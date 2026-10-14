@@ -1,14 +1,14 @@
 // POST /api/waitlist (marketing/WAITLIST.md §2). JSON from the page script, or form-encoded when the page posts natively.
-// Turnstile is verified server-side, the e-mail stored once (INSERT OR IGNORE), at most 5 POSTs per IP hash per hour.
+// Turnstile is verified server-side, the e-mail stored once (INSERT OR IGNORE), at most 5 POSTs per IP hash per clock hour.
 // Returns { ok, position, already } (position = people ahead of you) as JSON, or a small HTML page for form posts.
 interface Env { DB?: any; TURNSTILE_SECRET?: string; IP_SALT?: string }
 interface Ctx { request: Request; env: Env }
 
 const EMAIL = /^[^\s@<>()",;:]{1,64}@[a-z0-9.-]{1,190}\.[a-z]{2,24}$/i;
-const SCHEMA = [
-  "CREATE TABLE IF NOT EXISTS waitlist (email TEXT PRIMARY KEY, edition TEXT NOT NULL, note TEXT, src TEXT, ua TEXT, ip_hash TEXT, created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')))",
-  'CREATE TABLE IF NOT EXISTS waitlist_attempts (ip_hash TEXT NOT NULL, at INTEGER NOT NULL)',
-  'CREATE INDEX IF NOT EXISTS waitlist_attempts_ip ON waitlist_attempts (ip_hash, at)',
+const SCHEMA = [ // same as db/waitlist.sql (the planner created it on D1 2026-10-15)
+  "CREATE TABLE IF NOT EXISTS waitlist (email TEXT PRIMARY KEY, edition TEXT NOT NULL DEFAULT 'homelab', note TEXT, src TEXT, ua TEXT, ip_hash TEXT, created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')))",
+  'CREATE INDEX IF NOT EXISTS waitlist_created ON waitlist(created_at)',
+  'CREATE TABLE IF NOT EXISTS ratelimit (ip_hash TEXT NOT NULL, hour TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (ip_hash, hour))',
 ];
 let schemaReady = false;
 
@@ -51,13 +51,12 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   const ipHash = await sha256(ip + (env.IP_SALT ?? env.TURNSTILE_SECRET));
 
   if (!schemaReady) { await env.DB.batch(SCHEMA.map((q) => env.DB.prepare(q))); schemaReady = true; }
-  const now = Date.now();
-  const { n } = await env.DB.prepare('SELECT COUNT(*) AS n FROM waitlist_attempts WHERE ip_hash = ? AND at > ?').bind(ipHash, now - 3_600_000).first();
-  await env.DB.batch([
-    env.DB.prepare('INSERT INTO waitlist_attempts (ip_hash, at) VALUES (?, ?)').bind(ipHash, now),
-    env.DB.prepare('DELETE FROM waitlist_attempts WHERE at < ?').bind(now - 86_400_000),
+  const hour = new Date().toISOString().slice(0, 13); // per clock hour, e.g. 2026-10-15T21
+  const [rl] = await env.DB.batch([
+    env.DB.prepare('INSERT INTO ratelimit (ip_hash, hour, n) VALUES (?, ?, 1) ON CONFLICT (ip_hash, hour) DO UPDATE SET n = n + 1 RETURNING n').bind(ipHash, hour),
+    env.DB.prepare('DELETE FROM ratelimit WHERE hour < ?').bind(new Date(Date.now() - 86_400_000).toISOString().slice(0, 13)),
   ]);
-  if (n >= 5) return reply(form, 429, { ok: false, error: 'rate' });
+  if (Number(rl.results?.[0]?.n ?? 0) > 5) return reply(form, 429, { ok: false, error: 'rate' });
 
   const token = String(data.turnstile ?? data['cf-turnstile-response'] ?? '');
   const check = new FormData();

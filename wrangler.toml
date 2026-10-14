@@ -4,10 +4,10 @@ name = "rack-density"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-10-01"
 
-# Waitlist D1 — uncomment once the planner has created the database and logged its id:
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "rack-density-waitlist"
-# database_id = "<id from: npx wrangler d1 list>"
+# Waitlist D1 (created by the planner 2026-10-15; marketing/WAITLIST.md).
+[[d1_databases]]
+binding = "DB"
+database_name = "rack-density-waitlist"
+database_id = "ba3c58a5-ee48-4cd6-a8be-c5080aad76db"
 
 # Secrets (never in this file): TURNSTILE_SECRET, optional IP_SALT — `npx wrangler pages secret put TURNSTILE_SECRET --project-name rack-density`.

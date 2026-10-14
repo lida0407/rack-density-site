@@ -18,10 +18,9 @@ export const WALKTHROUGH = { subject: 'Homelab Twin walkthrough', body: 'I would
 export const NOTIFY = { subject: 'Tell me when Homelab Twin Try opens', body: 'One e-mail when the self-serve Try opens, please.' };
 
 // Waitlist (marketing/WAITLIST.md): /homelab/waitlist/ + Pages Function functions/api/waitlist (D1 + Turnstile).
-// Goes live when the Turnstile site key is set here (the planner creates the widget, the D1 database and the secret);
-// until then the notify CTAs stay mailto. WAITLIST_SITEKEY at build time overrides it (local tests with the test key).
+// Live since 2026-10-15 (D1 + Turnstile created by the planner); an empty key would fall back to the mailto CTAs. WAITLIST_SITEKEY at build time overrides it (local tests with the test key).
 const env = typeof process !== 'undefined' && process.env ? process.env : {};
-const TURNSTILE_SITEKEY = env.WAITLIST_SITEKEY ?? '';
+const TURNSTILE_SITEKEY = env.WAITLIST_SITEKEY ?? '0x4AAAAAAFW6HYzPounMOy66'; // Turnstile widget "rack-density waitlist" (public key)
 export const WAITLIST = { live: TURNSTILE_SITEKEY !== '', siteKey: TURNSTILE_SITEKEY, api: '/api/waitlist' } as const;
 
 export const PRICES = { account: { month: 5, year: 50 }, pro: { month: 20, year: 200 }, currency: 'USD' } as const;
