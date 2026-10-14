@@ -64,11 +64,14 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
     <script type="application/ld+json" set:html={ld} />
   </head>
   <body class="theme-dc">
+    {/* Cloudflare's email obfuscation rewrites mailto links to /cdn-cgi/l/email-protection (404 without JS): opt out. */}
+    <Fragment set:html="<!--email_off-->" />
     <Header section="dc" />
     {bc && <Breadcrumbs items={bc} />}
     <main id="main">
       <slot />
     </main>
     <Footer section="dc" />
+    <Fragment set:html="<!--/email_off-->" />
   </body>
 </html>
