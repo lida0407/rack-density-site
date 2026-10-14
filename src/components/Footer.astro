@@ -1,19 +1,20 @@
 ---
 import { u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, CONTACT_EMAIL } from '../config/brand';
+import { PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, CONTACT_EMAIL } from '../config/brand';
 ---
 <footer class="site-footer">
   <div class="wrap cols">
     <div>
-      <p class="brand"><strong class="wm">RACK<span>DENSITY</span></strong> by <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a>: {PRODUCT_NAME} for the homelab, {DC_PRODUCT_NAME} for the data center.</p>
-      <p class="muted small">No account = we store nothing. $5/month keeps it.</p>
-      <p class="small"><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+      <p class="brand"><strong class="wm">RACK<span>DENSITY</span></strong> by <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a></p>
+      <p class="muted">{PRODUCT_NAME} for the homelab · {DC_PRODUCT_NAME} for the data center.</p>
+      <p><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+      <p class="dim">© 2026 {PARTNER.name}</p>
     </div>
     <div>
       <p class="h">{PRODUCT_NAME}</p>
       <ul>
         <li><a href={u('/homelab')}>Overview</a></li>
-        <li><a href={u('/homelab/try')}>Try it</a></li>
+        <li><a href={u('/homelab/try')}>See it</a></li>
         <li><a href={u('/homelab/pricing')}>Pricing</a></li>
         <li><a href={u('/homelab/learn')}>Learn</a></li>
         <li><a href={u('/homelab/changelog')}>Changelog</a></li>
@@ -38,13 +39,15 @@ import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, CONTACT_EMAIL } from '..
   </div>
 </footer>
 <style>
-  .site-footer { border-top: 1px solid var(--line); padding: 40px 0 56px; margin-top: 40px; background: var(--bg2); font-size: .95rem; }
+  .site-footer { border-top: 1px solid var(--line); padding: 40px 0 56px; margin-top: 40px; background: var(--bg-100); font: 400 12px/1.7 var(--font-mono); }
   .cols { display: grid; gap: 24px; }
   @media (min-width: 760px) { .cols { grid-template-columns: 2fr 1fr 1fr 1fr; } }
-  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  p { margin: 0 0 8px; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
   a { color: var(--ink-muted); text-decoration: none; }
   a:hover { color: var(--accent); }
-  .h { color: var(--dim); font-family: var(--font-mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .14em; margin-bottom: .8em; }
-  .wm { font-family: var(--font-mono); letter-spacing: .12em; } .wm span { color: var(--accent); }
-  .brand a, .small a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .h { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
+  .wm { font-size: 14px; letter-spacing: .12em; color: var(--ink); } .wm span { color: var(--accent); }
+  .brand a, p > a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .dim { color: var(--ink-dim); }
 </style>

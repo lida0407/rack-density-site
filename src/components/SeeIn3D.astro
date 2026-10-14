@@ -1,23 +1,31 @@
 ---
-import { u } from '../lib/url';
-import { TRY } from '../config/brand';
+// "See it on your rack" card (brand handoff §3, Learn articles): lights-off still + CTA. No public demo → See it + walkthrough.
+import { Image } from 'astro:assets';
+import { u, mailto } from '../lib/url';
+import { WALKTHROUGH } from '../config/brand';
+import still from '../assets/shots/hero-lightsoff.png';
 interface Props { title: string; body: string; button?: string; utm?: string }
 const { title, body, button = 'See it in 3D', utm } = Astro.props;
 const href = u('/homelab/try') + (utm ? `?utm_source=learn&utm_medium=cta&utm_content=${utm}` : '');
 ---
-<aside class="see3d card">
-  <div>
+<aside class="see3d">
+  <Image src={still} alt="The Basement Lab demo rack with the room lights off" widths={[480, 800]} sizes="(min-width: 760px) 380px, 100vw" format="webp" quality={70} loading="lazy" />
+  <div class="body">
+    <p class="cs-eyebrow">See it on your rack</p>
     <h3>{title}</h3>
     <p>{body}</p>
-  </div>
-  <div class="btn-row">
-    <a class="btn btn-primary" href={href}>{button}</a>
-    {!TRY.live && <span class="pill pill-soon">Try: {TRY.comingNote}</span>}
+    <div class="btn-row">
+      <a class="btn btn-primary" href={href}>{button}</a>
+      <a class="btn btn-ghost" href={mailto(WALKTHROUGH.subject, WALKTHROUGH.body)}>Request a walkthrough</a>
+    </div>
   </div>
 </aside>
 <style>
-  .see3d { display: grid; gap: 14px; margin: 2.2em 0; background: var(--accent-soft); border-color: var(--accent); }
-  @media (min-width: 720px) { .see3d { grid-template-columns: 1fr auto; align-items: center; } }
-  .see3d h3 { margin: 0 0 .3em; }
-  .see3d p { margin: 0; color: var(--ink-muted); }
+  .see3d { display: grid; margin: 2.4em 0; border: 1px solid var(--line-strong); background: var(--bg-100); }
+  @media (min-width: 760px) { .see3d { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); align-items: stretch; } }
+  .see3d img { width: 100%; height: 100%; min-height: 200px; object-fit: cover; display: block; border-radius: 0; }
+  .body { padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+  .body h3 { margin: 0; font-size: 1.3rem; }
+  .body p { margin: 0; color: var(--ink-muted); }
+  .body .cs-eyebrow { color: var(--accent); }
 </style>

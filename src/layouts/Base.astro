@@ -36,6 +36,14 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0b0a09" />
+    <script is:inline>
+      // Bright mode before first paint: stored choice, else the system preference. Print always uses the bright tokens.
+      (function () { var t; try { t = localStorage.getItem('rd.theme'); } catch (e) {}
+        if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        var was; addEventListener('beforeprint', function () { was = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', 'light'); });
+        addEventListener('afterprint', function () { if (was !== 'light') document.documentElement.removeAttribute('data-theme'); }); })();
+    </script>
     <link rel="icon" href={u(section === 'homelab' ? '/brand/favicon-homelab.svg' : '/brand/favicon-rackdensity.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={u('/icon-512.png')} />
     {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME} changelog`} href={u('/homelab/changelog.xml')} />}

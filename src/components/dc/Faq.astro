@@ -4,9 +4,9 @@ const { items, heading = "Questions people ask" } = Astro.props;
 ---
 {items.length > 0 && (
   <section class="faq" aria-labelledby="faq-h">
-    <h2 id="faq-h">{heading}</h2>
-    <dl>
-      {items.map((i) => (<><dt>{i.q}</dt><dd>{i.a}</dd></>))}
-    </dl>
+    <span class="eyebrow" id="faq-h">{heading}</span>
+    <div class="faq-list">
+      {items.map((i, n) => (<details open={n === 0}><summary>{i.q}</summary><p>{i.a}</p></details>))}
+    </div>
   </section>
 )}

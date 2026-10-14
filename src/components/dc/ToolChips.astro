@@ -1,0 +1,45 @@
+---
+// Integration chips with partner logos (compatibility statements, approved 2026-10-15). Status follows share/updatedc.md.
+import { u } from "../../lib/dc/url";
+interface Props { exclude?: string; links?: boolean }
+const { exclude, links = true } = Astro.props;
+type Tool = { name: string; slug: string; status: "available" | "roadmap" | "partner"; logos?: { src: string; mask?: boolean }[] };
+const tools: Tool[] = [
+  { name: "Zabbix", slug: "zabbix", status: "available", logos: [{ src: "logos/zabbix.png" }] },
+  { name: "NetBox", slug: "netbox", status: "available", logos: [{ src: "logos/netbox.svg", mask: true }] },
+  { name: "Prometheus · Grafana", slug: "grafana", status: "roadmap", logos: [{ src: "logos/prometheus.svg", mask: true }, { src: "logos/grafana.svg", mask: true }] },
+  { name: "SolarWinds", slug: "solarwinds", status: "roadmap" },
+  { name: "ManageEngine OpManager", slug: "manageengine-opmanager", status: "roadmap" },
+  { name: "Sunbird dcTrack", slug: "sunbird-dctrack", status: "roadmap" },
+  { name: "PRTG", slug: "prtg", status: "roadmap" },
+  { name: "CloudSino", slug: "cloudsino", status: "partner", logos: [{ src: "logos/cloudsino.png" }] },
+];
+const list = tools.filter((t) => t.slug !== exclude);
+---
+<ul class="tool-chips">
+  {list.map((t) => {
+    const Tag = links ? "a" : "span";
+    return (
+      <li>
+        <Tag class={`cs-chip tool-chip${t.status === "available" ? " cs-chip--ok" : ""}`} href={links ? u(`integrations/${t.slug}/`) : undefined}>
+          {t.status === "available" && <span class="cs-shape cs-shape--ok" aria-hidden="true"></span>}
+          {t.logos?.map((l) => l.mask
+            ? <i class="tool-logo" style={`--logo:url(${u(l.src)})`} aria-hidden="true"></i>
+            : <img class="tool-logo-img" src={u(l.src)} alt="" height="16" />)}
+          <span>{t.name}</span>
+          {t.status === "roadmap" && <span class="cs-badge cs-badge--roadmap">Roadmap</span>}
+          {t.status === "partner" && <span class="tool-partner">Partner</span>}
+        </Tag>
+      </li>
+    );
+  })}
+</ul>
+<style>
+  .tool-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tool-chip { text-decoration: none; color: var(--ink); gap: 8px; }
+  a.tool-chip:hover { border-color: var(--accent); color: var(--ink); }
+  .tool-logo { display: inline-block; width: 16px; height: 16px; background: currentColor; -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; opacity: 0.85; }
+  .tool-logo-img { display: inline-block; height: 16px; width: auto; }
+  .tool-partner { font: 600 10px/1 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+  .tool-chip .cs-badge { height: 16px; }
+</style>

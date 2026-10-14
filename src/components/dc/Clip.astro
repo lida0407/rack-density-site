@@ -15,7 +15,7 @@ const poster = await getImage({ src, width: 1280, format: "webp", quality: 72 })
   <video controls muted playsinline preload="none" poster={poster.src} width="1920" height="1080" aria-label={title}>
     <source src={u(`media/dcsim-${name}.mp4`)} type="video/mp4" />
   </video>
-  {caption && <figcaption>{caption}</figcaption>}
+  {caption && <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>{caption}</span><span class="sim">recorded in the app</span></figcaption>}
 </figure>
 <style>
   .clip video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }

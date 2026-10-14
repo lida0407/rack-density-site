@@ -1,12 +1,14 @@
-// FAQ text from ~/Sensaka/marketing/homelab-site/copy/*.md, adjusted to Dali's 2026-10-14 16:00 decisions (no accounts yet).
+// FAQ text from ~/Sensaka/marketing/homelab-site/copy/*.md, adjusted to Dali's decisions (2026-10-14 16:00 no accounts yet;
+// 2026-10-15 no public demo: Try is shown in clips and walkthroughs until he opens it).
 // The same arrays render the visible FAQ and the FAQPage JSON-LD.
 import { PRODUCT_NAME, PRICES, FLAGS } from '../config/brand';
 const P = PRODUCT_NAME;
 const plans = FLAGS.billingLive ? '' : ' Account and Pro are launching soon.';
 
 export const homeFaq = [
-  { q: `Is ${P} free?`, a: `Yes. Try is free, needs no account and stores nothing. Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) keeps your lab; Pro ($${PRICES.pro.month}/month or $${PRICES.pro.year}/year) adds cable tracing, tokens per kWh, the full Flaw Finder and reports.${plans}` },
-  { q: 'Do I need to install anything?', a: 'No. Open it in your browser and import a spreadsheet: the template, or one CSV per sheet. Only the Devices sheet is required (rack, U and model).' },
+  { q: `Is ${P} free?`, a: `Try will be free, with no account and nothing stored. It isn't public yet: for now we show the app in clips, stills and walkthroughs. Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) keeps your lab; Pro ($${PRICES.pro.month}/month or $${PRICES.pro.year}/year) adds cable tracing, tokens per kWh, the full Flaw Finder and reports.${plans}` },
+  { q: 'Can I try it now?', a: 'Not on your own yet. Watch the clips on the See it page, or request a walkthrough and we show you the app on a short call. Meanwhile the import template is free to download and fill in.' },
+  { q: 'Do I need to install anything?', a: 'No. It runs in your browser and imports a spreadsheet: the template, or one CSV per sheet. Only the Devices sheet is required (rack, U and model).' },
   { q: 'Is my file uploaded?', a: 'No. The spreadsheet is read in your browser and never leaves your machine. Without an account nothing is stored: no cookies, no browser storage, and no requests to third parties.' },
   { q: 'How accurate are the power and cost numbers?', a: "They are estimates: each device's typical draw from its model, adjusted by any readings you add to the Readings sheet, times your electricity price. For exact numbers, add readings from a smart plug or your UPS." },
   { q: 'What racks does it handle?', a: 'One or two racks, including 10-inch mini racks. Gear outside the rack, such as access points, cameras or the ISP box, can be placed too: leave the U column empty.' },
@@ -14,9 +16,10 @@ export const homeFaq = [
 ];
 
 export const tryFaq = [
-  { q: 'What do I need to start?', a: 'Nothing but a browser. Explore the demo lab, or download the template and fill in the Devices sheet: rack, U and model.' },
-  { q: 'Which file formats work?', a: 'An .xlsx workbook in the template layout, or one CSV per sheet with the same column names.' },
-  { q: "My device isn't in the catalog. What happens?", a: 'It still appears, as a plain box of the right height, in the right U.' },
+  { q: 'Why is there no public demo?', a: `We are not opening ${P} to everyone yet. Until we do, you can see it here in clips and stills, or in a walkthrough with us.` },
+  { q: 'What happens in a walkthrough?', a: 'A short video call: we open the demo lab and show the views you care about, from the power chain and the Fail what-if to the Flaw Finder and lights-off mode, and answer your questions.' },
+  { q: 'Which file formats will work?', a: 'An .xlsx workbook in the template layout, or one CSV per sheet with the same column names.' },
+  { q: "My device isn't in the catalog. What happens?", a: 'Pick it from the device catalog by category and brand, or describe your own device and reuse it. In a spreadsheet, an unknown model still appears as a plain box of the right height, in the right U.' },
   { q: 'Is anything uploaded or saved?', a: 'No. The file is read in your browser, and without an account nothing is stored: no cookies, no browser storage, nothing sent to a server.' },
 ];
 

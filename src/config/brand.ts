@@ -7,12 +7,15 @@ export const BRAND = 'RACKDENSITY';
 export const PARTNER = { name: 'Sensaka', url: 'https://sensaka.com' } as const;
 export const CONTACT_EMAIL = 'da@mustardseedmt.com';
 
-/** The app. `live` turns on every Try button; until then /try shows screenshots and "coming this week". */
+/** The app. Dali 2026-10-15: no public demo — both apps stay behind the password page. `live` stays false until he opens a
+ *  public Try; until then every CTA is "See it" (clips + stills on /homelab/try/) and "Request a walkthrough" (mailto). */
 export const TRY = {
   live: false,
-  url: '',                                       // set to the public URL the dev agent logs on redeploy, then live: true
-  comingNote: 'coming this week',
+  url: '',                                       // public Try URL, only when Dali opens one
+  comingNote: 'by walkthrough for now',
 } as const;
+export const WALKTHROUGH = { subject: 'Homelab Twin walkthrough', body: 'I would like a walkthrough of Homelab Twin. My lab: (rack size, devices, what you want to see).' };
+export const NOTIFY = { subject: 'Tell me when Homelab Twin Try opens', body: 'One e-mail when the self-serve Try opens, please.' };
 
 export const PRICES = { account: { month: 5, year: 50 }, pro: { month: 20, year: 200 }, currency: 'USD' } as const;
 

@@ -1,64 +1,111 @@
 ---
+// "See it" (Dali, 2026-10-15: no public demo). Clips + stills of the gated demo build, Request a walkthrough (mailto),
+// notify-me for the self-serve Try. Route stays /homelab/try/ so existing links keep working.
 import Base from '../../layouts/Base.astro';
 import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
-import TryButton from '../../components/TryButton.astro';
-import { u } from '../../lib/url';
-import { PRODUCT_NAME, TRY, FLAGS, PRICES } from '../../config/brand';
+import { u, mailto } from '../../lib/url';
+import { PRODUCT_NAME, TRY, WALKTHROUGH, NOTIFY, FLAGS, PRICES } from '../../config/brand';
 import { tryFaq } from '../../data/faq';
-import overview from '../../assets/shots/overview.png';
+import heroDark from '../../assets/shots/hero-lightsoff.png';
+import heroLight from '../../assets/shots/hero-office.png';
 import flaw from '../../assets/shots/flaw-finder.png';
 import viewMenu from '../../assets/shots/view-menu.png';
-import phone from '../../assets/shots/phone.png';
+import cables from '../../assets/shots/cables.png';
+import phone from '../../assets/shots/phone-lightsoff.png';
+const half = '(min-width: 760px) 560px, 100vw';
 ---
-<Base title={`Try ${PRODUCT_NAME} Free: Your Rack in 3D, No Account`}
-  description="Open the demo lab or drop in your own Excel or CSV. Your homelab rack in 3D with power, network and a Fail what-if. Free, nothing stored."
+<Base title={`See ${PRODUCT_NAME}: Clips, Stills and a Walkthrough`}
+  description={`Watch ${PRODUCT_NAME} in action: the demo lab in 3D, the power and network diagrams, a Fail what-if and lights-off mode. Request a walkthrough.`}
   path="/homelab/try" ogImage="/homelab/og/try.png" section="homelab">
+  <section class="section-tight head">
+    <div class="wrap head-grid">
+      <div>
+        <p class="eyebrow">See it · demo lab · simulated data</p>
+        <h1>See {PRODUCT_NAME}</h1>
+        <p class="lead">The app isn't open to the public yet. Watch it here, or book a short walkthrough and we show it to you on a call.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={mailto(WALKTHROUGH.subject, WALKTHROUGH.body)}>Request a walkthrough</a>
+          <a class="btn btn-ghost" href={mailto(NOTIFY.subject, NOTIFY.body)}>E-mail me when Try opens</a>
+        </div>
+      </div>
+      <div class="cs-banner"><span class="cs-shape cs-shape--off"></span><span>When Try opens: nothing is saved, close the tab and it's gone. <b>${PRICES.account.month}/month keeps it.</b></span></div>
+    </div>
+  </section>
+
+  <section class="section-tight" id="clips">
+    <div class="wrap grid grid-2 clips">
+      <figure class="shot">
+        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>Tour</b><span>· Overview → Power → Network → Fail · 28 s</span></div>
+        <video controls muted playsinline preload="none" poster={u('/homelab/media/demo-tour.jpg')} width="1280" height="720" aria-label="Screen recording of the demo lab: Overview, the View menu, Power in 3D and as a diagram, Network in 3D and as a diagram, then a Fail what-if on the aggregation switch">
+          <source src={u('/homelab/media/demo-tour.mp4')} type="video/mp4" />
+        </video>
+        <figcaption>Search a device, open it, press Fail: the network diagram shows everything that loses connectivity.</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>Lights off</b><span>· animated share · 8 s loop</span></div>
+        <video autoplay muted loop playsinline preload="none" poster={u('/homelab/media/lights-off-loop.jpg')} width="1280" height="654" aria-label="The demo lab with the room lights off: device LEDs blink and power and network flows run between the racks">
+          <source src={u('/homelab/media/lights-off-loop.webm')} type="video/webm" />
+          <source src={u('/homelab/media/lights-off-loop.mp4')} type="video/mp4" />
+        </video>
+        <figcaption>Lights off saves an estimated 145 W, about €34 a month, in the demo lab. Every lab can export this as a GIF or a video.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="section-tight">
     <div class="wrap">
-      <h1>Try {PRODUCT_NAME}</h1>
-      <p class="lead">Start with the demo lab, then add your own. No account, and nothing is stored.</p>
-      <div class="btn-row">
-        <TryButton direct label="Open the app ↗" utm="try-page" />
-        {!TRY.live && <span class="muted small">The public app is {TRY.comingNote}. Until then: screenshots below, and the template is ready to fill in.</span>}
+      <p class="eyebrow">Stills</p>
+      <div class="grid grid-2">
+        <Shot src={heroDark} light={heroLight} label="Overview" alt="The demo lab in 3D with the lights off: two racks, device labels, the readout at the top" sizes={half} />
+        <Shot src={flaw} label="Flaw Finder" alt="Flaw Finder: the UPS is a single point of failure; 14 devices would go dark, with the fix" sizes={half} />
+        <Shot src={viewMenu} label="View menu" alt="The View menu: Overview, Power, Heat, Network, Cables, Compute, AI" sizes={half} />
+        <Shot src={cables} label="Cables · Pro" alt="Cables at the rear of both racks, coloured by type, with a cable count per device" sizes={half} />
+      </div>
+      <div class="phone"><Shot src={phone} label="Phone" alt="The demo lab on a phone-sized screen with the lights off (emulated)" caption="Phone layout, browser emulation; not yet tested on real devices." widths={[390, 780]} sizes="320px" /></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="steps">
+    <div class="wrap grid grid-2 two">
+      <div>
+        <p class="eyebrow">Get your sheet ready</p>
+        <h2>Your lab in three steps</h2>
+        <ol class="steps">
+          <li><span class="num">01</span><span><b>Download the template.</b> <span class="muted">One sheet per topic: Devices, Cables, Racks, Power, Networks, Readings.</span></span></li>
+          <li><span class="num">02</span><span><b>Fill in Devices.</b> <span class="muted">One row per device, with rack, U (the lowest unit it sits in) and model. Leave U empty for gear outside the rack, such as access points, cameras or the ISP box.</span></span></li>
+          <li><span class="num">03</span><span><b>Import it.</b> <span class="muted">.xlsx, or one CSV per sheet. You get an import report (rows imported, rows skipped with the reason, checks pinned on the rack), then your electricity price.</span></span></li>
+        </ol>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href={u('/downloads/homelab-template.xlsx')} download>Download the template (.xlsx)</a>
+          <a class="btn btn-ghost" href={u('/downloads/basement-lab.xlsx')} download>Download the Basement Lab example</a>
+        </div>
+      </div>
+      <div class="card privacy">
+        <p class="eyebrow" style="color:var(--ink-muted)">Close the tab and it's gone</p>
+        <p class="muted">Try keeps your lab in the browser tab only: no cookies, no browser storage, nothing sent to a server. Download your lab as a file to come back to it.{FLAGS.billingLive ? '' : ' Accounts that keep your lab are launching soon.'}</p>
+        <div class="chips"><span class="cs-chip"><span class="cs-shape cs-shape--off"></span>No cookies</span><span class="cs-chip"><span class="cs-shape cs-shape--off"></span>No storage</span><span class="cs-chip"><span class="cs-shape cs-shape--off"></span>No upload</span></div>
+        <p class="eyebrow" style="color:var(--ink-muted); margin-top:16px">What the import checks</p>
+        <p class="muted small">Two devices in one U · a port used twice · 10G on a 1G port or fiber into RJ45 · both power supplies on one feed · a power strip over 80 % · UPS runtime under 5 minutes · a cable shorter than its run · missing labels · undefined VLANs · port errors · cable ends that name an unknown device.</p>
       </div>
     </div>
   </section>
 
-  <section class="section-tight">
-    <div class="wrap grid grid-2">
-      <Shot src={overview} eager alt="The demo lab in 3D with the Try banner: nothing is saved, close the tab and it's gone" sizes="(min-width: 760px) 560px, 100vw" />
-      <Shot src={flaw} alt="Flaw Finder in Try: the UPS is a single point of failure; 14 devices would go dark" sizes="(min-width: 760px) 560px, 100vw" />
-      <Shot src={viewMenu} alt="The View menu: Overview, Power, Heat, Network, Cables, Compute, AI" sizes="(min-width: 760px) 560px, 100vw" />
-      <div class="phone"><Shot src={phone} alt="The demo lab on a phone-sized screen (emulated)" caption="Demo lab · simulated data · phone layout (emulated, not yet tested on real devices)" widths={[390, 780]} sizes="320px" /></div>
-    </div>
-  </section>
-
-  <section class="section-tight">
-    <div class="wrap btn-row">
-      <a class="btn btn-ghost" href={u('/downloads/homelab-template.xlsx')} download>Download the template (.xlsx)</a>
-      <a class="btn btn-ghost" href={u('/downloads/basement-lab.xlsx')} download>Download the Basement Lab example</a>
-      <a href="#steps">How to fill it in ↓</a>
-    </div>
-  </section>
-
-  <section class="section" id="steps">
-    <div class="wrap narrow prose">
-      <h2>Your lab in three steps</h2>
-      <ol>
-        <li><strong>Download the template.</strong> It has one sheet per topic: Devices, Cables, Racks, Power, Networks, Readings.</li>
-        <li><strong>Fill in Devices.</strong> One row per device, with rack, U (the lowest unit it sits in) and model. Leave U empty for gear outside the rack, such as access points, cameras or the ISP box. The other sheets are optional: Cables adds the network and cable views, Power adds the power chain, Readings fits the numbers to your real measurements.</li>
-        <li><strong>Open ⋯ → Add your lab and drop the file.</strong> .xlsx, or one CSV per sheet. You get an import report: rows imported, rows skipped with the reason, and checks pinned on the rack. Then enter your electricity price.</li>
-      </ol>
-      <h2>What the import checks</h2>
-      <p>Two devices in one U · a port used twice · 10G on a 1G port or fiber into RJ45 · both power supplies on one feed · a power strip over 80 % · UPS runtime under 5 minutes · a cable shorter than its run · missing labels · undefined VLANs · port errors · cable ends that name an unknown device.</p>
-      <h2>Close the tab and it's gone</h2>
-      <p>Try keeps your lab in this browser tab only: no cookies, no browser storage, nothing sent to a server. Close the tab and the lab is gone; we never had it. Want to come back to it? Download your lab as a file and import it next time.{FLAGS.billingLive ? ` Or let an Account ($${PRICES.account.month}/month) keep it.` : ' Accounts that keep your lab are launching soon.'}</p>
-    </div>
-  </section>
-
   <section class="section"><div class="wrap narrow"><Faq items={tryFaq} /></div></section>
+  {TRY.live && <p class="sr-only">Try is open.</p>}
 </Base>
 <style>
-  .phone { max-width: 320px; justify-self: center; }
+  .head-grid { display: grid; gap: 20px; align-items: end; }
+  @media (min-width: 900px) { .head-grid { grid-template-columns: 1.4fr 1fr; } }
+  .head h1 { margin-bottom: .3em; }
+  .clips { align-items: start; }
+  video { width: 100%; height: auto; display: block; background: #000; }
+  .phone { max-width: 320px; margin: 18px auto 0; }
+  .alt { background: var(--bg-100); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .two { gap: 48px; align-items: start; }
+  .steps { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 14px; }
+  .steps li { display: grid; grid-template-columns: 36px 1fr; gap: 10px; }
+  .steps .num { font: 600 13px/24px var(--font-mono); color: var(--accent); }
+  .privacy { background: var(--bg-000); }
+  .privacy .chips { gap: 8px; }
 </style>

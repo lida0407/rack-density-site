@@ -20,5 +20,5 @@ const tall = img.height > img.width;
     loading={eager ? "eager" : "lazy"}
     fetchpriority={eager ? "high" : "auto"}
   />
-  {caption && <figcaption>{caption}</figcaption>}
+  {caption && <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>{caption}</span><span class="sim">simulated data</span></figcaption>}
 </figure>

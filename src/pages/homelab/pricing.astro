@@ -38,13 +38,13 @@ const soon = !FLAGS.billingLive;
       <h1>Pricing</h1>
       <p class="lead">Start free. Pay only when you want {PRODUCT_NAME} to keep your lab.</p>
       <p class="muted">No account = we store nothing. $5/month keeps it.</p>
-      <div class="grid grid-3 plans">
-        <div class="card">
-          <h2>Try</h2><p class="price">Free</p><p class="muted"><em>No account · nothing stored</em></p>
-          <ul><li>1–2 racks in 3D from your spreadsheet</li><li>Power, Heat, Network, Compute views</li><li>Power and network diagrams with <strong>Fail</strong> what-if</li><li>Import report and checks</li><li>Share image and rack-elevation PNG</li><li>One Flaw Finder run</li><li>Closes with the tab, or download your lab as a file</li></ul>
-          <TryButton label="Try it free" />
-        </div>
+      <div class="tiles tiles-3 plans">
         <div class="card featured">
+          <h2>Try</h2><p class="price">Free</p><p class="muted"><em>No account · nothing stored</em></p><p class="small muted">Not public yet: see it in clips or book a walkthrough.</p>
+          <ul><li>1–2 racks in 3D from your spreadsheet</li><li>Power, Heat, Network, Compute views</li><li>Power and network diagrams with <strong>Fail</strong> what-if</li><li>Import report and checks</li><li>Share image and rack-elevation PNG</li><li>One Flaw Finder run</li><li>Closes with the tab, or download your lab as a file</li></ul>
+          <TryButton label="See it" />
+        </div>
+        <div class="card">
           <h2>Account {soon && <span class="pill pill-soon">Launching soon</span>}</h2>
           <p class="price">${PRICES.account.month} <span>/ month</span></p><p class="muted">or ${PRICES.account.year} / year, two months free</p>
           <p class="small muted">Everything in Try, plus:</p>
@@ -86,11 +86,14 @@ const soon = !FLAGS.billingLive;
 </Base>
 <style>
   .plans { margin-top: 24px; }
-  .plans h2 { font-size: 1.3rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .plans h2 { font: 600 12px/14px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .featured h2 { color: var(--accent); }
   .price { font-family: var(--font-mono); font-size: 2rem; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
   .price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
   .plans ul { padding-left: 1.1em; margin: 0 0 18px; }
   .plans li { margin: .35em 0; }
-  .featured { border-color: var(--accent); box-shadow: var(--glow-accent); }
+  .plans .card { border: 0; background: var(--bg-000); display: flex; flex-direction: column; }
+  .plans .card > .btn { margin-top: auto; align-self: flex-start; }
+  .featured { box-shadow: inset 0 3px 0 var(--accent); }
   td:not(:first-child), th:not(:first-child) { text-align: center; white-space: nowrap; }
 </style>

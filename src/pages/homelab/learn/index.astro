@@ -37,7 +37,7 @@ const upcoming = [
         {live.map((e) => <a class="card link" href={u(`/homelab/learn/${e.data.slug}`)}><h3>{e.data.title}</h3><p class="muted">{e.data.teaser}</p></a>)}
         {upcoming.map((g) => <div class="card"><span class="pill">Coming soon</span><h3>{g.t}</h3><p class="muted">{g.d}</p></div>)}
       </div>
-      <p style="margin-top:24px">Have a rack already? <a href={u('/homelab/try')}>See it in 3D, free →</a></p>
+      <p style="margin-top:24px">Have a rack already? <a href={u('/homelab/try')}>See it in 3D →</a></p>
     </div>
   </section>
 </Base>

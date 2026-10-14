@@ -1,13 +1,13 @@
 ---
-// Every "Try" call to action. While TRY.live is false it goes to /try (screenshots + "coming this week").
-import { u } from '../lib/url';
-import { TRY } from '../config/brand';
-interface Props { label?: string; direct?: boolean; utm?: string }
-const { label = 'Try it free, no account', direct = false, utm } = Astro.props;
+// Primary CTA for Homelab Twin. No public demo (Dali, 2026-10-15): "See it" → clips and stills; with `walkthrough`
+// it also shows "Request a walkthrough" (mailto). When TRY.live turns on, `direct` links straight to the app.
+import { u, mailto } from '../lib/url';
+import { TRY, WALKTHROUGH } from '../config/brand';
+interface Props { label?: string; direct?: boolean; walkthrough?: boolean; utm?: string }
+const { label = 'See it', direct = false, walkthrough = false, utm } = Astro.props;
 const appUrl = TRY.url + (utm ? `?utm_source=${utm}&utm_medium=site` : '');
 ---
-{direct
-  ? (TRY.live
-      ? <a class="btn btn-primary" href={appUrl} rel="noopener">{label}</a>
-      : <span class="btn btn-primary" aria-disabled="true" role="link">Try: {TRY.comingNote}</span>)
+{direct && TRY.live
+  ? <a class="btn btn-primary" href={appUrl} rel="noopener">{label}</a>
   : <a class="btn btn-primary" href={u('/homelab/try')}>{label}</a>}
+{walkthrough && <a class="btn btn-ghost" href={mailto(WALKTHROUGH.subject, WALKTHROUGH.body)}>Request a walkthrough</a>}

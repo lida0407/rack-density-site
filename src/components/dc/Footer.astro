@@ -1,6 +1,7 @@
 ---
 import { PRODUCT_NAME, COMPANY, COMPANY_URL, CONTACT_EMAIL } from "../../config/dc/product";
-import { u } from "../../lib/dc/url";
+import { PRODUCT_NAME as HOMELAB_NAME, BRAND } from "../../config/brand";
+import { u, root } from "../../lib/dc/url";
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -47,6 +48,12 @@ const year = new Date().getFullYear();
         </ul>
       </div>
     </div>
-    <p class="small" style="margin-top:28px">{PRODUCT_NAME} is a product of {COMPANY}. The Chinese-language edition is distributed by CloudSino. · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> · © {year} {COMPANY}</p>
+    <div class="legal">
+      <span class="mark">{BRAND.slice(0, 4)}<span>{BRAND.slice(4)}</span></span>
+      <a href={root()}>All products</a>
+      <a href={root("homelab/")}>{HOMELAB_NAME}</a>
+      <span>{PRODUCT_NAME} is a product of {COMPANY}. The Chinese-language edition is distributed by CloudSino.</span>
+      <span class="end">© {year} {COMPANY} · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></span>
+    </div>
   </div>
 </footer>
