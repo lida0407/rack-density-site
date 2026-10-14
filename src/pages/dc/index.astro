@@ -21,7 +21,7 @@ const faq = [
   { q: "Is there a Chinese edition?", a: "Yes. The Chinese-language edition is distributed by our partner CloudSino." },
 ];
 const walkthrough = DEMO_URL ?? mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n");
-const sizes = "(max-width: 1200px) 100vw, 1104px";
+const sizes = "(min-width: 1200px) 600px, (min-width: 1000px) 50vw, 100vw";
 const demoMoments = [
   { shape: "crit", text: "Lose feed A at peak: single-corded devices go dark and the other PDU overloads.", t: "0:31" },
   { shape: "warn", text: "A cooling unit stops: minutes to 27, 32 and 35 °C, estimated by a zonal model, not CFD.", t: "0:31" },
@@ -48,7 +48,8 @@ const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-d
 >
   <div class="dch">
     <section class="dch-hero">
-      <div class="dch-wrap dch-hero-copy">
+      <div class="dch-wrap dch-hero-grid">
+      <div class="dch-hero-copy">
         <span class="eyebrow">{PRODUCT_NAME} · by {COMPANY}</span>
         <h1>Your data center, simulated.</h1>
         <p class="lede">From a spreadsheet to a living 3D twin in minutes. Fail anything. See what goes dark.</p>
@@ -56,19 +57,20 @@ const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-d
           <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>Download the Excel template</a>
           <a class="cs-btn cs-btn--secondary dch-cta" href={walkthrough}>{DEMO_URL ? "Open the demo" : "Request a walkthrough"}</a>
         </div>
-        <p class="dch-note">Built by data-center people. Runs in the browser. Estimated where we estimate, labelled every time.</p>
+        <p class="dch-note">Built by data-center people. Estimated where we estimate, labelled every time.</p>
       </div>
-      <div class="dch-wrap dch-hero-fig">
+      <div class="dch-hero-fig">
         <HeroStage edition="dc" label="Demo hall" dark={heroDark} light={heroLight} sizes={sizes}
           alt="A data hall in DC Sim with the lights off: rows of racks glow green from their LEDs, the NOC wall screen lit."
           altLight="The same data hall with the lights on: white walls, light grey floor, rows of black racks, cooling units along the walls.">
           <span slot="pin" class="cs-pin"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{heroVideo ? "Recorded in the app" : <><span class="only-dark">Lights off</span><span class="only-light">Lights on</span></>}</span>
           <figcaption>{stageLive
-            ? <span>Choose a view, switch the lights, fail UPS-A in Power.</span>
+            ? <span>Runs in the browser. Pick a view, switch the lights, fail UPS-A.</span>
             : heroVideo
               ? <span>Fail UPS-A, trace the network, count the tokens, turn the lights off.</span>
               : <><span class="only-dark">Lights off: what still glows is what is running.</span><span class="only-light">Lights on: the same hall, the same numbers.</span></>}<span class="sim">{heroVideo || stageLive ? "Demo hall" : "AI hall demo"} · simulated data</span></figcaption>
         </HeroStage>
+      </div>
       </div>
     </section>
 
@@ -177,11 +179,14 @@ const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-d
   .dch h3 { margin: 0; }
   .dch-head { display: flex; flex-direction: column; gap: 12px; }
   .dch-hero { border-bottom: 1px solid var(--line); background: var(--bg-000); }
-  .dch-hero-copy { padding-top: clamp(40px, 6vw, 80px); display: flex; flex-direction: column; gap: 22px; }
+  /* Copy left, stage right from 1000 px (Dali 2026-10-15 late; HERO-INTERACTIVE §1, same grid as the homelab home) */
+  .dch-hero-grid { display: grid; gap: 32px; align-items: center; padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(40px, 6vw, 64px); }
+  @media (min-width: 1000px) { .dch-hero-grid { grid-template-columns: 1fr 1.2fr; gap: 48px; } .dch-hero h1 { font-size: clamp(44px, 4.6vw, 64px); } .dch-hero .lede { font-size: 18px; } }
+  .dch-hero-copy { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
   .dch-hero .lede { margin: 0; font-size: 19px; line-height: 28px; max-width: 36em; }
   .dch-cta { height: 44px; padding: 0 20px; font-size: 15px; }
   .dch-note { margin: 0; font: 400 12px/18px var(--font-mono); color: var(--ink-dim); }
-  .dch-hero-fig { margin-top: 40px; padding-bottom: clamp(40px, 6vw, 72px); }
+  .dch-hero-fig { min-width: 0; }
   .dch-band { border-bottom: 1px solid var(--line); background: var(--bg-100); }
   .dch-band2 { border-block: 1px solid var(--line); background: var(--bg-100); }
   .dch-proof { padding-top: 32px; padding-bottom: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 40px; align-items: end; }
