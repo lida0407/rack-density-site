@@ -15,7 +15,7 @@ export async function GET() {
 
 ## ${PRODUCT_NAME} (homelab)
 
-> ${PRODUCT_NAME} turns a spreadsheet of your homelab gear (Excel or CSV) into a 3D model of your rack: power and monthly cost per device (estimated), heat, network and cable views, power and network diagrams, and a "Fail" what-if that shows what goes dark. The file is read in the browser and never uploaded. Try is free with no account and nothing stored; Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) and Pro ($${PRICES.pro.month}/month) are launching soon.
+> ${PRODUCT_NAME} turns a spreadsheet of your homelab gear (Excel or CSV) into a 3D model of your rack: power and monthly cost per device (estimated), heat, network and cable views, power and network diagrams, and a "Fail" what-if that shows what goes dark. The file is read in the browser and never uploaded. Try is free with no account and nothing stored; Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) and Pro ($${PRICES.pro.month}/month or $${PRICES.pro.year}/year) are launching soon.
 
 - [${PRODUCT_NAME}](${abs('/homelab')}): overview
 - [Try ${PRODUCT_NAME}](${abs('/homelab/try')}): the demo lab and the import template

@@ -53,7 +53,7 @@ const soon = !FLAGS.billingLive;
         </div>
         <div class="card">
           <h2>Pro {soon && <span class="pill pill-soon">Launching soon</span>}</h2>
-          <p class="price">${PRICES.pro.month} <span>/ month</span></p><p class="muted"><em>Explains your lab</em></p>
+          <p class="price">${PRICES.pro.month} <span>/ month</span></p><p class="muted">or ${PRICES.pro.year} / year, two months free · <em>Explains your lab</em></p>
           <p class="small muted">Everything in Account, plus:</p>
           <ul><li>Up to 4 racks, 1-year history</li><li>Cabling view: every cable traced end to end</li><li>AI view: tokens per kWh, cost per million tokens</li><li>Flaw Finder: every single point of failure, ranked, with the fix</li><li>PDF report and Excel export</li><li>Upgrade Planner <span class="pill pill-roadmap">Roadmap</span></li></ul>
           {soon ? <a class="btn btn-ghost" href={mailto(`${PRODUCT_NAME}: tell me when Pro opens`, 'One e-mail when Pro opens, please.')}>E-mail me when it opens</a> : <a class="btn btn-primary" href="#">Get Pro</a>}

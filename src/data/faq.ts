@@ -5,7 +5,7 @@ const P = PRODUCT_NAME;
 const plans = FLAGS.billingLive ? '' : ' Account and Pro are launching soon.';
 
 export const homeFaq = [
-  { q: `Is ${P} free?`, a: `Yes. Try is free, needs no account and stores nothing. Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) keeps your lab; Pro ($${PRICES.pro.month}/month) adds cable tracing, tokens per kWh, the full Flaw Finder and reports.${plans}` },
+  { q: `Is ${P} free?`, a: `Yes. Try is free, needs no account and stores nothing. Account ($${PRICES.account.month}/month or $${PRICES.account.year}/year) keeps your lab; Pro ($${PRICES.pro.month}/month or $${PRICES.pro.year}/year) adds cable tracing, tokens per kWh, the full Flaw Finder and reports.${plans}` },
   { q: 'Do I need to install anything?', a: 'No. Open it in your browser and import a spreadsheet: the template, or one CSV per sheet. Only the Devices sheet is required (rack, U and model).' },
   { q: 'Is my file uploaded?', a: 'No. The spreadsheet is read in your browser and never leaves your machine. Without an account nothing is stored: no cookies, no browser storage, and no requests to third parties.' },
   { q: 'How accurate are the power and cost numbers?', a: "They are estimates: each device's typical draw from its model, adjusted by any readings you add to the Readings sheet, times your electricity price. For exact numbers, add readings from a smart plug or your UPS." },

@@ -14,7 +14,7 @@ export const TRY = {
   comingNote: 'coming this week',
 } as const;
 
-export const PRICES = { account: { month: 5, year: 50 }, pro: { month: 200 }, currency: 'USD' } as const;
+export const PRICES = { account: { month: 5, year: 50 }, pro: { month: 20, year: 200 }, currency: 'USD' } as const;
 
 export const FLAGS = {
   agentLive: false,          // agent reads real Proxmox / Home Assistant / NUT / UniFi → allows "live" wording

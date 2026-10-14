@@ -8,7 +8,7 @@ const PAGES = {
   home: ['Your homelab rack, in 3D.', 'Watts, cost per month, cables and what goes dark when one thing fails.'],
   try: ['Try it: your rack in 3D', 'Demo lab and import template. No account, nothing stored.'],
   calculator: ['Rack Density Calculator', 'Devices per rack by space, power and cooling, plus cost per month.'],
-  pricing: ['Free, $5 or $200 a month', 'Try stores nothing. Account keeps your lab. Pro explains it.'],
+  pricing: ['Free, $5 or $20 a month', 'Try stores nothing. Account keeps your lab. Pro explains it.'],
   learn: ['Homelab guides & calculators', 'Power cost, tokens per watt, 10-inch racks, Proxmox power.'],
   'tokens-per-watt': ['Tokens per watt', 'Tokens per kWh and cost per million tokens for your local AI box.'],
   '10-inch-mini-rack-planner': ['10-inch mini rack planner', 'Will it fit? Width, depth and U, plus a power budget.'],
