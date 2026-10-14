@@ -19,9 +19,9 @@ const canonical = abs(path);
 const org = {
   '@context': 'https://schema.org',
   '@graph': [
-    { '@type': 'Organization', '@id': `${SITE_URL}${BASE}/#org`, name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}`,
+    { '@type': 'Organization', '@id': `${abs('/')}#org`, name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}`,
       description: `${BRAND} makes 3D rack and data-center twins: ${PRODUCT_NAME} for the homelab and ${DC_PRODUCT_NAME} for data centers, plus free rack, power and AI-efficiency calculators. A Sensaka company.` },
-    { '@type': 'WebSite', '@id': `${SITE_URL}${BASE}/#website`, name: BRAND, url: abs('/'), publisher: { '@id': `${SITE_URL}${BASE}/#org` } },
+    { '@type': 'WebSite', '@id': `${abs('/')}#website`, name: BRAND, url: abs('/'), publisher: { '@id': `${abs('/')}#org` } },
   ],
 };
 const ogTitle = title.replace(/ \| .*$/, '');

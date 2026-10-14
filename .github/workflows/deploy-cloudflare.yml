@@ -1,0 +1,44 @@
+name: Deploy to Cloudflare Pages
+
+# Production: rack-density.com (Cloudflare Pages project "rack-density"; the planner attaches the domain and DNS).
+# Secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are set by the planner. Until they exist the job builds
+# and tests but skips the upload, so pushes stay green.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build       # site.config.mjs defaults: https://rack-density.com, base "/"
+      - name: Secrets present?
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::notice::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set yet: build verified, upload skipped."
+          fi
+      - name: Create the Pages project if it does not exist yet
+        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        run: npx --yes wrangler@4.143.1 pages project create rack-density --production-branch main || echo "project exists"
+      - name: Deploy dist to Cloudflare Pages
+        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
+        run: npx --yes wrangler@4.143.1 pages deploy dist --project-name rack-density --branch main --commit-dirty=true

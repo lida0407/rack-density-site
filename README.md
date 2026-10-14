@@ -1,7 +1,7 @@
 # rack-density-site
 
 The RACKDENSITY site: one Astro site for both product lines.
-Live (until rack-density.com moves here): https://lida0407.github.io/rack-density-site/
+Production: **https://rack-density.com** on Cloudflare Pages (project `rack-density`, preview https://rack-density.pages.dev). Until the domain is attached, the same site also builds to https://lida0407.github.io/rack-density-site/.
 
 | Route | What | Owner |
 |---|---|---|
@@ -32,12 +32,17 @@ Push to `main` → `.github/workflows/deploy.yml` → GitHub Pages.
 - **Homelab Sim:** `src/config/brand.ts` (name, contact, prices, `TRY`, flags). **DC Sim:** `src/config/dc/product.ts`. The hub reads both.
 
 ## Theme hooks (brand tokens pending)
-`<html data-edition="homelab|dc">` follows the token contract in `~/Sensaka/brand/tokens.css` (the hub has no edition: neutral base); `<body>` also carries `theme-hub`, `theme-homelab` or `theme-dc`, and the hub's product cards carry the same classes. Today each section keeps its pre-merge look (homelab/hub: `src/styles/global.css`; DC: `src/styles/dc/global.css`). `brand/tokens.css` is delivered (updatebrand.md 18:00, design system approved); the site handoff (`brand/HANDOFF-sites.md`) and page designs are still in progress. Applying it: the file becomes `src/styles/tokens.css`, imported by both layouts, with the accent set per theme class (Homelab orange, DC green), and the two global stylesheets merge into one. No restyle before the tokens exist.
+`<html data-edition="homelab|dc">` follows the token contract in `~/Sensaka/brand/tokens.css` (the hub has no edition: neutral base); `<body>` also carries `theme-hub`, `theme-homelab` or `theme-dc`, and the hub's product cards carry the same classes. Today each section keeps its pre-merge look (homelab/hub: `src/styles/global.css`; DC: `src/styles/dc/global.css`). Applied 2026-10-15: `src/styles/tokens.css` is a copy of `~/Sensaka/brand/tokens.css` (refresh with `npm run tokens`), imported by `src/styles/global.css` (hub + homelab) and `src/styles/dc/global.css` (DC). Each stylesheet keeps its own variable names as aliases of the tokens; the accent follows `data-edition` (homelab orange, DC green; the hub uses the base and sets `data-edition` per product card). Brand marks and favicons are in `public/brand/` (from `~/Sensaka/brand/logos/`). Page-level layouts from the brand canvas are not implemented yet (they wait for `brand/HANDOFF-sites.md`).
 
-## Moving to rack-density.com
-- **Cloudflare Pages** (planned; waits for Dali's go): connect this repo; build `npm run build`, output `dist`, `NODE_VERSION=24`; custom domain rack-density.com (DNS already on Cloudflare). Then set `SITE_URL = 'https://rack-density.com'`, `BASE = '/'`.
-- **Or GitHub Pages:** same constants, plus `public/CNAME` containing `rack-density.com`.
-- The old sites (`homelab-sim-site`, `dcsim-site` on GitHub Pages) redirect here once this site is verified.
+## Deploys
+| Workflow | Target | Address |
+|---|---|---|
+| `deploy-cloudflare.yml` | Cloudflare Pages project `rack-density` (wrangler, branch main) | `site.config.mjs` defaults: `https://rack-density.com`, base `/` |
+| `deploy.yml` | GitHub Pages (kept until the cutover) | env `SITE_URL=https://lida0407.github.io`, `SITE_BASE=/rack-density-site` |
+
+Secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set by the planner; without them the Cloudflare job builds and tests but skips the upload. DNS and the custom domain are attached by the planner in Cloudflare; the Lovable project is retired at cutover (`rank-sparkle-dash` stays as the calculator's archive). `public/_headers` sets long caching for `/_astro/*` on Cloudflare.
+
+Build locally for either target: `npm run build` (rack-density.com) or `SITE_URL=https://lida0407.github.io SITE_BASE=/rack-density-site npm run build`. `--force` in the build script clears Astro's content cache, so Markdown links are re-prefixed when the base changes.
 
 ## History
 Merged on 2026-10-14 from `lida0407/homelab-sim-site` (history kept) and `lida0407/dcsim-site` at commit `9fd8025` (copied with `scripts/import-dc.py`).
