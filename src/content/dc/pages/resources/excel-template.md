@@ -1,13 +1,15 @@
 ---
 title: "Free data center Excel template: racks, devices, power, cables"
-description: "One file, seven sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.1."
+description: "One file, nine sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.3."
 h1: "The Excel template that becomes a 3D twin"
 navLabel: "Excel template"
-directAnswer: "The DC Sim template is one Excel workbook with seven sheets: Devices, Cables, Racks, Power, Networks, Cooling and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
+directAnswer: "The DC Sim template is one Excel workbook with nine sheets: Devices, Cables, Rooms, Racks, Power, Networks, Cooling, CustomDevices and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
 section: "resources"
 order: 1
 ctaTop: true
-faq: [{"q": "Can I use CSV instead?", "a": "Yes: one CSV per sheet with the same columns; the importer reads comma, semicolon and tab separators."}, {"q": "What if my spreadsheet uses different column names?", "a": "Common synonyms are recognised; anything else can be renamed in the header row. The order of the columns does not matter."}, {"q": "Do I need all seven sheets?", "a": "No. Devices alone gives you the 3D room and rack power; add sheets as you have the data."}, {"q": "Is my file stored?", "a": "The import runs on the server, reads values only and builds your model. Ask us to delete the model and the file and we confirm within 30 days. See Security & data."}, {"q": "Does the template change?", "a": "Sheet and column names are a fixed contract shared with the homelab edition. New optional columns may be added, as in version 1.1; existing ones are never renamed."}]
+faq: [{"q": "Can I use CSV instead?", "a": "Yes: one CSV per sheet with the same columns; the importer reads comma, semicolon and tab separators."}, {"q": "What if my spreadsheet uses different column names?", "a": "Common synonyms are recognised; anything else can be renamed in the header row. The order of the columns does not matter."}, {"q": "Do I need all nine sheets?", "a": "No. Devices alone gives you the 3D room and rack power; add sheets as you have the data."}, {"q": "Is my file stored?", "a": "The import runs on the server, reads values only and builds your model. Ask us to delete the model and the file and we confirm within 30 days. See Security & data."}, {"q": "Does the template change?", "a": "Sheet and column names are a fixed contract shared with the homelab edition. New optional columns may be added, as in version 1.1; existing ones are never renamed."}]
+clips:
+  - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (48 s)." }
 ---
 
 ## What each sheet unlocks
@@ -16,15 +18,23 @@ faq: [{"q": "Can I use CSV instead?", "a": "Yes: one CSV per sheet with the same
 |---|---|---|---|
 | **Devices** (required) | rack, u, model | name, role, height_u, power_cords (A/B/AB), serial, owner, warranty_end, runs | 3D racks, weight, power and heat per rack, airflow, open any device, warranty flags |
 | Cables | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | Cabling view with trace, Power and Network diagrams, port checks |
-| Racks | rack, row, position | height_u, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets |
+| Rooms | room | length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | room size and lighting load (template v1.3) |
+| Racks | rack, row, position | room, height_u, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets |
 | Power | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | "what if feed A, a UPS or a breaker fails", overload checks |
 | Networks | vlan, name | purpose, subnet | VLAN colours in the Network view |
 | Cooling | name, type | capacity_kw, serves, model | cooling against heat, "what if AC-1 stops" |
+| CustomDevices | name, category | brand, model, height_u, width_in, depth_mm, weight_kg, psu_count, psu_w, idle_w, typical_w, max_w, airflow, inlet_max_c, ports | devices the catalog does not know, reusable by name (template v1.2) |
 | Readings | time, item, metric, value | | the model fitted to your real room; any monitoring tool's CSV export fits here |
 
-## New in version 1.1
+## What changed since version 1.0
 
-Additions only, so 1.0 files still import:
+Additions only, so older files still import.
+
+**Version 1.3:** an optional **Rooms** sheet (size, raised floor, lighting load, time zone) and `Racks.room` to put each rack in its room. Reading the Rooms sheet in the importer is on the roadmap <span class="badge badge-roadmap">Roadmap</span>; until then all racks sit in one room and the lighting load uses the default density.
+
+**Version 1.2:** an optional **CustomDevices** sheet for devices the catalog does not know (brand, model, size, power, ports). The importer reads it, and the model exports back to the same sheets.
+
+**Version 1.1:**
 
 - **Cables:** `phase` (L1, L2, L3) on power cables.
 - **Power:** `phase`, plus `runtime_min` and `battery_kwh` on UPS rows; the `type` column accepts `wall outlet`.

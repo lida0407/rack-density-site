@@ -6,14 +6,14 @@ directAnswer: "DC Sim holds a model of your room, not your network. The browser 
 navLabel: "Security & data"
 section: "company"
 order: 2
-faq: [{"q": "Can the twin be installed on-premises?", "a": "The same container runs on-prem and is part of the Enterprise license (later). Ask if you need it earlier."}, {"q": "What will the agent send?", "a": "When live connectors ship: metric names, values, timestamps and the host label, nothing else. A dry-run flag prints exactly what would be sent before it connects anywhere."}, {"q": "Who can see my room?", "a": "Today, during a walkthrough, only you and Sensaka. In the product: your users and the partners you invite; Sensaka support only with your permission during a ticket."}, {"q": "Do you keep my spreadsheet?", "a": "The values are turned into your model. Ask us to delete the model and the original file and we will confirm in writing within 30 days. Model export as a filled template is on the roadmap."}, {"q": "Is customer data used to improve the catalog?", "a": "Only if you choose to contribute a spec sheet, and then only the public facts from it with the source cited."}]
+faq: [{"q": "Can the twin be installed on-premises?", "a": "The same container runs on-prem and is part of the Enterprise license (later). Ask if you need it earlier."}, {"q": "What will the agent send?", "a": "When live connectors ship: metric names, values, timestamps and the host label, nothing else. A dry-run flag prints exactly what would be sent before it connects anywhere."}, {"q": "Who can see my room?", "a": "Today, during a walkthrough, only you and Sensaka. In the product: your users and the partners you invite; Sensaka support only with your permission during a ticket."}, {"q": "Do you keep my spreadsheet?", "a": "The values are turned into your model. You can download the model as a filled template, and ask us to delete the model and the original file; we confirm in writing within 30 days."}, {"q": "Is customer data used to improve the catalog?", "a": "Only if you choose to contribute a spec sheet, and then only the public facts from it with the source cited."}]
 ---
 
 ## Architecture, in five lines
 
 1. **Browser:** receives frames and diagrams; the web bundle contains no secrets and no engine code.
 2. **Server:** the simulation engine, the importer and the catalog run on the server; each customer is a separate organisation with its own sites, versions and history.
-3. **Agent (with live connectors, on the roadmap):** a single binary inside your network that polls your sources and sends metric values over one outbound WebSocket. No listening port. Credentials stay in its config file on your machine.
+3. **Agent (for Zabbix, NetBox and future connectors inside your network):** a single binary inside your network that polls your sources and sends metric values over one outbound WebSocket. No listening port. Credentials stay in its config file on your machine.
 4. **Storage:** model and readings in a Postgres-compatible database per deployment.
 5. **Editions:** the English edition is Sensaka's, hosted in the EU; the Chinese-language edition is operated by CloudSino in China. The two do not share data.
 
@@ -23,7 +23,7 @@ faq: [{"q": "Can the twin be installed on-premises?", "a": "The same container r
 - **Manuals and spec sheets you send for the catalog:** only the facts (size, weight, power, parts) are stored, with the source cited; the document itself is not kept beyond extraction unless you opt in.
 - **No training on customer data.** Your model, telemetry and files are not used to train any model, ours or a third party's. The AI design assistant (roadmap) will see only the catalog and the brief you type.
 - **Redaction (on request):** before a shared walkthrough, a case study or a support session, device names, owners and tenant names are replaced by placeholders.
-- **Delete:** deletion requests for your model and files are honoured within 30 days. Model export as a filled template is on the roadmap.
+- **Export and delete:** download your model as the filled Excel template at any time; deletion requests for your model and files are honoured within 30 days.
 
 ## Access
 

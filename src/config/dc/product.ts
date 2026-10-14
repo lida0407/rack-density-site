@@ -7,7 +7,7 @@ export const COMPANY_URL = "https://sensaka.com";
 export const CONTACT_EMAIL = "da@mustardseedmt.com";
 /** Public demo of the English build. null = not public yet; the site shows stills and offers a walkthrough. */
 export const DEMO_URL: string | null = null;
-export const TEMPLATE_VERSION = "1.1";
+export const TEMPLATE_VERSION = "1.3";
 export const TEMPLATE_FILE = "downloads/dc-import-template.xlsx";
 export const EXAMPLE_FILE = "downloads/demo-hall.xlsx";
 

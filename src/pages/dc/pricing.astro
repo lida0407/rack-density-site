@@ -13,6 +13,7 @@ const faq = [
   { q: "What does \"3 months per project\" mean for Design?", a: "A Design license covers one project for three months of active design; extensions are available if the project runs longer." },
   { q: "Can I switch from Design to Monitor?", a: "Yes. The design becomes the twin of the running room, and Design customers get the first three months of Monitor free." },
   { q: "What happens to my data if I stop?", a: "You can export the model as Excel and ask for deletion; deletion is confirmed within 30 days." },
+  { q: "Is the AI design assistant extra?", a: "No. When it ships it is included in the Design license at no extra cost, and Design customers get it first as early access." },
   { q: "Do partners get a discount on Design?", a: "Yes, a partner price per project under the partner agreement, so the twin can be in the proposal before the customer buys." },
   { q: "How does this compare with typical DCIM pricing?", a: "Typical DCIM pricing starts at about $125 per month and runs $230–330 per rack per year. Monitor is $5 per rack per month with a $49 minimum, and Design is one-time per project. DC Sim sits on top of DCIM and monitoring rather than replacing them." },
 ];
@@ -38,16 +39,16 @@ const faq = [
         <ul>
           {PRICES.design.map((t) => <li><strong>${t.price.toLocaleString("en-US")}</strong> {t.label}</li>)}
         </ul>
-        <p>Design mode, all checks, N−1 audit, versions, full what-if, Excel export, hand-off to Monitor with three months free.</p>
-        <p class="small">AI design assistant <Badge kind="roadmap" /> early access for Design customers.</p>
+        <p>Design mode with the device picker and custom devices, all checks, N−1 audit, versions, full what-if, Excel export of the model, hand-off to Monitor with three months free.</p>
+        <p class="small">AI design assistant <Badge kind="roadmap" /> included at no extra cost when it ships, early access for Design customers.</p>
         <a class="btn btn-primary" href={mailto("DC Sim Design license")}>Ask about Design</a>
       </div>
       <div class="card">
         <h2 style="margin-top:0">Monitor</h2>
         <p class="muted">For operators of a running room. Monthly, cancel any time.</p>
         <p class="price">${PRICES.monitorPerRack} <small>per rack per month, minimum ${PRICES.monitorMin}</small></p>
-        <p>The twin of your running room: all nine layers, what-if and scenarios, history and replay, reports, token layer, five users. Readings arrive as sheets exported from your monitoring today.</p>
-        <p class="small">Live connectors (Zabbix and NetBox first) <Badge kind="roadmap" /></p>
+        <p>The twin of your running room: all nine layers, what-if and scenarios, history and replay, reports, token layer, five users. Zabbix and NetBox connect directly; other tools come in as sheet exports.</p>
+        <p class="small">Zabbix and NetBox connectors <Badge kind="available" /> · other live connectors <Badge kind="roadmap" /></p>
         <a class="btn btn-primary" href={mailto("DC Sim Monitor")}>Ask about Monitor</a>
       </div>
       <div class="card">
@@ -90,7 +91,7 @@ const faq = [
       <h2>Not included (yet)</h2>
       <ul>
         <li>CFD-grade airflow: not offered. Thermal values come from a zonal model and are labelled estimated.</li>
-                <li>AI design assistant <Badge kind="roadmap" />, live connectors <Badge kind="roadmap" />, partner multi-customer console <Badge kind="roadmap" />.</li>
+                <li>AI design assistant <Badge kind="roadmap" />, live connectors beyond Zabbix and NetBox <Badge kind="roadmap" />, partner multi-customer console <Badge kind="roadmap" />.</li>
         <li>Self-serve accounts and card checkout <Badge kind="roadmap" />; on-prem packaging (Enterprise, later).</li>
       </ul>
     </section>
