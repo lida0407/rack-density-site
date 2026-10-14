@@ -6,7 +6,7 @@ Production: **https://rack-density.com** on Cloudflare Pages (project `rack-dens
 | Route | What | Owner |
 |---|---|---|
 | `/` | Hub: both products + the Rack Density Calculator (the domain's original page) | homelab marketing |
-| `/homelab/…` | Homelab Sim: home, try, pricing, learn (+ calculators), changelog (+ RSS) | homelab marketing |
+| `/homelab/…` | Homelab Twin: home, try, pricing, learn (+ calculators), changelog (+ RSS) | homelab marketing |
 | `/dc/…` | DC Sim: home, product, integrations, pricing, resources, guides, partners, legal | **DC marketing** |
 | `/privacy/`, `/404`, `robots.txt`, `sitemap-index.xml`, `llms.txt` | site-wide | homelab marketing (llms.txt embeds `src/pages/dc/_llms.ts`) |
 
@@ -29,7 +29,7 @@ Push to `main` → `.github/workflows/deploy.yml` → GitHub Pages.
 
 ## One place for each fact
 - **Where the site lives:** `site.config.mjs` (`SITE_URL`, `BASE`).
-- **Homelab Sim:** `src/config/brand.ts` (name, contact, prices, `TRY`, flags). **DC Sim:** `src/config/dc/product.ts`. The hub reads both.
+- **Homelab Twin:** `src/config/brand.ts` (name, contact, prices, `TRY`, flags). **DC Sim:** `src/config/dc/product.ts`. The hub reads both.
 
 ## Theme hooks (brand tokens pending)
 `<html data-edition="homelab|dc">` follows the token contract in `~/Sensaka/brand/tokens.css` (the hub has no edition: neutral base); `<body>` also carries `theme-hub`, `theme-homelab` or `theme-dc`, and the hub's product cards carry the same classes. Today each section keeps its pre-merge look (homelab/hub: `src/styles/global.css`; DC: `src/styles/dc/global.css`). Applied 2026-10-15: `src/styles/tokens.css` is a copy of `~/Sensaka/brand/tokens.css` (refresh with `npm run tokens`), imported by `src/styles/global.css` (hub + homelab) and `src/styles/dc/global.css` (DC). Each stylesheet keeps its own variable names as aliases of the tokens; the accent follows `data-edition` (homelab orange, DC green; the hub uses the base and sets `data-edition` per product card). Brand marks and favicons are in `public/brand/` (from `~/Sensaka/brand/logos/`). Page-level layouts from the brand canvas are not implemented yet (they wait for `brand/HANDOFF-sites.md`).

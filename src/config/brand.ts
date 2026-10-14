@@ -2,7 +2,7 @@
 // Flip a flag only when ~/Sensaka/share/updatehl.md logs the feature as done AND deployed (see CLAIMS.md in the plan repo).
 export { SITE_URL, BASE } from '../../site.config.mjs';
 
-export const PRODUCT_NAME = 'Homelab Sim';      // working name — change here only
+export const PRODUCT_NAME = 'Homelab Twin';     // renamed from Homelab Sim 2026-10-15 — change here only
 export const BRAND = 'RACKDENSITY';
 export const PARTNER = { name: 'Sensaka', url: 'https://sensaka.com' } as const;
 export const CONTACT_EMAIL = 'da@mustardseedmt.com';

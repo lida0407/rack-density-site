@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Pull the Learn articles from the plan repo (private dcsim-plan, ~/Sensaka/marketing/homelab-site/learn) into MDX for this site.
 // Run locally: npm run sync  (CI never runs this — the generated .mdx files are committed).
-// - "Homelab Sim" and {{PRODUCT_NAME}} → {PRODUCT_NAME} (the constant in src/config/brand.ts)
+// - "Homelab Twin", the old "Homelab Sim" and {{PRODUCT_NAME}} → {PRODUCT_NAME} (the constant in src/config/brand.ts)
 // - {{CONTACT_EMAIL}} → a mailto link from the constant
 // - a line starting with `<Calculator />` → the live component
 // - internal notes (blockquotes starting "> Table goes here") → a short public note
@@ -48,7 +48,7 @@ for (const file of readdirSync(SRC).filter((f) => f.endsWith('.md') && f !== 'CO
     outLines.push(line);
   }
   let mdx = outLines.join('\n')
-    .replace(/\{\{PRODUCT_NAME\}\}|Homelab Sim/g, '{PRODUCT_NAME}')
+    .replace(/\{\{PRODUCT_NAME\}\}|Homelab (Sim|Twin)/g, '{PRODUCT_NAME}')
     .replace(/\{\{CONTACT_EMAIL\}\}/g, '<a href={MAILTO}>{CONTACT_EMAIL}</a>');
   // MDX safety: flag raw < or { outside code spans/blocks that we didn't generate
   let inFence = false;

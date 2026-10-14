@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { dcCollections } from './content/dc/collections';
 
-// Homelab Sim (owned by homelab marketing)
+// Homelab Twin (owned by homelab marketing)
 const learn = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/homelab/learn' }),
   schema: z.object({
