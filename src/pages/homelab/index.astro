@@ -6,7 +6,7 @@ import Base from '../../layouts/Base.astro';
 import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
 import TryButton from '../../components/TryButton.astro';
-import HeroVideo from '../../components/site/HeroVideo.astro';
+import HeroStage from '../../components/site/HeroStage.astro';
 import { u, abs, mailto } from '../../lib/url';
 import { PRODUCT_NAME, PRICES, FLAGS, NOTIFY } from '../../config/brand';
 import { homeFaq } from '../../data/faq';
@@ -50,13 +50,12 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
         <div class="btn-row"><TryButton walkthrough /></div>
         <p class="note">Try it free — coming when we open the doors; <a href={mailto(NOTIFY.subject, NOTIFY.body)}>get notified</a>. Your file is read in your browser and never uploaded.</p>
       </div>
-      <figure class="shot hero-shot">
-        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>Basement Lab</b><span class="only-dark">· lights off</span><span class="sp"></span><span class="cs-pin cs-pin--warn"><span class="cs-shape cs-shape--warn"></span>Disk 7 · SMART</span></div>
-        <HeroVideo name="hero-homelab" dir="/homelab/media" dark={heroDark} light={heroLight} widths={heroImg.widths} sizes={heroImg.sizes}
-          alt="The demo lab in 3D with the room lights off: device LEDs and screens glow, the readout shows 1.02 kW and €165 a month"
-          altLight="The demo lab in 3D with the room lights on, in a bright office" />
+      <HeroStage edition="homelab" label="Basement Lab" dark={heroDark} light={heroLight} sizes={heroImg.sizes}
+        alt="The demo lab in 3D with the room lights off: device LEDs and screens glow, the readout shows 1.02 kW and €165 a month"
+        altLight="The demo lab in 3D with the room lights on, in a bright office">
+        <span slot="pin" class="cs-pin cs-pin--warn"><span class="cs-shape cs-shape--warn"></span>Disk 7 · SMART</span>
         <figcaption class="readouts"><span>1.02 kW <i>now</i></span><span>€165 <i>/ month</i></span><span>18 min <i>on UPS</i></span><span><span class="cs-shape cs-shape--warn"></span>16 issues found</span><span class="dim">demo · simulated data</span></figcaption>
-      </figure>
+      </HeroStage>
     </div>
   </section>
 
@@ -196,7 +195,6 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
   @media (min-width: 1000px) { .hero-grid { grid-template-columns: 1fr 1.2fr; } .hero { padding: 64px 0 48px; } }
   .hero-copy { background: var(--bg-000); padding: 8px 0; }
   .note { font: 400 12px/18px var(--font-mono); color: var(--ink-dim); margin-top: 14px; }
-  .hero-shot .bar .sp { flex: 1; }
   .readouts { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 13px/18px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
   .readouts i { font-style: normal; color: var(--ink-muted); }
   .readouts span { display: inline-flex; align-items: center; gap: 6px; }

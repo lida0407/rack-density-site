@@ -1,0 +1,124 @@
+---
+// Interactive hero (marketing/HERO-INTERACTIVE.md): recorded state clips + real DOM controls, never the app itself.
+// Clips via `npm run media`: public/<ed>/media/state-<ed>-<view>-<on|off>.webm|.mp4 (+ -power-fail-*), posters in
+// src/assets/video/. Until every view has both lights states, it renders the 30 s hero loop (HeroVideo) instead.
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import fs from 'node:fs';
+import nodePath from 'node:path';
+import HeroVideo from './HeroVideo.astro';
+import { u } from '../../lib/url';
+
+interface Props { edition: 'homelab' | 'dc'; label: string; dark: ImageMetadata; light: ImageMetadata; alt: string; altLight: string; sizes?: string }
+const { edition, label, dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
+const VIEWS = edition === 'homelab'
+  ? [['overview', 'Overview'], ['power', 'Power'], ['cables', 'Cables'], ['tokens', 'Tokens']]
+  : [['overview', 'Overview'], ['power', 'Power'], ['network', 'Network'], ['cabling', 'Cabling'], ['tokens', 'Tokens']];
+const dir = `/${edition}/media`;
+const posters = import.meta.glob<{ default: ImageMetadata }>('/src/assets/video/*.jpg', { eager: true });
+const has = (f: string) => fs.existsSync(nodePath.join(process.cwd(), 'public', dir, f));
+const clip = async (key: string, still: ImageMetadata) => {
+  const n = `state-${edition}-${key}`, p = posters[`/src/assets/video/${n}.jpg`]?.default ?? still;
+  return { webm: has(`${n}.webm`) ? u(`${dir}/${n}.webm`) : '', mp4: has(`${n}.mp4`) ? u(`${dir}/${n}.mp4`) : '', poster: (await getImage({ src: p, width: 1280, format: 'webp', quality: 72 })).src, img: p };
+};
+const map: Record<string, Awaited<ReturnType<typeof clip>>> = {};
+for (const [v] of VIEWS) for (const l of ['on', 'off']) map[`${v}-${l}`] = await clip(`${v}-${l}`, l === 'on' ? light : dark);
+const fails = await Promise.all(['on', 'off'].map((l) => clip(`power-fail-${l}`, l === 'on' ? light : dark)));
+if (fails.every((c) => c.webm || c.mp4)) [map['fail-on'], map['fail-off']] = fails;
+const live = VIEWS.every(([v]) => ['on', 'off'].every((l) => map[`${v}-${l}`].webm || map[`${v}-${l}`].mp4));
+const sources = Object.fromEntries(Object.entries(map).map(([k, c]) => [k, { webm: c.webm, mp4: c.mp4, poster: c.poster }]));
+const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality: 72 };
+---
+<figure class="shot hs" data-hs={live ? JSON.stringify(sources) : undefined}>
+  <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{label}</b>
+    {live ? (<>
+      <details class="hs-menu"><summary aria-label="Choose a view">View: <span data-hs-view>Overview</span></summary>
+        <div class="hs-list">{VIEWS.map(([v, t]) => <button type="button" data-view={v} aria-pressed={v === 'overview' ? 'true' : 'false'}>{t}</button>)}</div></details>
+      <span class="hs-lights" role="group" aria-label="Lights">Lights <button type="button" data-lights="on" aria-pressed="false">On</button><button type="button" data-lights="off" aria-pressed="true">Off</button></span>
+      {map['fail-on'] && <button type="button" class="hs-fail" data-fail hidden>Fail UPS-A</button>}
+    </>) : <><span class="sp"></span><slot name="pin" /></>}
+  </div>
+  {live ? (
+    <div class="hs-stage">
+      <Image src={map['overview-off'].img} class="hs-img only-dark" alt={alt} loading="eager" fetchpriority="high" decoding="sync" {...img} />
+      <Image src={map['overview-on'].img} class="hs-img only-light" alt={altLight} loading="lazy" {...img} />
+      <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
+      <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
+    </div>
+  ) : <HeroVideo name={`hero-${edition}`} dir={dir} dark={dark} light={light} alt={alt} altLight={altLight} widths={img.widths} sizes={sizes} />}
+  <slot />
+  {live && <p class="hs-note">Recorded from the app. Every control here swaps a clip.</p>}
+  {live && <p class="sr-only" aria-live="polite" data-hs-say></p>}
+</figure>
+<style>
+  .hs .bar { flex-wrap: wrap; row-gap: 6px; }
+  .hs .sp { flex: 1; }
+  .hs-menu { position: relative; margin-left: auto; }
+  .hs-menu summary, .hs-lights button, .hs-fail { cursor: pointer; min-height: 30px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: inherit; letter-spacing: inherit; display: inline-flex; align-items: center; gap: 6px; }
+  .hs-menu summary { list-style: none; } .hs-menu summary::-webkit-details-marker { display: none; }
+  .hs-menu summary::after { content: '▾'; color: var(--ink-muted); }
+  .hs-list { position: absolute; z-index: 5; top: calc(100% + 4px); right: 0; min-width: 160px; display: grid; padding: 4px; background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); }
+  .hs-list button { text-align: left; padding: 9px 10px; border: 0; background: none; color: var(--ink); font: inherit; letter-spacing: inherit; cursor: pointer; }
+  .hs-list button[aria-pressed='true'] { background: var(--accent-soft); box-shadow: inset 2px 0 0 var(--accent); }
+  .hs-lights { display: inline-flex; align-items: center; gap: 4px; color: var(--ink-muted); }
+  .hs-lights button[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .hs-fail { border-color: var(--crit); color: var(--crit); }
+  .hs-fail:disabled { opacity: .6; cursor: default; }
+  .hs-fail[hidden] { display: none; }
+  .hs button:focus-visible, .hs summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .hs-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #000; }
+  .hs-stage :global(.hs-img), .hs-v { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hs-v { opacity: 0; transition: opacity .25s ease; }
+  .hs-v.front { opacity: 1; }
+  .hs-note { margin: 0; padding: 6px 12px; border-top: 1px solid var(--line); background: var(--bg-100); font: 400 11px/16px var(--font-mono); color: var(--ink-dim); }
+  @media (prefers-reduced-motion: reduce) { .hs-v { transition: none; } }
+</style>
+<script>
+  type Src = { webm: string; mp4: string; poster: string };
+  document.querySelectorAll<HTMLElement>('.hs[data-hs]').forEach((el) => {
+    const S: Record<string, Src> = JSON.parse(el.dataset.hs!), root = document.documentElement;
+    const [a, b] = [...el.querySelectorAll<HTMLVideoElement>('.hs-v')], imgs = [...el.querySelectorAll<HTMLImageElement>('.hs-img')];
+    const conn = (navigator as any).connection, still = () => matchMedia('(prefers-reduced-motion: reduce)').matches || !!conn?.saveData;
+    const fail = el.querySelector<HTMLButtonElement>('[data-fail]'), say = el.querySelector('[data-hs-say]')!;
+    let front = a, back = b, view = 'overview', lights = root.dataset.theme === 'light' ? 'on' : 'off', chosen = false, failing = false, cur = '';
+    const url = (s?: Src) => (s ? (s.webm && a.canPlayType('video/webm; codecs="vp9"') ? s.webm : s.mp4 || s.webm) : '');
+    const key = () => (failing ? `fail-${lights}` : `${view}-${lights}`);
+    const orig = imgs.map((i) => [i.src, i.srcset]); // [overview-off (dark), overview-on (bright)] as rendered, responsive
+    const poster = (k: string) => { const d = ['overview-off', 'overview-on'].indexOf(k); imgs.forEach((i) => { i.srcset = d < 0 ? '' : orig[d][1]; i.src = d < 0 ? S[k].poster : orig[d][0]; }); };
+    const prefetch = (k: string) => { const s = url(S[k]); if (!still() && s && back.paused && back.getAttribute('src') !== s) { back.preload = 'auto'; back.src = s; } };
+    const show = () => {
+      const k = key(); if (k === cur) return; cur = k;
+      el.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.view === view)));
+      el.querySelectorAll<HTMLButtonElement>('[data-lights]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.lights === lights)));
+      el.querySelector('[data-hs-view]')!.textContent = el.querySelector(`[data-view="${view}"]`)!.textContent;
+      if (fail) { fail.hidden = view !== 'power'; fail.textContent = failing && still() ? 'Restore' : 'Fail UPS-A'; fail.disabled = failing && !still(); }
+      say.textContent = `${el.querySelector(`[data-view="${view}"]`)!.textContent} view, lights ${lights}${failing ? ', UPS-A failed' : ''}`;
+      if (still()) { [a, b].forEach((v) => { v.pause(); v.classList.remove('front'); }); return poster(k); }
+      const s = url(S[k]); if (back.getAttribute('src') !== s) back.src = s;
+      back.loop = !failing; back.onended = null; back.currentTime = 0;
+      back.play().then(() => {
+        if (cur !== k) return;
+        back.classList.add('front'); front.classList.remove('front');
+        const old = front; setTimeout(() => old.pause(), 260); [front, back] = [back, front];
+        if (failing) front.onended = () => { failing = false; show(); };
+      }).catch(() => poster(k));
+    };
+    el.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((x) => {
+      x.addEventListener('click', () => { view = x.dataset.view!; failing = false; x.closest('details')!.open = false; show(); });
+      ['pointerenter', 'focus'].forEach((e) => x.addEventListener(e, () => prefetch(`${x.dataset.view}-${lights}`)));
+    });
+    el.querySelectorAll<HTMLButtonElement>('[data-lights]').forEach((x) => {
+      x.addEventListener('click', () => { lights = x.dataset.lights!; chosen = true; show(); });
+      ['pointerenter', 'focus'].forEach((e) => x.addEventListener(e, () => prefetch(failing ? `fail-${x.dataset.lights}` : `${view}-${x.dataset.lights}`)));
+    });
+    fail?.addEventListener('click', () => { failing = !(failing && still()); show(); });
+    fail && ['pointerenter', 'focus'].forEach((e) => fail.addEventListener(e, () => prefetch(`fail-${lights}`)));
+    const menu = el.querySelector('details')!;
+    document.addEventListener('click', (e) => { if (menu.open && !menu.contains(e.target as Node)) menu.open = false; });
+    menu.addEventListener('keydown', (e) => { if ((e as KeyboardEvent).key === 'Escape') { (e.currentTarget as HTMLDetailsElement).open = false; (e.currentTarget as HTMLElement).querySelector('summary')!.focus(); } });
+    new MutationObserver(() => { if (!chosen) { lights = root.dataset.theme === 'light' ? 'on' : 'off'; show(); } }).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    new IntersectionObserver(([e]) => { if (!still()) e.isIntersecting ? front.play().catch(() => {}) : front.pause(); }).observe(el);
+    const start = () => show();
+    if (document.readyState === 'complete') start(); else addEventListener('load', start, { once: true });
+  });
+</script>
