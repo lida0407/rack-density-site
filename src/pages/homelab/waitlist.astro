@@ -1,0 +1,89 @@
+---
+// Waitlist (marketing/WAITLIST.md §1). /waitlist 301s here (public/_redirects); ?src= and ?edition= are kept.
+// The form posts natively to the Pages Function (works if this script fails); with JS it posts JSON and answers inline.
+import Base from '../../layouts/Base.astro';
+import { u, mailto } from '../../lib/url';
+import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY } from '../../config/brand';
+---
+<Base title={`Join the ${PRODUCT_NAME} Waitlist | RACKDENSITY`}
+  description={`Get in first when the self-serve ${PRODUCT_NAME} Try opens: one e-mail, no spam, nothing else stored.`}
+  path="/homelab/waitlist" ogImage="/homelab/og/try.png" section="homelab" crumbs={[{ name: 'Waitlist' }]}>
+  <section class="section-tight">
+    <div class="wrap narrow wl">
+      <p class="eyebrow">Waitlist · self-serve Try</p>
+      <h1>Get in first when Try opens</h1>
+      <p class="lead">The self-serve Try opens to the waitlist first. One e-mail when it does, no spam, nothing else stored.</p>
+      {WAITLIST.live ? (
+        <form class="card form" method="post" action={WAITLIST.api} data-wl>
+          <label class="field">E-mail <input type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" /></label>
+          <label class="field">What's in your rack? <span class="hint">optional, 120 characters</span>
+            <input type="text" name="note" maxlength="120" placeholder="e.g. 3 mini PCs, a NAS, a UDM-Pro, 10-inch rack" /></label>
+          <fieldset class="field ed"><legend>For</legend>
+            <label><input type="radio" name="edition" value="homelab" checked /> {PRODUCT_NAME}</label>
+            <label><input type="radio" name="edition" value="dc" /> {DC_PRODUCT_NAME}</label>
+          </fieldset>
+          <input type="hidden" name="src" value="site" />
+          <div class="cf-turnstile" data-sitekey={WAITLIST.siteKey} data-theme="dark" data-size="flexible"></div>
+          <button class="btn btn-primary" type="submit">Join the waitlist</button>
+          <p class="small muted" data-msg aria-live="polite"></p>
+          <p class="small muted">We keep your e-mail, the product you picked, your note and where you came from (<code>?src</code>), plus a one-way hash of your IP address against spam. No tracking, no third-party scripts besides the Cloudflare bot check. <a href={u('/privacy')}>Privacy</a>.</p>
+        </form>
+      ) : (
+        <div class="card form">
+          <p>The waitlist form opens in a moment. Until then, e-mail us and we add you by hand.</p>
+          <a class="btn btn-primary" href={mailto(NOTIFY.subject, NOTIFY.body)}>E-mail me when Try opens</a>
+        </div>
+      )}
+      <p class="small muted count" data-count></p>
+      <p class="small muted">Prefer to see it now? <a href={u('/homelab/try')}>Watch the clips</a> or request a walkthrough from the See it page.</p>
+    </div>
+  </section>
+  {WAITLIST.live && <script is:inline>
+    document.querySelectorAll('.cf-turnstile').forEach(function (e) { e.dataset.theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'; });
+  </script>}
+  {WAITLIST.live && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Base>
+<style>
+  .wl h1 { margin-bottom: .3em; }
+  .form { display: grid; gap: 14px; margin: 22px 0 12px; }
+  .ed { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .ed legend { padding: 0; margin-bottom: 6px; }
+  .ed label { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; text-transform: none; letter-spacing: 0; font: 400 1rem/1.4 var(--font-sans, inherit); color: var(--ink); cursor: pointer; }
+  .ed input[type='radio'] { width: 18px; height: 18px; min-height: 0; margin: 0; padding: 0; flex: none; accent-color: var(--accent); }
+  .form .btn { justify-self: start; }
+  [data-msg]:empty, [data-count]:empty { display: none; }
+  [data-msg].ok { color: var(--ok); font-weight: 600; font-size: 1rem; }
+  [data-msg].err { color: var(--crit); }
+</style>
+<script>
+  import { WAITLIST } from '../../config/brand';
+  const f = document.querySelector<HTMLFormElement>('[data-wl]');
+  const q = new URLSearchParams(location.search);
+  const countEl = document.querySelector<HTMLElement>('[data-count]')!;
+  const showCount = () => fetch(`${WAITLIST.api}/count`).then((r) => r.json()).then(({ count }) => { if (count > 0) countEl.textContent = `${count.toLocaleString('en-US')} ${count === 1 ? 'person is' : 'people are'} on the list.`; }).catch(() => {});
+  if (f) {
+    const src = q.get('src'); if (src && /^[a-z0-9_-]{1,24}$/i.test(src)) (f.elements.namedItem('src') as HTMLInputElement).value = src.toLowerCase();
+    if (q.get('edition') === 'dc') (f.querySelector('[value="dc"]') as HTMLInputElement).checked = true;
+    const msg = f.querySelector<HTMLElement>('[data-msg]')!;
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(f).entries()) as Record<string, string>;
+      const btn = f.querySelector('button')!; btn.disabled = true; msg.className = ''; msg.textContent = 'Sending…';
+      try {
+        const r = await fetch(WAITLIST.api, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: data.email, note: data.note, edition: data.edition, src: data.src, turnstile: data['cf-turnstile-response'] }) });
+        const j = await r.json();
+        if (j.ok) {
+          msg.className = 'ok';
+          msg.textContent = `${j.already ? "You're already on the list" : "You're on the list"} — ${j.position} ${j.position === 1 ? 'person' : 'people'} ahead of you.`;
+          f.querySelectorAll('input, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+          showCount(); return;
+        }
+        msg.className = 'err';
+        msg.textContent = { email: 'That e-mail address does not look right.', turnstile: 'The anti-bot check did not pass. Try again.', rate: 'Too many tries from this connection. Try again in an hour.' }[j.error as string] ?? 'The waitlist is not reachable right now. E-mail us instead.';
+      } catch { msg.className = 'err'; msg.textContent = 'The waitlist is not reachable right now. E-mail us instead.'; }
+      btn.disabled = false; (window as any).turnstile?.reset();
+    });
+    showCount();
+  }
+</script>

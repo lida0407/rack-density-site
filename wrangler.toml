@@ -1,0 +1,13 @@
+# Cloudflare Pages project "rack-density" (deployed by .github/workflows/deploy-cloudflare.yml).
+# With this file present, bindings are configured HERE, not in the dashboard (marketing/WAITLIST.md §2).
+name = "rack-density"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+# Waitlist D1 — uncomment once the planner has created the database and logged its id:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "rack-density-waitlist"
+# database_id = "<id from: npx wrangler d1 list>"
+
+# Secrets (never in this file): TURNSTILE_SECRET, optional IP_SALT — `npx wrangler pages secret put TURNSTILE_SECRET --project-name rack-density`.

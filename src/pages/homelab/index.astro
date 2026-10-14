@@ -7,8 +7,8 @@ import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
 import TryButton from '../../components/TryButton.astro';
 import HeroStage from '../../components/site/HeroStage.astro';
-import { u, abs, mailto } from '../../lib/url';
-import { PRODUCT_NAME, PRICES, FLAGS, NOTIFY } from '../../config/brand';
+import { u, abs, notifyHref } from '../../lib/url';
+import { PRODUCT_NAME, PRICES, FLAGS, WAITLIST } from '../../config/brand';
 import { homeFaq } from '../../data/faq';
 import heroDark from '../../assets/shots/hero-lightsoff.png';
 import heroLight from '../../assets/shots/hero-office.png';
@@ -48,7 +48,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
         <h1>Your homelab rack, in&nbsp;3D.</h1>
         <p class="lead">Drop in a spreadsheet of your gear. See what every device draws and costs, what's plugged where, and what goes dark when one thing fails.</p>
         <div class="btn-row"><TryButton walkthrough /></div>
-        <p class="note"><span class="run"><span class="cs-shape cs-shape--off" aria-hidden="true"></span>Runs in your browser · no data leaves it</span>Try it free — coming when we open the doors; <a href={mailto(NOTIFY.subject, NOTIFY.body)}>get notified</a>. Your file is read in your browser and never uploaded.</p>
+        <p class="note"><span class="run"><span class="cs-shape cs-shape--off" aria-hidden="true"></span>Runs in your browser · no data leaves it</span>Try it free — coming when we open the doors; <a href={notifyHref('home')}>{WAITLIST.live ? 'join the waitlist' : 'get notified'}</a>. Your file is read in your browser and never uploaded.</p>
       </div>
       <HeroStage edition="homelab" label="Basement Lab" dark={heroDark} light={heroLight} sizes={heroImg.sizes}
         alt="The demo lab in 3D with the room lights off: device LEDs and screens glow, the readout shows 1.02 kW and €165 a month"

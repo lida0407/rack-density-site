@@ -1,5 +1,5 @@
 import { SITE_URL } from '../../site.config.mjs';
-import { CONTACT_EMAIL } from '../config/brand';
+import { CONTACT_EMAIL, NOTIFY, WAITLIST } from '../config/brand';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -16,3 +16,6 @@ export const abs = (path: string): string => `${SITE_URL}${u(path)}`;
 
 export const mailto = (subject: string, body = ''): string =>
   `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
+
+/** Notify-me CTA: the waitlist page once it is live, the mailto until then. */
+export const notifyHref = (src = 'site'): string => (WAITLIST.live ? `${u('/homelab/waitlist')}?src=${src}` : mailto(NOTIFY.subject, NOTIFY.body));

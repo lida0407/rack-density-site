@@ -4,8 +4,8 @@
 import Base from '../../layouts/Base.astro';
 import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
-import { u, mailto } from '../../lib/url';
-import { PRODUCT_NAME, TRY, WALKTHROUGH, NOTIFY, FLAGS, PRICES } from '../../config/brand';
+import { u, mailto, notifyHref } from '../../lib/url';
+import { PRODUCT_NAME, TRY, WALKTHROUGH, WAITLIST, FLAGS, PRICES } from '../../config/brand';
 import { tryFaq } from '../../data/faq';
 import heroDark from '../../assets/shots/hero-lightsoff.png';
 import heroLight from '../../assets/shots/hero-office.png';
@@ -26,7 +26,7 @@ const half = '(min-width: 760px) 560px, 100vw';
         <p class="lead">The app isn't open to the public yet. Watch it here, or book a short walkthrough and we show it to you on a call.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href={mailto(WALKTHROUGH.subject, WALKTHROUGH.body)}>Request a walkthrough</a>
-          <a class="btn btn-ghost" href={mailto(NOTIFY.subject, NOTIFY.body)}>E-mail me when Try opens</a>
+          <a class="btn btn-ghost" href={notifyHref('seeit')}>{WAITLIST.live ? 'Join the waitlist' : 'E-mail me when Try opens'}</a>
         </div>
       </div>
       <div class="cs-banner"><span class="cs-shape cs-shape--off"></span><span>When Try opens: nothing is saved, close the tab and it's gone. <b>${PRICES.account.month}/month keeps it.</b></span></div>

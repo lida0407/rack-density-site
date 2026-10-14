@@ -15,9 +15,15 @@ import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO } from '../config/brand';
       </ul>
       <h2>This website</h2>
       <ul>
-        <li>No analytics, no cookies, no ads and no third-party scripts. The site is hosted on GitHub Pages; GitHub receives your IP address to deliver the pages, as described in GitHub's privacy statement.</li>
-        <li>The calculators run in your browser. If you pick a currency or an electricity price, your browser remembers it on your device. We don't receive it.</li>
+        <li>No analytics, no cookies, no ads and no third-party scripts (one exception: Cloudflare's bot check on the waitlist form, below). The site is hosted on Cloudflare Pages; Cloudflare receives your IP address to deliver and protect the pages, as described in Cloudflare's privacy policy.</li>
+        <li>The calculators run in your browser. If you pick a currency, an electricity price, calculator inputs or the theme (Auto, Dark, Bright), your browser remembers it on your device. We don't receive it.</li>
         <li>If you e-mail us to hear when Account and Pro open, we use your address for that one reply and then delete it.</li>
+      </ul>
+      <h2>The waitlist</h2>
+      <ul>
+        <li>If you join the waitlist we store your e-mail address, the product you picked, the optional note about your rack, where you came from (the <code>?src</code> in the link, for example <code>yt</code>) and your browser's user-agent string, plus a one-way hash of your IP address that only serves to limit spam (five tries per hour).</li>
+        <li>A Cloudflare Turnstile check on the form tells people from bots. It runs Cloudflare's script on that page only.</li>
+        <li>We use the address for one e-mail when the self-serve Try opens. We don't share it and we don't add it to any other list. Ask us at <a href={MAILTO}>{CONTACT_EMAIL}</a> and we delete it.</li>
       </ul>
       <h2>With an Account (when available)</h2>
       <ul>
@@ -26,7 +32,7 @@ import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO } from '../config/brand';
       </ul>
       <h2>Who we are</h2>
       <p>{PRODUCT_NAME} is made by {BRAND} in partnership with Sensaka. Questions: <a href={MAILTO}>{CONTACT_EMAIL}</a>.</p>
-      <p class="small muted">Last updated: 14 October 2026</p>
+      <p class="small muted">Last updated: 15 October 2026</p>
     </div>
   </section>
 </Base>
