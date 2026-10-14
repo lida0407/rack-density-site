@@ -7,7 +7,11 @@ import Clip from "../../components/dc/Clip.astro";
 import Faq from "../../components/dc/Faq.astro";
 import ToolChips from "../../components/dc/ToolChips.astro";
 import { PRODUCT_NAME, COMPANY, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, TEMPLATE_VERSION, PRICES, mailto } from "../../config/dc/product";
-import { faqLd, softwareLd } from "../../lib/dc/schema";
+import { faqLd, softwareLd, videoLd } from "../../lib/dc/schema";
+import { HERO_CLIP, isoDuration } from "../../config/dc/clips";
+import { getImage } from "astro:assets";
+import heroPoster from "../../assets/video/hero-dc-dark.jpg";
+import { SITE_URL } from "../../../site.config.mjs";
 import { u } from "../../lib/dc/url";
 import heroDark from "../../assets/dc/shots/hero-lightsoff-crop.png";
 import heroLight from "../../assets/dc/shots/hero-lit-crop.png";
@@ -39,12 +43,22 @@ const guides = [
 const views = ["overview", "power", "network", "cabling", "tokens"];
 const stageLive = views.every((v) => ["on", "off"].every((l) => ["webm", "mp4"].some((e) => existsSync(`public/dc/media/state-dc-${v}-${l}.${e}`))));
 const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-dc-dark.${e}`));
+const heroThumb = await getImage({ src: heroPoster, width: 1280, format: "jpg", quality: 78 });
+const heroLd = videoLd({
+  name: HERO_CLIP.title,
+  description: "A 30-second tour of DC Sim recorded from the app on the demo hall: the View menu, a UPS failure in the power chain, network utilisation, tokens per kWh and the lights-off view.",
+  contentUrl: new URL(u("media/hero-dc-dark.mp4"), SITE_URL).href,
+  thumbnailUrl: new URL(heroThumb.src, SITE_URL).href,
+  uploadDate: HERO_CLIP.uploadDate,
+  duration: isoDuration(HERO_CLIP.seconds),
+  transcript: HERO_CLIP.transcript.join(" "),
+});
 ---
 <Base
   title={`${PRODUCT_NAME} — Your data center, simulated`}
   description="Turn one Excel file into a 3D twin of your data center. Fail any UPS, feed, switch or cooler and see what goes dark. Built to sit on top of the monitoring you run."
   path=""
-  jsonLd={[softwareLd(), ...faqLd(faq)]}
+  jsonLd={[softwareLd(), heroLd, ...faqLd(faq)]}
 >
   <div class="dch">
     <section class="dch-hero">

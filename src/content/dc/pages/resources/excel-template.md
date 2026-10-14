@@ -1,5 +1,5 @@
 ---
-title: "Free data center Excel template: racks, devices, power, cables"
+title: "Free data center Excel template: racks, power, cables"
 description: "One file, nine sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.3."
 h1: "The Excel template that becomes a 3D twin"
 navLabel: "Excel template"

@@ -6,6 +6,12 @@ directAnswer: "Rack power capacity planning means knowing, for every rack, how m
 calculator: "rack-power"
 section: "guides"
 order: 1
+clips:
+  - { name: "feed-a-fails-lightsoff", title: "Lose feed A at peak", caption: "Why the 80 % rule is about failover: lose feed A and PDU-R05-B carries 113.9 % (31 s)." }
+related:
+  - { href: "product/facility/", label: "Floor, air, water, fire and power layers", kind: "Product" }
+  - { href: "resources/guides/ups-failure-impact-analysis/", label: "UPS failure impact analysis in 20 minutes", kind: "Guide" }
+  - { href: "resources/guides/document-data-center-in-excel/", label: "How to document your data center in Excel", kind: "Guide" }
 faq: [{"q": "What is the 80 % rule?", "a": "Continuous load on a breaker, PDU or UPS should not exceed 80 % of its rating; the remaining 20 % is for inrush, imbalance and measurement error."}, {"q": "Should I plan with nameplate or measured watts?", "a": "Measured, when you have a week of readings. Until then, a per-model catalog estimate, labelled as such — never a flat percentage of nameplate."}, {"q": "How do I check A/B redundancy across the whole room?", "a": "Fail feed A in a model that knows every cord and every PDU rating, and read the surviving side's load per node. A rack-by-rack spreadsheet cannot see the upstream sums."}, {"q": "Does this apply to a 5-rack server room?", "a": "Especially. Small rooms are where both PDUs end up on the same feed and nobody notices until the electrician's maintenance window."}, {"q": "Can DC Sim do this from my existing spreadsheet?", "a": "If it has rack, U and model per device, yes; rename the headers or keep them — common synonyms are recognised. Add the Power sheet for the chain and the checks run at import."}]
 ---
 

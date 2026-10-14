@@ -3,7 +3,7 @@
 import { u } from "../../lib/dc/url";
 interface Props { exclude?: string; links?: boolean }
 const { exclude, links = true } = Astro.props;
-type Tool = { name: string; slug: string; status: "available" | "roadmap" | "partner"; logos?: { src: string; mask?: boolean }[] };
+type Tool = { name: string; slug: string; status: "available" | "roadmap" | "planned" | "partner"; logos?: { src: string; mask?: boolean }[] };
 const tools: Tool[] = [
   { name: "Zabbix", slug: "zabbix", status: "available", logos: [{ src: "logos/zabbix.png" }] },
   { name: "NetBox", slug: "netbox", status: "available", logos: [{ src: "logos/netbox.svg", mask: true }] },
@@ -12,6 +12,7 @@ const tools: Tool[] = [
   { name: "ManageEngine OpManager", slug: "manageengine-opmanager", status: "roadmap" },
   { name: "Sunbird dcTrack", slug: "sunbird-dctrack", status: "roadmap" },
   { name: "PRTG", slug: "prtg", status: "roadmap" },
+  { name: "LibreNMS", slug: "librenms", status: "planned" },
   { name: "CloudSino", slug: "cloudsino", status: "partner", logos: [{ src: "logos/cloudsino.png" }] },
 ];
 const list = tools.filter((t) => t.slug !== exclude);
@@ -28,6 +29,7 @@ const list = tools.filter((t) => t.slug !== exclude);
             : <img class="tool-logo-img" src={u(l.src)} alt="" height="16" />)}
           <span>{t.name}</span>
           {t.status === "roadmap" && <span class="cs-badge cs-badge--roadmap">Roadmap</span>}
+          {t.status === "planned" && <span class="cs-badge cs-badge--roadmap">Planned</span>}
           {t.status === "partner" && <span class="tool-partner">Partner</span>}
         </Tag>
       </li>

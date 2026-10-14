@@ -17,7 +17,7 @@ const pages = defineCollection({
     section: z.enum(["product", "integrations", "company", "resources"]),
     order: z.number().default(0),
     faq,
-    badge: z.enum(["available", "partial", "roadmap", "early", "partner"]).optional(),
+    badge: z.enum(["available", "partial", "roadmap", "planned", "early", "partner"]).optional(),
     badgeNote: z.string().optional(),
     shots: z.array(shot).default([]),
     clips: z.array(clip).default([]),
@@ -36,8 +36,15 @@ const guides = defineCollection({
     section: z.literal("guides").default("guides"),
     order: z.number().default(0),
     faq,
-    calculator: z.enum(["rack-power", "tokens-per-kwh"]).optional(),
+    calculator: z.enum(["rack-power", "tokens-per-kwh", "dcim-cost"]).optional(),
     shots: z.array(shot).default([]),
+    // SEO-GEO-PLAN §3/§5: steps → HowTo, a "see it in the twin" clip, a Dataset for data pages, 3 related links.
+    steps: z.array(z.object({ name: z.string(), text: z.string() })).default([]),
+    totalTime: z.string().optional(),
+    clips: z.array(clip).default([]),
+    dataset: z.object({ name: z.string(), description: z.string(), variables: z.array(z.string()) }).optional(),
+    related: z.array(z.object({ href: z.string(), label: z.string(), kind: z.string() })).max(3).default([]),
+    updated: z.string().optional(),
   }),
 });
 

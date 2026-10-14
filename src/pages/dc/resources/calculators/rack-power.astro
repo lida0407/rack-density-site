@@ -3,7 +3,7 @@ import Base from "../../../../layouts/dc/Base.astro";
 import RackPowerCalc from "../../../../components/dc/RackPowerCalc.astro";
 import Faq from "../../../../components/dc/Faq.astro";
 import TemplateCTA from "../../../../components/dc/TemplateCTA.astro";
-import { faqLd } from "../../../../lib/dc/schema";
+import { faqLd, webAppLd } from "../../../../lib/dc/schema";
 import { u } from "../../../../lib/dc/url";
 const faq = [
   { q: "Why does the surviving PDU carry the whole rack?", a: "In a 2N rack every device has one cord on feed A and one on feed B. When feed A fails, the B cords carry the full load, so the B PDU and its breaker must handle the whole rack under the 80 % rule." },
@@ -16,7 +16,7 @@ const faq = [
   description="Add up a rack's load, then check whether either PDU can carry the whole rack when one feed fails, against the 80 % breaker rule. Runs in your browser."
   path="resources/calculators/rack-power/"
   crumbs={[{ name: "Resources", path: "resources/" }, { name: "Calculators", path: "resources/calculators/" }, { name: "Rack power", path: "resources/calculators/rack-power/" }]}
-  jsonLd={faqLd(faq)}
+  jsonLd={[webAppLd("Rack power calculator", "Load per PDU in normal operation and when one feed fails, checked against the 80 % rule.", "resources/calculators/rack-power/"), ...faqLd(faq)]}
 >
   <article class="container page">
     <header class="page-head">

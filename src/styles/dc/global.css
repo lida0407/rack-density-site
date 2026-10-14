@@ -110,7 +110,7 @@ figure.shot .bar b { color: var(--ink); font-weight: 600; }
 .badge-available { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
 .badge-available::before { content: "●"; font-size: 9px; }
 .badge-partial { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
-.badge-roadmap { border-style: dashed; color: var(--ink-muted); }
+.badge-roadmap, .badge-planned { border-style: dashed; color: var(--ink-muted); }
 .badge-early { color: var(--data); border-color: color-mix(in srgb, var(--data) 45%, transparent); }
 .badge-partner { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
 .badge-note { font: 500 12px/18px var(--font-mono); color: var(--ink-muted); margin: 8px 0 0; }

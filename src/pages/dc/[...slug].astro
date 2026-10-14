@@ -9,8 +9,8 @@ import TemplateCTA from "../../components/dc/TemplateCTA.astro";
 import PricingStrip from "../../components/dc/PricingStrip.astro";
 import ToolChips from "../../components/dc/ToolChips.astro";
 import { mailto } from "../../config/dc/product";
-import { faqLd, softwareLd } from "../../lib/dc/schema";
-import { u } from "../../lib/dc/url";
+import { faqLd, softwareLd, howToLd } from "../../lib/dc/schema";
+import { u, root } from "../../lib/dc/url";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
@@ -44,9 +44,18 @@ const connect: Record<string, { url: string; result: string }> = {
   netbox: { url: "https://[your-netbox]/api/", result: "4.7.3 · 24 sites · 42 racks · 72 devices · 108 cables" },
 };
 const panel = connect[tool];
-const badgeLabel = { available: "Available", partial: "Partial", roadmap: "Roadmap", early: "Early access", partner: "Partner" };
+const badgeLabel = { available: "Available", partial: "Partial", roadmap: "Roadmap", planned: "Planned", early: "Early access", partner: "Partner" };
+// Planned connectors collect demand on the shared waitlist (edition preselected, ?src = the tool).
+const wantHref = d.badge === "planned" ? root(`homelab/waitlist/?src=${tool}&edition=dc`) : null; // = /waitlist?src=… (the 301 target)
+// Zabbix and NetBox connect directly: the three on-page steps as HowTo (SEO-GEO-PLAN §3).
+const connectSteps = panel ? [
+  { name: "Connect", text: `Open ⋯ → Connect, choose ${toolName}, paste the URL and a read-only API token, press Test. The test shows the version and what it can see.` },
+  { name: "Preview", text: "The result is rendered as the template sheets with the same import report and checks as an Excel upload." },
+  { name: "Import", text: "Confirm, and the twin is built or updated. Re-sync shows exactly what changed." },
+] : [];
 const jsonLd = [
   ...(d.section === "product" || d.section === "integrations" ? [softwareLd()] : []),
+  ...howToLd(`Connect ${toolName} to DC Sim`, `Turn ${toolName} data into a 3D data center twin with a read-only token.`, connectSteps, "PT10M"),
   ...faqLd(d.faq),
 ];
 ---
@@ -57,15 +66,16 @@ const jsonLd = [
         <div class="int-copy">
           <div class="int-status">
             {d.badge === "available" ? <span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Available</span>
-              : d.badge === "roadmap" ? <span class="cs-badge cs-badge--roadmap">Roadmap</span>
+              : d.badge === "roadmap" || d.badge === "planned" ? <span class="cs-badge cs-badge--roadmap">{badgeLabel[d.badge]}</span>
               : d.badge && <span class={`badge badge-${d.badge}`}>{badgeLabel[d.badge]}</span>}
             {d.badgeNote && <span class="int-note">{d.badgeNote}</span>}
           </div>
           <h1>{d.h1}</h1>
           <p class="int-lede">{d.directAnswer}</p>
           <div class="btn-row">
-            <a class="cs-btn cs-btn--primary int-cta" href={mailto(`DC Sim and ${toolName}`, `Hi Da,\n\nI'd like a walkthrough of DC Sim with ${toolName}.\n\nCompany: \n`)}>Request a walkthrough</a>
-            <a class="cs-btn cs-btn--secondary int-cta" href={u("resources/excel-template/")}>The template sheets</a>
+            {wantHref && <a class="cs-btn cs-btn--primary int-cta" href={wantHref}>I want this</a>}
+            <a class:list={["cs-btn int-cta", wantHref ? "cs-btn--secondary" : "cs-btn--primary"]} href={mailto(`DC Sim and ${toolName}`, `Hi Da,\n\nI'd like a walkthrough of DC Sim with ${toolName}.\n\nCompany: \n`)}>Request a walkthrough</a>
+            {!wantHref && <a class="cs-btn cs-btn--secondary int-cta" href={u("resources/excel-template/")}>The template sheets</a>}
           </div>
         </div>
         {panel ? (

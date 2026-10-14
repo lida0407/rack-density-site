@@ -1,0 +1,45 @@
+---
+// DCIM cost by room size from public list prices (checked October 2026, vendors not named — SEO-GEO-PLAN §2/§8).
+// The ranges live in one place (RATES) so the guide's tables and this calculator cannot drift apart.
+import { PRICES } from "../../config/dc/product";
+const RATES = {
+  perAsset: { usd: 3, min: 1500 },          // cloud DCIM priced per asset per year, with an annual minimum
+  perRack: { lo: 234, hi: 330 },            // mid-market DCIM per cabinet per year: $19.50 core, $27.50 with power monitoring, per month
+  enterprise: { lo: 800, hi: 2500 },        // enterprise suites per rack per year, as reported by 2026 industry research
+  dcsim: { perRack: PRICES.monitorPerRack, min: PRICES.monitorMin },
+};
+---
+<section class="calc" id="dcim-cost" aria-labelledby="dcc-h" data-rates={JSON.stringify(RATES)}>
+  <h2 id="dcc-h" style="margin-top:0">DCIM cost calculator</h2>
+  <p class="small muted">Yearly license cost from published list prices. Assets are racks plus the devices in them; services, sensors and implementation are not included.</p>
+  <div class="grid grid-2">
+    <div><label for="dcc-racks">Racks</label><input id="dcc-racks" type="number" min="1" max="5000" value="20" inputmode="numeric" /></div>
+    <div><label for="dcc-dev">Devices per rack</label><input id="dcc-dev" type="number" min="1" max="60" value="15" inputmode="numeric" /></div>
+  </div>
+  <table aria-live="polite">
+    <tbody>
+      <tr><th scope="row">Cloud DCIM, priced per asset</th><td><output id="dcc-asset">–</output></td></tr>
+      <tr><th scope="row">Mid-market DCIM, priced per rack</th><td><output id="dcc-rack">–</output></td></tr>
+      <tr><th scope="row">Enterprise suite (reported)</th><td><output id="dcc-ent">–</output></td></tr>
+      <tr><th scope="row">DC Sim Monitor</th><td><output id="dcc-dcsim">–</output></td></tr>
+    </tbody>
+  </table>
+  <p class="small muted" style="margin-top:10px">Per year. Per asset: $3 per asset, $1,500 minimum. Per rack: $234–330. Enterprise: $800–2,500 per rack as reported by industry research, usually quote-only. DC Sim Monitor: ${PRICES.monitorPerRack} per rack per month, ${PRICES.monitorMin} minimum.</p>
+</section>
+<script>
+  const box = document.getElementById("dcim-cost")!;
+  const R = JSON.parse(box.dataset.rates!);
+  const n = (id: string) => Math.max(0, Number((document.getElementById(id) as HTMLInputElement).value) || 0);
+  const usd = (x: number) => `$${Math.round(x).toLocaleString("en-US")}`;
+  const out = (id: string, v: string) => ((document.getElementById(id) as HTMLOutputElement).value = v);
+  function calc() {
+    const racks = n("dcc-racks"), dev = n("dcc-dev");
+    if (!racks) { ["dcc-asset", "dcc-rack", "dcc-ent", "dcc-dcsim"].forEach((id) => out(id, "–")); return; }
+    out("dcc-asset", usd(Math.max(R.perAsset.min, R.perAsset.usd * racks * (dev + 1))));
+    out("dcc-rack", `${usd(R.perRack.lo * racks)} – ${usd(R.perRack.hi * racks)}`);
+    out("dcc-ent", `${usd(R.enterprise.lo * racks)} – ${usd(R.enterprise.hi * racks)}`);
+    out("dcc-dcsim", usd(12 * Math.max(R.dcsim.min, R.dcsim.perRack * racks)));
+  }
+  box.querySelectorAll("input").forEach((el) => el.addEventListener("input", calc));
+  calc();
+</script>

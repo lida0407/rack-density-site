@@ -1,5 +1,5 @@
 ---
-title: "Data center design mode for rooms that don't exist yet — DC Sim"
+title: "Data center design software for unbuilt rooms — DC Sim"
 description: "Lay out racks and coolers on a 2D plan, check U, weight, breakers and cooling live, run an N−1 audit, publish versions. AI design assistant on the roadmap."
 h1: "Design it before you build it"
 navLabel: "Design mode"

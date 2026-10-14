@@ -1,10 +1,17 @@
 ---
-title: "DCIM for a small server room: what you need, what it costs"
+title: "DCIM for a small server room: the five things you need"
 description: "A small server room needs five things from DCIM, not fifty. What they are, what to skip, and what a lightweight DCIM should cost at 5 to 50 racks."
-h1: "DCIM for a small server room: what you need and what it should cost"
+h1: "DCIM for a small server room: the five things you actually need"
 directAnswer: "A small server room needs five things from DCIM: an inventory with rack, U, model and power cords; the power chain with load per node; space, power and cooling headroom; a what-if for failures; and readings from the monitoring you already run. At 5 to 50 racks, that should cost tens to hundreds of dollars a month, not thousands."
 section: "guides"
 order: 3
+updated: "2026-10-15"
+clips:
+  - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "A lightweight start: one workbook in, the room in 3D with its checks (50 s)." }
+related:
+  - { href: "resources/guides/dcim-pricing/", label: "What DCIM costs in 2026: price ranges by room size", kind: "Data" }
+  - { href: "integrations/", label: "Integrations: keep the monitoring you already run", kind: "Integrations" }
+  - { href: "resources/guides/document-data-center-in-excel/", label: "How to document your data center in Excel", kind: "Guide" }
 faq: [{"q": "What is a lightweight DCIM?", "a": "A tool that covers inventory, the power chain, capacity and a failure what-if for a small room, without workflows, multi-site features or a dedicated administrator, and that you can fill from a spreadsheet in an afternoon."}, {"q": "Do I need DCIM for a 5-rack server room?", "a": "You need the answers: what is in each rack, what each breaker and PDU carries, and what goes dark when one fails. Whether that takes a DCIM, a twin or a careful spreadsheet depends on how often the room changes."}, {"q": "How much should DCIM cost for a small data center?", "a": "Typical DCIM pricing is $230–330 per rack per year, with $125 per month minimums. DC Sim Monitor is about $5 per rack per month with a $49 minimum: $600 a year at 10 racks."}, {"q": "Is an open-source DCIM a good alternative?", "a": "For inventory, racks and cables, often yes, if someone will host and maintain it. It does not simulate failures. Its rack and device export can be mapped to the DC Sim template columns."}, {"q": "Does DC Sim replace my monitoring?", "a": "No. It puts monitoring data on a twin you can fail. Today that data arrives as an imported Readings sheet; live connectors are on the roadmap. For a walkthrough on your own file, write to Sensaka at da@mustardseedmt.com."}]
 ---
 
@@ -42,18 +49,7 @@ Then the question an inventory cannot answer: **if this fails, what goes dark?**
 
 ## 4. What it should cost
 
-Yearly cost by rack count. DC Sim figures are list prices; the DCIM column uses the per-rack range typical of DCIM pricing.
-
-| Racks | Typical DCIM at $230–330 per rack per year | DC Sim Monitor, about $5 per rack per month, $49 minimum |
-|---|---|---|
-| 5 | $1,150–1,650 | $49 × 12 = $588 |
-| 10 | $2,300–3,300 | $50 × 12 = $600 |
-| 20 | $4,600–6,600 | $100 × 12 = $1,200 |
-| 50 | $11,500–16,500 | $250 × 12 = $3,000 |
-
-Typical DCIM pricing also has $125 per month minimums: $125 × 12 = $1,500 a year before the first rack, so at 5 racks the real range is $1,500–1,650. Simulation tools for engineers start at several thousand dollars per seat per year, and need an engineer to run them.
-
-For a room that does not exist yet, DC Sim **Design** is one-time per project: $490 up to 20 racks, $1,490 up to 100, $3,900 above 100.
+At 5 to 50 racks, a lightweight setup should cost hundreds to a few thousand dollars a year, not tens of thousands. Published DCIM list prices run from about $1,500 a year (a per-asset plan's minimum) through $234–330 per rack per year for mid-market tools; DC Sim **Monitor** is $5 per rack per month with a $49 minimum, and **Design** is one-time per project from $490. The full ranges by pricing model and room size, with a calculator, are in [What DCIM costs in 2026](../dcim-pricing/).
 
 Count the hidden costs too: hours to load the data, a server to host a self-run tool, and the time to keep any of them current.
 

@@ -5,7 +5,7 @@ import Badge from "../../components/dc/Badge.astro";
 import Faq from "../../components/dc/Faq.astro";
 import TemplateCTA from "../../components/dc/TemplateCTA.astro";
 import { PRICES, mailto } from "../../config/dc/product";
-import { faqLd, softwareLd } from "../../lib/dc/schema";
+import { faqLd, softwareLd, productLd } from "../../lib/dc/schema";
 import { u } from "../../lib/dc/url";
 
 const faq = [
@@ -25,7 +25,7 @@ const usd = (n: number) => "$" + n.toLocaleString("en-US");
   description="Design from $490 per project. Monitor from $5 per rack per month, minimum $49. Partner program with a 30 % margin. Compare with typical DCIM pricing."
   path="pricing/"
   crumbs={[{ name: "Pricing", path: "pricing/" }]}
-  jsonLd={[softwareLd(), ...faqLd(faq)]}
+  jsonLd={[softwareLd(), productLd(), ...faqLd(faq)]}
 >
   <div class="dcp">
     <section class="dcp-wrap dcp-hero">

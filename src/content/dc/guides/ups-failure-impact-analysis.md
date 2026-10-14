@@ -7,7 +7,21 @@ shots:
   - { name: "power-fail-ups-a", alt: "Power one-line diagram with UPS-A failed: feed A greyed out, a banner listing the devices on one feed and the overloaded PDU.", caption: "UPS-A failed on the demo hall: the dark list, the one-feed list and the overloaded PDU in one view." }
 section: "guides"
 order: 2
-faq: [{"q": "What is a UPS failure impact analysis?", "a": "For one UPS failing at peak load, it lists the devices that go dark, the devices left on one feed, the services that stop and the nodes that overload on the surviving side. You do it once per UPS."}, {"q": "How is it different from a UPS runtime calculation?", "a": "Runtime says how long the batteries last when the utility fails. Impact analysis says what stops when the UPS itself fails. The survivor's runtime is part of the second."}, {"q": "What is a single point of failure in a data center?", "a": "Any one component whose failure stops a service: a single-corded server, two PSUs on one feed, one switch, a PDU that cannot carry the whole rack. Redundant hardware wired to one path is still a single point of failure."}, {"q": "Do I need live monitoring to do this?", "a": "No. The chain and the cords come from a spreadsheet. Measured watts improve the loads, and DC Sim takes them today from a Readings sheet exported from your monitoring. Live connectors through an outbound agent are on the roadmap."}, {"q": "How accurate is the result?", "a": "What goes dark is exact for the chain you describe: one cord on feed A means dark when A fails. Loads are estimated per model unless you import readings. Runtime and thermal figures are estimated and labelled."}]
+updated: "2026-10-15"
+totalTime: "PT20M"
+steps:
+  - { name: "Map the chain in two sheets (minutes 0–8)", text: "Devices with rack, U, model, power cords (A, B or AB) and what runs on each; Power with every UPS, panel, breaker and PDU, its rating, what feeds it and its feed." }
+  - { name: "Read the checks before failing anything (minutes 8–12)", text: "Single-corded devices, dual-corded devices with both cords on one feed, and PDUs that cannot carry the rack alone are already the answer for most rooms." }
+  - { name: "Fail the UPS at peak and do the arithmetic (minutes 12–16)", text: "List what goes dark, what runs on one feed, which services stop and which surviving nodes are now above their rating." }
+  - { name: "Add time (minutes 16–20)", text: "Runtime of the surviving UPS at the new load and, if cooling is on the same chain, how fast the room heats up; both labelled as estimates." }
+  - { name: "Turn the lists into a fix list, cheapest first", text: "Move a cord, rebalance a PDU, add a second power supply, then hardware; repeat for every UPS and feed." }
+clips:
+  - { name: "feed-a-fails-lightsoff", title: "Lose feed A at peak", caption: "The demo hall's UPS-A failure: 2 devices lose power, 90 run on one feed, PDU-R05-B at 113.9 % (31 s)." }
+related:
+  - { href: "product/simulate/", label: "Data center what-if simulation: fail anything", kind: "Product" }
+  - { href: "resources/calculators/rack-power/", label: "Rack power calculator: A/B feeds and the 80 % rule", kind: "Calculator" }
+  - { href: "resources/guides/rack-power-capacity-planning/", label: "Rack power capacity planning with the 80 % rule", kind: "Guide" }
+faq: [{"q": "What is a UPS failure impact analysis?", "a": "For one UPS failing at peak load, it lists the devices that go dark, the devices left on one feed, the services that stop and the nodes that overload on the surviving side. You do it once per UPS."}, {"q": "How is it different from a UPS runtime calculation?", "a": "Runtime says how long the batteries last when the utility fails. Impact analysis says what stops when the UPS itself fails. The survivor's runtime is part of the second."}, {"q": "What is a single point of failure in a data center?", "a": "Any one component whose failure stops a service: a single-corded server, two PSUs on one feed, one switch, a PDU that cannot carry the whole rack. Redundant hardware wired to one path is still a single point of failure."}, {"q": "Do I need monitoring data to do this?", "a": "No. The chain and the cords come from a spreadsheet. Measured watts improve the loads: DC Sim takes them from a Readings sheet exported from any monitoring tool, or directly from Zabbix with a read-only token."}, {"q": "How accurate is the result?", "a": "What goes dark is exact for the chain you describe: one cord on feed A means dark when A fails. Loads are estimated per model unless you import readings. Runtime and thermal figures are estimated and labelled."}]
 ---
 
 ## 1. The four lists the analysis must produce
@@ -74,7 +88,20 @@ Fail is instant, and exact for the chain you described. It does not say *when* t
 
 Re-upload after each change, read the change list and fail again. You are done when the dark list is empty.
 
-## 7. Then fail everything else
+## 7. A worked example: UPS-A in the demo hall
+
+The demo hall is 13 racks and 121 devices on two feeds, built from one workbook. Its checks, before anything fails, already flag the usual suspects: **k8s-0204**, a dual-corded server with both power cables on feed A, and **ci-0308**, a single-corded device. Fail UPS-A at peak load and the four lists are:
+
+| List | Demo hall result |
+|---|---|
+| Dark | 2 devices lose power; the scenario lists them by name |
+| On one feed | 90 devices now run on feed B only |
+| Services | whatever runs on those two devices stops or degrades; the timeline lists each one |
+| Overloads | PDU-R05-B at 113.9 % of its rating: rack R05's whole load lands on one PDU |
+
+The fix list writes itself, cheapest first: move one of k8s-0204's cords to feed B; give ci-0308 a second power supply or a transfer switch, or move its service; split rack R05's load so each PDU stays under 80 % of its rating when the other feed is lost (the [rack power calculator](../../calculators/rack-power/) shows the failover load). Then fail UPS-B, both feeds of each rack, and the cooling. The clip below is this exact run.
+
+## 8. Then fail everything else
 
 Repeat for each PDU, panel and breaker. The scenario library already has lose feed A at peak, UPS failure, utility loss and generator fails to start. Then fail the switches in the Network view. Failures propagate from power to network, so a server that keeps its power can still lose every path if both of its switches hang off feed A.
 

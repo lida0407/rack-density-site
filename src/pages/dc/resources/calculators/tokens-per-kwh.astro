@@ -3,7 +3,7 @@ import Base from "../../../../layouts/dc/Base.astro";
 import TokensCalc from "../../../../components/dc/TokensCalc.astro";
 import Faq from "../../../../components/dc/Faq.astro";
 import TemplateCTA from "../../../../components/dc/TemplateCTA.astro";
-import { faqLd } from "../../../../lib/dc/schema";
+import { faqLd, webAppLd } from "../../../../lib/dc/schema";
 import { u } from "../../../../lib/dc/url";
 const faq = [
   { q: "How do I convert joules per token to tokens per kWh?", a: "One kWh is 3.6 million joules, so tokens per kWh = 3,600,000 ÷ joules per token. At 0.5 J per token that is 7.2 million tokens per kWh." },
@@ -12,11 +12,11 @@ const faq = [
 ];
 ---
 <Base
-  title="Tokens per kWh calculator: energy cost per 1M tokens — DC Sim"
+  title="Tokens per kWh calculator: cost per 1M tokens — DC Sim"
   description="Turn tokens per second and server watts into tokens per kWh, energy per million tokens and cost per million tokens, with an optional facility overhead factor."
   path="resources/calculators/tokens-per-kwh/"
   crumbs={[{ name: "Resources", path: "resources/" }, { name: "Calculators", path: "resources/calculators/" }, { name: "Tokens per kWh", path: "resources/calculators/tokens-per-kwh/" }]}
-  jsonLd={faqLd(faq)}
+  jsonLd={[webAppLd("Tokens per kWh calculator", "Turns tokens per second and watts into tokens per kWh and energy cost per million tokens.", "resources/calculators/tokens-per-kwh/"), ...faqLd(faq)]}
 >
   <article class="container page">
     <header class="page-head">

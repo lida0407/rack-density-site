@@ -6,7 +6,9 @@ import Shot from "../../../../components/dc/Shot.astro";
 import TemplateCTA from "../../../../components/dc/TemplateCTA.astro";
 import RackPowerCalc from "../../../../components/dc/RackPowerCalc.astro";
 import TokensCalc from "../../../../components/dc/TokensCalc.astro";
-import { faqLd, articleLd } from "../../../../lib/dc/schema";
+import DcimCostCalc from "../../../../components/dc/DcimCostCalc.astro";
+import Clip from "../../../../components/dc/Clip.astro";
+import { faqLd, articleLd, howToLd, datasetLd } from "../../../../lib/dc/schema";
 import { u } from "../../../../lib/dc/url";
 import { mailto } from "../../../../config/dc/product";
 import { Image } from "astro:assets";
@@ -21,19 +23,24 @@ const { guide, all } = Astro.props;
 const d = guide.data;
 const { Content } = await render(guide);
 const path = `resources/guides/${guide.id}/`;
-const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order - b.data.order);
+const jsonLd = [
+  { ...articleLd(d.h1, d.description, path), ...(d.updated ? { dateModified: d.updated } : {}) },
+  ...howToLd(d.h1, d.description, d.steps, d.totalTime),
+  ...(d.dataset ? [datasetLd(d.dataset.name, d.dataset.description, path, d.dataset.variables)] : []),
+  ...faqLd(d.faq),
+];
 ---
 <Base
   title={d.title}
   description={d.description}
   path={path}
   crumbs={[{ name: "Resources", path: "resources/" }, { name: "Guides", path: "resources/guides/" }, { name: d.h1, path }]}
-  jsonLd={[articleLd(d.h1, d.description, path), ...faqLd(d.faq)]}
+  jsonLd={jsonLd}
 >
   <article class="container page guide">
     <div class="guide-head">
       <h1>{d.h1}</h1>
-      <span class="guide-meta">Guide{d.calculator ? " + calculator" : ""} · {d.faq.length} questions answered</span>
+      <span class="guide-meta">Guide{d.calculator ? " + calculator" : ""}{d.dataset ? " + data" : ""} · {d.faq.length} questions answered{d.updated ? ` · updated ${d.updated}` : ""}</span>
     </div>
     {d.calculator ? (
       <div class="guide-top">
@@ -41,11 +48,25 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
         <div class="guide-calc">
           {d.calculator === "rack-power" && <RackPowerCalc />}
           {d.calculator === "tokens-per-kwh" && <TokensCalc />}
+          {d.calculator === "dcim-cost" && <DcimCostCalc />}
         </div>
       </div>
     ) : <p class="direct-answer">{d.directAnswer}</p>}
     {d.shots.map((s, i) => <div class="shots"><Shot name={s.name} alt={s.alt} caption={s.caption} light={s.light} eager={i === 0} /></div>)}
     <div class="prose"><Content /></div>
+    {d.steps.length > 0 && (
+      <section class="guide-steps" aria-labelledby="gs-h">
+        <span class="eyebrow">Step by step</span>
+        <h2 id="gs-h">{d.steps.length} steps</h2>
+        <ol>{d.steps.map((s) => <li><h3>{s.name}</h3><p>{s.text}</p></li>)}</ol>
+      </section>
+    )}
+    {d.clips.length > 0 && (
+      <section class="guide-clips" aria-label="See it in the twin">
+        <span class="eyebrow">See it in the twin</span>
+        <div class:list={["grid", { "grid-2": d.clips.length > 1 }]}>{d.clips.map((c) => <Clip name={c.name} title={c.title} caption={c.caption} />)}</div>
+      </section>
+    )}
     <aside class="guide-seeit">
       <Image class="only-dark" src={seeIt} alt="A data hall in DC Sim with the lights off: racks glow green from their LEDs." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
       <Image class="only-light" src={seeItLit} alt="A data hall in DC Sim with the lights on: rows of black racks on a light floor." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
@@ -58,10 +79,11 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
     </aside>
     <Faq items={d.faq} />
     <TemplateCTA />
-    {others.length > 0 && (
-      <nav class="section" aria-label="More guides" style="margin-top:40px">
-        <span class="eyebrow">More guides</span>
-        <div class="grid grid-3 guide-more">{others.map((g) => <a class="cs-card" href={u(`resources/guides/${g.id}/`)}><span class="guide-more-t">{g.data.h1}</span><span class="guide-more-d">{g.data.description}</span></a>)}</div>
+    {d.related.length > 0 && (
+      <nav class="section guide-related" aria-label="Related">
+        <span class="eyebrow">Related</span>
+        <div class="grid grid-3 guide-more">{d.related.map((r) => <a class="cs-card" href={u(r.href)}><span class="guide-more-k">{r.kind}</span><span class="guide-more-t">{r.label}</span></a>)}</div>
+        <p class="guide-all"><a href={u("resources/guides/")}>All guides</a></p>
       </nav>
     )}
   </article>
@@ -74,6 +96,17 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
   .guide-top .direct-answer { margin: 0; max-width: none; }
   .guide-calc .calc { margin: 0; height: 100%; }
   .guide .prose { margin-top: 40px; }
+  .guide-steps { margin-top: 48px; }
+  .guide-steps h2 { margin: 6px 0 16px; }
+  .guide-steps ol { list-style: none; counter-reset: gs; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .guide-steps li { counter-increment: gs; display: grid; grid-template-columns: 48px 1fr; column-gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .guide-steps li::before { content: counter(gs, decimal-leading-zero); grid-row: span 2; font: 600 13px/22px var(--font-mono); color: var(--accent); }
+  .guide-steps h3 { margin: 0 0 4px; font-size: 17px; line-height: 22px; }
+  .guide-steps p { margin: 0; color: var(--ink-muted); }
+  .guide-clips { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; }
+  .guide-related { margin-top: 40px; }
+  .guide-more-k { font: 500 11px/14px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+  .guide-all { margin: 14px 0 0; font-size: 15px; }
   .guide-seeit { margin-top: 56px; border: 1px solid var(--line-strong); background: var(--bg-100); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); align-items: center; }
   .guide-seeit img { display: block; width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
   .guide-seeit-copy { padding: 32px; display: flex; flex-direction: column; gap: 14px; }

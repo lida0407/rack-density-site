@@ -6,6 +6,12 @@ directAnswer: "Tokens per kWh is the number of tokens a server, rack or room pro
 calculator: "tokens-per-kwh"
 section: "guides"
 order: 4
+clips:
+  - { name: "leak", title: "Manifold leak on a liquid-cooled GPU row", caption: "Tokens as a failure cost: a 1.4 L manifold leak throttles 2 GPU servers, 7.8 M tokens lost (31 s)." }
+related:
+  - { href: "product/it/", label: "Device and token layers: tokens per kWh per server", kind: "Product" }
+  - { href: "resources/guides/rack-power-capacity-planning/", label: "Rack power capacity planning with the 80 % rule", kind: "Guide" }
+  - { href: "resources/guides/data-center-digital-twin/", label: "Data center digital twin: what it is, and what it isn't", kind: "Guide" }
 faq: [{"q": "How do I convert joules per token to tokens per kWh?", "a": "Divide 3,600,000 by the joules per token. At 0.5 J per token, that is 7.2 million tokens per kWh."}, {"q": "Is tokens per watt the same as tokens per kWh?", "a": "Same idea, different unit. \"Tokens per watt\" usually means tokens per second per watt, which is tokens per joule. Multiply by 3,600,000 for tokens per kWh."}, {"q": "How do I calculate cost per million tokens from power?", "a": "Divide 1,000,000 by tokens per kWh to get kWh per million tokens, then multiply by your tariff. At 3.75 million tokens per kWh and $0.15/kWh: 0.267 kWh and $0.04. Energy only."}, {"q": "Which boundary should I report?", "a": "Whole server to compare hardware; rack plus its share of facility overhead for cost and for the room. Always print the boundary next to the number."}, {"q": "Can DC Sim show tokens per kWh for my servers?", "a": "Today the Token layer and the Report show it on the demo data, where the figures are estimated. The Readings sheet can carry your own token and power counters from a monitoring export. Live collection through the agent is on the roadmap."}]
 ---
 
