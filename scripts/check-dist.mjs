@@ -3,6 +3,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { BASE } from '../site.config.mjs';
+const ROOT = BASE.replace(/\/$/, '');   // '' on rack-density.com, '/rack-density-site' on github.io
 const DIST = 'dist';
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
 const html = walk(DIST).filter((f) => f.endsWith('.html'));
@@ -19,8 +20,8 @@ for (const f of html) {
   for (const m of s.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { JSON.parse(m[1]); } catch { fail(`${f}: bad JSON-LD`); } }
   for (const m of s.matchAll(/(?:href|src|srcset)="([^"]+)"/g)) {
     for (const ref of m[1].split(',').map((x) => x.trim().split(' ')[0])) {
-      if (!ref.startsWith(BASE + '/') && ref !== BASE + '/') continue;
-      const p = decodeURI(ref.slice(BASE.length).split('#')[0].split('?')[0]);
+      if (!ref.startsWith(ROOT + '/') || ref.startsWith('//')) continue;
+      const p = decodeURI(ref.slice(ROOT.length).split('#')[0].split('?')[0]);
       const t = join(DIST, p);
       if (!(existsSync(t) && statSync(t).isFile()) && !existsSync(join(t, 'index.html'))) fail(`${f}: broken ${ref}`);
     }

@@ -15,7 +15,7 @@ function rehypeBaseLinks() {
       if (node.type === 'element') {
         for (const attr of ['href', 'src']) {
           const v = node.properties?.[attr];
-          if (typeof v === 'string' && v.startsWith('/') && !v.startsWith('//') && !v.startsWith(siteBase)) node.properties[attr] = prefix + v.slice(1);
+          if (typeof v === 'string' && v.startsWith('/') && !v.startsWith('//') && !v.startsWith(prefix)) node.properties[attr] = prefix + v.slice(1);
         }
       }
       (node.children || []).forEach(walk);

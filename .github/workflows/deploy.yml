@@ -26,6 +26,9 @@ jobs:
       - run: npm ci
       - run: npm test            # calculator math (node --test)
       - run: npm run build       # astro build + link / meta / JSON-LD checks
+        env:                     # github.io copy until the Cloudflare cutover; site.config.mjs defaults to rack-density.com
+          SITE_URL: https://lida0407.github.io
+          SITE_BASE: /rack-density-site
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
