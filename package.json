@@ -1,24 +1,26 @@
 {
-  "name": "homelab-sim-site",
+  "name": "rack-density-site",
   "private": true,
   "type": "module",
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-dist.mjs",
+    "build": "astro build && node scripts/check-dist.mjs && node scripts/check-copy-dc.mjs",
     "preview": "astro preview",
     "sync": "node scripts/sync-content.mjs",
     "og": "node scripts/og.mjs",
     "test": "node --test src/lib/calc/calc.test.ts",
-    "check": "node scripts/check-dist.mjs"
+    "check": "node scripts/check-dist.mjs && node scripts/check-copy-dc.mjs"
   },
   "engines": {
     "node": ">=22.12"
   },
   "dependencies": {
-    "astro": "7.3.5",
+    "@astrojs/markdown-remark": "7.3.1",
     "@astrojs/mdx": "8.0.2",
+    "@astrojs/sitemap": "3.7.4",
     "@fontsource-variable/inter": "5.3.0",
+    "astro": "7.3.5",
     "sharp": "0.35.5"
   }
 }

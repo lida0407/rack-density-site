@@ -1,0 +1,68 @@
+---
+import Base from "../../../layouts/dc/Base.astro";
+import Badge from "../../../components/dc/Badge.astro";
+import { u } from "../../../lib/dc/url";
+// Public wording of the build log (dcsim-plan: share/updatedc.md). Newest first.
+const entries = [
+  {
+    date: "2026-10-14",
+    title: "Template v1.1: phase balance, UPS runtime from your sheet, unracked devices",
+    items: [
+      "Phase balance: with phases on power cables and power items (L1/L2/L3), every three-phase node shows its per-phase load; a phase above 80 % of its share, or an imbalance above 15 %, is flagged. Without phase data the import report says so.",
+      "UPS runtime comes from your runtime_min or battery_kwh first, then the catalog, otherwise it is estimated and labelled; failing one UPS shortens the other's runtime with its new load.",
+      "Devices with an empty U are kept as devices outside a rack, on an open shelf named after their location, instead of being skipped.",
+      "Mini racks: width_in = 10 draws a 10-inch rack (also inferred from the rack name). The power type accepts wall outlet.",
+      "Additions only: nothing was renamed, so v1.0 files still import.",
+    ],
+  },
+  {
+    date: "2026-10-14",
+    title: "One View menu instead of a wall of buttons",
+    items: [
+      "A single View dropdown groups the nine layers (Facility: Floor, Air, Water, Fire, Power · Connectivity: Cabling, Network · IT: Device, Token), with a one-line hint and an issue count per view.",
+      "A Mode dropdown (Design, Monitor, Simulate, Replay) changes the side panel and the primary button; Import is always one click.",
+      "At rest the desktop screen shows six controls plus the time slider; on a phone, four. Views keep 60 frames per second on desktop and phone emulation.",
+    ],
+  },
+  {
+    date: "2026-10-14",
+    title: "Excel import, Cabling, Power and Network views, Fail what-if",
+    items: [
+      "Excel or CSV import with a preview, an import report, checks pinned in 3D and a change list on re-upload. Values only: formulas, macros, encrypted and oversized files are refused.",
+      "Cabling view: every cable routed through rear managers, trays or under the floor; trace any cable end to end.",
+      "Power one-line diagram with A/B paths and load per node, and a Network topology built from the cables. Click any node, Fail, and see what goes dark, what survives on one feed and which services stop.",
+      "Scenario library generated from the model: utility loss, generator failure, feed loss, UPS, cooling and liquid failures, leak, fire, more load.",
+    ],
+  },
+];
+const inProgress = [
+  "Zabbix and NetBox connectors (paste URL and read-only token, Test, preview, import), tested against demo instances",
+  "A public demo of the English edition",
+  "AI design assistant",
+];
+---
+<Base
+  title="Changelog — DC Sim"
+  description="What shipped in DC Sim and what is in progress: template v1.1 with phase balance and UPS runtime, the View menu, Excel import, Cabling, Power and Network views."
+  path="resources/changelog/"
+  crumbs={[{ name: "Resources", path: "resources/" }, { name: "Changelog", path: "resources/changelog/" }]}
+>
+  <article class="container page">
+    <p class="crumbs"><a href={u("resources/")}>Resources</a> /</p>
+    <header class="page-head">
+      <h1>Changelog</h1>
+      <p class="direct-answer">What shipped, newest first, in plain words. Items that are not shipped yet are listed under In progress with a Roadmap badge; nothing on this site is described as available before it is.</p>
+    </header>
+    <div class="prose">
+      {entries.map((e) => (
+        <section>
+          <h2>{e.title}</h2>
+          <p class="muted small"><time datetime={e.date}>{e.date}</time></p>
+          <ul>{e.items.map((i) => <li>{i}</li>)}</ul>
+        </section>
+      ))}
+      <h2>In progress</h2>
+      <ul>{inProgress.map((i) => <li>{i} <Badge kind="roadmap" /></li>)}</ul>
+    </div>
+  </article>
+</Base>

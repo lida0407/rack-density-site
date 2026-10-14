@@ -3,7 +3,7 @@ import { u } from '../lib/url';
 import { TRY } from '../config/brand';
 interface Props { title: string; body: string; button?: string; utm?: string }
 const { title, body, button = 'See it in 3D', utm } = Astro.props;
-const href = u('/try') + (utm ? `?utm_source=learn&utm_medium=cta&utm_content=${utm}` : '');
+const href = u('/homelab/try') + (utm ? `?utm_source=learn&utm_medium=cta&utm_content=${utm}` : '');
 ---
 <aside class="see3d card">
   <div>

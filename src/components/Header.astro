@@ -1,37 +1,46 @@
 ---
 import { u } from '../lib/url';
-import { BRAND, PRODUCT_NAME } from '../config/brand';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME } from '../config/brand';
+interface Props { section?: 'hub' | 'homelab' }
+const { section = 'hub' } = Astro.props;
 const path = Astro.url.pathname;
-const links = [
-  { href: '/calculator', label: 'Calculator' },
-  { href: '/learn', label: 'Learn' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/changelog', label: 'Changelog' },
-];
-const here = (href: string) => path.startsWith(u(href));
+const links = section === 'homelab'
+  ? [
+      { href: '/homelab', label: PRODUCT_NAME, exact: true },
+      { href: '/homelab/learn', label: 'Learn' },
+      { href: '/homelab/pricing', label: 'Pricing' },
+      { href: '/homelab/changelog', label: 'Changelog' },
+      { href: '/#calculator', label: 'Calculator' },
+    ]
+  : [
+      { href: '/homelab', label: PRODUCT_NAME },
+      { href: '/dc', label: DC_PRODUCT_NAME },
+      { href: '/#calculator', label: 'Calculator' },
+    ];
+const here = (l: { href: string; exact?: boolean }) => (l.exact ? path === u(l.href) : !l.href.includes('#') && path.startsWith(u(l.href)));
 ---
 <header class="site-header">
   <div class="wrap bar">
-    <a class="logo" href={u('/')} aria-label={`${BRAND} — ${PRODUCT_NAME} home`}>
-      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="#38bdf8" stroke-width="2"/><rect x="7" y="5" width="10" height="3" rx="1" fill="#38bdf8"/><rect x="7" y="10.5" width="10" height="3" rx="1" fill="#34d399"/><rect x="7" y="16" width="10" height="3" rx="1" fill="#fbbf24"/></svg>
+    <a class="logo" href={u('/')} aria-label={`${BRAND} home`}>
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="currentColor" stroke-width="2" class="logo-frame"/><rect x="7" y="5" width="10" height="3" rx="1" fill="#38bdf8"/><rect x="7" y="10.5" width="10" height="3" rx="1" fill="#34d399"/><rect x="7" y="16" width="10" height="3" rx="1" fill="#fbbf24"/></svg>
       <span>{BRAND}</span>
     </a>
     <nav aria-label="Main">
       <details class="menu">
         <summary aria-label="Menu">Menu</summary>
         <ul>
-          <li><a href={u('/')} aria-current={path === u('/') ? 'page' : undefined}>{PRODUCT_NAME}</a></li>
-          {links.map((l) => <li><a href={u(l.href)} aria-current={here(l.href) ? 'page' : undefined}>{l.label}</a></li>)}
+          {links.map((l) => <li><a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a></li>)}
         </ul>
       </details>
     </nav>
-    <a class="btn btn-primary btn-sm" href={u('/try')}>Try it free</a>
+    {section === 'homelab' && <a class="btn btn-primary btn-sm" href={u('/homelab/try')}>Try it free</a>}
   </div>
 </header>
 <style>
   .site-header { position: sticky; top: 0; z-index: 20; background: rgba(7, 11, 20, .86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
   .bar { display: flex; align-items: center; gap: 16px; min-height: 62px; }
   .logo { display: inline-flex; align-items: center; gap: 9px; color: var(--text); text-decoration: none; font-weight: 800; letter-spacing: .08em; font-size: .95rem; }
+  .logo-frame { color: var(--accent); }
   nav { margin-left: auto; }
   .btn-sm { min-height: 40px; padding: 0 14px; font-size: .92rem; white-space: nowrap; }
   @media (max-width: 400px) { .logo span { letter-spacing: .04em; font-size: .88rem; } .bar { gap: 10px; } .btn-sm { padding: 0 11px; } }

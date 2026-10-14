@@ -10,6 +10,7 @@ let bad = 0;
 const fail = (m) => { console.log('✖', m); bad++; };
 for (const f of html) {
   const s = readFileSync(f, 'utf8');
+  if (/http-equiv="refresh"/.test(s)) continue;   // redirect stubs
   const h1 = (s.match(/<h1[\s>]/g) || []).length;
   if (h1 !== 1) fail(`${f}: ${h1} <h1>`);
   if (!/<title>[^<]+<\/title>/.test(s)) fail(`${f}: no title`);

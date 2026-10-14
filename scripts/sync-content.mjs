@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = process.env.PLAN_LEARN ?? join(process.env.HOME, 'Sensaka/marketing/homelab-site/learn');
-const OUT = join(here, '../src/content/learn');
+const OUT = join(here, '../src/content/homelab/learn');
 const PUBLISH = ['tokens-per-watt', '10-inch-mini-rack-planner', 'homelab-power-calculator', 'proxmox-power-usage']; // weekly runs add slugs here
 const TEASERS = {
   'tokens-per-watt': 'Divide tokens per second by watts: that is tokens per joule. Multiply by 3.6 million for tokens per kWh.',
@@ -58,8 +58,8 @@ for (const file of readdirSync(SRC).filter((f) => f.endsWith('.md') && f !== 'CO
     const noCode = l.replace(/`[^`]*`/g, '').replace(/<[A-Z][A-Za-z]+ \/>/g, '').replace(/\{PRODUCT_NAME\}|\{CONTACT_EMAIL\}|<a href=\{MAILTO\}>|<\/a>/g, '');
     if (/[{}]|<[a-zA-Z]/.test(noCode)) { console.warn(`${file}:${n + 1}: MDX-unsafe text: ${l}`); problems++; }
   });
-  const imports = [`import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../config/brand';`,
-    ...[...comps].map((c) => `import ${c} from '../../components/calc/${c}.astro';`)].join('\n');
+  const imports = [`import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../../config/brand';`,
+    ...[...comps].map((c) => `import ${c} from '../../../components/calc/${c}.astro';`)].join('\n');
   const teaser = TEASERS[slug] ?? '';
   writeFileSync(join(OUT, `${slug}.mdx`), `---\n${fm}\nteaser: ${JSON.stringify(teaser)}\n---\n${imports}\n\n${mdx.trim()}\n`);
   console.log(`synced ${slug}.mdx (${[...comps].join(', ') || 'no calculator'})`);

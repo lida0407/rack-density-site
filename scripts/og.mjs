@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import { readFileSync } from 'node:fs';
 import { PRODUCT_NAME } from '../src/config/brand.ts';
 const PAGES = {
+  hub: ['Racks you can see through', 'Free rack density calculator, plus 3D twins for the homelab and the data center.'],
   home: ['Your homelab rack, in 3D.', 'Watts, cost per month, cables and what goes dark when one thing fails.'],
   try: ['Try it: your rack in 3D', 'Demo lab and import template. No account, nothing stored.'],
   calculator: ['Rack Density Calculator', 'Devices per rack by space, power and cooling, plus cost per month.'],
@@ -26,8 +27,8 @@ for (const [name, [title, sub]] of Object.entries(PAGES)) {
     <text x="64" y="370" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#c9d4e3">${esc(sub)}</text>
     <text x="64" y="566" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#8a97ab">${esc(PRODUCT_NAME)} · demo lab, simulated data</text>
   </svg>`;
-  await sharp(bg).composite([{ input: Buffer.from(svg) }]).png({ compressionLevel: 9, palette: true }).toFile(`public/og/${name}.png`);
-  console.log(`og/${name}.png`);
+  await sharp(bg).composite([{ input: Buffer.from(svg) }]).png({ compressionLevel: 9, palette: true }).toFile(name === 'hub' ? 'public/og/hub.png' : `public/homelab/og/${name}.png`);
+  console.log(name);
 }
 await sharp(readFileSync('public/favicon.svg'), { density: 1200 }).resize(512, 512).png().toFile('public/icon-512.png');
 console.log('icon-512.png');

@@ -1,8 +1,10 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { dcCollections } from './content/dc/collections';
 
+// Homelab Sim (owned by homelab marketing)
 const learn = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/learn' }),
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/homelab/learn' }),
   schema: z.object({
     title: z.string(), metaTitle: z.string().max(60), metaDescription: z.string().max(155),
     slug: z.string(), date: z.coerce.date(), updated: z.coerce.date(),
@@ -14,7 +16,9 @@ const learn = defineCollection({
   }),
 });
 const changelog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/changelog' }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/homelab/changelog' }),
   schema: z.object({ date: z.coerce.date(), title: z.string(), summary: z.string().max(200) }),
 });
-export const collections = { learn, changelog };
+
+// DC Sim collections ("pages", "guides") are defined by DC marketing in src/content/dc/collections.ts.
+export const collections = { learn, changelog, ...dcCollections };

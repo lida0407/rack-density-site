@@ -10,4 +10,4 @@ const appUrl = TRY.url + (utm ? `?utm_source=${utm}&utm_medium=site` : '');
   ? (TRY.live
       ? <a class="btn btn-primary" href={appUrl} rel="noopener">{label}</a>
       : <span class="btn btn-primary" aria-disabled="true" role="link">Try: {TRY.comingNote}</span>)
-  : <a class="btn btn-primary" href={u('/try')}>{label}</a>}
+  : <a class="btn btn-primary" href={u('/homelab/try')}>{label}</a>}

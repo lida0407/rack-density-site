@@ -35,3 +35,7 @@ export const FEATURE_STATUS: Record<string, Status> = {
   upgradePlanner: 'roadmap', alerts: 'roadmap', agent: 'roadmap',
 };
 export const MAILTO = `mailto:${CONTACT_EMAIL}`;
+
+// The other product line on rack-density.com. Its own constants live in src/config/dc/product.ts (DC marketing owns them);
+// this mirror is only for the hub, the shared footer and the Organization schema.
+export { PRODUCT_NAME as DC_PRODUCT_NAME } from './dc/product.ts';
