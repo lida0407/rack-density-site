@@ -1,22 +1,20 @@
 ---
+// Rack Density Calculator (/calculator/): form + result tiles on the left, the live RackDiagram on the right (sticky);
+// phone: presets → inputs → tiles → diagram → message. ?preset=10|12|22|42 preselects; last inputs remembered locally.
 import PriceField from './PriceField.astro';
-import { u } from '../../lib/url';
-const presets = [
-  { id: '10', label: '10" mini rack (8U)', rackU: 8, serverU: 1, w: 35, cool: 0.5 },
-  { id: '12', label: '12U wall rack', rackU: 12, serverU: 1, w: 60, cool: 1 },
-  { id: '22', label: '22U half rack', rackU: 22, serverU: 2, w: 150, cool: 2 },
-  { id: '42', label: '42U full rack', rackU: 42, serverU: 2, w: 250, cool: 5 },
-];
+import RackDiagram from './RackDiagram.astro';
+import { DENSITY_PRESETS as presets } from '../../lib/calc/presets';
 const circuits = [
   { v: 'single-230-16', label: 'Single-phase 230 V · 16 A' }, { v: 'single-230-10', label: 'Single-phase 230 V · 10 A' },
   { v: 'single-120-15', label: 'Single-phase 120 V · 15 A' }, { v: 'single-120-20', label: 'Single-phase 120 V · 20 A' },
   { v: 'three-400-16', label: 'Three-phase 400 V · 16 A' }, { v: 'three-400-32', label: 'Three-phase 400 V · 32 A' },
 ];
 ---
-<div class="calc" data-calc="density" id="calculator">
+<div class="calc dens" data-calc="density">
+ <div class="dens-main">
   <p class="small muted" style="margin:0 0 8px">Start from</p>
   <div class="chips" style="margin-bottom:16px">
-    {presets.map((p) => <button type="button" class="btn btn-ghost" style="min-height:40px" data-preset={JSON.stringify(p)}>{p.label}</button>)}
+    {presets.map((p) => <button type="button" class="btn btn-ghost" style="min-height:40px" data-preset={JSON.stringify(p)} aria-pressed="false">{p.label}</button>)}
   </div>
   <p class="small muted" style="margin-top:-6px">Homelab values are typical starting points, not measurements. Change any field.</p>
   <div class="calc-grid">
@@ -33,57 +31,79 @@ const circuits = [
     <div class="result"><div class="k">Draw</div><div class="v" data-o="kw">–</div></div>
     <div class="result"><div class="k">If it runs 24/7</div><div class="v" data-o="cost">–</div></div>
     <div class="result"><div class="k">Status</div><div class="v" data-o="st">–</div></div>
+    <div class="result wide"><div class="k">Space · Power · Cooling</div><ul class="util" data-o="util"><li>–</li></ul></div>
   </div>
+ </div>
+ <div class="dens-side"><RackDiagram /></div>
+ <div class="dens-foot">
   <p data-o="msg" style="margin:14px 0 6px"></p>
-  <div class="bars" data-bars style="min-height:112px"></div>
   <p class="small muted" style="margin-top:10px">Cost = draw (kW) × 730 hours × your price. An estimate: real draw depends on load. Green needs ≥ 20 % headroom on power and cooling.</p>
-  <aside class="card" style="margin-top:18px">
-    <h2 style="font-size:1.15rem">See a rack like this in 3D</h2>
-    <p class="muted">What each device draws, what's plugged where, and what goes dark if the UPS fails: watch it in Homelab Twin.</p>
-    <a class="btn btn-primary" href={u('/homelab/try')}>See it</a>
-  </aside>
+ </div>
 </div>
+<style>
+  .dens { display: grid; gap: 0 24px; }
+  .dens-main { margin-top: 16px; }
+  .dens-side { margin: 18px 16px 0; }
+  .dens .wide { grid-column: 1 / -1; }
+  .util { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 2px; font: 500 .9rem/1.5 var(--font-mono); font-variant-numeric: tabular-nums; }
+  @media (min-width: 960px) {
+    .dens { grid-template-columns: 55fr 45fr; grid-template-areas: 'main side' 'foot side'; align-items: start; }
+    .dens-main { grid-area: main; } .dens-foot { grid-area: foot; }
+    .dens-side { grid-area: side; position: sticky; top: 104px; margin: 16px 16px 16px 0; }
+  }
+</style>
 <script>
   import { rackDensity, type Phase } from '../../lib/calc/rackDensity';
+  import { drawRack } from '../../lib/calc/rackDiagram';
+  import { DENSITY_PRESETS } from '../../lib/calc/presets';
   import { bindPrice, num, fmt, money } from '../../lib/prefs';
+  const KEY = 'rd.density';
   document.querySelectorAll<HTMLElement>('[data-calc="density"]').forEach((root) => {
     const q = (s: string) => root.querySelector(s) as HTMLInputElement;
     const out = (k: string, v: string) => { (root.querySelector(`[data-o="${k}"]`) as HTMLElement).textContent = v; };
     let price: () => { currency: string; price: number };
+    const fields = ['[data-ru]', '[data-su]', '[data-w]', '[data-cool]', '[data-circ]', '[data-pf]'];
     const run = () => {
       const [phase, volts, amps] = q('[data-circ]').value.split('-');
       try {
-        const r = rackDensity({ rackU: num(q('[data-ru]')), serverU: num(q('[data-su]')), wattsPerServer: num(q('[data-w]')), coolingKw: num(q('[data-cool]')),
-          supply: { phase: phase as Phase, volts: +volts, amps: +amps, pf: num(q('[data-pf]'), 0.95) } });
+        const input = { rackU: num(q('[data-ru]')), serverU: num(q('[data-su]')), wattsPerServer: num(q('[data-w]')), coolingKw: num(q('[data-cool]')),
+          supply: { phase: phase as Phase, volts: +volts, amps: +amps, pf: num(q('[data-pf]'), 0.95) } };
+        const r = rackDensity(input);
         const p = price();
+        const cost = money(p.currency, r.drawKw * 730 * p.price, 0);
         out('n', String(r.servers)); out('kw', `${fmt(r.drawKw, 2)} kW`);
-        out('cost', `${money(p.currency, r.drawKw * 730 * p.price, 0)} / month`);
+        out('cost', `${cost} / month`);
         out('st', r.status === 'ok' ? 'OK' : r.status === 'warn' ? 'Tight' : 'Critical');
+        const pct = (v: number) => `${fmt(v * 100)} %`;
+        root.querySelector('[data-o="util"]')!.replaceChildren(...[
+          `Space ${r.servers * input.serverU} / ${fmt(input.rackU)} U · ${pct(r.util.space)}`,
+          `Power ${fmt(r.drawKw, 2)} / ${fmt(r.supplyKw, 2)} kW · ${pct(r.util.power)}`,
+          `Cooling ${fmt(r.drawKw, 2)} / ${fmt(input.coolingKw, 2)} kW · ${pct(r.util.cooling)}`,
+        ].map((t) => Object.assign(document.createElement('li'), { textContent: t })));
         const word = { space: 'Space', power: 'Power', cooling: 'Cooling' }[r.bottleneck];
         out('msg', r.status === 'critical' ? `${word} is the bottleneck and has no safe margin. Add capacity or lower density.`
           : r.status === 'warn' ? `${word} is the bottleneck, with under 20 % headroom.` : `${word} is the limit; power and cooling keep ≥ 20 % headroom.`);
-        const rows: [string, number, string][] = [
-          ['Space', r.util.space, `${r.servers * num(q('[data-su]'))} / ${fmt(num(q('[data-ru]')))} U`],
-          ['Power', r.util.power, `${fmt(r.drawKw, 2)} / ${fmt(r.supplyKw, 2)} kW`],
-          ['Cooling', r.util.cooling, `${fmt(r.drawKw, 2)} / ${fmt(num(q('[data-cool]')), 2)} kW`],
-        ];
-        root.querySelector<HTMLElement>('[data-bars]')!.replaceChildren(...rows.map(([n, f, t]) => {
-          const b = document.createElement('div'); b.className = 'bar';
-          const a = document.createElement('span'); a.textContent = n;
-          const v = document.createElement('span'); v.className = 'muted'; v.textContent = `${t} · ${fmt(f * 100)} %`;
-          const tr = document.createElement('div'); tr.className = 'track';
-          const fi = document.createElement('div'); fi.className = 'fill'; fi.style.width = `${Math.min(100, f * 100)}%`;
-          fi.className = `fill ${n === 'Space' ? 'data' : f > 0.95 ? 'crit' : f > 0.8 ? 'warn' : 'ok'}`;
-          tr.appendChild(fi); b.append(a, v, tr); return b;
-        }));
+        drawRack(root.querySelector('[data-diagram]')!, r, input, cost);
+        try { localStorage.setItem(KEY, JSON.stringify(fields.map((f) => q(f).value))); } catch { /* storage unavailable */ }
       } catch { out('n', '–'); }
     };
-    root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((b) => b.addEventListener('click', () => {
-      const p = JSON.parse(b.dataset.preset!);
-      q('[data-ru]').value = p.rackU; q('[data-su]').value = String(p.serverU); q('[data-w]').value = p.w; q('[data-cool]').value = p.cool; run();
-    }));
+    const btns = [...root.querySelectorAll<HTMLButtonElement>('[data-preset]')];
+    const apply = (p: (typeof DENSITY_PRESETS)[number]) => {
+      q('[data-ru]').value = String(p.rackU); q('[data-su]').value = String(p.serverU); q('[data-w]').value = String(p.w); q('[data-cool]').value = String(p.cool);
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(JSON.parse(b.dataset.preset!).id === p.id)));
+    };
+    btns.forEach((b) => b.addEventListener('click', () => { apply(JSON.parse(b.dataset.preset!)); run(); }));
+    // Start state: ?preset= wins, then the last inputs in this browser, then the defaults in the markup.
+    const want = new URLSearchParams(location.search).get('preset');
+    const preset = DENSITY_PRESETS.find((p) => p.id === want);
+    if (preset) apply(preset);
+    else try {
+      const saved = JSON.parse(localStorage.getItem(KEY) ?? 'null');
+      if (Array.isArray(saved) && saved.length === fields.length) fields.forEach((f, k) => { if (saved[k] !== '') q(f).value = String(saved[k]); });
+    } catch { /* storage unavailable */ }
     price = bindPrice(root, run);
-    root.addEventListener('input', run); root.addEventListener('change', run);
+    root.addEventListener('input', (e) => { if ((e.target as Element).matches('[data-ru],[data-su],[data-w],[data-cool]')) btns.forEach((b) => b.setAttribute('aria-pressed', 'false')); run(); });
+    root.addEventListener('change', run);
     run();
   });
 </script>

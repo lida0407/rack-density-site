@@ -30,6 +30,6 @@ export default defineConfig({
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'always' },
   markdown: { rehypePlugins: [rehypeBaseLinks], shikiConfig: { themes: { dark: 'github-dark-default', light: 'github-light-default' }, defaultColor: 'dark' } },
-  integrations: [mdx(), sitemap({ filter: (page) => !/\/404\/?$/.test(page) && !/\/calculator\/$/.test(page) })],
+  integrations: [mdx(), sitemap({ filter: (page) => !/\/404\/?$/.test(page) })],
   devToolbar: { enabled: false },
 });

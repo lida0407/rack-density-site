@@ -5,7 +5,7 @@ import { u } from '../../../lib/url';
 const live = (await getCollection('learn')).sort((a, b) => +a.data.date - +b.data.date);
 const isLive = (slug: string) => live.some((e) => e.data.slug === slug);
 const calculators = [
-  { t: 'Rack Density Calculator', d: 'How many devices fit before space, power or cooling runs out.', href: '/#calculator', live: true },
+  { t: 'Rack Density Calculator', d: 'How many devices fit before space, power or cooling runs out.', href: '/calculator', live: true },
   { t: 'Tokens per Watt Calculator', d: 'Tokens per kWh and cost per million tokens for your home AI box.', href: '/homelab/learn/tokens-per-watt', live: isLive('tokens-per-watt') },
   { t: 'Homelab Power Cost Calculator', d: 'What your whole lab costs per month, device by device.', href: '/homelab/learn/homelab-power-calculator', live: isLive('homelab-power-calculator') },
   { t: '10-inch Rack Planner', d: 'Will it fit? Width, depth and U for a 10-inch mini rack.', href: '/homelab/learn/10-inch-mini-rack-planner', live: isLive('10-inch-mini-rack-planner') },

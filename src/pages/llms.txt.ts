@@ -11,7 +11,7 @@ export async function GET() {
 > ${BRAND} makes 3D twins of racks built from a spreadsheet: ${PRODUCT_NAME} for the homelab and ${DC_PRODUCT_NAME} for data centers, plus free calculators. Contact: ${CONTACT_EMAIL}.
 
 ## Free calculators
-- [Rack Density Calculator](${abs('/')}#calculator): devices per rack by space, power and cooling; kW per rack; monthly cost
+- [Rack Density Calculator](${abs('/calculator')}): devices per rack by space, power and cooling; kW per rack; monthly cost
 
 ## ${PRODUCT_NAME} (homelab)
 

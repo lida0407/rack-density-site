@@ -5,6 +5,7 @@ import { tokensPerWatt } from './tokensPerWatt.ts';
 import { uNeeded, fitDevice, planRack } from './rackFit.ts';
 import { labCost, avgWatts } from './powerCost.ts';
 import { idleSavings, paybackMonths } from './idleSavings.ts';
+import { rackSlots } from './rackSlots.ts';
 
 const near = (a: number, b: number, eps = 1e-6) => assert.ok(Math.abs(a - b) <= eps * Math.max(1, Math.abs(b)), `${a} ≉ ${b}`);
 
@@ -135,4 +136,13 @@ test('density: homelab 12U wall rack on a 230 V 16 A circuit', () => {
   assert.equal(r.bottleneck, 'space');
   near(r.drawKw, 0.72);
   assert.equal(r.status, 'ok');            // cooling 72 % → 28 % headroom
+});
+
+test('rack diagram slots: 42U / 2U fills 21, 80U caps at 60 slots (60 drawn + 20 more), oversized devices clamp', () => {
+  assert.deepEqual(rackSlots(42, 2, 14), { slots: 42, perDevice: 2, drawn: 14, more: 0 });
+  assert.deepEqual(rackSlots(42, 2, 30), { slots: 42, perDevice: 2, drawn: 21, more: 9 });
+  assert.deepEqual(rackSlots(80, 1, 80), { slots: 60, perDevice: 1, drawn: 60, more: 20 });
+  assert.deepEqual(rackSlots(8, 8, 3), { slots: 8, perDevice: 8, drawn: 1, more: 2 });
+  assert.deepEqual(rackSlots(6, 8, 1), { slots: 6, perDevice: 6, drawn: 1, more: 0 });
+  assert.equal(rackSlots(0, 1, 0).slots, 1);
 });

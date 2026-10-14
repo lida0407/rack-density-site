@@ -63,9 +63,12 @@ const ogTitle = title.replace(/ \| .*$/, '');
     {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body class={`theme-${section}`}>
+    {/* Cloudflare's email obfuscation rewrites mailto links to /cdn-cgi/l/email-protection (404 without JS): opt out. */}
+    <Fragment set:html="<!--email_off-->" />
     <Header section={section} />
     {bc && <Breadcrumbs items={bc} />}
     <main id="main"><slot /></main>
     <Footer section={section} />
+    <Fragment set:html="<!--/email_off-->" />
   </body>
 </html>

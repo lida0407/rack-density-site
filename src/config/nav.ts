@@ -27,14 +27,14 @@ export const PRODUCTS = [
 /** Section menu. On the hub the two switcher pills are the first two items (Homelab Twin · DC Sim), so the menu adds the rest. */
 export const MENU: Record<Section, NavLink[]> = {
   hub: [
-    { href: '/#calculator', label: 'Calculator' },
+    { href: '/calculator', label: 'Calculator' },
     { href: '/homelab/learn', label: 'Learn' },
   ],
   homelab: [
     { href: '/homelab/learn', label: 'Learn' },
     { href: '/homelab/pricing', label: 'Pricing' },
     { href: '/homelab/changelog', label: 'Changelog' },
-    { href: '/#calculator', label: 'Calculator' },
+    { href: '/calculator', label: 'Calculator' },
   ],
   dc: DC_NAV,
 };
@@ -55,7 +55,7 @@ export const STRIP: Record<Section, { label?: string; value?: string; shape?: st
 export const FOOTER = {
   hub: [
     { href: '/', label: 'All products' },
-    { href: '/#calculator', label: 'Rack Density Calculator' },
+    { href: '/calculator', label: 'Rack Density Calculator' },
     { href: '/homelab/learn', label: 'Learn' },
   ],
   homelab: [

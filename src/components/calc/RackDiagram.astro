@@ -1,0 +1,92 @@
+---
+// Live rack diagram (CALCULATOR-PAGE.md §3): rack elevation filling from the bottom, Space · Power · Cooling gauges,
+// power flow from the circuit, heat chevrons. Static SVG rendered in the default state; lib/calc/rackDiagram.ts updates it.
+// Schematic only (no product shots, no model names). aria-hidden: every number is also in the result tiles.
+import { rackDensity } from '../../lib/calc/rackDensity';
+import { rackSlots, SLOT_CAP } from '../../lib/calc/rackSlots';
+import { G, devBox, level } from '../../lib/calc/rackDiagram';
+import { DENSITY_DEFAULT as D } from '../../lib/calc/presets';
+const input = { rackU: D.rackU, serverU: D.serverU, wattsPerServer: D.w, coolingKw: D.cool, supply: { phase: 'single' as const, volts: 230, amps: 16, pf: 0.95 } };
+const r = rackDensity(input);
+const L = rackSlots(input.rackU, input.serverU, r.servers);
+const idx = Array.from({ length: SLOT_CAP }, (_, k) => k);
+const gauges = [
+  { a: 'space' as const, x: 300, name: 'Space', v1: `${r.servers * input.serverU} U`, v2: `of ${input.rackU} U` },
+  { a: 'power' as const, x: 380, name: 'Power', v1: `${r.drawKw.toFixed(2)} kW`, v2: `of ${r.supplyKw.toFixed(2)} kW` },
+  { a: 'cooling' as const, x: 460, name: 'Cooling', v1: `${r.drawKw.toFixed(2)} kW`, v2: `of ${input.coolingKw.toFixed(2)} kW` },
+];
+---
+<figure class="rd-fig" data-diagram>
+  <svg viewBox="0 0 520 420" aria-hidden="true" focusable="false" class="rd">
+    <text data-d="head" x="8" y="22" class="head">{r.servers} devices · {r.drawKw.toFixed(2)} kW · –/month</text>
+    <g class={`heat g-${level(r.util.cooling, 'cooling')}`}>
+      {[0, 1, 2, 3, 4, 5].map((k) => <path class:list={['chev', { off: k >= 3 + Math.round(3 * Math.min(1, r.util.cooling)) }]} d={`M${56 + k * 26} 64 l8 -7 l8 7`} style={`animation-delay:${(k * 0.37) % 1.4}s`} />)}
+    </g>
+    <rect class="frame" x="30" y="72" width="180" height="300" />
+    <line class="rail" x1="40" y1="74" x2="40" y2="370" /><line class="rail" x1="200" y1="74" x2="200" y2="370" />
+    {idx.map((k) => { const b = devBox(k, L.slots, 1); return <rect class:list={['slot', { off: k >= L.slots }]} x={G.x} y={b.y} width={G.w} height={b.h} />; })}
+    {idx.map((k) => { const b = devBox(k, L.slots, L.perDevice); return (
+      <g transform={`translate(${G.x} ${b.y})`}><g class:list={['dev', { on: k < L.drawn }]}>
+        <rect width={G.w} height={b.h} rx="1.5" />
+        <circle class="led" cx={G.w - 12} cy={b.h / 2} r={Math.min(2.4, b.h / 3)} style={`animation-delay:${((k * 0.53) % 2).toFixed(2)}s`} />
+        <circle class="led" cx={G.w - 20} cy={b.h / 2} r={Math.min(2.4, b.h / 3)} style={`animation-delay:${((k * 0.53 + 0.7) % 2).toFixed(2)}s`} />
+      </g></g>); })}
+    <text data-d="more" x="214" y="84" class="small"></text>
+    <rect class="plug" x="6" y="388" width="118" height="26" rx="2" />
+    <text data-d="circ" x="65" y="405" class="small mid">230 V · 16 A</text>
+    <path class={`flow g-${level(r.util.power, 'power')}`} d="M124 401 H170 V374" />
+    {gauges.map((g) => (
+      <g data-g={g.a} class:list={['gauge', `g-${level(r.util[g.a], g.a)}`, { limit: r.bottleneck === g.a }]}>
+        <text x={g.x} y="84" class="tag mid">limit</text>
+        <rect class="ring" x={g.x - 22} y={G.gaugeTop - 4} width="44" height={G.gaugeH + 8} rx="3" />
+        <rect class="track" x={g.x - 18} y={G.gaugeTop} width="36" height={G.gaugeH} />
+        <rect class="fill" x={g.x - 18} y={G.gaugeTop} width="36" height={G.gaugeH} style={`transform:scaleY(${Math.min(1, r.util[g.a])})`} />
+        <text x={g.x} y="336" class="pct mid">{Math.round(r.util[g.a] * 100)} %</text>
+        <text x={g.x} y="356" class="name mid">{g.name}</text>
+        <text x={g.x} y="376" class="v1 small mid">{g.v1}</text>
+        <text x={g.x} y="392" class="v2 small mid">{g.v2}</text>
+      </g>
+    ))}
+  </svg>
+  <figcaption>Schematic. Devices fill from the bottom; the glowing gauge is what runs out first.</figcaption>
+</figure>
+<style>
+  .rd-fig { margin: 0; border: 1px solid var(--line); background: var(--bg-000); padding: 12px; }
+  .rd { width: 100%; height: auto; max-height: 60vh; display: block; font-family: var(--font-mono); }
+  .rd-fig figcaption { margin-top: 8px; font: 400 12px/1.5 var(--font-mono); color: var(--ink-dim); }
+  text { fill: var(--ink-muted); font-size: 13px; }
+  .head { fill: var(--ink); font-size: 15px; font-weight: 600; }
+  .small { font-size: 12px; } .mid { text-anchor: middle; }
+  .name { fill: var(--ink); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+  .pct { fill: var(--ink); font-weight: 600; }
+  .frame { fill: var(--bg-100); stroke: var(--line-strong); stroke-width: 2; transition: filter .3s, stroke .3s; }
+  .is-crit .frame { stroke: var(--crit); filter: drop-shadow(0 0 6px var(--crit)); }
+  .rail { stroke: var(--line); stroke-width: 2; }
+  .slot { fill: none; stroke: var(--line); stroke-dasharray: 2 7; }
+  .off { display: none; }
+  .dev { opacity: 0; transform: translateY(-8px); transition: opacity .25s ease, transform .25s ease; }
+  .dev.on { opacity: 1; transform: none; }
+  .dev rect { fill: var(--bg-300); stroke: var(--line-strong); stroke-width: 1; }
+  .led { fill: var(--ok); animation: blink 2s ease-in-out infinite; }
+  @keyframes blink { 50% { opacity: .25; } }
+  .plug { fill: var(--bg-100); stroke: var(--line-strong); }
+  .flow { fill: none; stroke-width: 2.5; stroke-dasharray: 6 6; animation: flow 1.2s linear infinite; }
+  @keyframes flow { to { stroke-dashoffset: -24; } }
+  .track { fill: var(--bg-200); stroke: var(--line); }
+  .fill { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .4s ease; }
+  .g-data .fill { fill: var(--data); } .g-ok .fill { fill: var(--ok); } .g-warn .fill { fill: var(--warn); } .g-crit .fill { fill: var(--crit); }
+  .flow.g-ok { stroke: var(--ok); } .flow.g-warn { stroke: var(--warn); } .flow.g-crit { stroke: var(--crit); }
+  .ring { fill: none; stroke: none; }
+  .tag { display: none; fill: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
+  .limit .ring { stroke: var(--accent); stroke-width: 2; animation: pulse 1.6s ease-in-out infinite; }
+  .limit .tag { display: block; }
+  @keyframes pulse { 50% { stroke-opacity: .25; } }
+  .chev { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; animation: rise 2s ease-in infinite; opacity: 0; }
+  .heat.g-ok .chev { stroke: var(--ok); } .heat.g-warn .chev { stroke: var(--warn); } .heat.g-crit .chev { stroke: var(--crit); }
+  @keyframes rise { 0% { opacity: 0; transform: translateY(6px); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-22px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .led, .flow, .limit .ring { animation: none; }
+    .chev { display: none; }
+    .dev, .fill, .frame { transition: none; }
+  }
+</style>

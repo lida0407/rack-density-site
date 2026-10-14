@@ -9,7 +9,7 @@ const PAGES = {
   hub: ['Racks you can see through', 'Free rack density calculator, plus 3D twins for the homelab and the data center.'],
   home: ['Your homelab rack, in 3D.', 'Watts, cost per month, cables and what goes dark when one thing fails.'],
   try: ['See Homelab Twin', 'Clips and stills of the demo lab, or book a walkthrough.'],
-  calculator: ['Rack Density Calculator', 'Devices per rack by space, power and cooling, plus cost per month.'],
+  calculator: ['Rack Density Calculator', 'Devices per rack by space, power and cooling, with a live rack diagram.'],
   pricing: ['Free, $5 or $20 a month', 'Try stores nothing. Account keeps your lab. Pro explains it.'],
   learn: ['Homelab guides & calculators', 'Power cost, tokens per watt, 10-inch racks, Proxmox power.'],
   'tokens-per-watt': ['Tokens per watt', 'Tokens per kWh and cost per million tokens for your local AI box.'],
@@ -17,6 +17,7 @@ const PAGES = {
   'homelab-power-calculator': ['What your homelab costs', 'Average watts × 730 ÷ 1,000 × your price per kWh, device by device.'],
   'proxmox-power-usage': ['Proxmox power usage', 'Measure it at the wall, then cut idle watts. Payback calculator.'],
 };
+const HUB = new Set(['hub', 'calculator']); // hub pages: public/og/, no product footer
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const V = {
   dark: { shot: 'src/assets/shots/overview.png', bright: 0.55, mid: .8, bg: '#0b0a09', ink: '#f2f1ee', muted: '#a8a5a0', acc: '#e57000', acc2: '#22c55e', suffix: '' },
@@ -32,9 +33,9 @@ for (const v of Object.values(V)) {
       <text x="110" y="90" font-family="Menlo, Courier, monospace" font-size="26" font-weight="700" letter-spacing="4" fill="${v.ink}">RACK<tspan fill="${v.acc}">DENSITY</tspan></text>
       <text x="64" y="300" font-family="Helvetica, Arial, sans-serif" font-size="64" font-weight="800" fill="${v.ink}">${esc(title)}</text>
       <text x="64" y="370" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="${v.muted}">${esc(sub)}</text>
-      <text x="64" y="566" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="${v.acc}">${esc(PRODUCT_NAME)} · demo lab, simulated data</text>
+      <text x="64" y="566" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="${v.acc}">${HUB.has(name) ? 'Free · runs in your browser, no data leaves it' : `${esc(PRODUCT_NAME)} · demo lab, simulated data`}</text>
     </svg>`;
-    await sharp(bg).composite([{ input: Buffer.from(svg) }]).png({ compressionLevel: 9, palette: true }).toFile(name === 'hub' ? `public/og/hub${v.suffix}.png` : `public/homelab/og/${name}${v.suffix}.png`);
+    await sharp(bg).composite([{ input: Buffer.from(svg) }]).png({ compressionLevel: 9, palette: true }).toFile(HUB.has(name) ? `public/og/${name}${v.suffix}.png` : `public/homelab/og/${name}${v.suffix}.png`);
     console.log(name + v.suffix);
   }
 }
