@@ -7,6 +7,8 @@ import Faq from '../../components/Faq.astro';
 import { u, mailto, notifyHref } from '../../lib/url';
 import { PRODUCT_NAME, TRY, WALKTHROUGH, WAITLIST, FLAGS, PRICES } from '../../config/brand';
 import { tryFaq } from '../../data/faq';
+import Transcript from '../../components/site/Transcript.astro';
+import { VIDEOS, videoLd } from '../../data/videos';
 import heroDark from '../../assets/shots/hero-lightsoff.png';
 import heroLight from '../../assets/shots/hero-office.png';
 import flaw from '../../assets/shots/flaw-finder.png';
@@ -17,7 +19,7 @@ const half = '(min-width: 760px) 560px, 100vw';
 ---
 <Base title={`See ${PRODUCT_NAME}: Clips, Stills and a Walkthrough`}
   description={`Watch ${PRODUCT_NAME} in action: the demo lab in 3D, the power and network diagrams, a Fail what-if and lights-off mode. Request a walkthrough.`}
-  path="/homelab/try" ogImage="/homelab/og/try.png" section="homelab" crumbs={[{ name: 'See it' }]}>
+  path="/homelab/try" ogImage="/homelab/og/try.png" schema={[videoLd(VIDEOS.tour, '/homelab/try'), videoLd(VIDEOS.lightsOff, '/homelab/try')]} section="homelab" crumbs={[{ name: 'See it' }]}>
   <section class="section-tight head">
     <div class="wrap head-grid">
       <div>
@@ -40,7 +42,7 @@ const half = '(min-width: 760px) 560px, 100vw';
         <video controls muted playsinline preload="none" poster={u('/homelab/media/demo-tour.jpg')} width="1280" height="720" aria-label="Screen recording of the demo lab: Overview, the View menu, Power in 3D and as a diagram, Network in 3D and as a diagram, then a Fail what-if on the aggregation switch">
           <source src={u('/homelab/media/demo-tour.mp4')} type="video/mp4" />
         </video>
-        <figcaption>Search a device, open it, press Fail: the network diagram shows everything that loses connectivity.</figcaption>
+        <figcaption>Search a device, open it, press Fail: the network diagram shows everything that loses connectivity.<Transcript video={VIDEOS.tour} /></figcaption>
       </figure>
       <figure class="shot">
         <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>Lights off</b><span>· animated share · 8 s loop</span></div>
@@ -48,7 +50,7 @@ const half = '(min-width: 760px) 560px, 100vw';
           <source src={u('/homelab/media/lights-off-loop.webm')} type="video/webm" />
           <source src={u('/homelab/media/lights-off-loop.mp4')} type="video/mp4" />
         </video>
-        <figcaption>Lights off saves an estimated 145 W, about €34 a month, in the demo lab. Every lab can export this as a GIF or a video.</figcaption>
+        <figcaption>Lights off saves an estimated 145 W, about €34 a month, in the demo lab. Every lab can export this as a GIF or a video.<Transcript video={VIDEOS.lightsOff} /></figcaption>
       </figure>
     </div>
   </section>

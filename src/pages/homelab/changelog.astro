@@ -6,7 +6,7 @@ import { PRODUCT_NAME } from '../../config/brand';
 const entries = (await getCollection('changelog')).sort((a, b) => +b.data.date - +a.data.date);
 const rendered = await Promise.all(entries.map(async (e) => ({ e, C: (await render(e)).Content })));
 ---
-<Base title={`Changelog | ${PRODUCT_NAME}`} description={`What's new in ${PRODUCT_NAME}, newest first: features shipped, fixes and what's coming to your 3D homelab rack.`} path="/homelab/changelog" ogImage="/homelab/og/home.png" section="homelab" crumbs={[{ name: 'Changelog' }]}>
+<Base title={`${PRODUCT_NAME} Changelog: What's New`} description={`What's new in ${PRODUCT_NAME}, newest first: features shipped, fixes and what's coming to your 3D homelab rack.`} path="/homelab/changelog" ogImage="/homelab/og/home.png" section="homelab" crumbs={[{ name: 'Changelog' }]}>
   <section class="section-tight">
     <div class="wrap narrow">
       <h1>Changelog</h1>

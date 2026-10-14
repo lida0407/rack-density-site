@@ -1,0 +1,16 @@
+---
+// Visible transcript for a clip (indexable text; the clips are silent, so this is the captions plus what is on screen).
+import type { Video } from '../../data/videos';
+interface Props { video: Video; label?: string }
+const { video, label = 'What the clip shows' } = Astro.props;
+---
+<details class="transcript">
+  <summary>{label}</summary>
+  <ol>{video.transcript.map((t) => <li>{t}</li>)}</ol>
+</details>
+<style>
+  .transcript { margin-top: 10px; font: 400 13px/1.6 var(--font-mono); color: var(--ink-muted); }
+  .transcript summary { cursor: pointer; color: var(--ink-dim); letter-spacing: .06em; min-height: 32px; display: flex; align-items: center; }
+  .transcript summary:hover { color: var(--ink); }
+  .transcript ol { margin: 6px 0 0; padding-left: 1.4em; display: grid; gap: 4px; }
+</style>

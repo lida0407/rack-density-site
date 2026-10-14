@@ -7,6 +7,8 @@ import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
 import TryButton from '../../components/TryButton.astro';
 import HeroStage from '../../components/site/HeroStage.astro';
+import Transcript from '../../components/site/Transcript.astro';
+import { VIDEOS, videoLd } from '../../data/videos';
 import { u, abs, notifyHref } from '../../lib/url';
 import { PRODUCT_NAME, PRICES, FLAGS, WAITLIST } from '../../config/brand';
 import { homeFaq } from '../../data/faq';
@@ -39,7 +41,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
 ---
 <Base title={`3D Homelab Rack Planner: Power, Cost & Cables | ${PRODUCT_NAME}`}
   description="Turn a spreadsheet of your gear into a 3D model of your homelab rack: watts, cost per month, network, and what goes dark when one thing fails."
-  path="/homelab" ogImage="/homelab/og/home.png" schema={[app]} section="homelab">
+  path="/homelab" ogImage="/homelab/og/home.png" schema={[app, videoLd(VIDEOS.hero, '/homelab')]} section="homelab">
 
   <section class="hero">
     <div class="wrap hero-grid">
@@ -55,6 +57,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
         altLight="The demo lab in 3D with the room lights on, in a bright office">
         <span slot="pin" class="cs-pin cs-pin--warn"><span class="cs-shape cs-shape--warn"></span>Disk 7 · SMART</span>
         <figcaption class="readouts"><span><span class="cs-shape cs-shape--warn"></span>16 issues found</span><span class="dim">demo · simulated data</span></figcaption>
+        <div class="hero-tx"><Transcript video={VIDEOS.hero} label="What the hero clips show" /></div>
       </HeroStage>
     </div>
   </section>
@@ -200,6 +203,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
   .readouts i { font-style: normal; color: var(--ink-muted); }
   .readouts span { display: inline-flex; align-items: center; gap: 6px; }
   .readouts .dim { color: var(--ink-dim); margin-left: auto; }
+  .hero-tx { padding: 0 12px 8px; background: var(--bg-100); }
   .proof .tiles { margin-top: -1px; }
   .tile { background: var(--bg-100); padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
   .proof .tile { background: var(--bg-000); }

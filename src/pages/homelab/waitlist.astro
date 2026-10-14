@@ -35,6 +35,7 @@ import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY } from '../../config/br
         </div>
       )}
       <p class="small muted count" data-count></p>
+      <p class="small asked" data-asked></p>
       <p class="small muted">Prefer to see it now? <a href={u('/homelab/try')}>Watch the clips</a> or request a walkthrough from the See it page.</p>
     </div>
   </section>
@@ -51,7 +52,8 @@ import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY } from '../../config/br
   .ed label { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; text-transform: none; letter-spacing: 0; font: 400 1rem/1.4 var(--font-sans, inherit); color: var(--ink); cursor: pointer; }
   .ed input[type='radio'] { width: 18px; height: 18px; min-height: 0; margin: 0; padding: 0; flex: none; accent-color: var(--accent); }
   .form .btn { justify-self: start; }
-  [data-msg]:empty, [data-count]:empty { display: none; }
+  [data-msg]:empty, [data-count]:empty, [data-asked]:empty { display: none; }
+  .asked { color: var(--ink-muted); }
   [data-msg].ok { color: var(--ok); font-weight: 600; font-size: 1rem; }
   [data-msg].err { color: var(--crit); }
 </style>
@@ -64,6 +66,10 @@ import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY } from '../../config/br
   if (f) {
     const src = q.get('src'); if (src && /^[a-z0-9_-]{1,24}$/i.test(src)) (f.elements.namedItem('src') as HTMLInputElement).value = src.toLowerCase();
     if (q.get('edition') === 'dc') (f.querySelector('[value="dc"]') as HTMLInputElement).checked = true;
+    // Planned connectors send people here with ?src=<tool> ("I want this" on /dc/integrations/<tool>/): say so.
+    const ASKED: Record<string, string> = { librenms: 'the LibreNMS connector' };
+    const asked = ASKED[(src ?? '').toLowerCase()];
+    if (asked) document.querySelector('[data-asked]')!.textContent = `Your sign-up also counts as a request for ${asked}: connectors are built in the order people ask for them.`;
     const msg = f.querySelector<HTMLElement>('[data-msg]')!;
     f.addEventListener('submit', async (e) => {
       e.preventDefault();

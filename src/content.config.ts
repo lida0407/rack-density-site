@@ -13,6 +13,10 @@ const learn = defineCollection({
     cta: z.object({ title: z.string(), body: z.string(), button: z.string(), href: z.string() }),
     faq: z.array(z.object({ q: z.string(), a: z.string() })),
     teaser: z.string(),
+    // SEO-GEO-PLAN §3: HowTo schema for guides with steps; 3 related guides (default: newest others); matching tool pages.
+    howto: z.object({ name: z.string(), totalTime: z.string().optional(), steps: z.array(z.object({ name: z.string(), text: z.string() })).min(2) }).optional(),
+    related: z.array(z.string()).max(3).optional(),
+    tools: z.array(z.string()).default(['/calculator']),
   }),
 });
 const changelog = defineCollection({

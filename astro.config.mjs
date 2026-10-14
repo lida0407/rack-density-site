@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { SITE_URL, BASE } from './site.config.mjs';
 
 const siteBase = BASE.endsWith('/') ? BASE : `${BASE}/`;
@@ -24,12 +26,29 @@ function rehypeBaseLinks() {
   };
 }
 
+/** Sitemap lastmod = the last git commit that touched the page's source (SEO-GEO-PLAN §3: real lastmod, not build time).
+ *  CI checks out the full history (fetch-depth 0); a page with no known source gets no lastmod rather than a fake one. */
+const sourcesFor = (p) => {
+  if (p === '') return ['src/pages/index.astro'];
+  const learn = p.match(/^homelab\/learn\/([^/]+)$/);
+  if (learn) return [`src/content/homelab/learn/${learn[1]}.mdx`];
+  const guide = p.match(/^dc\/resources\/guides\/([^/]+)$/);
+  if (guide) return [`src/content/dc/guides/${guide[1]}.md`];
+  return [`src/pages/${p}.astro`, `src/pages/${p}/index.astro`, ...(p.startsWith('dc/') ? [`src/content/dc/pages/${p.slice(3)}.md`] : [])];
+};
+const lastmod = (url) => {
+  const p = decodeURIComponent(new URL(url).pathname).slice(siteBase.length).replace(/\/$/, '');
+  const files = sourcesFor(p).filter((f) => existsSync(f));
+  if (!files.length) return undefined;
+  try { return execFileSync('git', ['log', '-1', '--format=%cI', '--', ...files]).toString().trim() || undefined; } catch { return undefined; }
+};
+
 export default defineConfig({
   site: SITE_URL,
   base: BASE,
   trailingSlash: 'always',
   build: { format: 'directory', inlineStylesheets: 'always' },
   markdown: { rehypePlugins: [rehypeBaseLinks], shikiConfig: { themes: { dark: 'github-dark-default', light: 'github-light-default' }, defaultColor: 'dark' } },
-  integrations: [mdx(), sitemap({ filter: (page) => !/\/404\/?$/.test(page) })],
+  integrations: [mdx(), sitemap({ filter: (page) => !/\/404\/?$/.test(page), serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; } })],
   devToolbar: { enabled: false },
 });

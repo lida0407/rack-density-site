@@ -18,9 +18,13 @@ const iso = (x: Date) => x.toISOString().slice(0, 10);
 const article = { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.metaDescription, url: abs(path),
   datePublished: iso(d.date), dateModified: iso(d.updated), image: `${SITE_URL}${u(`/homelab/og/${d.slug}.png`)}`,
   author: { '@type': 'Organization', name: BRAND, url: abs('/') }, publisher: { '@id': `${abs('/')}#org` }, mainEntityOfPage: abs(path) };
-const related = all.filter((e) => e.data.slug !== d.slug);
+const others = all.filter((e) => e.data.slug !== d.slug).sort((a, b) => +b.data.updated - +a.data.updated);
+const related = (d.related?.length ? d.related.map((s) => others.find((e) => e.data.slug === s)).filter((e) => e !== undefined) : others).slice(0, 3);
+const TOOL_NAMES: Record<string, string> = { '/calculator': 'Rack Density Calculator', '/calculator/ups-runtime': 'UPS Runtime Calculator' };
+const howto = d.howto && { '@context': 'https://schema.org', '@type': 'HowTo', name: d.howto.name, ...(d.howto.totalTime ? { totalTime: d.howto.totalTime } : {}),
+  step: d.howto.steps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })) };
 ---
-<Base title={d.metaTitle} description={d.metaDescription} path={path} ogImage={`/homelab/og/${d.slug}.png`} schema={[article]} section="homelab"
+<Base title={d.metaTitle} description={d.metaDescription} path={path} ogImage={`/homelab/og/${d.slug}.png`} schema={howto ? [article, howto] : [article]} section="homelab"
   crumbs={[{ name: 'Learn', path: '/homelab/learn' }, { name: d.title.split(':')[0] }]}>
   <article class="section-tight">
     <div class="wrap">
@@ -32,9 +36,10 @@ const related = all.filter((e) => e.data.slug !== d.slug);
         <SeeIn3D title={d.cta.title} body={d.cta.body} button={d.cta.button} utm={d.slug} />
         <Faq items={d.faq.map((f) => ({ q: f.q, a: f.a }))} />
       </div>
-      {related.length > 0 && <section style="margin-top:3em">
-        <h2>More guides</h2>
+      {related.length > 0 && <section class="related" aria-labelledby="related-h">
+        <h2 id="related-h">Related</h2>
         <div class="grid grid-3">{related.map((e) => <a class="card rel" href={u(`/homelab/learn/${e.data.slug}`)}><h3>{e.data.title}</h3><p class="muted small">{e.data.teaser}</p></a>)}</div>
+        <p class="small muted tools">Free tools: {d.tools.map((t, i) => <>{i > 0 && ' · '}<a href={u(t)}>{TOOL_NAMES[t] ?? t}</a></>)} · All guides: <a href={u('/homelab/learn')}>Homelab Learn</a></p>
       </section>}
     </div>
   </article>
@@ -42,6 +47,8 @@ const related = all.filter((e) => e.data.slug !== d.slug);
 <style>
   .crumbs a { color: var(--muted); }
   .narrow-h { max-width: 22em; }
+  .related { margin-top: 3em; }
+  .tools { margin-top: 14px; }
   .rel { text-decoration: none; color: var(--text); }
   .rel:hover { border-color: var(--accent); color: var(--text); }
 </style>

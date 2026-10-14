@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Faq from '../../components/Faq.astro';
 import TryButton from '../../components/TryButton.astro';
-import { mailto } from '../../lib/url';
+import { mailto, abs } from '../../lib/url';
 import { PRODUCT_NAME, PRICES, FLAGS, FEATURE_STATUS } from '../../config/brand';
 import { pricingFaq } from '../../data/faq';
 
@@ -29,13 +29,25 @@ const rows: { f: string; key: string; c: [Cell, Cell, Cell] }[] = [
   { f: 'Agent: finds your devices', key: 'agent', c: ['this session', 'unattended', 'unattended'] },
 ];
 const soon = !FLAGS.billingLive;
+// Product + offers (SEO-GEO-PLAN §3). Paid plans are not purchasable yet (billingLive false) → PreOrder; Try → free.
+const offer = (name: string, price: number, unit: 'MON' | 'ANN', avail: string) => ({ '@type': 'Offer', name, price: String(price), priceCurrency: PRICES.currency,
+  availability: `https://schema.org/${avail}`, url: abs('/homelab/pricing'),
+  priceSpecification: { '@type': 'UnitPriceSpecification', price: String(price), priceCurrency: PRICES.currency, billingDuration: 1, unitCode: unit } });
+const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': abs('/homelab/') + '#product', name: PRODUCT_NAME, url: abs('/homelab/'),
+  description: `${PRODUCT_NAME} turns a spreadsheet of your homelab gear into a 3D model of your rack: power and monthly cost per device (estimated), network and cable views, and a Fail what-if.`,
+  brand: { '@id': `${abs('/')}#org` }, category: 'Homelab rack planning software',
+  offers: [
+    { '@type': 'Offer', name: 'Try', price: '0', priceCurrency: PRICES.currency, availability: 'https://schema.org/PreOrder', url: abs('/homelab/waitlist') },
+    offer('Account, monthly', PRICES.account.month, 'MON', soon ? 'PreOrder' : 'InStock'), offer('Account, yearly', PRICES.account.year, 'ANN', soon ? 'PreOrder' : 'InStock'),
+    offer('Pro, monthly', PRICES.pro.month, 'MON', soon ? 'PreOrder' : 'InStock'), offer('Pro, yearly', PRICES.pro.year, 'ANN', soon ? 'PreOrder' : 'InStock'),
+  ] };
 ---
-<Base title={`Pricing: Free, $${PRICES.account.month}/month or $${PRICES.pro.month}/month | ${PRODUCT_NAME}`}
-  description={`Try is free with no account and nothing stored. Account keeps your lab for $${PRICES.account.month}/month or $${PRICES.account.year}/year. Pro adds cable tracing, the AI view and more.`}
-  path="/homelab/pricing" ogImage="/homelab/og/pricing.png" section="homelab" crumbs={[{ name: 'Pricing' }]}>
+<Base title={`${PRODUCT_NAME} Pricing: Free, $${PRICES.account.month} or $${PRICES.pro.month} a Month`}
+  description={`Try will be free when it opens: no account, nothing stored. Account keeps your lab for $${PRICES.account.month}/month or $${PRICES.account.year}/year. Pro adds cable tracing, the AI view and more.`}
+  path="/homelab/pricing" ogImage="/homelab/og/pricing.png" schema={[product]} section="homelab" crumbs={[{ name: 'Pricing' }]}>
   <section class="section-tight">
     <div class="wrap">
-      <h1>Pricing</h1>
+      <h1>{PRODUCT_NAME} pricing</h1>
       <p class="lead">Start free. Pay only when you want {PRODUCT_NAME} to keep your lab.</p>
       <p class="muted">No account = we store nothing. $5/month keeps it.</p>
       <div class="tiles tiles-3 plans">
