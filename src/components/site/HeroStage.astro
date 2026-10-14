@@ -9,8 +9,10 @@ import nodePath from 'node:path';
 import HeroVideo from './HeroVideo.astro';
 import { u } from '../../lib/url';
 
-interface Props { edition: 'homelab' | 'dc'; label: string; dark: ImageMetadata; light: ImageMetadata; alt: string; altLight: string; sizes?: string }
-const { edition, label, dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
+interface Props { edition: 'homelab' | 'dc'; label: string; readout?: string; dark: ImageMetadata; light: ImageMetadata; alt: string; altLight: string; sizes?: string }
+// The demo readout that used to sit in the header strip (SITE-NAV.md change 2026-10-15 late): it describes the picture.
+const READOUT = { homelab: '1.02 kW · €165/mo · UPS 18 min', dc: 'IT 79.1 kW · PUE 1.16 · ▲ 2 alarms' };
+const { edition, label, readout = READOUT[edition], dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
 const VIEWS = edition === 'homelab'
   ? [['overview', 'Overview'], ['power', 'Power'], ['cables', 'Cables'], ['tokens', 'Tokens']]
   : [['overview', 'Overview'], ['power', 'Power'], ['network', 'Network'], ['cabling', 'Cabling'], ['tokens', 'Tokens']];
@@ -30,12 +32,12 @@ const sources = Object.fromEntries(Object.entries(map).map(([k, c]) => [k, { web
 const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality: 72 };
 ---
 <figure class="shot hs" data-hs={live ? JSON.stringify(sources) : undefined}>
-  <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{label}</b>
+  <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{label}</b>{readout && <span class="hs-read">{readout}</span>}
     {live ? (<>
-      <details class="hs-menu"><summary aria-label="Choose a view">View: <span data-hs-view>Overview</span></summary>
+      <span class="hs-ctl"><details class="hs-menu"><summary aria-label="Choose a view">View: <span data-hs-view>Overview</span></summary>
         <div class="hs-list">{VIEWS.map(([v, t]) => <button type="button" data-view={v} aria-pressed={v === 'overview' ? 'true' : 'false'}>{t}</button>)}</div></details>
       <span class="hs-lights" role="group" aria-label="Lights">Lights <button type="button" data-lights="on" aria-pressed="false">On</button><button type="button" data-lights="off" aria-pressed="true">Off</button></span>
-      {map['fail-on'] && <button type="button" class="hs-fail" data-fail hidden>Fail UPS-A</button>}
+      {map['fail-on'] && <button type="button" class="hs-fail" data-fail hidden>Fail UPS-A</button>}</span>
     </>) : <><span class="sp"></span><slot name="pin" /></>}
   </div>
   {live ? (
@@ -53,7 +55,9 @@ const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality:
 <style>
   .hs .bar { flex-wrap: wrap; row-gap: 6px; }
   .hs .sp { flex: 1; }
-  .hs-menu { position: relative; margin-left: auto; }
+  .hs-read { color: var(--ink-muted); font-weight: 500; letter-spacing: .04em; text-transform: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .hs-ctl { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-left: auto; }
+  .hs-menu { position: relative; }
   .hs-menu summary, .hs-lights button, .hs-fail { cursor: pointer; min-height: 30px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: inherit; letter-spacing: inherit; display: inline-flex; align-items: center; gap: 6px; }
   .hs-menu summary { list-style: none; } .hs-menu summary::-webkit-details-marker { display: none; }
   .hs-menu summary::after { content: '▾'; color: var(--ink-muted); }

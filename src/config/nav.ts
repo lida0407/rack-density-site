@@ -45,13 +45,6 @@ export const CTA: Record<Section, NavLink | null> = {
   dc: DC_CTA,
 };
 
-/** Status strip after the brand, per section (DC values from the DC header, 2026-10-15). */
-export const STRIP: Record<Section, { label?: string; value?: string; shape?: string; hideSm?: boolean }[]> = {
-  hub: [{ value: `${PRODUCT_NAME} · ${DC_PRODUCT_NAME}` }, { label: 'Free calculators', hideSm: true }],
-  homelab: [{ label: 'Demo lab', value: '1.02 kW · €165/mo · UPS 18 min' }, { label: 'Runs in your browser · no data leaves it', hideSm: true }],
-  dc: [{ label: 'Demo hall', value: 'IT 79.1 kW · PUE 1.16', hideSm: true }, { label: 'Alarms', value: '2', shape: 'warn', hideSm: true }, { label: 'Runs in the browser', hideSm: true }],
-};
-
 export const FOOTER = {
   hub: [
     { href: '/', label: 'All products' },

@@ -1,11 +1,11 @@
 ---
-// Shared header for every page (marketing/SITE-NAV.md): RACKDENSITY wordmark → hub, Homelab Twin · DC Sim switcher,
+// Shared header for every page (marketing/SITE-NAV.md; one row since 2026-10-15 late, no status strip): RACKDENSITY wordmark → hub, Homelab Twin · DC Sim switcher,
 // section menu + CTA in the section accent, Auto · Dark · Bright toggle. Phone: wordmark + switcher stay, the rest goes
 // into one sheet (section menu, CTA, both products, the hub, the theme toggle).
 // Self-contained styles: it runs on hub/homelab pages (styles/global.css) and on DC pages (styles/dc/global.css).
 import { u } from '../lib/url';
-import { BRAND, PARTNER } from '../config/brand';
-import { MENU, CTA, STRIP, PRODUCTS, type Section, type NavLink } from '../config/nav';
+import { BRAND } from '../config/brand';
+import { MENU, CTA, PRODUCTS, type Section, type NavLink } from '../config/nav';
 import ThemeToggle from './site/ThemeToggle.astro';
 
 interface Props { section?: Section }
@@ -19,14 +19,6 @@ const current = PRODUCTS.find((p) => p.edition === section);
 ---
 <a class="sh-skip" href="#main">Skip to content</a>
 <header class="site-header" data-section={section}>
-  <div class="cs-strip" aria-label="Status">
-    <span class="cs-strip__brand"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{brandA}<b>{brandB}</b>{current && <> / {current.label.toUpperCase()}</>}</span>
-    {STRIP[section].map((s) => (
-      <span class:list={['cs-strip__item', { 'sh-hide-sm': s.hideSm }]}>{s.shape && <span class={`cs-shape cs-shape--${s.shape}`} aria-hidden="true"></span>}{s.label}{s.label && s.value ? ' ' : ''}{s.value && <strong>{s.value}</strong>}</span>
-    ))}
-    <span class="cs-strip__spacer"></span>
-    <span class="cs-strip__item">by {PARTNER.name}</span>
-  </div>
   <div class="sh-wrap sh-bar">
     <a class="sh-logo" href={u('/')} aria-label={`${BRAND}: all products`}>
       <img class="only-dark" src={u('/brand/mark-rackdensity.svg')} alt="" width="24" height="24" />
@@ -72,7 +64,6 @@ const current = PRODUCTS.find((p) => p.edition === section);
   .sh-skip { position: absolute; left: -999px; top: 0; z-index: 40; background: var(--accent); color: var(--on-accent); padding: 8px 12px; font-weight: 600; }
   .sh-skip:focus { left: 8px; top: 8px; }
   .site-header { position: sticky; top: 0; z-index: 20; background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-  .cs-strip { min-height: 32px; border-bottom: 1px solid var(--line); background: var(--bg-100); }
   .sh-wrap { max-width: var(--max, 1160px); margin: 0 auto; padding: 0 var(--gutter, 16px); }
   .sh-bar { display: flex; align-items: center; gap: 12px; min-height: 58px; position: relative; }
   .sh-logo { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; flex: none; }
@@ -103,7 +94,7 @@ const current = PRODUCTS.find((p) => p.edition === section);
 
   .sh-sheet summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink); font-size: .9rem; }
   .sh-sheet summary::-webkit-details-marker { display: none; }
-  .sh-panel { position: absolute; top: calc(100% + 1px); left: var(--gutter, 16px); right: var(--gutter, 16px); background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); padding: 10px; display: grid; gap: 2px; max-height: calc(100vh - 110px); overflow: auto; }
+  .sh-panel { position: absolute; top: calc(100% + 1px); left: var(--gutter, 16px); right: var(--gutter, 16px); background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); padding: 10px; display: grid; gap: 2px; max-height: calc(100vh - 80px); overflow: auto; }
   .sh-panel > a { display: block; padding: 11px 12px; color: var(--ink); text-decoration: none; }
   .sh-panel > a:hover, .sh-panel > a[aria-current='page'] { background: var(--accent-soft); }
   .sh-panel .sh-panel-cta { background: var(--accent); color: var(--on-accent); font-weight: 600; margin-top: 4px; }
@@ -123,7 +114,6 @@ const current = PRODUCTS.find((p) => p.edition === section);
     .sh-bar > .sh-switch .sh-led { display: none; }
     .sh-sheet summary span { display: none; }
     .sh-sheet summary { min-width: 40px; justify-content: center; }
-    .sh-hide-sm { display: none !important; }
   }
   @media (max-width: 359px) { .sh-bar > .sh-switch .sh-pill { padding: 0 6px; letter-spacing: 0; } }
   @media (max-width: 1239px) { .sh-bar > .sh-switch .sh-pill small { display: none; } }
