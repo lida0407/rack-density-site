@@ -99,6 +99,10 @@ figure.shot { background: #000; border: 1px solid var(--line-strong); overflow: 
 figure.shot figcaption { flex: 1 0 auto; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-100); font: 500 12px/18px var(--font-mono); color: var(--ink-muted); }
 figure.shot figcaption .cs-shape { align-self: center; flex: none; }
 figure.shot figcaption .sim { margin-left: auto; color: var(--ink-dim); }
+/* Console still/stage header bar (shared HeroStage) */
+figure.shot .bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg-100); border-bottom: 1px solid var(--line); font: 600 11px/14px var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
+figure.shot .bar b { color: var(--ink); font-weight: 600; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .shots { margin: 28px 0; }
 
 /* ---------- badges ---------- */

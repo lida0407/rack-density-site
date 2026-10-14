@@ -1,6 +1,6 @@
 ---
 import { existsSync } from "node:fs";
-import HeroVideo from "../../components/site/HeroVideo.astro";
+import HeroStage from "../../components/site/HeroStage.astro";
 // DC Sim home, from the approved page design (brand canvas "DcHome", Console, DC green).
 import Base from "../../layouts/dc/Base.astro";
 import Clip from "../../components/dc/Clip.astro";
@@ -34,8 +34,10 @@ const guides = [
   { href: "resources/guides/tokens-per-kwh/", title: "Tokens per kWh: the one metric for an AI room", kind: "Guide · calculator" },
   { href: "resources/guides/dcim-for-small-data-center/", title: "DCIM for a small server room: what you need and what it should cost", kind: "Guide" },
 ];
-// Hero loops (SITE-THEME-VIDEO.md §2): `node scripts/media.mjs --all` copies the dev recordings (hero-dc-dark|bright) into
-// public/dc/media/ and the posters into src/assets/video/; until then HeroVideo shows the stills.
+// Hero (HERO-INTERACTIVE.md): HeroStage swaps recorded state clips (state-dc-<view>-<on|off>) under real controls once all
+// ten are in public/dc/media/; until then it plays the 30 s loop (hero-dc-dark|bright), and the stills if that is missing too.
+const views = ["overview", "power", "network", "cabling", "tokens"];
+const stageLive = views.every((v) => ["on", "off"].every((l) => ["webm", "mp4"].some((e) => existsSync(`public/dc/media/state-dc-${v}-${l}.${e}`))));
 const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-dc-dark.${e}`));
 ---
 <Base
@@ -56,17 +58,18 @@ const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-d
         </div>
         <p class="dch-note">Built by data-center people. Runs in the browser. Estimated where we estimate, labelled every time.</p>
       </div>
-      <figure class="dch-wrap dch-hero-fig">
-        <div class="dch-frame">
-          <HeroVideo name="hero-dc" dir="/dc/media" dark={heroDark} light={heroLight} widths={[640, 1100, 1600, 2200]} sizes={sizes}
-            alt="A data hall in DC Sim with the lights off: rows of racks glow green from their LEDs, the NOC wall screen lit."
-            altLight="The same data hall with the lights on: white walls, light grey floor, rows of black racks, cooling units along the walls." />
-          <span class="cs-pin dch-pin"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{heroVideo ? "Recorded in the app" : <><span class="only-dark">Lights off</span><span class="only-light">Lights on</span></>}</span>
-        </div>
-        <figcaption>{heroVideo
-          ? <span>Fail UPS-A, trace the network, count the tokens, turn the lights off.</span>
-          : <><span class="only-dark">Lights off: what still glows is what is running.</span><span class="only-light">Lights on: the same hall, the same numbers.</span></>}<span class="dch-sim">AI hall demo · simulated data</span></figcaption>
-      </figure>
+      <div class="dch-wrap dch-hero-fig">
+        <HeroStage edition="dc" label="Demo hall" dark={heroDark} light={heroLight} sizes={sizes}
+          alt="A data hall in DC Sim with the lights off: rows of racks glow green from their LEDs, the NOC wall screen lit."
+          altLight="The same data hall with the lights on: white walls, light grey floor, rows of black racks, cooling units along the walls.">
+          <span slot="pin" class="cs-pin"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{heroVideo ? "Recorded in the app" : <><span class="only-dark">Lights off</span><span class="only-light">Lights on</span></>}</span>
+          <figcaption>{stageLive
+            ? <span>Choose a view, switch the lights, fail UPS-A in Power.</span>
+            : heroVideo
+              ? <span>Fail UPS-A, trace the network, count the tokens, turn the lights off.</span>
+              : <><span class="only-dark">Lights off: what still glows is what is running.</span><span class="only-light">Lights on: the same hall, the same numbers.</span></>}<span class="sim">{heroVideo || stageLive ? "Demo hall" : "AI hall demo"} · simulated data</span></figcaption>
+        </HeroStage>
+      </div>
     </section>
 
     <section class="dch-band">
@@ -179,11 +182,6 @@ const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-d
   .dch-cta { height: 44px; padding: 0 20px; font-size: 15px; }
   .dch-note { margin: 0; font: 400 12px/18px var(--font-mono); color: var(--ink-dim); }
   .dch-hero-fig { margin-top: 40px; padding-bottom: clamp(40px, 6vw, 72px); }
-  .dch-frame { position: relative; border: 1px solid var(--line-strong); background: #000; }
-  .dch-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 545; object-fit: cover; }
-  .dch-pin { position: absolute; left: 16px; top: 16px; }
-  .dch-hero-fig figcaption { display: flex; gap: 8px 24px; flex-wrap: wrap; padding-top: 12px; font: 500 13px/18px var(--font-mono); color: var(--ink); }
-  .dch-sim { margin-left: auto; color: var(--ink-dim); }
   .dch-band { border-bottom: 1px solid var(--line); background: var(--bg-100); }
   .dch-band2 { border-block: 1px solid var(--line); background: var(--bg-100); }
   .dch-proof { padding-top: 32px; padding-bottom: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 40px; align-items: end; }
