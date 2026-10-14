@@ -15,18 +15,18 @@ const calc = { '@context': 'https://schema.org', '@type': 'WebApplication', name
   path="/" ogImage="/og/hub.png" schema={[calc]} section="hub">
   <section class="hub-hero">
     <div class="wrap">
-      <p class="eyebrow">{BRAND}</p>
+      <p class="status"><span class="dot" aria-hidden="true"></span>Free · runs in your browser · no data leaves it</p>
       <h1>See your racks: what they draw, what's plugged where, what fails.</h1>
       <p class="lead">Free tools and 3D twins built from the spreadsheet you already keep. One for the rack in your basement, one for the data hall.</p>
       <div class="grid grid-2 products">
-        <a class="card product theme-homelab" href={u('/homelab')}>
+        <a class="card product theme-homelab" data-edition="homelab" href={u('/homelab')}>
           <p class="eyebrow">For the homelab</p>
           <h2>{PRODUCT_NAME}</h2>
           <p>Your homelab rack, in 3D. Watts and cost per device, what's plugged where, and what goes dark when one thing fails. Free, no account, nothing stored.</p>
           <span class="go">Explore {PRODUCT_NAME} →</span>
           {!TRY.live && <span class="pill pill-soon">Try: {TRY.comingNote}</span>}
         </a>
-        <a class="card product theme-dc" href={u('/dc')}>
+        <a class="card product theme-dc" data-edition="dc" href={u('/dc')}>
           <p class="eyebrow">For the data center</p>
           <h2>{DC_PRODUCT_NAME}</h2>
           <p>Turn one Excel file into a 3D twin of your data center. Fail any UPS, feed, switch or cooler and see what goes dark. Built to sit on top of the monitoring you run.</p>
@@ -68,15 +68,17 @@ circuit_kW = √3 × V × A × PF / 1000     (three-phase)</code></pre>
   <section class="section"><div class="wrap narrow"><Faq items={calculatorFaq} /></div></section>
 </Base>
 <style>
-  .hub-hero { padding: 48px 0 28px; background: radial-gradient(900px 400px at 70% 0%, rgba(56,189,248,.12), transparent 70%); }
+  .hub-hero { padding: 48px 0 28px; background: radial-gradient(700px 360px at 20% 0%, rgba(229,112,0,.10), transparent 70%), radial-gradient(700px 360px at 85% 10%, rgba(34,197,94,.08), transparent 70%); }
   .hub-hero h1 { max-width: 18em; }
+  .status { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); padding: 6px 10px; border-radius: var(--radius-1); margin-bottom: 22px; }
+  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
   .products { margin-top: 28px; }
-  .product { text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 6px; transition: border-color .15s; }
+  .product { text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 6px; transition: border-color .15s, box-shadow .15s; border-top: 3px solid var(--accent); }
   .product h2 { margin: 0; }
-  .product p { color: #c9d4e3; margin: 0; }
+  .product p { color: var(--ink-muted); margin: 0; }
   .product .eyebrow { margin: 0; }
   .product .go { color: var(--accent); font-weight: 650; margin-top: 8px; }
   .product .pill { align-self: flex-start; }
-  .product:hover { border-color: var(--accent); color: var(--text); }
+  .product:hover { border-color: var(--accent); color: var(--text); box-shadow: var(--glow-accent); }
   .calc-h { font-size: clamp(1.8rem, 4vw, 2.6rem); }
 </style>

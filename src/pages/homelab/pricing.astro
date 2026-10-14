@@ -87,10 +87,10 @@ const soon = !FLAGS.billingLive;
 <style>
   .plans { margin-top: 24px; }
   .plans h2 { font-size: 1.3rem; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .price { font-size: 2rem; font-weight: 750; margin: 0; }
+  .price { font-family: var(--font-mono); font-size: 2rem; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
   .price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
   .plans ul { padding-left: 1.1em; margin: 0 0 18px; }
   .plans li { margin: .35em 0; }
-  .featured { border-color: rgba(56,189,248,.5); }
+  .featured { border-color: var(--accent); box-shadow: var(--glow-accent); }
   td:not(:first-child), th:not(:first-child) { text-align: center; white-space: nowrap; }
 </style>

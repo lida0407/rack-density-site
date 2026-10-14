@@ -50,7 +50,7 @@ import PriceField from './PriceField.astro';
   import { fitDevice, planRack, type RackWidth } from '../../lib/calc/rackFit';
   import { HOURS_PER_MONTH } from '../../lib/calc/powerCost';
   import { bindPrice, num, fmt, money } from '../../lib/prefs';
-  const COLORS = ['#38bdf8', '#34d399', '#fbbf24', '#a78bfa', '#fb7185', '#94a3b8'];
+  const COLORS = ['var(--layer-net)', 'var(--layer-compute)', 'var(--layer-power)', 'var(--layer-ai)', 'var(--layer-heat)', 'var(--ink-muted)'];
   document.querySelectorAll<HTMLElement>('[data-calc="fit"]').forEach((root) => {
     const q = (s: string) => root.querySelector(s) as HTMLInputElement;
     const out = (k: string, v: string) => { (root.querySelector(`[data-o="${k}"]`) as HTMLElement).textContent = v; };
@@ -92,8 +92,8 @@ import PriceField from './PriceField.astro';
       const elev = root.querySelector<HTMLElement>('[data-elev]')!;
       const cells: HTMLElement[] = [];
       items.forEach((it, i) => { for (let k = 0; k < it.u; k++) { const d = document.createElement('div'); d.style.background = COLORS[i % COLORS.length]; d.textContent = k === 0 ? it.name : ''; cells.push(d); } });
-      for (let k = cells.length; k < rackU; k++) { const d = document.createElement('div'); d.style.background = 'rgba(148,163,184,.14)'; cells.push(d); }
-      cells.forEach((c, k) => { if (k >= rackU) c.style.background = '#f87171'; });
+      for (let k = cells.length; k < rackU; k++) { const d = document.createElement('div'); d.style.background = 'var(--bg-300)'; cells.push(d); }
+      cells.forEach((c, k) => { if (k >= rackU) c.style.background = 'var(--crit)'; });
       elev.replaceChildren(...cells);
     };
     [['Patch panel', 1, 0], ['Switch', 1, 10], ['Mini PC shelf', 2, 25], ['Mini PC shelf', 2, 25], ['UPS', 2, 10]].forEach(([n, u, w]) => add(n as string, u as number, w as number));
