@@ -31,11 +31,12 @@ for (const [ed, base, lim, [dmin, dmax]] of bases) {
     if (ext === 'jpg' && lim.jpg && size > lim.jpg) console.warn(`! ${base}.jpg is ${(size / 1e3).toFixed(0)} KB (spec ≤ ${lim.jpg / 1e3} KB; Astro re-encodes it anyway)`);
     if (ext !== 'jpg') {
       if (size > lim[ext]) { console.error(`✗ ${base}.${ext} is ${(size / 1e6).toFixed(2)} MB (limit ${lim[ext] / 1e6} MB) — ask the dev agent for a smaller encode`); bad++; continue; }
+      const dur = Number(probe(from, ['-show_entries', 'format=duration']));
+      if (!dur) { console.error(`✗ ${base}.${ext} is unreadable (still being written?) — skipped`); bad++; continue; }
       if (probe(from, ['-select_streams', 'a', '-show_entries', 'stream=index'])) {
         execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', from, '-an', '-c', 'copy', to]);
         console.log(`✓ ${to} (audio stripped)`); n++; continue;
       }
-      const dur = Number(probe(from, ['-show_entries', 'format=duration']));
       if (dur && (dur < dmin || dur > dmax)) console.warn(`! ${base}.${ext} is ${dur.toFixed(1)} s (expected ${dmin}–${dmax} s)`);
     }
     fs.copyFileSync(from, to);
