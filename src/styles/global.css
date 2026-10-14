@@ -175,9 +175,10 @@ th { background: var(--bg-200); letter-spacing: .14em; font-size: 11px; }
 details.faq summary { font-size: 15px; font-weight: 600; }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); display: inline-block; flex: none; }
 /* bright mode: hero/still pairs */
-.only-light { display: none; }
-[data-theme="light"] .only-light { display: block; }
-[data-theme="light"] .only-dark { display: none; }
+.only-light { display: none !important; }
+[data-theme="light"] .only-light { display: block !important; }
+[data-theme="light"] .only-dark { display: none !important; }
+[data-theme="light"] span.only-light, [data-theme="light"] img.only-light[width="24"] { display: inline-block !important; }
 @media print { .site-header, .site-footer, .theme-toggle { display: none; } }
 .prose blockquote { font-family: var(--font-mono); font-size: 15px; background: var(--bg-000); border: 1px solid var(--line); border-radius: 0; padding: 14px 16px; }
 .prose blockquote p { margin: 0; }

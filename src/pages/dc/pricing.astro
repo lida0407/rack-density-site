@@ -1,4 +1,5 @@
 ---
+// DC Sim pricing, from the approved page design (brand canvas "PricingDc", Console, DC green).
 import Base from "../../layouts/dc/Base.astro";
 import Badge from "../../components/dc/Badge.astro";
 import Faq from "../../components/dc/Faq.astro";
@@ -17,6 +18,7 @@ const faq = [
   { q: "Do partners get a discount on Design?", a: "Yes, a partner price per project under the partner agreement, so the twin can be in the proposal before the customer buys." },
   { q: "How does this compare with typical DCIM pricing?", a: "Typical DCIM pricing starts at about $125 per month and runs $230–330 per rack per year. Monitor is $5 per rack per month with a $49 minimum, and Design is one-time per project. DC Sim sits on top of DCIM and monitoring rather than replacing them." },
 ];
+const usd = (n: number) => "$" + n.toLocaleString("en-US");
 ---
 <Base
   title="Pricing: Design per project, Monitor per rack — DC Sim"
@@ -25,94 +27,153 @@ const faq = [
   crumbs={[{ name: "Pricing", path: "pricing/" }]}
   jsonLd={[softwareLd(), ...faqLd(faq)]}
 >
-  <article class="container page">
-    <header class="page-head">
-      <h1>Pricing that fits a 10-rack room</h1>
-      <p class="direct-answer">DC Sim has two licenses and a partner program. Design is one-time per project: $490 for up to 20 racks, $1,490 up to 100, $3,900 above that, three months per project. Monitor is about $5 per rack per month with a $49 minimum. Partners earn a 30 % margin. Enterprise and on-prem are quoted.</p>
-      <p class="muted">Today every license starts with a walkthrough on your own file; self-serve accounts and card checkout are on the roadmap. Prices in USD, excluding VAT.</p>
-    </header>
+  <div class="dcp">
+    <section class="dcp-wrap dcp-hero">
+      <div class="dcp-col">
+        <span class="eyebrow">Pricing</span>
+        <h1>Pricing that fits a 10-rack room</h1>
+      </div>
+      <p class="dcp-intro">DC Sim has two licenses and a partner program. Design is one-time per project: $490 for up to 20 racks, $1,490 up to 100, $3,900 above that, three months per project. Monitor is about $5 per rack per month with a $49 minimum. Partners earn a 30 % margin. Today every license starts with a walkthrough on your own file; self-serve accounts and card checkout are on the roadmap. Prices in USD, excluding VAT.</p>
+    </section>
 
-    <div class="grid grid-2" style="margin-top:20px">
-      <div class="card">
-        <h2 style="margin-top:0">Design</h2>
-        <p class="muted">For owners, consultants and integrators planning a new room or an expansion. One-time, three months per project.</p>
-        <ul>
-          {PRICES.design.map((t) => <li><strong>${t.price.toLocaleString("en-US")}</strong> {t.label}</li>)}
+    <section class="dcp-wrap dcp-pad">
+      <div class="dcp-plans">
+        <article>
+          <span class="dcp-kicker">Design</span>
+          <span class="dcp-for">For owners, consultants and integrators planning a new room or an expansion. One-time, three months per project.</span>
+          <dl class="dcp-tiers">{PRICES.design.map((t) => <><dt>{usd(t.price)}</dt><dd>{t.label}</dd></>)}</dl>
+          <span class="dcp-incl">Design mode with the device picker and custom devices, all checks, N−1 audit, versions, full what-if, Excel export of the model, hand-off to Monitor with three months free.</span>
+          <span class="dcp-note">AI design assistant <Badge kind="roadmap" /> included at no extra cost when it ships</span>
+          <a class="cs-btn cs-btn--secondary dcp-btn" href={mailto("DC Sim Design license")}>Ask about Design</a>
+        </article>
+        <article class="dcp-rec">
+          <span class="dcp-kicker dcp-acc">Monitor</span>
+          <span class="dcp-for">For operators of a running room. Monthly, cancel any time.</span>
+          <div class="dcp-price">${PRICES.monitorPerRack}<span> / rack / month</span></div>
+          <span class="dcp-note">minimum ${PRICES.monitorMin}</span>
+          <span class="dcp-incl">All nine layers, what-if and scenarios, history and replay, reports, token layer, five users.</span>
+          <span class="dcp-chips"><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Zabbix · NetBox</span><span class="cs-badge cs-badge--roadmap">Other connectors · Roadmap</span></span>
+          <a class="cs-btn cs-btn--primary dcp-btn" href={mailto("DC Sim Monitor")}>Ask about Monitor</a>
+        </article>
+        <article>
+          <span class="dcp-kicker">Partner</span>
+          <span class="dcp-for">For integrators, MSPs, data-center builders, consultants and vendors. Annual agreement.</span>
+          <div class="dcp-price">{PRICES.partnerMargin} %<span> margin</span></div>
+          <span class="dcp-note">or a fee plus a higher margin</span>
+          <span class="dcp-incl">Demo rooms to present from, partner price on Design, white-label on request, training.</span>
+          <a class="cs-btn cs-btn--secondary dcp-btn" href={u("partners/")}>Partner program</a>
+        </article>
+        <article>
+          <span class="dcp-kicker">Enterprise</span>
+          <span class="dcp-for">Multi-site operators, on-premises, single sign-on.</span>
+          <div class="dcp-price">Quote</div>
+          <span class="dcp-incl">Everything above plus the on-prem container, SSO, multi-site, custom connectors and an SLA. Later; ask if you need it now.</span>
+          <a class="cs-btn cs-btn--ghost dcp-btn" href={mailto("DC Sim Enterprise")}>Talk to us</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="dcp-band">
+      <div class="dcp-wrap dcp-calc" id="price-calc">
+        <div class="dcp-col">
+          <span class="eyebrow">What would my room cost?</span>
+          <div class="cs-field dcp-field"><label class="cs-field__head" for="pc-racks"><span>Racks</span><span class="cs-field__unit">count</span></label><input id="pc-racks" class="cs-input" type="number" min="1" max="2000" value="20" inputmode="numeric" /></div>
+          <p class="dcp-fine">Typical DCIM pricing: $125 per month minimums and $230–330 per rack per year are typical. Simulation tools for engineers start at several thousand dollars per seat per year and need an engineer; Monitor needs a spreadsheet.</p>
+        </div>
+        <div class="dcp-result" aria-live="polite">
+          <div class="dcp-col"><span class="dcp-kicker" id="pc-label">Monitor · 20 racks</span><span class="dcp-bignum"><output id="pc-mon">$100</output><span> / month</span></span><span class="dcp-note" id="pc-line">$1,200 per year · Design one-time $490</span></div>
+          <div class="dcp-col">
+            <div class="cs-bar"><div class="cs-bar__head"><span>DC Sim Monitor</span><span id="pc-bar-dc">$1,200 / yr</span></div><div class="cs-bar__track"><div class="cs-bar__fill" id="pc-fill" style="width: 18%;"></div></div></div>
+            <div class="cs-bar"><div class="cs-bar__head"><span>Typical DCIM, same racks</span><span id="pc-dcim">$4,600–$6,600 / yr</span></div><div class="cs-bar__track"><div class="dcp-typ"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dcp-wrap dcp-pad dcp-two">
+      <div class="dcp-col">
+        <span class="eyebrow">Which license do I need?</span>
+        <ul class="dcp-which">
+          <li><span>"I am planning a room or a new row."</span> <b>Design.</b> When it goes live, move to Monitor with three months free.</li>
+          <li><span>"I run a room and want to see it, fail things and report on it."</span> <b>Monitor.</b></li>
+          <li><span>"I do this for customers."</span> <b>Partner:</b> Design per project at partner price, a share of Monitor.</li>
         </ul>
-        <p>Design mode with the device picker and custom devices, all checks, N−1 audit, versions, full what-if, Excel export of the model, hand-off to Monitor with three months free.</p>
-        <p class="small">AI design assistant <Badge kind="roadmap" /> included at no extra cost when it ships, early access for Design customers.</p>
-        <a class="btn btn-primary" href={mailto("DC Sim Design license")}>Ask about Design</a>
       </div>
-      <div class="card">
-        <h2 style="margin-top:0">Monitor</h2>
-        <p class="muted">For operators of a running room. Monthly, cancel any time.</p>
-        <p class="price">${PRICES.monitorPerRack} <small>per rack per month, minimum ${PRICES.monitorMin}</small></p>
-        <p>The twin of your running room: all nine layers, what-if and scenarios, history and replay, reports, token layer, five users. Zabbix and NetBox connect directly; other tools come in as sheet exports.</p>
-        <p class="small">Zabbix and NetBox connectors <Badge kind="available" /> · other live connectors <Badge kind="roadmap" /></p>
-        <a class="btn btn-primary" href={mailto("DC Sim Monitor")}>Ask about Monitor</a>
+      <div class="dcp-col">
+        <span class="eyebrow dcp-muted">Not included (yet)</span>
+        <ul class="dcp-not">
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span>CFD-grade airflow: not offered. Thermal values come from a zonal model and are labelled estimated.</span></li>
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span>AI design assistant, a BOM export, live connectors beyond Zabbix and NetBox, partner multi-customer console <Badge kind="roadmap" /></span></li>
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span>Self-serve accounts and card checkout <Badge kind="roadmap" />; on-prem packaging (Enterprise, later).</span></li>
+        </ul>
       </div>
-      <div class="card">
-        <h2 style="margin-top:0">Partner</h2>
-        <p class="muted">For integrators, MSPs, data-center builders, consultants and vendors. Annual agreement.</p>
-        <p class="price">{PRICES.partnerMargin} % <small>margin, or a fee plus a higher margin</small></p>
-        <p>Demo rooms to present from, partner price on Design, white-label on request, training.</p>
-        <a class="btn btn-ghost" href={u("partners/")}>Partner program</a>
-      </div>
-      <div class="card">
-        <h2 style="margin-top:0">Enterprise</h2>
-        <p class="muted">Multi-site operators, on-premises, single sign-on.</p>
-        <p class="price">Quote</p>
-        <p>Everything above plus the on-prem container, SSO, multi-site, custom connectors and an SLA. Later; ask if you need it now.</p>
-        <a class="btn btn-ghost" href={mailto("DC Sim Enterprise")}>Talk to us</a>
-      </div>
+    </section>
+
+    <div class="dcp-wrap dcp-end">
+      <Faq items={faq} />
+      <TemplateCTA compact />
     </div>
-
-    <section class="calc" id="price-calc" aria-labelledby="pc-h" style="margin-top:32px">
-      <h2 id="pc-h" style="margin-top:0">What would my room cost?</h2>
-      <label for="pc-racks">Racks: <output id="pc-n">20</output></label>
-      <input id="pc-racks" type="range" min="1" max="300" value="20" />
-      <table aria-live="polite">
-        <tbody>
-          <tr><th scope="row">Monitor</th><td><output id="pc-mon">–</output></td></tr>
-          <tr><th scope="row">Design (one-time)</th><td><output id="pc-des">–</output></td></tr>
-          <tr><th scope="row">Typical DCIM pricing, same racks</th><td><output id="pc-dcim">–</output></td></tr>
-        </tbody>
-      </table>
-      <p class="small muted" style="margin-top:10px">Typical DCIM pricing: $125 per month minimums and $230–330 per rack per year are typical. Simulation tools for engineers start at several thousand dollars per seat per year and need an engineer; Monitor needs a spreadsheet.</p>
-    </section>
-
-    <section class="section">
-      <h2 style="margin-top:0">Which license do I need?</h2>
-      <ul>
-        <li><strong>"I am planning a room or a new row."</strong> Design. When it goes live, move to Monitor with three months free.</li>
-        <li><strong>"I run a room and want to see it, fail things and report on it."</strong> Monitor.</li>
-        <li><strong>"I do this for customers."</strong> Partner: Design per project at partner price, a share of Monitor.</li>
-      </ul>
-      <h2>Not included (yet)</h2>
-      <ul>
-        <li>CFD-grade airflow: not offered. Thermal values come from a zonal model and are labelled estimated.</li>
-                <li>AI design assistant <Badge kind="roadmap" />, live connectors beyond Zabbix and NetBox <Badge kind="roadmap" />, partner multi-customer console <Badge kind="roadmap" />.</li>
-        <li>Self-serve accounts and card checkout <Badge kind="roadmap" />; on-prem packaging (Enterprise, later).</li>
-      </ul>
-    </section>
-
-    <Faq items={faq} />
-    <TemplateCTA compact />
-  </article>
+  </div>
 </Base>
 <script>
   const r = document.getElementById("pc-racks") as HTMLInputElement;
-  const set = (id: string, v: string) => ((document.getElementById(id) as HTMLOutputElement).value = v);
+  const $ = (id: string) => document.getElementById(id)!;
   const usd = (x: number) => "$" + Math.round(x).toLocaleString("en-US");
   function calc() {
-    const n = Number(r.value);
-    set("pc-n", String(n));
+    const n = Math.max(1, Math.min(2000, Math.round(Number(r.value) || 1)));
     const mon = Math.max(49, 5 * n);
-    set("pc-mon", `${usd(mon)} per month · ${usd(mon * 12)} per year`);
-    set("pc-des", n <= 20 ? "$490" : n <= 100 ? "$1,490" : "$3,900");
+    const design = n <= 20 ? 490 : n <= 100 ? 1490 : 3900;
     const lo = Math.max(1500, 230 * n), hi = Math.max(1500, 330 * n);
-    set("pc-dcim", `${usd(lo)}–${usd(hi)} per year`);
+    $("pc-label").textContent = `Monitor · ${n} rack${n === 1 ? "" : "s"}`;
+    ($("pc-mon") as HTMLOutputElement).value = usd(mon);
+    $("pc-line").textContent = `${usd(mon * 12)} per year · Design one-time ${usd(design)}`;
+    $("pc-bar-dc").textContent = `${usd(mon * 12)} / yr`;
+    $("pc-dcim").textContent = `${usd(lo)}–${usd(hi)} / yr`;
+    ($("pc-fill") as HTMLElement).style.width = Math.min(100, (mon * 12 / hi) * 100).toFixed(1) + "%";
   }
   r.addEventListener("input", calc);
   calc();
 </script>
+<style>
+  .dcp-wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .dcp-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .dcp-hero { padding-top: clamp(48px, 7vw, 88px); padding-bottom: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 40px; align-items: end; }
+  .dcp-hero h1 { margin: 0; font-size: clamp(36px, 4.6vw, 60px); line-height: 1.02; }
+  .dcp-intro { margin: 0; color: var(--ink-muted); line-height: 26px; font-size: 16px; }
+  .dcp-pad { padding-bottom: 48px; }
+  .dcp-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .dcp-plans article { background: var(--bg-000); padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .dcp-plans .dcp-rec { background: var(--bg-100); box-shadow: inset 0 3px 0 var(--accent); }
+  .dcp-kicker { font: 600 12px/14px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .dcp-acc { color: var(--accent); }
+  .dcp-for { font-size: 14px; color: var(--ink-muted); line-height: 20px; }
+  .dcp-tiers { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; }
+  .dcp-tiers dt { font: 600 24px/1.1 var(--font-mono); }
+  .dcp-tiers dd { margin: 0; color: var(--ink-muted); font-size: 13px; align-self: center; }
+  .dcp-price { font: 600 44px/1 var(--font-mono); letter-spacing: -0.03em; }
+  .dcp-price span { font-size: 14px; color: var(--ink-muted); letter-spacing: 0; }
+  .dcp-note { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font: 500 12px/16px var(--font-mono); color: var(--ink-muted); }
+  .dcp-incl { font-size: 14px; line-height: 20px; }
+  .dcp-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .dcp-btn { margin-top: auto; }
+  .dcp-band { border-block: 1px solid var(--line); background: var(--bg-100); }
+  .dcp-calc { padding-top: 56px; padding-bottom: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: start; }
+  .dcp-field { max-width: 280px; }
+  .dcp-fine { margin: 0; font: 400 12px/18px var(--font-mono); color: var(--ink-dim); max-width: 44em; }
+  .dcp-result { border: 1px solid var(--line); background: var(--bg-000); padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+  .dcp-result .dcp-col { gap: 10px; }
+  .dcp-bignum { font: 600 64px/0.95 var(--font-mono); letter-spacing: -0.04em; color: var(--accent); text-shadow: 0 0 28px var(--accent-soft); }
+  .dcp-bignum output { font: inherit; color: inherit; }
+  .dcp-bignum span { font-size: 0.3em; color: var(--ink-muted); text-shadow: none; letter-spacing: 0; }
+  .dcp-typ { height: 100%; width: 100%; background: var(--ink-dim); }
+  .dcp-two { padding-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; }
+  .dcp-which { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .dcp-which li { padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 22px; }
+  .dcp-which li > span { color: var(--ink-muted); }
+  .dcp-muted { color: var(--ink-muted); }
+  .dcp-muted::before { background: var(--ink-muted); }
+  .dcp-not { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 22px; }
+  .dcp-not li { display: flex; gap: 10px; }
+  .dcp-not .cs-shape { margin-top: 7px; flex: none; }
+  .dcp-end { padding-bottom: 80px; }
+</style>
