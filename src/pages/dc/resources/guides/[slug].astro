@@ -8,6 +8,9 @@ import RackPowerCalc from "../../../../components/dc/RackPowerCalc.astro";
 import TokensCalc from "../../../../components/dc/TokensCalc.astro";
 import { faqLd, articleLd } from "../../../../lib/dc/schema";
 import { u } from "../../../../lib/dc/url";
+import { mailto } from "../../../../config/dc/product";
+import { Image } from "astro:assets";
+import seeIt from "../../../../assets/dc/shots/hero-lightsoff-crop.png";
 
 export async function getStaticPaths() {
   const guides = await getCollection("guides");
@@ -26,24 +29,58 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
   crumbs={[{ name: "Resources", path: "resources/" }, { name: "Guides", path: "resources/guides/" }, { name: d.h1, path }]}
   jsonLd={[articleLd(d.h1, d.description, path), ...faqLd(d.faq)]}
 >
-  <article class="container page">
-    <p class="crumbs"><a href={u("resources/")}>Resources</a> / <a href={u("resources/guides/")}>Guides</a> /</p>
-    <header class="page-head">
-      <p class="eyebrow">Guide</p>
+  <article class="container page guide">
+    <div class="guide-head">
+      <p class="crumbs"><a href={u("resources/")}>Resources</a> › <a href={u("resources/guides/")}>Guides</a> › {d.h1.replace(/:.*$/, "")}</p>
       <h1>{d.h1}</h1>
-      <p class="direct-answer">{d.directAnswer}</p>
-    </header>
+      <span class="guide-meta">Guide{d.calculator ? " + calculator" : ""} · {d.faq.length} questions answered</span>
+    </div>
+    {d.calculator ? (
+      <div class="guide-top">
+        <p class="direct-answer">{d.directAnswer}</p>
+        <div class="guide-calc">
+          {d.calculator === "rack-power" && <RackPowerCalc />}
+          {d.calculator === "tokens-per-kwh" && <TokensCalc />}
+        </div>
+      </div>
+    ) : <p class="direct-answer">{d.directAnswer}</p>}
     {d.shots.map((s, i) => <div class="shots"><Shot name={s.name} alt={s.alt} caption={s.caption} eager={i === 0} /></div>)}
     <div class="prose"><Content /></div>
-    {d.calculator === "rack-power" && <RackPowerCalc />}
-    {d.calculator === "tokens-per-kwh" && <TokensCalc />}
+    <aside class="guide-seeit">
+      <Image src={seeIt} alt="A data hall in DC Sim with the lights off: racks glow green from their LEDs." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
+      <div class="guide-seeit-copy">
+        <span class="eyebrow">See it on your room</span>
+        <h2>Every number in this guide, on your racks</h2>
+        <p>Import your Devices and Power sheets and see load per rack, PDU and UPS in 3D, then fail a feed and watch what goes dark. We show it on your own file in a walkthrough.</p>
+        <div class="btn-row"><a class="cs-btn cs-btn--primary" href={mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n")}>Request a walkthrough</a><a class="cs-btn cs-btn--secondary" href={u("resources/excel-template/")}>The Excel template</a></div>
+      </div>
+    </aside>
     <Faq items={d.faq} />
     <TemplateCTA />
     {others.length > 0 && (
       <nav class="section" aria-label="More guides" style="margin-top:40px">
-        <h2 style="margin-top:0">More guides</h2>
-        <div class="grid grid-3">{others.map((g) => <a class="card" href={u(`resources/guides/${g.id}/`)}><h3>{g.data.h1}</h3></a>)}</div>
+        <span class="eyebrow">More guides</span>
+        <div class="grid grid-3 guide-more">{others.map((g) => <a class="cs-card" href={u(`resources/guides/${g.id}/`)}><span class="guide-more-t">{g.data.h1}</span><span class="guide-more-d">{g.data.description}</span></a>)}</div>
       </nav>
     )}
   </article>
+<style>
+  .guide-head { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+  .guide-head h1 { margin: 0; font-size: clamp(32px, 4.2vw, 52px); line-height: 1.05; }
+  .guide-meta { font: 500 12px/16px var(--font-mono); color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .guide .direct-answer { margin-top: 32px; }
+  .guide-top { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; align-items: stretch; }
+  .guide-top .direct-answer { margin: 0; max-width: none; }
+  .guide-calc .calc { margin: 0; height: 100%; }
+  .guide .prose { margin-top: 40px; }
+  .guide-seeit { margin-top: 56px; border: 1px solid var(--line-strong); background: var(--bg-100); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); align-items: center; }
+  .guide-seeit img { display: block; width: 100%; height: 100%; min-height: 220px; object-fit: cover; }
+  .guide-seeit-copy { padding: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .guide-seeit-copy h2 { margin: 0; font-size: 26px; line-height: 32px; }
+  .guide-seeit-copy p { margin: 0; color: var(--ink-muted); line-height: 24px; }
+  .guide-more { margin-top: 16px; }
+  .guide-more .cs-card { text-decoration: none; color: var(--ink); }
+  .guide-more-t { font: 600 17px/23px 'Inter Variable', var(--font-sans); }
+  .guide-more-d { color: var(--ink-muted); font-size: 14px; line-height: 22px; }
+</style>
 </Base>
