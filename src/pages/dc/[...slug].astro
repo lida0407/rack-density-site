@@ -55,7 +55,6 @@ const jsonLd = [
     <section class="int-hero">
       <div class="container int-grid">
         <div class="int-copy">
-          <p class="crumbs"><a href={u("integrations/")}>Integrations</a> › {toolName}</p>
           <div class="int-status">
             {d.badge === "available" ? <span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Available</span>
               : d.badge === "roadmap" ? <span class="cs-badge cs-badge--roadmap">Roadmap</span>
@@ -105,10 +104,6 @@ const jsonLd = [
   )}
   <article class="container page">
     {!isTool && (<>
-    <p class="crumbs">
-      {sectionInfo && page.id !== "product" && <><a href={u(sectionInfo.path)}>{sectionInfo.name}</a> /</>}
-      {d.section === "product" && page.id === "product" && <span>Product</span>}
-    </p>
     <header class="page-head">
       {d.badge && <Badge kind={d.badge} note={d.badgeNote} />}
       <h1>{d.h1}</h1>
@@ -118,7 +113,7 @@ const jsonLd = [
     {d.ctaTop && <TemplateCTA />}
     {d.shots.length > 0 && (
       <div class={`grid ${d.shots.length > 1 ? "grid-2" : ""} shots`}>
-        {d.shots.map((s, i) => <Shot name={s.name} alt={s.alt} caption={s.caption} eager={i === 0} />)}
+        {d.shots.map((s, i) => <Shot name={s.name} alt={s.alt} caption={s.caption} light={s.light} eager={i === 0} />)}
       </div>
     )}
     <div class="prose"><Content /></div>

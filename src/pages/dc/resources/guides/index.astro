@@ -12,7 +12,6 @@ const guides = (await getCollection("guides")).sort((a, b) => a.data.order - b.d
   crumbs={[{ name: "Resources", path: "resources/" }, { name: "Guides", path: "resources/guides/" }]}
 >
   <article class="container page">
-    <p class="crumbs"><a href={u("resources/")}>Resources</a> /</p>
     <header class="page-head">
       <h1>Guides</h1>
       <p class="direct-answer">Short, practical guides for people who run or build small and mid-size data centers. Each one answers a single question, shows the arithmetic, and ends with a sheet or a calculator you can use straight away.</p>

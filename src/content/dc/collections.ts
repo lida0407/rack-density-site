@@ -2,7 +2,9 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 const faq = z.array(z.object({ q: z.string(), a: z.string() })).default([]);
-const shot = z.object({ name: z.string(), alt: z.string(), caption: z.string().optional() });
+const still = { name: z.string(), alt: z.string(), caption: z.string().optional() };
+// light: the lit-room variant shown in the bright theme instead of a lights-off still (SITE-THEME-VIDEO.md §1)
+const shot = z.object({ ...still, light: z.object(still).optional() });
 const clip = z.object({ name: z.string(), title: z.string(), caption: z.string().optional() });
 
 const pages = defineCollection({

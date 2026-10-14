@@ -11,6 +11,7 @@ import { u } from "../../../../lib/dc/url";
 import { mailto } from "../../../../config/dc/product";
 import { Image } from "astro:assets";
 import seeIt from "../../../../assets/dc/shots/hero-lightsoff-crop.png";
+import seeItLit from "../../../../assets/dc/shots/hero-lit-crop.png";
 
 export async function getStaticPaths() {
   const guides = await getCollection("guides");
@@ -31,7 +32,6 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
 >
   <article class="container page guide">
     <div class="guide-head">
-      <p class="crumbs"><a href={u("resources/")}>Resources</a> › <a href={u("resources/guides/")}>Guides</a> › {d.h1.replace(/:.*$/, "")}</p>
       <h1>{d.h1}</h1>
       <span class="guide-meta">Guide{d.calculator ? " + calculator" : ""} · {d.faq.length} questions answered</span>
     </div>
@@ -44,10 +44,11 @@ const others = all.filter((g) => g.id !== guide.id).sort((a, b) => a.data.order 
         </div>
       </div>
     ) : <p class="direct-answer">{d.directAnswer}</p>}
-    {d.shots.map((s, i) => <div class="shots"><Shot name={s.name} alt={s.alt} caption={s.caption} eager={i === 0} /></div>)}
+    {d.shots.map((s, i) => <div class="shots"><Shot name={s.name} alt={s.alt} caption={s.caption} light={s.light} eager={i === 0} /></div>)}
     <div class="prose"><Content /></div>
     <aside class="guide-seeit">
-      <Image src={seeIt} alt="A data hall in DC Sim with the lights off: racks glow green from their LEDs." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
+      <Image class="only-dark" src={seeIt} alt="A data hall in DC Sim with the lights off: racks glow green from their LEDs." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
+      <Image class="only-light" src={seeItLit} alt="A data hall in DC Sim with the lights on: rows of black racks on a light floor." widths={[480, 960]} sizes="(max-width: 900px) 100vw, 560px" format="webp" quality={72} loading="lazy" />
       <div class="guide-seeit-copy">
         <span class="eyebrow">See it on your room</span>
         <h2>Every number in this guide, on your racks</h2>

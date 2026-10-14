@@ -1,8 +1,12 @@
 ---
 import "../../styles/dc/global.css";
 import { getImage } from "astro:assets";
-import Header from "../../components/dc/Header.astro";
-import Footer from "../../components/dc/Footer.astro";
+// Shared site chrome (marketing/SITE-NAV.md, SITE-THEME-VIDEO.md): header with section="dc" reads config/dc/nav.ts.
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ThemeScript from "../../components/site/ThemeScript.astro";
+import Breadcrumbs from "../../components/site/Breadcrumbs.astro";
+import { trail, crumbsSchema } from "../../lib/crumbs";
 import { PRODUCT_NAME, COMPANY, COMPANY_URL, CONTACT_EMAIL } from "../../config/dc/product";
 import { SITE_URL } from "../../../site.config.mjs";
 import { abs, u, root } from "../../lib/dc/url";
@@ -30,17 +34,9 @@ const org = {
   email: CONTACT_EMAIL,
 };
 const graph: Record<string, unknown>[] = [org, ...jsonLd];
-if (crumbs.length) {
-  graph.push({
-    "@type": "BreadcrumbList",
-    itemListElement: [{ name: PRODUCT_NAME, path: "" }, ...crumbs].map((c, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: c.name,
-      item: abs(c.path),
-    })),
-  });
-}
+// RACKDENSITY › DC Sim › … (crumb paths are relative to /dc/)
+const bc = crumbs.length ? trail("dc", crumbs.map((c) => ({ name: c.name, path: `/dc/${c.path}` }))) : null;
+if (bc) { const { "@context": _ctx, ...list } = crumbsSchema(bc, `/dc/${path}`); graph.push(list); }
 const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
 ---
 <!doctype html>
@@ -52,15 +48,9 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#080a09" />
-    <script is:inline>
-      // Bright mode before first paint: stored choice (shared key with the rest of the site), else the system preference. Print uses the bright tokens.
-      (function () { var t; try { t = localStorage.getItem('rd.theme'); } catch (e) {}
-        if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-        var was; addEventListener('beforeprint', function () { was = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', 'light'); });
-        addEventListener('afterprint', function () { if (was !== 'light') document.documentElement.removeAttribute('data-theme'); }); })();
-    </script>
+    <meta name="theme-color" content="#080a09" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f7f6" media="(prefers-color-scheme: light)" />
+    <ThemeScript />
     <link rel="icon" href={root("brand/favicon-dc.svg")} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={root("icon-512.png")} />
     <link rel="sitemap" href={root("sitemap-index.xml")} />
@@ -74,10 +64,11 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
     <script type="application/ld+json" set:html={ld} />
   </head>
   <body class="theme-dc">
-    <Header />
+    <Header section="dc" />
+    {bc && <Breadcrumbs items={bc} />}
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer section="dc" />
   </body>
 </html>

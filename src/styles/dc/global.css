@@ -36,32 +36,7 @@ a:hover { color: var(--accent-strong); }
 .skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: var(--on-accent); padding: 8px 12px; z-index: 30; }
 .skip:focus { left: 8px; top: 8px; }
 
-/* ---------- header: status strip + nav ---------- */
-.site-header { position: sticky; top: 0; z-index: 20; background: var(--glass); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.site-header .cs-strip { background: var(--bg-000); border-bottom: 1px solid var(--line); }
-.site-header .bar { display: flex; align-items: center; gap: 20px; min-height: 58px; }
-.logo { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; white-space: nowrap; }
-.logo:hover { color: var(--ink); }
-.wordmark { font: 600 15px/1 var(--font-mono); letter-spacing: 0.12em; }
-.wordmark .acc { color: var(--accent); }
-.wordmark .prod { color: var(--ink-dim); letter-spacing: 0.08em; font-weight: 500; }
-.nav { display: flex; gap: 20px; margin-left: auto; align-items: center; flex-wrap: wrap; font-size: 14px; }
-.nav a:not(.cs-btn) { color: var(--ink-muted); text-decoration: none; padding: 6px 0 4px; }
-.nav a:not(.cs-btn):hover { color: var(--ink); }
-.nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
-.theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: none; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: transparent; color: var(--ink-muted); cursor: pointer; }
-.theme-toggle:hover { color: var(--ink); background: var(--bg-200); }
-.theme-toggle .moon { display: none; }
-:root[data-theme="light"] .theme-toggle .sun { display: none; }
-:root[data-theme="light"] .theme-toggle .moon { display: block; }
-.menu { display: none; margin-left: auto; }
-.menu summary { list-style: none; cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); font: 600 12px/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
-.menu summary::-webkit-details-marker { display: none; }
-.menu[open] .menu-panel { display: grid; }
-.menu-panel { display: none; position: absolute; right: var(--gutter); left: var(--gutter); top: 100%; background: var(--bg-100); border: 1px solid var(--line-strong); padding: 6px; gap: 0; }
-.menu-panel a { color: var(--ink); text-decoration: none; padding: 12px; border-bottom: 1px solid var(--line); }
-.menu-panel a:last-child { border-bottom: 0; }
-@media (max-width: 960px) { .nav { display: none; } .menu { display: block; } .site-header .cs-strip .hide-sm { display: none; } }
+/* header, breadcrumbs and footer: shared components (src/components/Header.astro, Footer.astro, site/Breadcrumbs.astro) */
 
 /* ---------- buttons ---------- */
 .btn, .cs-btn { min-height: 44px; }
@@ -105,8 +80,6 @@ p { margin: 0 0 14px; }
 
 /* ---------- layout pieces ---------- */
 .page { padding: clamp(32px, 5vw, 64px) var(--gutter) 80px; }
-.crumbs { font: 500 12px/16px var(--font-mono); letter-spacing: 0.04em; color: var(--ink-dim); margin: 0; }
-.crumbs a { color: var(--ink-muted); }
 .page-head { margin-bottom: 8px; }
 .grid { display: grid; gap: 24px; }
 .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
@@ -122,8 +95,8 @@ a.card { color: var(--ink); text-decoration: none; display: block; }
 a.card:hover { background: var(--bg-100); box-shadow: inset 0 2px 0 var(--accent); }
 .section { padding: 56px 0; border-top: 1px solid var(--line); }
 figure { margin: 0; }
-figure.shot { background: #000; border: 1px solid var(--line-strong); overflow: hidden; }
-figure.shot figcaption { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-100); font: 500 12px/18px var(--font-mono); color: var(--ink-muted); }
+figure.shot { background: #000; border: 1px solid var(--line-strong); overflow: hidden; display: flex; flex-direction: column; }
+figure.shot figcaption { flex: 1 0 auto; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-100); font: 500 12px/18px var(--font-mono); color: var(--ink-muted); }
 figure.shot figcaption .cs-shape { align-self: center; flex: none; }
 figure.shot figcaption .sim { margin-left: auto; color: var(--ink-dim); }
 .shots { margin: 28px 0; }
@@ -168,20 +141,7 @@ figure.shot figcaption .sim { margin-left: auto; color: var(--ink-dim); }
 .status-table { width: 100%; }
 .status-table-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--bg-000); }
 
-/* ---------- footer ---------- */
-.site-footer { border-top: 1px solid var(--line); margin-top: 0; padding: 40px 0 48px; background: var(--bg-100); font-size: 14px; color: var(--ink-muted); }
-.site-footer .cols { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
-.site-footer h2 { font: 600 11px/14px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin: 0 0 10px; }
-.site-footer ul { list-style: none; padding: 0; margin: 0; }
-.site-footer li { margin: 6px 0; }
-.site-footer a { color: var(--ink-muted); text-decoration: none; }
-.site-footer a:hover { color: var(--ink); }
-.site-footer .legal { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); font: 400 12px/18px var(--font-mono); }
-.site-footer .legal .mark { color: var(--ink); letter-spacing: 0.12em; }
-.site-footer .legal .mark span { color: var(--accent); }
-.site-footer .legal .end { margin-left: auto; }
 
-/* bright mode: hero images swap to the lit-room render */
-.only-light { display: none; }
-:root[data-theme="light"] .only-dark { display: none; }
-:root[data-theme="light"] .only-light { display: block; }
+/* Theme pairs: hide-only rules (!important so scoped display rules on img/video cannot resurrect the hidden twin) */
+:root:not([data-theme="light"]) .only-light { display: none !important; }
+:root[data-theme="light"] .only-dark { display: none !important; }
