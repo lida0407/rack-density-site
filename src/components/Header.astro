@@ -1,99 +1,144 @@
 ---
+// Shared header for every page (marketing/SITE-NAV.md): RACKDENSITY wordmark → hub, Homelab Twin · DC Sim switcher,
+// section menu + CTA in the section accent, Auto · Dark · Bright toggle. Phone: wordmark + switcher stay, the rest goes
+// into one sheet (section menu, CTA, both products, the hub, the theme toggle).
+// Self-contained styles: it runs on hub/homelab pages (styles/global.css) and on DC pages (styles/dc/global.css).
 import { u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER } from '../config/brand';
-interface Props { section?: 'hub' | 'homelab' }
+import { BRAND, PARTNER } from '../config/brand';
+import { MENU, CTA, STRIP, PRODUCTS, type Section, type NavLink } from '../config/nav';
+import ThemeToggle from './site/ThemeToggle.astro';
+
+interface Props { section?: Section }
 const { section = 'hub' } = Astro.props;
 const path = Astro.url.pathname;
-const links = section === 'homelab'
-  ? [
-      { href: '/homelab', label: PRODUCT_NAME, exact: true },
-      { href: '/homelab/try', label: 'See it' },
-      { href: '/homelab/learn', label: 'Learn' },
-      { href: '/homelab/pricing', label: 'Pricing' },
-      { href: '/homelab/changelog', label: 'Changelog' },
-      { href: '/#calculator', label: 'Calculator' },
-    ]
-  : [
-      { href: '/homelab', label: PRODUCT_NAME },
-      { href: '/dc', label: DC_PRODUCT_NAME },
-      { href: '/#calculator', label: 'Calculator' },
-    ];
-const here = (l: { href: string; exact?: boolean }) => (l.exact ? path === u(l.href) : !l.href.includes('#') && path.startsWith(u(l.href)));
+const menu = MENU[section];
+const cta = CTA[section];
+const here = (l: NavLink) => !l.href.includes('#') && !l.download && path.startsWith(u(l.href));
+const brandA = BRAND.slice(0, 4), brandB = BRAND.slice(4);
+const current = PRODUCTS.find((p) => p.edition === section);
 ---
-<header class="site-header">
+<a class="sh-skip" href="#main">Skip to content</a>
+<header class="site-header" data-section={section}>
   <div class="cs-strip" aria-label="Status">
-    <span class="cs-strip__brand"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>RACK<b>DENSITY</b>{section === 'homelab' && <> / {PRODUCT_NAME.toUpperCase()}</>}</span>
-    {section === 'homelab'
-      ? <span class="cs-strip__item">Demo lab <strong>1.02 kW · €165/mo · UPS 18 min</strong></span>
-      : <span class="cs-strip__item">{PRODUCT_NAME} · {DC_PRODUCT_NAME}</span>}
-    <span class="cs-strip__item">Runs in your browser · no data leaves it</span>
+    <span class="cs-strip__brand"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{brandA}<b>{brandB}</b>{current && <> / {current.label.toUpperCase()}</>}</span>
+    {STRIP[section].map((s) => (
+      <span class:list={['cs-strip__item', { 'sh-hide-sm': s.hideSm }]}>{s.shape && <span class={`cs-shape cs-shape--${s.shape}`} aria-hidden="true"></span>}{s.label}{s.label && s.value ? ' ' : ''}{s.value && <strong>{s.value}</strong>}</span>
+    ))}
     <span class="cs-strip__spacer"></span>
     <span class="cs-strip__item">by {PARTNER.name}</span>
   </div>
-  <div class="wrap bar">
-    <a class="logo" href={u('/')} aria-label={`${BRAND} home`}>
+  <div class="sh-wrap sh-bar">
+    <a class="sh-logo" href={u('/')} aria-label={`${BRAND}: all products`}>
       <img class="only-dark" src={u('/brand/mark-rackdensity.svg')} alt="" width="24" height="24" />
       <img class="only-light" src={u('/brand/mark-rackdensity-print.svg')} alt="" width="24" height="24" />
-      <span class="wordmark"><span>RACK</span><span class="acc">DENSITY</span></span>
+      <span class="sh-wordmark">{brandA}<span>{brandB}</span></span>
     </a>
-    <nav aria-label="Main">
-      <details class="menu">
-        <summary aria-label="Menu">Menu</summary>
-        <ul>
-          {links.map((l) => <li><a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a></li>)}
-        </ul>
-      </details>
+    <div class="sh-switch" role="group" aria-label="Products">
+      {PRODUCTS.map((p) => (
+        <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}
+          aria-current={p.edition === section ? (path === u(p.href) ? 'page' : 'true') : undefined}>
+          <span class="sh-led" aria-hidden="true"></span>{p.label}{'suffix' in p && p.suffix && <small> {p.suffix}</small>}
+        </a>
+      ))}
+    </div>
+    <nav class="sh-menu" aria-label={current ? `${current.label} menu` : 'Main'}>
+      {menu.map((l) => <a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a>)}
     </nav>
-    <button type="button" class="theme-toggle" aria-label="Bright mode" aria-pressed="false" title="Bright mode">
-      <svg class="sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      <svg class="moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-    </button>
-    {section === 'homelab' && <a class="btn btn-primary btn-sm" href={u('/homelab/try')}>See it</a>}
+    <span class="sh-spacer"></span>
+    <span class="sh-theme-desk"><ThemeToggle compact /></span>
+    {cta && <a class="sh-cta" href={u(cta.href)} download={cta.download ? '' : undefined}>{cta.label}</a>}
+    <details class="sh-sheet">
+      <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Menu</span></summary>
+      <div class="sh-panel">
+        <p class="sh-h">{current ? current.label : BRAND}</p>
+        {menu.map((l) => <a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a>)}
+        {cta && <a class="sh-panel-cta" href={u(cta.href)} download={cta.download ? '' : undefined}>{cta.label}</a>}
+        <p class="sh-h">Products</p>
+        <div class="sh-switch sh-switch--sheet" role="group" aria-label="Products">
+          {PRODUCTS.map((p) => (
+            <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}>
+              <span class="sh-led" aria-hidden="true"></span>{p.label}{'suffix' in p && p.suffix && <small> {p.suffix}</small>}
+            </a>
+          ))}
+        </div>
+        <a href={u('/')}>{BRAND}: all products</a>
+        <p class="sh-h">Theme</p>
+        <ThemeToggle />
+      </div>
+    </details>
   </div>
 </header>
 <style>
-  .site-header { position: sticky; top: 0; z-index: 20; background: var(--glass); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .sh-skip { position: absolute; left: -999px; top: 0; z-index: 40; background: var(--accent); color: var(--on-accent); padding: 8px 12px; font-weight: 600; }
+  .sh-skip:focus { left: 8px; top: 8px; }
+  .site-header { position: sticky; top: 0; z-index: 20; background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
   .cs-strip { min-height: 32px; border-bottom: 1px solid var(--line); background: var(--bg-100); }
-  .bar { display: flex; align-items: center; gap: 14px; min-height: 58px; }
-  .logo { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
-  .wordmark { font-family: var(--font-mono); font-weight: 600; letter-spacing: .12em; font-size: .95rem; }
-  .wordmark .acc { color: var(--accent); }
-  nav { margin-left: auto; }
-  .btn-sm { min-height: 40px; padding: 0 14px; font-size: .92rem; white-space: nowrap; }
-  .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: transparent; color: var(--ink-muted); cursor: pointer; }
-  .theme-toggle:hover { color: var(--ink); background: var(--bg-200); }
-  .theme-toggle .moon { display: none; }
-  :global([data-theme="light"]) .theme-toggle .sun { display: none; }
-  :global([data-theme="light"]) .theme-toggle .moon { display: block; }
-  @media (max-width: 420px) { .wordmark { letter-spacing: .06em; font-size: .82rem; } .bar { gap: 8px; } .btn-sm { padding: 0 10px; } .cs-strip .cs-strip__item:nth-child(3) { display: none; } }
-  .menu summary { list-style: none; cursor: pointer; color: var(--ink-muted); padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); font-size: .9rem; min-height: 40px; display: flex; align-items: center; }
-  .menu summary::-webkit-details-marker { display: none; }
-  .menu ul { list-style: none; margin: 0; padding: 8px; position: absolute; right: var(--gutter); left: var(--gutter); top: 94px; background: var(--bg-100); border: 1px solid var(--line-strong); border-radius: 0; display: grid; gap: 2px; }
-  .menu a { display: block; padding: 11px 12px; color: var(--ink); text-decoration: none; }
-  .menu a:hover, .menu a[aria-current='page'] { background: var(--accent-soft); }
-  @media (min-width: 900px) {
-    .menu summary { display: none; }
-    .menu { display: block; }
-    .menu ul { position: static; display: flex; gap: 4px; background: none; border: 0; padding: 0; }
-    .menu a { padding: 8px 10px; color: var(--ink-muted); font-size: .92rem; }
-    .menu a[aria-current='page'], .menu a:hover { color: var(--ink); background: none; box-shadow: inset 0 -2px 0 var(--accent); }
+  .sh-wrap { max-width: var(--max, 1160px); margin: 0 auto; padding: 0 var(--gutter, 16px); }
+  .sh-bar { display: flex; align-items: center; gap: 12px; min-height: 58px; position: relative; }
+  .sh-logo { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; flex: none; }
+  .sh-wordmark { font: 600 .95rem/1 var(--font-mono); letter-spacing: .12em; }
+  .sh-wordmark span { color: var(--accent); }
+
+  /* Product switcher: the current product filled in its own accent, the other outlined; both outlined on the hub.
+     Colours are the tokens' edition accents (dark: brand orange/green; bright: burnt orange/forest green). */
+  .sh-switch { display: inline-flex; gap: 6px; flex: none; }
+  .sh-pill { --pa: #e57000; --pon: #0b0a09; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border: 1px solid var(--pa); border-radius: 999px; color: var(--ink); text-decoration: none; font: 500 12px/1 var(--font-mono); letter-spacing: .04em; white-space: nowrap; }
+  .sh-pill--dc { --pa: #22c55e; --pon: #080a09; }
+  :global([data-theme='light']) .sh-pill { --pa: #ad4a00; --pon: #ffffff; }
+  :global([data-theme='light']) .sh-pill--dc { --pa: #137a34; }
+  .sh-pill small { font-size: 10px; }
+  .sh-led { width: 7px; height: 7px; border-radius: 50%; background: var(--pa); flex: none; }
+  .sh-pill:hover { background: color-mix(in srgb, var(--pa) 14%, transparent); }
+  .sh-pill.is-current { background: var(--pa); color: var(--pon); font-weight: 600; }
+  .sh-pill.is-current .sh-led { background: var(--pon); }
+
+  .sh-menu { display: none; gap: 2px; margin-left: 4px; }
+  .sh-menu a { padding: 8px 9px; color: var(--ink-muted); text-decoration: none; font-size: .9rem; white-space: nowrap; }
+  .sh-menu a:hover, .sh-menu a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
+  .sh-spacer { flex: 1; }
+  .sh-theme-desk { display: none; }
+  .sh-cta { display: none; align-items: center; min-height: 40px; padding: 0 14px; border-radius: var(--radius-1); background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: .92rem; text-decoration: none; white-space: nowrap; }
+  .sh-cta:hover { background: var(--accent-strong); color: var(--on-accent); }
+  .site-header a:focus-visible, .site-header summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .sh-sheet summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink); font-size: .9rem; }
+  .sh-sheet summary::-webkit-details-marker { display: none; }
+  .sh-panel { position: absolute; top: calc(100% + 1px); left: var(--gutter, 16px); right: var(--gutter, 16px); background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); padding: 10px; display: grid; gap: 2px; max-height: calc(100vh - 110px); overflow: auto; }
+  .sh-panel > a { display: block; padding: 11px 12px; color: var(--ink); text-decoration: none; }
+  .sh-panel > a:hover, .sh-panel > a[aria-current='page'] { background: var(--accent-soft); }
+  .sh-panel .sh-panel-cta { background: var(--accent); color: var(--on-accent); font-weight: 600; margin-top: 4px; }
+  .sh-panel .sh-panel-cta:hover { background: var(--accent-strong); }
+  .sh-h { margin: 10px 12px 4px; font: 600 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim); }
+  .sh-h:first-child { margin-top: 4px; }
+  .sh-switch--sheet { display: flex; flex-wrap: wrap; padding: 4px 12px 8px; }
+  .sh-switch--sheet .sh-pill { height: 36px; font-size: 13px; }
+  .sh-panel :global(.sh-theme) { margin: 2px 12px 6px; justify-self: start; }
+
+  @media (max-width: 520px) {
+    .sh-logo img { display: none !important; }
+    .sh-wordmark { font-size: .8rem; letter-spacing: .05em; }
+    .sh-bar { gap: 8px; }
+    .sh-bar > .sh-switch { gap: 4px; }
+    .sh-bar > .sh-switch .sh-pill { padding: 0 8px; font-size: 11px; height: 28px; }
+    .sh-bar > .sh-switch .sh-led { display: none; }
+    .sh-sheet summary span { display: none; }
+    .sh-sheet summary { min-width: 40px; justify-content: center; }
+    .sh-hide-sm { display: none !important; }
+  }
+  @media (max-width: 359px) { .sh-bar > .sh-switch .sh-pill { padding: 0 6px; letter-spacing: 0; } }
+  @media (max-width: 1239px) { .sh-bar > .sh-switch .sh-pill small { display: none; } }
+  @media (min-width: 640px) { .sh-cta { display: inline-flex; } }
+  @media (min-width: 1100px) {
+    .sh-menu, .sh-theme-desk { display: inline-flex; }
+    .sh-sheet { display: none; }
   }
 </style>
 <script>
-  // Desktop: keep the nav <details> open so links are always visible.
-  const m = document.querySelector<HTMLDetailsElement>('.menu');
-  const mq = window.matchMedia('(min-width: 900px)');
-  const sync = () => { if (m) m.open = mq.matches; };
-  sync(); mq.addEventListener('change', sync);
-  // Bright mode: data-theme="light" on <html>, remembered per visitor (the head script applies it before paint).
-  const root = document.documentElement;
-  const btn = document.querySelector<HTMLButtonElement>('.theme-toggle');
-  const show = () => btn?.setAttribute('aria-pressed', String(root.dataset.theme === 'light'));
-  show();
-  btn?.addEventListener('click', () => {
-    const light = root.dataset.theme !== 'light';
-    if (light) root.dataset.theme = 'light'; else delete root.dataset.theme;
-    try { localStorage.setItem('rd.theme', light ? 'light' : 'dark'); } catch { /* storage unavailable */ }
-    show();
-  });
+  // Close the phone sheet on Escape, on an outside click, or when the viewport grows past the breakpoint.
+  const sheet = document.querySelector<HTMLDetailsElement>('.sh-sheet');
+  if (sheet) {
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet.open) { sheet.open = false; sheet.querySelector('summary')?.focus(); } });
+    document.addEventListener('click', (e) => { if (sheet.open && !sheet.contains(e.target as Node)) sheet.open = false; });
+    window.matchMedia('(min-width: 1100px)').addEventListener('change', (m) => { if (m.matches) sheet.open = false; });
+  }
 </script>

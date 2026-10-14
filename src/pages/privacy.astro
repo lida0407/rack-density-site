@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO } from '../config/brand';
 ---
-<Base title={`Privacy | ${BRAND}`} description={`No account = we store nothing. How ${PRODUCT_NAME} and this site handle your files: read in your browser, never uploaded.`} path="/privacy" ogImage="/og/hub.png" section="hub">
+<Base title={`Privacy | ${BRAND}`} description={`No account = we store nothing. How ${PRODUCT_NAME} and this site handle your files: read in your browser, never uploaded.`} path="/privacy" ogImage="/og/hub.png" section="hub" crumbs={[{ name: 'Privacy' }]}>
   <section class="section-tight">
     <div class="wrap narrow prose">
       <h1>Privacy</h1>

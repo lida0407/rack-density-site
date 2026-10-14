@@ -1,53 +1,68 @@
 ---
+// Shared footer (marketing/SITE-NAV.md): RACKDENSITY · Homelab Twin · DC Sim · Company, plus the product switcher.
+// Self-contained styles (hub/homelab and DC stylesheets).
 import { u } from '../lib/url';
-import { PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, CONTACT_EMAIL } from '../config/brand';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER } from '../config/brand';
+import { FOOTER, PRODUCTS, type Section } from '../config/nav';
+
+interface Props { section?: Section }
+const { section = 'hub' } = Astro.props;
+const brandA = BRAND.slice(0, 4), brandB = BRAND.slice(4);
+const cols = [
+  { h: BRAND, links: FOOTER.hub },
+  { h: PRODUCT_NAME, links: FOOTER.homelab },
+  { h: DC_PRODUCT_NAME, links: FOOTER.dc },
+  { h: 'Company', links: FOOTER.company },
+];
+const ext = (href: string) => /^(https?:|mailto:)/.test(href);
 ---
 <footer class="site-footer">
-  <div class="wrap cols">
-    <div>
-      <p class="brand"><strong class="wm">RACK<span>DENSITY</span></strong> by <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a></p>
-      <p class="muted">{PRODUCT_NAME} for the homelab · {DC_PRODUCT_NAME} for the data center.</p>
-      <p><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
-      <p class="dim">© 2026 {PARTNER.name}</p>
+  <div class="sf-wrap">
+    <div class="sf-top">
+      <a class="sf-wm" href={u('/')}>{brandA}<span>{brandB}</span></a>
+      <span class="sf-by">by <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a></span>
+      <div class="sf-switch" role="group" aria-label="Products">
+        {PRODUCTS.map((p) => (
+          <a class:list={['sf-pill', `sf-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}>
+            <span class="sf-led" aria-hidden="true"></span>{p.label}
+          </a>
+        ))}
+      </div>
     </div>
-    <div>
-      <p class="h">{PRODUCT_NAME}</p>
-      <ul>
-        <li><a href={u('/homelab')}>Overview</a></li>
-        <li><a href={u('/homelab/try')}>See it</a></li>
-        <li><a href={u('/homelab/pricing')}>Pricing</a></li>
-        <li><a href={u('/homelab/learn')}>Learn</a></li>
-        <li><a href={u('/homelab/changelog')}>Changelog</a></li>
-      </ul>
+    <div class="sf-cols">
+      {cols.map((c) => (
+        <div>
+          <p class="sf-h">{c.h}</p>
+          <ul>
+            {c.links.map((l) => <li><a href={ext(l.href) ? l.href : u(l.href)} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a></li>)}
+          </ul>
+        </div>
+      ))}
     </div>
-    <div>
-      <p class="h">Free tools</p>
-      <ul>
-        <li><a href={u('/#calculator')}>Rack Density Calculator</a></li>
-        <li><a href={u('/homelab/learn/tokens-per-watt')}>Tokens per Watt</a></li>
-        <li><a href={u('/homelab/learn/homelab-power-calculator')}>Homelab Power Cost</a></li>
-        <li><a href={u('/homelab/learn/10-inch-mini-rack-planner')}>10-inch Rack Planner</a></li>
-      </ul>
-    </div>
-    <div>
-      <p class="h">Site</p>
-      <ul>
-        <li><a href={u('/dc')}>{DC_PRODUCT_NAME}</a></li>
-        <li><a href={u('/privacy')}>Privacy</a></li>
-      </ul>
-    </div>
+    <p class="sf-legal">© 2026 {PARTNER.name} · {PRODUCT_NAME} and {DC_PRODUCT_NAME} are {BRAND} products · figures marked estimated are estimates</p>
   </div>
 </footer>
 <style>
-  .site-footer { border-top: 1px solid var(--line); padding: 40px 0 56px; margin-top: 40px; background: var(--bg-100); font: 400 12px/1.7 var(--font-mono); }
-  .cols { display: grid; gap: 24px; }
-  @media (min-width: 760px) { .cols { grid-template-columns: 2fr 1fr 1fr 1fr; } }
-  p { margin: 0 0 8px; }
-  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  a { color: var(--ink-muted); text-decoration: none; }
-  a:hover { color: var(--accent); }
-  .h { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
-  .wm { font-size: 14px; letter-spacing: .12em; color: var(--ink); } .wm span { color: var(--accent); }
-  .brand a, p > a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-  .dim { color: var(--ink-dim); }
+  .site-footer { border-top: 1px solid var(--line); padding: 36px 0 48px; margin-top: 40px; background: var(--bg-100); font: 400 12.5px/1.7 var(--font-mono); color: var(--ink-muted); }
+  .sf-wrap { max-width: var(--max, 1160px); margin: 0 auto; padding: 0 var(--gutter, 16px); }
+  .sf-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-bottom: 22px; margin-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .sf-wm { font: 600 15px/1 var(--font-mono); letter-spacing: .12em; color: var(--ink); text-decoration: none; }
+  .sf-wm span { color: var(--accent); }
+  .sf-by a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .sf-switch { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+  .sf-pill { --pa: #e57000; --pon: #0b0a09; display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px; border: 1px solid var(--pa); border-radius: 999px; color: var(--ink); text-decoration: none; font: 500 12px/1 var(--font-mono); }
+  .sf-pill--dc { --pa: #22c55e; --pon: #080a09; }
+  :global([data-theme='light']) .sf-pill { --pa: #ad4a00; --pon: #ffffff; }
+  :global([data-theme='light']) .sf-pill--dc { --pa: #137a34; }
+  .sf-led { width: 7px; height: 7px; border-radius: 50%; background: var(--pa); }
+  .sf-pill.is-current { background: var(--pa); color: var(--pon); font-weight: 600; }
+  .sf-pill.is-current .sf-led { background: var(--pon); }
+  .sf-cols { display: grid; gap: 22px; grid-template-columns: 1fr 1fr; }
+  @media (min-width: 860px) { .sf-cols { grid-template-columns: repeat(4, 1fr); } }
+  .sf-h { margin: 0 0 10px; color: var(--ink-dim); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  li a { display: inline-block; padding: 3px 0; color: var(--ink-muted); text-decoration: none; overflow-wrap: anywhere; }
+  li a:hover { color: var(--accent); }
+  .site-footer a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .sf-legal { margin: 26px 0 0; color: var(--ink-dim); font-size: 11.5px; }
 </style>

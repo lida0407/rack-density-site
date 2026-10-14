@@ -2,6 +2,9 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ThemeScript from '../components/site/ThemeScript.astro';
+import Breadcrumbs from '../components/site/Breadcrumbs.astro';
+import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
 import { abs, u } from '../lib/url';
 import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, SITE_URL, BASE } from '../config/brand';
 
@@ -13,8 +16,11 @@ interface Props {
   schema?: object[];           // JSON-LD objects for this page
   noindex?: boolean;
   section?: 'hub' | 'homelab';  // drives the header and the theme class (theme-hub / theme-homelab); DC pages use layouts/dc/Base.astro
+  crumbs?: Crumb[];             // page crumbs after RACKDENSITY › section (last = this page); omit on section homes
 }
-const { title, description, path, ogImage = '/og/hub.png', schema = [], noindex = false, section = 'hub' } = Astro.props;
+const { title, description, path, ogImage = '/og/hub.png', schema = [], noindex = false, section = 'hub', crumbs } = Astro.props;
+const bc = crumbs ? trail(section, crumbs) : null;
+const ld = bc ? [...schema, crumbsSchema(bc, path)] : schema;
 const canonical = abs(path);
 const org = {
   '@context': 'https://schema.org',
@@ -35,15 +41,9 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
-    <meta name="theme-color" content="#0b0a09" />
-    <script is:inline>
-      // Bright mode before first paint: stored choice, else the system preference. Print always uses the bright tokens.
-      (function () { var t; try { t = localStorage.getItem('rd.theme'); } catch (e) {}
-        if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-        if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-        var was; addEventListener('beforeprint', function () { was = document.documentElement.getAttribute('data-theme'); document.documentElement.setAttribute('data-theme', 'light'); });
-        addEventListener('afterprint', function () { if (was !== 'light') document.documentElement.removeAttribute('data-theme'); }); })();
-    </script>
+    <meta name="theme-color" content="#0b0a09" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <ThemeScript />
     <link rel="icon" href={u(section === 'homelab' ? '/brand/favicon-homelab.svg' : '/brand/favicon-rackdensity.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={u('/icon-512.png')} />
     {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME} changelog`} href={u('/homelab/changelog.xml')} />}
@@ -60,12 +60,12 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${SITE_URL}${u(ogImage)}`} />
     <script type="application/ld+json" set:html={JSON.stringify(org)} />
-    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+    {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body class={`theme-${section}`}>
-    <a class="sr-only" href="#main">Skip to content</a>
     <Header section={section} />
+    {bc && <Breadcrumbs items={bc} />}
     <main id="main"><slot /></main>
-    <Footer />
+    <Footer section={section} />
   </body>
 </html>

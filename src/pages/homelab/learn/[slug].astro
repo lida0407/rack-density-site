@@ -18,15 +18,12 @@ const iso = (x: Date) => x.toISOString().slice(0, 10);
 const article = { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.metaDescription, url: abs(path),
   datePublished: iso(d.date), dateModified: iso(d.updated), image: `${SITE_URL}${u(`/homelab/og/${d.slug}.png`)}`,
   author: { '@type': 'Organization', name: BRAND, url: abs('/') }, publisher: { '@id': `${abs('/')}#org` }, mainEntityOfPage: abs(path) };
-const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
-  { '@type': 'ListItem', position: 1, name: 'Learn', item: abs('/homelab/learn') },
-  { '@type': 'ListItem', position: 2, name: d.title.split(':')[0], item: abs(path) } ] };
 const related = all.filter((e) => e.data.slug !== d.slug);
 ---
-<Base title={d.metaTitle} description={d.metaDescription} path={path} ogImage={`/homelab/og/${d.slug}.png`} schema={[article, crumbs]} section="homelab">
+<Base title={d.metaTitle} description={d.metaDescription} path={path} ogImage={`/homelab/og/${d.slug}.png`} schema={[article]} section="homelab"
+  crumbs={[{ name: 'Learn', path: '/homelab/learn' }, { name: d.title.split(':')[0] }]}>
   <article class="section-tight">
     <div class="wrap">
-      <nav class="small muted crumbs" aria-label="Breadcrumb"><a href={u('/homelab/learn')}>Learn</a> › {d.title.split(':')[0]}</nav>
       <h1 class="narrow-h">{d.title}</h1>
       <p class="small muted">Updated <time datetime={iso(d.updated)}>{d.updated.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>
       <div class="prose">

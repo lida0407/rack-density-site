@@ -3,7 +3,7 @@
 @import '@fontsource/ibm-plex-mono/600.css';
 
 /* Console design tokens (brand/tokens.css): colours, type, radius, spacing. The edition accent comes from
-   <html data-edition="homelab|dc">; the hub uses the base (orange) and sets data-edition on each product card. */
+   <html data-edition="homelab|dc">; the hub uses the base (orange); its DC card switches only the accent tokens. */
 @import './tokens.css';
 @import './console.css';
 :root {
@@ -182,3 +182,7 @@ details.faq summary { font-size: 15px; font-weight: 600; }
 @media print { .site-header, .site-footer, .theme-toggle { display: none; } }
 .prose blockquote { font-family: var(--font-mono); font-size: 15px; background: var(--bg-000); border: 1px solid var(--line); border-radius: 0; padding: 14px 16px; }
 .prose blockquote p { margin: 0; }
+
+/* Code blocks: Shiki renders the dark colours inline and the bright ones as --shiki-light vars (astro.config.mjs). */
+[data-theme='light'] .astro-code, [data-theme='light'] .astro-code span { color: var(--shiki-light) !important; background-color: var(--shiki-light-bg) !important; }
+.astro-code { border: 1px solid var(--line); }

@@ -1,0 +1,28 @@
+---
+// Breadcrumbs with real links (SITE-NAV.md): RACKDENSITY › Homelab Twin › Learn › page. The last crumb is the page itself.
+// The BreadcrumbList JSON-LD is built by the layout from the same list (see crumbsSchema in lib/crumbs.ts).
+import { u } from '../../lib/url';
+import type { Crumb } from '../../lib/crumbs';
+interface Props { items: Crumb[] }
+const { items } = Astro.props;
+---
+<nav class="bc" aria-label="Breadcrumb">
+  <ol class="bc-wrap">
+    {items.map((c, i) => (
+      <li>{i < items.length - 1 && c.path !== undefined
+        ? <a href={u(c.path)}>{c.name}</a>
+        : <span aria-current="page">{c.name}</span>}</li>
+    ))}
+  </ol>
+</nav>
+<style>
+  .bc { border-bottom: 1px solid var(--line); background: var(--bg-000); }
+  .bc-wrap { max-width: var(--max, 1160px); margin: 0 auto; padding: 9px var(--gutter, 16px); list-style: none; display: flex; flex-wrap: wrap; gap: 2px 0; font: 500 12px/1.5 var(--font-mono); letter-spacing: .04em; color: var(--ink-dim); }
+  li { display: inline-flex; align-items: center; min-width: 0; }
+  li + li::before { content: '›'; margin: 0 8px; color: var(--ink-dim); }
+  a { color: var(--ink-muted); text-decoration: none; padding: 4px 0; }
+  a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  li:first-child a { letter-spacing: .1em; }
+  span[aria-current] { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 60vw; }
+</style>

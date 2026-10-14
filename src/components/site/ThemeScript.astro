@@ -1,0 +1,21 @@
+---
+// Put in <head> of every layout (before the stylesheets paint). Theme mode: 'auto' (default, follows prefers-color-scheme,
+// live), 'dark' or 'light' (remembered in localStorage 'rd.theme'). Sets <html data-theme="light"> when the result is bright,
+// and data-theme-mode for the toggle. Printing always uses the bright tokens.
+---
+<script is:inline>
+  (function () {
+    var d = document.documentElement, mq = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
+    function mode() { try { var m = localStorage.getItem('rd.theme'); return m === 'light' || m === 'dark' ? m : 'auto'; } catch (e) { return 'auto'; } }
+    function apply() {
+      var m = mode(), light = m === 'light' || (m === 'auto' && mq && mq.matches);
+      d.setAttribute('data-theme-mode', m);
+      if (light) d.setAttribute('data-theme', 'light'); else d.removeAttribute('data-theme');
+    }
+    window.rdTheme = { mode: mode, apply: apply, set: function (m) { try { if (m === 'auto') localStorage.removeItem('rd.theme'); else localStorage.setItem('rd.theme', m); } catch (e) {} apply(); } };
+    apply();
+    if (mq && mq.addEventListener) mq.addEventListener('change', apply);
+    var was; addEventListener('beforeprint', function () { was = d.getAttribute('data-theme'); d.setAttribute('data-theme', 'light'); });
+    addEventListener('afterprint', function () { apply(); });
+  })();
+</script>

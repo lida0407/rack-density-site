@@ -6,8 +6,9 @@ import Base from '../../layouts/Base.astro';
 import Shot from '../../components/Shot.astro';
 import Faq from '../../components/Faq.astro';
 import TryButton from '../../components/TryButton.astro';
-import { u, abs } from '../../lib/url';
-import { PRODUCT_NAME, PRICES, FLAGS } from '../../config/brand';
+import HeroVideo from '../../components/site/HeroVideo.astro';
+import { u, abs, mailto } from '../../lib/url';
+import { PRODUCT_NAME, PRICES, FLAGS, NOTIFY } from '../../config/brand';
 import { homeFaq } from '../../data/faq';
 import heroDark from '../../assets/shots/hero-lightsoff.png';
 import heroLight from '../../assets/shots/hero-office.png';
@@ -34,7 +35,7 @@ const checks = [
   ['data', 'A cable shorter than its run'], ['data', 'Missing labels, undefined VLANs, port errors'],
 ];
 const soon = !FLAGS.billingLive;
-const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 100vw', format: 'webp' as const, quality: 72 };
+const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 100vw' };
 ---
 <Base title={`3D Homelab Rack Planner: Power, Cost & Cables | ${PRODUCT_NAME}`}
   description="Turn a spreadsheet of your gear into a 3D model of your homelab rack: watts, cost per month, network, and what goes dark when one thing fails."
@@ -47,12 +48,13 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
         <h1>Your homelab rack, in&nbsp;3D.</h1>
         <p class="lead">Drop in a spreadsheet of your gear. See what every device draws and costs, what's plugged where, and what goes dark when one thing fails.</p>
         <div class="btn-row"><TryButton walkthrough /></div>
-        <p class="note">No public demo yet: see it in clips and stills, or book a walkthrough. Your file is read in your browser and never uploaded.</p>
+        <p class="note">Try it free — coming when we open the doors; <a href={mailto(NOTIFY.subject, NOTIFY.body)}>get notified</a>. Your file is read in your browser and never uploaded.</p>
       </div>
       <figure class="shot hero-shot">
         <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>Basement Lab</b><span class="only-dark">· lights off</span><span class="sp"></span><span class="cs-pin cs-pin--warn"><span class="cs-shape cs-shape--warn"></span>Disk 7 · SMART</span></div>
-        <Image src={heroDark} class="only-dark" alt="The demo lab in 3D with the room lights off: device LEDs and screens glow, the readout shows 1.02 kW and €165 a month" loading="eager" fetchpriority="high" decoding="sync" {...heroImg} />
-        <Image src={heroLight} class="only-light" alt="The demo lab in 3D with the room lights on, in a bright office" loading="lazy" {...heroImg} />
+        <HeroVideo name="hero-homelab" dir="/homelab/media" dark={heroDark} light={heroLight} widths={heroImg.widths} sizes={heroImg.sizes}
+          alt="The demo lab in 3D with the room lights off: device LEDs and screens glow, the readout shows 1.02 kW and €165 a month"
+          altLight="The demo lab in 3D with the room lights on, in a bright office" />
         <figcaption class="readouts"><span>1.02 kW <i>now</i></span><span>€165 <i>/ month</i></span><span>18 min <i>on UPS</i></span><span><span class="cs-shape cs-shape--warn"></span>16 issues found</span><span class="dim">demo · simulated data</span></figcaption>
       </figure>
     </div>

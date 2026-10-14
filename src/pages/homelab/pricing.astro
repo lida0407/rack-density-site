@@ -32,7 +32,7 @@ const soon = !FLAGS.billingLive;
 ---
 <Base title={`Pricing: Free, $${PRICES.account.month}/month or $${PRICES.pro.month}/month | ${PRODUCT_NAME}`}
   description={`Try is free with no account and nothing stored. Account keeps your lab for $${PRICES.account.month}/month or $${PRICES.account.year}/year. Pro adds cable tracing, the AI view and more.`}
-  path="/homelab/pricing" ogImage="/homelab/og/pricing.png" section="homelab">
+  path="/homelab/pricing" ogImage="/homelab/og/pricing.png" section="homelab" crumbs={[{ name: 'Pricing' }]}>
   <section class="section-tight">
     <div class="wrap">
       <h1>Pricing</h1>
