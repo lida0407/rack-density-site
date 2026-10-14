@@ -3,7 +3,7 @@
 //   public/<dir>/<name>-dark.webm|.mp4, public/<dir>/<name>-bright.webm|.mp4, posters src/assets/video/<name>-dark|bright.jpg
 // Dark theme plays the lights-off recording, bright plays the lit-room one; the poster is the base layer (LCP, no JS,
 // reduced motion), the video fades in on top once it plays. Missing files → the stills passed in as props, nothing else.
-// Reduced motion: poster only, with a Play button. Always a Pause button (moving content > 5 s). Pauses off-screen.
+// Reduced motion or data saver: poster only, with a Play button. Always a Pause button (moving content > 5 s). Pauses off-screen.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import fs from 'node:fs';
@@ -64,11 +64,14 @@ const ratio = `${posterDark.width} / ${posterDark.height}`;
 <script>
   type Mode = 'dark' | 'bright';
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // Data saver / slow connection: poster + Play, like reduced motion (the loops are 6–10 MB).
+  const conn = (navigator as any).connection;
+  const lean = () => !!conn && (conn.saveData || /(^|-)2g$|^3g$/.test(conn.effectiveType ?? ''));
   const root = document.documentElement;
   document.querySelectorAll<HTMLElement>('.hv[data-video]').forEach((el) => {
     const v = el.querySelector<HTMLVideoElement>('.hv-video')!;
     const btn = el.querySelector<HTMLButtonElement>('.hv-btn')!;
-    let userPaused = false, onScreen = true, current = '';
+    let userPaused = false, userPlayed = false, onScreen = true, current = '';
     const mode = (): Mode => (root.dataset.theme === 'light' ? 'bright' : 'dark');
     const setBtn = (playing: boolean) => {
       btn.dataset.state = playing ? 'pause' : 'play';
@@ -88,17 +91,17 @@ const ratio = `${posterDark.width} / ${posterDark.height}`;
       v.src = src;
       v.addEventListener('loadedmetadata', () => { if (t && t < v.duration) v.currentTime = t; }, { once: true });
       btn.hidden = false;
-      if (reduce.matches || userPaused || !onScreen) { setBtn(false); v.preload = 'metadata'; } else play();
+      if (reduce.matches || lean() || userPaused || !onScreen) { setBtn(false); v.preload = 'none'; } else play();
     };
     v.addEventListener('playing', () => { el.classList.add('is-playing'); el.classList.remove('is-paused'); });
     v.addEventListener('pause', () => { if (el.classList.contains('is-playing')) el.classList.add('is-paused'); });
     btn.addEventListener('click', () => {
-      if (v.paused) { userPaused = false; play(); } else { userPaused = true; v.pause(); setBtn(false); }
+      if (v.paused) { userPaused = false; userPlayed = true; play(); } else { userPaused = true; v.pause(); setBtn(false); }
     });
     new MutationObserver(pick).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     new IntersectionObserver(([e]) => {
       onScreen = e.isIntersecting;
-      if (!current || userPaused || reduce.matches) return;
+      if (!current || userPaused || ((reduce.matches || lean()) && !userPlayed)) return;
       if (onScreen) play(); else v.pause();
     }).observe(el);
     // Start after the page has loaded so the poster stays the LCP and the video never competes with it.
