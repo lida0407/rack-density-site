@@ -27,7 +27,7 @@ const org = {
 const ogTitle = title.replace(/ \| .*$/, '');
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-edition={section === 'homelab' ? 'homelab' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
