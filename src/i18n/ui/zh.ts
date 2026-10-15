@@ -13,7 +13,7 @@ export const zh: Deep<UI> = {
   simulated: '模拟数据', demoLab: '演示环境', transcript: '视频内容说明', impressum: '法律声明',
   labels: {
     Calculator: '计算器', Devices: '设备库', Learn: '技术指南', Pricing: '价格', Changelog: '更新日志', 'See it': '观看演示',
-    'All products': '全部产品', 'Rack Density Calculator': '机架功率密度计算器', 'UPS Runtime Calculator': 'UPS 后备时间计算器',
+    'All products': '全部产品', 'Rack Density Calculator': '单机柜功率密度计算器', 'UPS Runtime Calculator': 'UPS 后备时间计算器',
     'Device database': '设备库', Overview: '概览', Privacy: '隐私政策', 'Legal notice': '法律声明',
     Product: '产品', Integrations: '集成', Partners: '合作伙伴', Resources: '资源', 'Excel template': 'Excel 导入模板',
     Guides: '技术指南', 'Security & data': '安全与数据', Contact: '联系我们', Waitlist: '候补名单', Comparisons: '产品对比', 'Famous data centers': '全球知名数据中心',

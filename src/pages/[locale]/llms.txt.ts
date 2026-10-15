@@ -36,7 +36,7 @@ Fakten: Das Blatt „Devices“ der Vorlage ist Pflicht (Rack, HE, Modell); Cabl
 Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com；${BRAND} 是其旗下品牌。本文件列出中文页面；全部英文页面见：${SITE_URL.replace(/\/$/, '')}/llms.txt
 
 ## 免费计算器
-- [机架功率密度计算器](${url('/calculator', l)})：按空间（U）、供电和制冷计算单机柜设备数、单机柜功率（kW）及每月电费
+- [单机柜功率密度计算器](${url('/calculator', l)})：按空间（U）、供电和制冷计算单机柜设备数、单机柜功率（kW）及每月电费
 
 ## ${P}（Homelab）
 
