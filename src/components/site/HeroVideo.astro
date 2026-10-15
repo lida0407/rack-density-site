@@ -37,8 +37,9 @@ const ratio = `${posterDark.width} / ${posterDark.height}`;
 ---
 <div class="hv" style={`aspect-ratio:${ratio}`} data-video={hasVideo ? '' : undefined}
   data-dark-webm={d.webm} data-dark-mp4={d.mp4} data-bright-webm={b.webm} data-bright-mp4={b.mp4}>
-  <Image src={posterDark} class="hv-img only-dark" alt={alt} loading="eager" fetchpriority="high" decoding="sync" {...img} />
-  <Image src={posterLight} class="hv-img only-light" alt={altLight} loading="lazy" {...img} />
+  <Image src={posterDark} class="hv-img only-dark" alt={alt} loading="eager" decoding="async" {...img} />
+  <Image src={posterLight} class="hv-img only-light" alt={altLight} loading="eager" decoding="async" {...img} />
+  <script is:inline>(function (s) { var i = s.parentNode.querySelectorAll('.hv-img'), l = document.documentElement.dataset.theme === 'light'; i[l ? 1 : 0].fetchPriority = 'high'; i[l ? 0 : 1].fetchPriority = 'low'; })(document.currentScript);</script>
   {hasVideo && <video class="hv-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>}
   {hasVideo && (
     <button class="hv-btn" type="button" hidden aria-label="Pause the video">

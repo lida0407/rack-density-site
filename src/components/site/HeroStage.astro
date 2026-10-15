@@ -30,6 +30,9 @@ if (fails.every((c) => c.webm || c.mp4)) [map['fail-on'], map['fail-off']] = fai
 const live = VIEWS.every(([v]) => ['on', 'off'].every((l) => map[`${v}-${l}`].webm || map[`${v}-${l}`].mp4));
 const sources = Object.fromEntries(Object.entries(map).map(([k, c]) => [k, { webm: c.webm, mp4: c.mp4, poster: c.poster }]));
 const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality: 72 };
+// LCP (DC marketing's bright-theme item): both posters eager; the one matching the system theme gets fetchpriority high
+// through a media-keyed preload (same URLs as <Image>), and the inline script below re-points it for a manual theme.
+const pre = live ? await Promise.all([map['overview-off'].img, map['overview-on'].img].map((src) => getImage({ src, ...img }))) : [];
 ---
 <figure class="shot hs" data-hs={live ? JSON.stringify(sources) : undefined}>
   <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{label}</b>{readout && <span class="hs-read">{readout}</span>}
@@ -42,8 +45,11 @@ const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality:
   </div>
   {live ? (
     <div class="hs-stage">
-      <Image src={map['overview-off'].img} class="hs-img only-dark" alt={alt} loading="eager" fetchpriority="high" decoding="sync" {...img} />
-      <Image src={map['overview-on'].img} class="hs-img only-light" alt={altLight} loading="lazy" {...img} />
+      <link rel="preload" as="image" fetchpriority="high" media="not all and (prefers-color-scheme: light)" imagesrcset={pre[0].srcSet.attribute} imagesizes={sizes} />
+      <link rel="preload" as="image" fetchpriority="high" media="(prefers-color-scheme: light)" imagesrcset={pre[1].srcSet.attribute} imagesizes={sizes} />
+      <Image src={map['overview-off'].img} class="hs-img only-dark" alt={alt} loading="eager" decoding="async" {...img} />
+      <Image src={map['overview-on'].img} class="hs-img only-light" alt={altLight} loading="eager" decoding="async" {...img} />
+      <script is:inline>(function (s) { var i = s.parentNode.querySelectorAll('.hs-img'), l = document.documentElement.dataset.theme === 'light'; i[l ? 1 : 0].fetchPriority = 'high'; i[l ? 0 : 1].fetchPriority = 'low'; })(document.currentScript);</script>
       <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
       <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
     </div>
