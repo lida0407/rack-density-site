@@ -1,6 +1,7 @@
 // POST /api/waitlist (marketing/WAITLIST.md §2). JSON from the page script, or form-encoded when the page posts natively.
 // Turnstile is verified server-side, the e-mail stored once (INSERT OR IGNORE), at most 5 POSTs per IP hash per clock hour.
 // Returns { ok, position, already } (position = people ahead of you) as JSON, or a small HTML page for form posts.
+import { WAITLIST_START } from '../../../src/config/waitlist';
 interface Env { DB?: any; TURNSTILE_SECRET?: string; IP_SALT?: string }
 interface Ctx { request: Request; env: Env }
 
@@ -67,7 +68,7 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   const ins = await env.DB.prepare('INSERT OR IGNORE INTO waitlist (email, edition, note, src, ua, ip_hash) VALUES (?, ?, ?, ?, ?, ?)')
     .bind(email, edition, note, src, (request.headers.get('user-agent') ?? '').slice(0, 200), ipHash).run();
   const row = await env.DB.prepare('SELECT (SELECT COUNT(*) FROM waitlist w2 WHERE w2.rowid < w.rowid) AS ahead FROM waitlist w WHERE email = ?').bind(email).first();
-  return reply(form, 200, { ok: true, position: Number(row?.ahead ?? 0), already: !ins.meta?.changes });
+  return reply(form, 200, { ok: true, position: WAITLIST_START + Number(row?.ahead ?? 0), already: !ins.meta?.changes });
 }
 
 export const onRequestGet = () => new Response('POST only', { status: 405, headers: { Allow: 'POST' } });
