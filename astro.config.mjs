@@ -64,6 +64,6 @@ export default defineConfig({
   build: { format: 'directory', inlineStylesheets: 'always' },
   markdown: { rehypePlugins: [rehypeBaseLinks], shikiConfig: { themes: { dark: 'github-dark-default', light: 'github-light-default' }, defaultColor: 'dark' } },
   // Sitemap: hreflang alternates for pages that exist in several locales; the Impressum (German only, noindex until complete) stays out.
-  integrations: [mdx(), sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', de: 'de', zh: 'zh-CN' } }, filter: (page) => !/\/(404|impressum)\/?$/.test(page) && !Object.entries(LOCALE_LIVE).some(([l, live]) => !live && page.includes(`/${l}/`)), serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; } })],
+  integrations: [mdx(), sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', de: 'de', zh: 'zh-CN' } }, filter: (page) => !/\/(404|impressum)\/?$/.test(page) && !Object.entries(LOCALE_LIVE).some(([l, live]) => !live && page.includes(`/${l}/`)) && !page.includes('/dc/preview/'), serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; } })],
   devToolbar: { enabled: false },
 });
