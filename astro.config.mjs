@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { execFileSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { SITE_URL, BASE } from './site.config.mjs';
 
 const siteBase = BASE.endsWith('/') ? BASE : `${BASE}/`;
@@ -36,12 +36,20 @@ const sourcesFor = (p) => {
   if (guide) return [`src/content/dc/guides/${guide[1]}.md`];
   return [`src/pages/${p}.astro`, `src/pages/${p}/index.astro`, ...(p.startsWith('dc/') ? [`src/content/dc/pages/${p.slice(3)}.md`] : [])];
 };
+// /devices/ pages: the record's own `updated` date from the public catalog.
+const DEVICE_UPDATED = new Map((existsSync('src/data/devices/public.json') ? JSON.parse(readFileSync('src/data/devices/public.json', 'utf8')).devices : [])
+  .map((d) => { const [c, v, m] = d.id.split('/'); return [`devices/${c.replace(/_/g, '-')}/${v}/${m}`, d.updated]; }));
 const lastmod = (url) => {
   const p = decodeURIComponent(new URL(url).pathname).slice(siteBase.length).replace(/\/$/, '');
-  const files = sourcesFor(p).filter((f) => existsSync(f));
+  if (DEVICE_UPDATED.has(p)) return new Date(DEVICE_UPDATED.get(p)).toISOString();
+  if (p.startsWith('devices')) return lastmodFiles(['src/data/devices/public.json']);
+  return lastmodFiles(sourcesFor(p));
+};
+function lastmodFiles(list) {
+  const files = list.filter((f) => existsSync(f));
   if (!files.length) return undefined;
   try { return execFileSync('git', ['log', '-1', '--format=%cI', '--', ...files]).toString().trim() || undefined; } catch { return undefined; }
-};
+}
 
 export default defineConfig({
   site: SITE_URL,

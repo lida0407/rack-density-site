@@ -12,7 +12,8 @@
     "test": "node --test src/lib/calc/calc.test.ts",
     "check": "node scripts/check-dist.mjs && node scripts/check-copy-dc.mjs",
     "tokens": "cp ~/Sensaka/brand/tokens.css src/styles/tokens.css.tmp && { printf '/* Copied from ~/Sensaka/brand/tokens.css (Console design system). Do not edit here: refresh with npm run tokens. */\\n'; cat src/styles/tokens.css.tmp; } > src/styles/tokens.css && rm src/styles/tokens.css.tmp && cp ~/Sensaka/brand/logos/{favicon,mark}-{rackdensity,homelab,dc}.svg public/brand/ && cp ~/Sensaka/brand/logos/mark-{rackdensity,homelab,dc}-print.svg public/brand/",
-    "media": "node scripts/media.mjs"
+    "media": "node scripts/media.mjs",
+    "devices": "node scripts/devices-sync.mjs"
   },
   "engines": {
     "node": ">=22.12"

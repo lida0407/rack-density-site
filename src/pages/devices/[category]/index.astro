@@ -1,0 +1,65 @@
+---
+// /devices/<category>/: every model in a category with power, size and dated list price; category medians.
+import Base from '../../../layouts/Base.astro';
+import { u, abs } from '../../../lib/url';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME } from '../../../config/brand';
+import { byCategory, catLabel, catSlug, CATEGORIES, devicePath, median, fmtW, fmtNum, fmtPrice, isEstimated, CATALOG, type Device } from '../../../lib/devices';
+
+export function getStaticPaths() {
+  return [...byCategory()].map(([c, list]) => ({ params: { category: catSlug(c) }, props: { c, list } }));
+}
+const { c, list } = Astro.props as { c: string; list: Device[] };
+const label = catLabel(c);
+const path = `/devices/${catSlug(c)}`;
+const m = (k: 'idle' | 'typical' | 'max') => median(list.map((d) => d.power_w?.[k]));
+const w = median(list.map((d) => d.weight_kg));
+const us = [...new Set(list.map((d) => d.rack_units).filter((x): x is number => !!x))].sort((a, b) => a - b);
+const byU = c === 'server' ? us.map((n) => ({ n, idle: median(list.filter((d) => d.rack_units === n).map((d) => d.power_w?.idle)), count: list.filter((d) => d.rack_units === n).length })) : [];
+const ed = CATEGORIES[c]?.edition ?? 'both';
+const items = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: `${label}: power, size and list prices`, url: abs(path), isPartOf: { '@id': abs('/devices/') + '#dataset' },
+  mainEntity: { '@type': 'ItemList', numberOfItems: list.length, itemListElement: list.map((d, i) => ({ '@type': 'ListItem', position: i + 1, url: abs(devicePath(d)), name: `${d.vendor} ${d.model}` })) } };
+const title = [`${label}: Power, Size & List Prices | ${BRAND}`, `${label}: Power, Size & List Prices`, `${label}: Power & Specs | ${BRAND}`, `${label}: Power & Specs`].find((t) => t.length <= 60)!;
+const others = [...byCategory()].filter(([k]) => k !== c && (CATEGORIES[k]?.edition === ed || CATEGORIES[k]?.edition === 'both')).slice(0, 6);
+---
+<Base title={title}
+  description={`${label}: ${list.length} models with idle, typical and maximum watts, U, weight, ports and dated list prices, sources cited. Median typical ${fmtW(m('typical'))}.`.slice(0, 155)}
+  path={path} ogImage="/og/hub.png" schema={[items]} section="hub" crumbs={[{ name: 'Devices', path: '/devices' }, { name: label }]}>
+  <section class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">Device database · {list.length} models</p>
+      <h1>{label}: power, size and list prices</h1>
+      <p class="answer">Across the {list.length} models in this category, the median draw is {fmtW(m('idle'))} idle, {fmtW(m('typical'))} typical and {fmtW(m('max'))} at most{w ? `, and the median weight ${fmtNum(w)} kg` : ''}{us.length ? `; rack-mount models take ${us.join(', ')}U` : ''}. Every model lists its sources; ≈ marks our estimates.</p>
+      {byU.length > 1 && <p class="small">{byU.map((b) => <span class="cs-chip">{b.n}U: median idle {fmtW(b.idle)} · {b.count} models</span>)}</p>}
+      <div class="tbl"><table>
+        <thead><tr><th scope="col">Model</th><th scope="col">U</th><th scope="col">Idle</th><th scope="col">Typical</th><th scope="col">Max</th><th scope="col">Weight</th><th scope="col">List price</th></tr></thead>
+        <tbody>{list.map((d) => (
+          <tr>
+            <th scope="row"><a href={u(devicePath(d))}>{d.vendor} {d.model}</a></th>
+            <td>{d.rack_units ?? '—'}</td>
+            <td>{isEstimated(d, 'idle') ? '≈ ' : ''}{fmtW(d.power_w?.idle)}</td>
+            <td>{isEstimated(d, 'typical') ? '≈ ' : ''}{fmtW(d.power_w?.typical)}</td>
+            <td>{isEstimated(d, 'max') ? '≈ ' : ''}{fmtW(d.power_w?.max)}</td>
+            <td>{d.weight_kg ? `${fmtNum(d.weight_kg)} kg` : '—'}</td>
+            <td>{fmtPrice(d) ?? '—'}</td>
+          </tr>))}</tbody>
+      </table></div>
+      <p class="small muted">≈ = our estimate. Prices are list prices on the year shown, not quotes. Data: {CATALOG.attribution}. <a href={u('/devices/rack-density-devices.csv')} download>Download the CSV</a>.</p>
+      <aside class="card see">
+        <h2>Put them in your rack</h2>
+        <p class="muted">This catalog feeds the device picker of {ed === 'dc' ? DC_PRODUCT_NAME : PRODUCT_NAME}: pick a model and see its watts, cost and what fails with it, in 3D.</p>
+        <a class="btn btn-primary" href={u(ed === 'dc' ? '/dc' : '/homelab/try')}>{ed === 'dc' ? `See ${DC_PRODUCT_NAME}` : 'See it'}</a>
+      </aside>
+      {others.length > 0 && <><h2>More categories</h2><p>{others.map(([k, l], i) => <>{i > 0 && ' · '}<a href={u(`/devices/${catSlug(k)}`)}>{catLabel(k)}</a> <span class="muted">({l.length})</span></>)} · <a href={u('/devices')}>All devices</a></p></>}
+    </div>
+  </section>
+</Base>
+<style>
+  .tbl { overflow-x: auto; margin: 18px 0 8px; border: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  thead th { font: 600 11px/1.4 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); background: var(--bg-100); }
+  td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  tbody th { font-weight: 500; white-space: normal; min-width: 14em; }
+  .cs-chip { margin: 0 6px 6px 0; }
+  .see { margin: 24px 0; } .see h2 { font-size: 1.15rem; margin: 0 0 6px; }
+</style>

@@ -1,0 +1,87 @@
+---
+// /devices/<category>/<vendor>/<model>/: one device's public specs and dated list price, with sources (Product schema).
+import Base from '../../../../layouts/Base.astro';
+import { u, abs } from '../../../../lib/url';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME } from '../../../../config/brand';
+import { DEVICES, CATEGORIES, catLabel, catSlug, deviceParts, devicePath, fmtW, fmtNum, fmtPrice, isEstimated, PRICE_KIND, CATALOG, type Device } from '../../../../lib/devices';
+
+export function getStaticPaths() {
+  return DEVICES.map((d) => ({ params: deviceParts(d), props: { d } }));
+}
+const { d } = Astro.props as { d: Device };
+const path = devicePath(d);
+const label = catLabel(d.category);
+const one = CATEGORIES[d.category]?.one ?? label;
+const ed = CATEGORIES[d.category]?.edition ?? 'both';
+const p = d.power_w ?? { idle: null, typical: null, max: null };
+const dim = d.dimensions_mm;
+const dims = dim && dim.width_body && dim.height && dim.depth ? `${fmtNum(dim.width_body)} × ${fmtNum(dim.height)} × ${fmtNum(dim.depth)} mm` : null;
+const est = (f: 'idle' | 'typical' | 'max' | 'weight') => (isEstimated(d, f) ? '≈ ' : '');
+const price = fmtPrice(d);
+const kwh = p.typical ? (p.typical * 730) / 1000 : null;
+const full = `${d.vendor} ${d.model}`;
+const answer = [
+  p.typical ? `The ${full} draws about ${est('typical')}${fmtW(p.typical)} in typical use` + (p.idle || p.max ? ` (${[p.idle && `${est('idle')}${fmtW(p.idle)} idle`, p.max && `${est('max')}${fmtW(p.max)} at most`].filter(Boolean).join(', ')})` : '') : `The ${full} is a ${one}`,
+  d.rack_units ? `, takes ${d.rack_units}U` : '',
+  d.weight_kg ? `, weighs ${est('weight')}${fmtNum(d.weight_kg)} kg` : '',
+  dims ? ` and measures ${dims} (W × H × D)` : '', '.',
+  price ? (d.list_price?.kind === 'reseller' ? ` A reseller listed it at ${price.replace('List ', '')}.` : ` ${price.replace('List', 'Its list price was')}${d.list_price?.kind ? `, the ${PRICE_KIND[d.list_price.kind] ?? 'list price'}` : ''}.`) : '',
+].join('');
+const qv = (value: number | null | undefined, unitCode: string) => (value ? { '@type': 'QuantitativeValue', value, unitCode } : undefined);
+const prop = (name: string, value: unknown, unitText?: string) => (value == null || value === '' ? null : { '@type': 'PropertyValue', name, value, ...(unitText ? { unitText } : {}) });
+const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': abs(path) + '#product', name: full, model: d.model, brand: { '@type': 'Brand', name: d.vendor },
+  category: label, description: answer, url: abs(path), weight: qv(d.weight_kg, 'KGM'), width: qv(dim?.width_body, 'MMT'), height: qv(dim?.height, 'MMT'), depth: qv(dim?.depth, 'MMT'),
+  additionalProperty: [prop('Rack units', d.rack_units, 'U'), prop('Idle power', p.idle, 'W'), prop('Typical power', p.typical, 'W'), prop('Maximum power', p.max, 'W'),
+    prop('Airflow', d.airflow), prop('Ports', d.ports_summary), prop('List price (USD)', d.list_price?.usd), prop('List price date', d.list_price?.date)].filter(Boolean),
+  subjectOf: { '@id': abs('/devices/') + '#dataset' } };
+const base = `${full} Specs & Power`;
+const title = `${base} | ${BRAND}`.length <= 60 ? `${base} | ${BRAND}` : base.length <= 60 ? base : `${full.slice(0, 48).trim()} Specs`;
+const desc = [`${full}`, d.rack_units && `${d.rack_units}U`, p.idle && `idle ${fmtW(p.idle)}`, p.typical && `typical ${fmtW(p.typical)}`, p.max && `max ${fmtW(p.max)}`, d.weight_kg && `${fmtNum(d.weight_kg)} kg`, price].filter(Boolean).join(', ') + '. Dimensions, ports, airflow and sources.';
+const siblings = DEVICES.filter((x) => x.category === d.category && x.id !== d.id).slice(0, 8);
+const rows: [string, string | null][] = [
+  ['Category', label], ['Form factor', d.form_factor?.replace(/_/g, ' ') ?? null], ['Rack units', d.rack_units ? `${d.rack_units}U` : null],
+  ['Dimensions (W × H × D)', dims], ['Weight', d.weight_kg ? `${est('weight')}${fmtNum(d.weight_kg)} kg` : null],
+  ['Power, idle', p.idle ? `${est('idle')}${fmtW(p.idle)}` : null], ['Power, typical', p.typical ? `${est('typical')}${fmtW(p.typical)}` : null], ['Power, maximum', p.max ? `${est('max')}${fmtW(p.max)}` : null],
+  ['Airflow', d.airflow?.replace(/_/g, ' ') ?? null], ['Ports', d.ports_summary || null],
+  ['List price', price ? `${price}${d.list_price?.kind ? ` · ${PRICE_KIND[d.list_price.kind] ?? d.list_price.kind}` : ''}${d.list_price?.config ? ` · ${d.list_price.config}` : ''}` : null],
+];
+---
+<Base title={title} description={desc.slice(0, 155)} path={path} ogImage="/og/hub.png" schema={[product]} section="hub"
+  crumbs={[{ name: 'Devices', path: '/devices' }, { name: label, path: `/devices/${catSlug(d.category)}` }, { name: d.model }]}>
+  <section class="section-tight">
+    <div class="wrap narrow">
+      <p class="eyebrow">{label} · {d.vendor}</p>
+      <h1>{full}</h1>
+      <p class="muted">{d.name}</p>
+      <p class="answer">{answer}</p>
+      <div class="tbl"><table><tbody>
+        {rows.filter(([, v]) => v).map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}
+      </tbody></table></div>
+      {kwh && <p class="small">Running 24/7 at typical draw: about {fmtNum(kwh)} kWh a month, roughly €{fmtNum(kwh * 0.3)} at €0.30/kWh or ${fmtNum(kwh * 0.17)} at $0.17/kWh (estimated; your own load decides).</p>}
+      {d.status === 'blocked' && <p class="small muted">The full documentation sits behind a partner login: these are the public specs.</p>}
+      {d.estimated.some((e) => e.startsWith('power.')) && <p class="small muted">≈ = our estimate where the vendor publishes no figure.</p>}
+      <h2>Sources</h2>
+      <ol class="src">
+        {d.sources.map((s) => <li><a href={s.url} rel="noopener nofollow">{s.title || new URL(s.url).hostname}</a>{s.retrieved && <span class="muted"> · read {s.retrieved}</span>}</li>)}
+        {d.list_price?.source && !d.sources.some((s) => s.url === d.list_price!.source) && <li><a href={d.list_price.source} rel="noopener nofollow">List price source</a>{d.list_price.date && <span class="muted"> · {d.list_price.date}</span>}</li>}
+      </ol>
+      <p class="small muted">Updated {d.updated}. Data: {CATALOG.attribution} — <a href={u('/devices/LICENSE.txt')}>license</a> · <a href={u('/devices/rack-density-devices.csv')} download>all devices as CSV</a>.</p>
+      <aside class="card see">
+        <h2>See it in your rack</h2>
+        <p class="muted">{ed === 'dc' ? DC_PRODUCT_NAME : PRODUCT_NAME} uses this catalog in its device picker: add the {one}, and see its watts, its cost per month and what goes dark when its power or network fails.</p>
+        <a class="btn btn-primary" href={u(ed === 'dc' ? '/dc' : '/homelab/try')}>{ed === 'dc' ? `See ${DC_PRODUCT_NAME}` : 'See it'}</a>
+      </aside>
+      {siblings.length > 0 && <><h2>More in {label}</h2><ul class="sib">{siblings.map((x) => <li><a href={u(devicePath(x))}>{x.vendor} {x.model}</a> <span class="muted">{fmtW(x.power_w?.typical)} typical</span></li>)}</ul><p><a href={u(`/devices/${catSlug(d.category)}`)}>All {label} →</a></p></>}
+    </div>
+  </section>
+</Base>
+<style>
+  .tbl { margin: 18px 0 10px; border: 1px solid var(--line); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { width: 34%; font: 600 11px/1.6 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); background: var(--bg-100); }
+  td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .src, .sib { padding-left: 1.3em; display: grid; gap: 4px; }
+  .src a { overflow-wrap: anywhere; }
+  .see { margin: 24px 0; } .see h2 { font-size: 1.15rem; margin: 0 0 6px; }
+</style>

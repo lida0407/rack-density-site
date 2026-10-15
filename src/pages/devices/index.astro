@@ -1,0 +1,80 @@
+---
+// /devices/: open device data (SEO-GEO-PLAN §4.1, SEO decisions 2026-10-15 §2). Dataset schema, CSV/JSON downloads, CC BY 4.0.
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import { u, abs } from '../../lib/url';
+import { BRAND } from '../../config/brand';
+import { CATALOG, DEVICES, byCategory, catLabel, catSlug, median, fmtW } from '../../lib/devices';
+const cats = byCategory();
+const priced = DEVICES.filter((d) => d.list_price?.usd).length;
+const sources = DEVICES.reduce((a, d) => a + d.sources.length, 0);
+const updated = DEVICES.map((d) => d.updated).sort().at(-1)!;
+const med = (f: (d: (typeof DEVICES)[number]) => boolean, k: 'idle' | 'typical') => median(DEVICES.filter(f).map((d) => d.power_w?.[k]));
+const facts = [
+  { k: '1U servers, median idle', v: fmtW(med((d) => d.category === 'server' && d.rack_units === 1, 'idle')), n: DEVICES.filter((d) => d.category === 'server' && d.rack_units === 1).length },
+  { k: '2U servers, median idle', v: fmtW(med((d) => d.category === 'server' && d.rack_units === 2, 'idle')), n: DEVICES.filter((d) => d.category === 'server' && d.rack_units === 2).length },
+  { k: 'Mini PCs, median idle', v: fmtW(med((d) => d.category === 'mini_pc', 'idle')), n: cats.get('mini_pc')?.length ?? 0 },
+  { k: 'NAS, median typical', v: fmtW(med((d) => d.category === 'nas', 'typical')), n: cats.get('nas')?.length ?? 0 },
+];
+const dataset = { '@context': 'https://schema.org', '@type': 'Dataset', '@id': abs('/devices/') + '#dataset', name: CATALOG.name,
+  description: `Specs and dated list prices for ${DEVICES.length} rack, homelab and data-center devices: dimensions, weight, rack units, idle, typical and maximum power, ports, airflow and list price, each with sources. ${CATALOG.notice}`,
+  url: abs('/devices/'), license: CATALOG.license_url, isAccessibleForFree: true, dateModified: updated,
+  creator: { '@id': `${abs('/')}#org` }, publisher: { '@id': `${abs('/')}#org` },
+  keywords: ['server power consumption', 'device power database', 'rack units', 'UPS', 'homelab', 'data center equipment specs'],
+  variableMeasured: ['rack units', 'width (mm)', 'height (mm)', 'depth (mm)', 'weight (kg)', 'idle power (W)', 'typical power (W)', 'maximum power (W)', 'ports', 'airflow', 'list price (USD) with date'],
+  distribution: [
+    { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: abs('/devices/rack-density-devices.csv') },
+    { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: abs('/devices/rack-density-devices.json') },
+  ] };
+const faq = [
+  { q: 'Where do the numbers come from?', a: 'From the vendors’ data sheets, manuals and spec pages, and for prices from the vendor store, launch announcements or a named reseller. Every device lists its sources with the date they were read. Values we had to estimate are marked with ≈.' },
+  { q: 'Can I use this data?', a: `Yes, under CC BY 4.0: copy, adapt and publish it, also commercially, as long as you credit "${CATALOG.attribution}" with a link to the license.` },
+  { q: 'Are the list prices current?', a: 'They are list prices on the date shown, often the launch price, not a quote. Street prices for older hardware are usually far lower. Devices without a public list price show none.' },
+  { q: 'What is “typical” power?', a: 'The draw in normal use as published by the vendor or measured in a cited review: between idle and the maximum the power supply is rated for. Plan circuits and UPS sizes on typical draw with headroom, not on the power-supply rating.' },
+];
+---
+<Base title={`Device Power & Spec Database (CC BY) | ${BRAND}`}
+  description={`Power, size, weight, ports and dated list prices for ${DEVICES.length} servers, switches, mini PCs, GPUs, UPSes and DC cooling units. Sources cited. CSV, CC BY 4.0.`}
+  path="/devices" ogImage="/og/hub.png" schema={[dataset]} section="hub" crumbs={[{ name: 'Devices' }]}>
+  <section class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">Open data · CC BY 4.0 · updated {updated}</p>
+      <h1>Device power and spec database</h1>
+      <p class="answer">{DEVICES.length} rack, homelab and data-center devices with their dimensions, weight, rack units, idle, typical and maximum power, ports, airflow and dated list prices, each with its sources. Free to reuse under CC BY 4.0: download the <a href={u('/devices/rack-density-devices.csv')}>CSV</a> or the <a href={u('/devices/rack-density-devices.json')}>JSON</a>.</p>
+      <div class="tiles tiles-4 stats">
+        <div class="tile"><p class="cs-eyebrow">Devices</p><p class="big2">{DEVICES.length}</p></div>
+        <div class="tile"><p class="cs-eyebrow">Categories</p><p class="big2">{cats.size}</p></div>
+        <div class="tile"><p class="cs-eyebrow">With a dated list price</p><p class="big2">{priced}</p></div>
+        <div class="tile"><p class="cs-eyebrow">Sources cited</p><p class="big2">{sources}</p></div>
+      </div>
+      <h2>From the data</h2>
+      <ul class="facts">{facts.map((f) => <li><b>{f.v}</b> <span class="muted">{f.k}, across {f.n} models</span></li>)}</ul>
+      <h2>Categories</h2>
+      <div class="grid grid-3 cats">
+        {[...cats].map(([c, list]) => (
+          <a class="card cat" href={u(`/devices/${catSlug(c)}`)}>
+            <h3>{catLabel(c)}</h3>
+            <p class="muted small">{list.length} models · median typical {fmtW(median(list.map((d) => d.power_w?.typical)))}</p>
+          </a>
+        ))}
+      </div>
+      <h2>Use the data</h2>
+      <ul>
+        <li><a href={u('/devices/rack-density-devices.csv')} download>rack-density-devices.csv</a> — one row per device</li>
+        <li><a href={u('/devices/rack-density-devices.json')} download>rack-density-devices.json</a> — the same with structured ports and sources</li>
+        <li><a href={u('/devices/LICENSE.txt')}>License and attribution</a>: {CATALOG.attribution}</li>
+      </ul>
+      <p class="small muted">{CATALOG.notice}</p>
+    </div>
+  </section>
+  <section class="section"><div class="wrap narrow"><Faq items={faq} /></div></section>
+</Base>
+<style>
+  .stats { margin: 20px 0 8px; }
+  .facts { list-style: none; padding: 0; display: grid; gap: 6px; font-family: var(--font-mono); }
+  .cats { margin-top: 12px; }
+  .cat { text-decoration: none; color: var(--ink); }
+  .cat h3 { margin: 0 0 4px; font-size: 1.05rem; }
+  .cat:hover { border-color: var(--accent); }
+  .big2 { margin: 6px 0 0; }
+</style>

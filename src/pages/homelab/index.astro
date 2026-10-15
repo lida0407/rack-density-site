@@ -12,6 +12,7 @@ import { VIDEOS, videoLd } from '../../data/videos';
 import { u, abs, notifyHref } from '../../lib/url';
 import { PRODUCT_NAME, PRICES, FLAGS, WAITLIST } from '../../config/brand';
 import { homeFaq } from '../../data/faq';
+import { ENTITY } from '../../config/entity';
 import heroDark from '../../assets/shots/hero-lightsoff.png';
 import heroLight from '../../assets/shots/hero-office.png';
 import overview from '../../assets/shots/overview.png';
@@ -23,7 +24,7 @@ import report from '../../assets/shots/import-report.png';
 
 const app = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', '@id': abs('/homelab/') + '#app', name: PRODUCT_NAME,
   applicationCategory: 'UtilitiesApplication', operatingSystem: 'Web browser', url: abs('/homelab/'),
-  description: 'A 3D model of your homelab rack built from an Excel or CSV file: power and cost per device (estimated), heat, network and cable views, power and network diagrams, a lights-off mode and a Fail what-if. The file is read in your browser and never uploaded.' };
+  description: ENTITY.homelabTwin };
 const views = [
   { id: 'overview', label: 'Overview', img: overview, alt: 'The demo lab in 3D: two racks with labelled devices, a power and cost readout at the top and the timeline at the bottom', text: 'The whole lab at a glance: racks, devices, and the gear outside the rack. One readout on top: watts, cost per month, UPS runtime.' },
   { id: 'views', label: 'Views', img: viewMenu, alt: 'The View menu open over the demo lab, listing Overview, Power, Heat, Network, Cables, Compute and AI', text: 'Overview, Power, Heat, Network, Cables, Compute and AI sit in one View menu (keys 1–7). Power and Network switch between 3D and a diagram.' },

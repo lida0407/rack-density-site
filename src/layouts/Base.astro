@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import ThemeScript from '../components/site/ThemeScript.astro';
 import Breadcrumbs from '../components/site/Breadcrumbs.astro';
 import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
+import { ENTITY } from '../config/entity';
 import { abs, u } from '../lib/url';
 import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, SITE_URL, BASE } from '../config/brand';
 
@@ -26,7 +27,7 @@ const org = {
   '@context': 'https://schema.org',
   '@graph': [
     { '@type': 'Organization', '@id': `${abs('/')}#org`, name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}`,
-      description: `${BRAND} makes 3D rack and data-center twins: ${PRODUCT_NAME} for the homelab and ${DC_PRODUCT_NAME} for data centers, plus free rack, power and AI-efficiency calculators. A Sensaka company.` },
+      description: ENTITY.rackdensity }, // marketing/ENTITY.md, verbatim
     { '@type': 'WebSite', '@id': `${abs('/')}#website`, name: BRAND, url: abs('/'), publisher: { '@id': `${abs('/')}#org` } },
   ],
 };

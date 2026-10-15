@@ -1,0 +1,4 @@
+public.json and public.csv: DC Sim device catalog by Sensaka / RACKDENSITY (rack-density.com), CC BY 4.0.
+License: Creative Commons Attribution 4.0 International — https://creativecommons.org/licenses/by/4.0/
+Attribute as: "DC Sim device catalog by Sensaka / RACKDENSITY (rack-density.com), CC BY 4.0", with a link to the license.
+Sources per record are cited in the data; estimated values are marked in the "estimated" field.

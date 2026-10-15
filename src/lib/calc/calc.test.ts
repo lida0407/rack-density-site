@@ -146,3 +146,11 @@ test('rack diagram slots: 42U / 2U fills 21, 80U caps at 60 slots (60 drawn + 20
   assert.deepEqual(rackSlots(6, 8, 1), { slots: 6, perDevice: 6, drawn: 1, more: 0 });
   assert.equal(rackSlots(0, 1, 0).slots, 1);
 });
+
+test('device medians: odd, even, nulls ignored, empty → null', async () => {
+  const { median } = await import('./stats.ts');
+  assert.equal(median([3, 1, 2]), 2);
+  assert.equal(median([4, 1, 3, 2]), 2.5);
+  assert.equal(median([null, 10, undefined, 30, NaN]), 20);
+  assert.equal(median([]), null);
+});

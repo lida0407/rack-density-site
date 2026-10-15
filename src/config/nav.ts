@@ -28,6 +28,7 @@ export const PRODUCTS = [
 export const MENU: Record<Section, NavLink[]> = {
   hub: [
     { href: '/calculator', label: 'Calculator' },
+    { href: '/devices', label: 'Devices' },
     { href: '/homelab/learn', label: 'Learn' },
   ],
   homelab: [
@@ -50,6 +51,7 @@ export const FOOTER = {
     { href: '/', label: 'All products' },
     { href: '/calculator', label: 'Rack Density Calculator' },
     { href: '/calculator/ups-runtime', label: 'UPS Runtime Calculator' },
+    { href: '/devices', label: 'Device database' },
     { href: '/homelab/learn', label: 'Learn' },
   ],
   homelab: [
