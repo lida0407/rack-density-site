@@ -2,7 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { u } from '../../../lib/url';
-const live = (await getCollection('learn')).sort((a, b) => +a.data.date - +b.data.date);
+const live = (await getCollection('learn')).sort((a, b) => +b.data.date - +a.data.date || a.data.title.localeCompare(b.data.title));
 const isLive = (slug: string) => live.some((e) => e.data.slug === slug);
 const calculators = [
   { t: 'Rack Density Calculator', d: 'How many devices fit before space, power or cooling runs out.', href: '/calculator', live: true },
@@ -10,12 +10,9 @@ const calculators = [
   { t: 'Homelab Power Cost Calculator', d: 'What your whole lab costs per month, device by device.', href: '/homelab/learn/homelab-power-calculator', live: isLive('homelab-power-calculator') },
   { t: '10-inch Rack Planner', d: 'Will it fit? Width, depth and U for a 10-inch mini rack.', href: '/homelab/learn/10-inch-mini-rack-planner', live: isLive('10-inch-mini-rack-planner') },
   { t: 'Idle Savings & Payback', d: 'What a lower idle draw or a new box saves, and when it pays back.', href: '/homelab/learn/proxmox-power-usage', live: isLive('proxmox-power-usage') },
-  { t: 'UPS Runtime Calculator', d: 'How long your UPS keeps the lab up, and how big a UPS you need.', href: '/homelab/learn/ups-runtime-calculator', live: isLive('ups-runtime-calculator') },
+  { t: 'UPS Runtime Calculator', d: 'How long your UPS keeps the lab up, and how big a UPS you need.', href: '/calculator/ups-runtime', live: true },
 ];
 const upcoming = [
-  { t: 'How much power does a homelab use?', d: 'From 10–20 W for one mini PC to 300–900 W for a rack of used enterprise servers.' },
-  { t: 'Rack diagram from Excel', d: 'One row per device (rack, U, model) gives a rack elevation and a 3D view.' },
-  { t: 'Homelab rack layout', d: 'Network at the top, heavy gear and the UPS at the bottom, room left to grow.' },
   { t: 'Homelab cable management plan', d: 'Keep patch panel and switch together, label both ends, keep the port map in a sheet.' },
 ];
 ---
@@ -24,7 +21,7 @@ const upcoming = [
   path="/homelab/learn" ogImage="/homelab/og/learn.png" section="homelab" crumbs={[{ name: 'Learn' }]}>
   <section class="section-tight">
     <div class="wrap">
-      <h1>Learn</h1>
+      <h1>Homelab guides and calculators</h1>
       <p class="lead">Straight answers for planning, powering and running a homelab rack. Each guide comes with a calculator, and a way to see the result on your own rack in 3D.</p>
       <h2 style="margin-top:1.5em">Free calculators</h2>
       <div class="grid grid-3">

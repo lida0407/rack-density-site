@@ -9,15 +9,20 @@ const PAGES = {
   hub: ['Racks you can see through', 'Free rack density calculator, plus 3D twins for the homelab and the data center.'],
   home: ['Your homelab rack, in 3D.', 'Watts, cost per month, cables and what goes dark when one thing fails.'],
   try: ['See Homelab Twin', 'Clips and stills of the demo lab, or book a walkthrough.'],
+  'ups-runtime': ['UPS Runtime Calculator', 'Minutes on battery, load against the rating, the UPS size you need.'],
   calculator: ['Rack Density Calculator', 'Devices per rack by space, power and cooling, with a live rack diagram.'],
   pricing: ['Free, $5 or $20 a month', 'Try stores nothing. Account keeps your lab. Pro explains it.'],
   learn: ['Homelab guides & calculators', 'Power cost, tokens per watt, 10-inch racks, Proxmox power.'],
   'tokens-per-watt': ['Tokens per watt', 'Tokens per kWh and cost per million tokens for your local AI box.'],
   '10-inch-mini-rack-planner': ['10-inch mini rack planner', 'Will it fit? Width, depth and U, plus a power budget.'],
   'homelab-power-calculator': ['What your homelab costs', 'Average watts × 730 ÷ 1,000 × your price per kWh, device by device.'],
+  'homelab-ups-sizing': ['Homelab UPS sizing', 'How long it will last, and the smallest UPS that still shuts down cleanly.'],
+  'rack-diagram-from-excel': ['Rack diagram from Excel', 'A free template, one formula for the rack, one for the clashes.'],
+  'homelab-rack-layout': ['Homelab rack layout', 'Heavy at the bottom, network at the top, air front to back.'],
+  'how-much-power-does-a-homelab-use': ['How much power does it use?', 'About 70 W, 120 W or 300+ W: three example labs with monthly costs.'],
   'proxmox-power-usage': ['Proxmox power usage', 'Measure it at the wall, then cut idle watts. Payback calculator.'],
 };
-const HUB = new Set(['hub', 'calculator']); // hub pages: public/og/, no product footer
+const HUB = new Set(['hub', 'calculator', 'ups-runtime']); // hub pages: public/og/, no product footer
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const V = {
   dark: { shot: 'src/assets/shots/overview.png', bright: 0.55, mid: .8, bg: '#0b0a09', ink: '#f2f1ee', muted: '#a8a5a0', acc: '#e57000', acc2: '#22c55e', suffix: '' },

@@ -49,6 +49,7 @@ export const FOOTER = {
   hub: [
     { href: '/', label: 'All products' },
     { href: '/calculator', label: 'Rack Density Calculator' },
+    { href: '/calculator/ups-runtime', label: 'UPS Runtime Calculator' },
     { href: '/homelab/learn', label: 'Learn' },
   ],
   homelab: [

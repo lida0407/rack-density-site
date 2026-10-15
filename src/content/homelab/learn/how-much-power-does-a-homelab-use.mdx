@@ -1,0 +1,87 @@
+---
+title: "How much power does a homelab use?"
+metaTitle: "How Much Power Does a Homelab Use? | RACKDENSITY"
+metaDescription: "Typical homelab power draw by setup: about 70 W for two mini PCs and a NAS, 120 W for a mini-PC cluster, 300+ W with used servers. With monthly costs."
+slug: how-much-power-does-a-homelab-use
+date: 2026-10-15
+updated: 2026-10-15
+keyword: how much power does a homelab use
+supporting: [homelab power usage, homelab power draw, how many watts does a server use, how much electricity does a home server use]
+answer: "Most homelabs draw between about 50 and 350 W around the clock. Two low-power mini PCs with a 4-bay NAS, a small switch and a router average about 70 W; a three-node mini-PC cluster with a managed switch about 120 W; two used 2U servers push the lab past 300 W. Every 100 W running 24/7 is 73 kWh a month, about €22 at €0.30/kWh or $12 at $0.17/kWh."
+calculator: PowerCost
+tools: [/calculator, /calculator/ups-runtime]
+related: [homelab-power-calculator, proxmox-power-usage, homelab-ups-sizing]
+cta:
+  title: "See the watts of every device in your rack"
+  body: "Homelab Twin estimates the watts and the monthly cost of each device from its model, shows the power chain from the wall to each power supply, and adjusts the estimates to any readings you add."
+  button: "See it in 3D"
+  href: /try
+faq:
+  - q: "Does idle or full load matter more for the bill?"
+    a: "Idle, for most homelabs. Servers spend most of the day waiting, so the idle draw runs 20 hours a day or more; a high peak for an hour barely moves the monthly total."
+  - q: "How do I measure my homelab's power?"
+    a: "At the wall: a smart plug with energy metering or a plug-in power meter on the power strip, or the load reading of your UPS (on its display or with Network UPS Tools, ups.realpower). Measure for a day, not a minute, and use the average."
+  - q: "Does a UPS add to the power use?"
+    a: "A little: a line-interactive UPS loses a few percent of the load as heat, an online (double-conversion) UPS more. Add it with the UPS-losses field in the calculator."
+  - q: "What uses the most power in a typical homelab?"
+    a: "Old dual-socket servers and GPUs. One older 2U server can idle above 100 W, more than a whole mini-PC cluster with its NAS and switch; an AI box with a 24 GB GPU idles around 60 W and draws several hundred watts while generating."
+teaser: "About 70 W for two mini PCs and a NAS, 120 W for a cluster, 300 W and up with used servers."
+---
+import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../../config/brand';
+import PowerCost from '../../../components/calc/PowerCost.astro';
+
+## The rule
+
+```
+monthly kWh  = average watts × 730 ÷ 1,000
+monthly cost = monthly kWh × your price per kWh
+```
+
+730 is the number of hours in an average month (8,760 ÷ 12). Average watts is what counts: a device that idles at 110 W and reaches 220 W for four hours a day averages about 128 W.
+
+## Typical draw by device
+
+These are the typical values the calculator below starts from; real devices vary, so measure yours at the wall when you can.
+
+| Device | Idle (W) | Load (W) |
+|---|---|---|
+| Mini PC, low-power quad-core | 8 | 25 |
+| Mini PC, 6–8 core | 12 | 50 |
+| Raspberry Pi / single-board computer | 4 | 8 |
+| NAS, 4 bays, disks spinning | 30 | 45 |
+| Desktop tower used as a server | 35 | 120 |
+| 1U server, older dual-socket | 80 | 160 |
+| 2U server, older dual-socket | 110 | 220 |
+| AI box with one 24 GB GPU | 60 | 400 |
+| Switch, 8-port unmanaged | 4 | 5 |
+| Switch, 24-port managed (PoE load not included) | 20 | 25 |
+| Router / firewall appliance | 12 | 18 |
+
+## Three example labs
+
+Each device busy four hours a day and idle the rest; prices at €0.30 and $0.17 per kWh.
+
+| Lab | Devices | Average | Per month |
+|---|---|---|---|
+| Small | 2 low-power mini PCs, 4-bay NAS, 8-port switch, router | ≈ 71 W | 52 kWh · €15.60 · $8.90 |
+| Cluster | 3 mini PCs (6–8 core) in a Proxmox cluster, 4-bay NAS, 24-port switch, router | ≈ 121 W | 89 kWh · €26.60 · $15.10 |
+| Used enterprise | 2 older 2U servers, 4-bay NAS, 24-port switch, router | ≈ 323 W | 236 kWh · €70.70 · $40.10 |
+
+Adding an AI box with a 24 GB GPU to any of them adds about 117 W on average with the same four busy hours: another 85 kWh, about €25.60 or $14.50 a month.
+
+## Work out your own
+
+Pick your devices, set the hours they are busy, and enter your price per kWh:
+
+<PowerCost />
+
+## Where the watts go
+
+- **Idle draw is most of the bill.** In the used-enterprise lab, close to 90 % of the energy is the idle draw that runs around the clock. Cutting idle watts (newer hardware, fewer always-on hosts, spinning down disks) saves more than tuning peaks; the [Proxmox power guide](/homelab/learn/proxmox-power-usage/) covers how.
+- **Disks add up.** Every spinning 3.5-inch disk adds a few watts around the clock.
+- **PoE is real power.** Cameras and access points powered by the switch show up in the switch's draw, not in their own.
+- **The UPS has losses too,** and its runtime depends on the total: check it with the [UPS runtime calculator](/calculator/ups-runtime/).
+
+## Sources
+- RACKDENSITY calculator presets (typical idle and load watts per device class; estimates, not measurements)
+- 730 hours per month = 8,760 hours per year ÷ 12

@@ -1,0 +1,109 @@
+---
+title: "Rack diagram from Excel: a free template and two formulas"
+metaTitle: "Rack Diagram from Excel: Free Template | RACKDENSITY"
+metaDescription: "Draw a rack elevation diagram from a spreadsheet: the columns you need, one formula that fills the rack, one that finds overlaps, and a free template."
+slug: rack-diagram-from-excel
+date: 2026-10-15
+updated: 2026-10-15
+keyword: rack diagram excel
+supporting: [rack diagram generator, rack elevation diagram, server rack diagram template excel, network rack diagram tool free, rack elevation template]
+answer: "A rack diagram (rack elevation) only needs one row per device with the rack, the lowest U it sits in and its height in U. With those columns, one FILTER formula draws every rack as a column of U slots in Excel or Google Sheets, conditional formatting colours the occupied slots, and a second formula flags two devices in the same U. The free template below has the columns already."
+calculator: RackFit
+tools: [/calculator]
+related: [homelab-rack-layout, 10-inch-mini-rack-planner, homelab-ups-sizing]
+howto:
+  name: "Draw a rack diagram from a spreadsheet"
+  totalTime: PT30M
+  steps:
+    - name: "List the devices"
+      text: "One row per device in the Devices sheet: rack, U (the lowest unit it occupies), model, name and height in U."
+    - name: "Build the rack grid"
+      text: "In a second sheet put the U numbers down column A, highest at the top, and one rack name per column in row 1."
+    - name: "Fill the grid with one formula"
+      text: "In each cell, FILTER the Devices sheet for rows in that rack whose span covers that U and show the first name."
+    - name: "Colour the occupied slots"
+      text: "Add a conditional-formatting rule that fills every non-empty cell, so each device shows as a block."
+    - name: "Check for overlaps"
+      text: "In the Devices sheet, count the other devices in the same rack whose span overlaps the row; anything above zero is a clash."
+cta:
+  title: "Turn the same sheet into a 3D rack"
+  body: "Homelab Twin reads the same columns (rack, U, model) and builds a 3D model of your rack, with the rack elevation, the watts per device and an import report that lists two devices in one U, ports used twice and missing labels."
+  button: "See it in 3D"
+  href: /try
+faq:
+  - q: "What is a rack elevation diagram?"
+    a: "A front (or rear) view of a rack with its U slots numbered, showing which device sits in which slots and which slots are free. It is the drawing you check before you buy, mount or move anything."
+  - q: "Is U1 at the bottom or the top?"
+    a: "On most racks U1 is the bottom slot and the numbers count up, but some rails are numbered from the top. Check the markings on your rails and use the same convention in the sheet."
+  - q: "How do I show devices mounted at the back?"
+    a: "Add a face column (front or rear) and build a second grid that filters on face = rear. Power strips and some switches are often rear-mounted; zero-U strips on the side don't take a slot at all."
+  - q: "Does this work for a 10-inch rack?"
+    a: "Yes. The grid does not care about the width: a 10-inch rack is just a shorter column, usually 4U to 12U. Use the planner on this page to check what fits."
+teaser: "Rack, lowest U and height: one FILTER formula draws the rack, one SUMPRODUCT finds the clashes."
+---
+import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../../config/brand';
+import RackFit from '../../../components/calc/RackFit.astro';
+
+## What the diagram needs
+
+A rack elevation is a lookup: for every U slot in every rack, which device covers it? The template's Devices sheet already has the columns for it:
+
+| Column | Header | Example | Notes |
+|---|---|---|---|
+| A | rack | R01 | The rack's name, spelled the same in every row |
+| B | u | 12 | The **lowest** U the device occupies |
+| C | model | (any) | {PRODUCT_NAME} takes the height and the watts from the model |
+| D | name | pve-01 | What you want to see in the slot |
+| F | height_u | 2 | How many U it takes: a 2U server in U12 occupies U12 and U13 |
+
+Leave `u` empty for gear that isn't in the rack (an access point, the ISP box): it stays in the list without taking a slot. For the formulas below, add one helper column L with the height, 1U when `height_u` is empty:
+
+```
+L2:  =IF(F2="",1,F2)
+```
+
+Download it here: [the free template (.xlsx)](/downloads/homelab-template.xlsx). It is the same file {PRODUCT_NAME} imports.
+
+## Draw the rack with one formula
+
+Make a second sheet, Rack view. Put the U numbers down column A from the top (for a 24U rack: 24 in A2, 23 in A3, down to 1 in A25) and the rack names across row 1 (B1 = R01, C1 = R02). Then, in B2:
+
+```
+=IFERROR(INDEX(FILTER(Devices!$D$2:$D$200,
+   (Devices!$A$2:$A$200=B$1)
+   *(Devices!$B$2:$B$200<>"")
+   *(Devices!$B$2:$B$200<=$A2)
+   *(Devices!$B$2:$B$200+Devices!$L$2:$L$200-1>=$A2)), 1), "")
+```
+
+Copy it across the grid. Each cell shows the device whose span covers that U in that rack, or stays empty. FILTER works in Excel 365, Excel 2021 and Google Sheets.
+
+To make it look like a rack, add a conditional-formatting rule on the grid: format cells that are **not empty** with a fill colour. A 2U device then shows as a two-row block with its name in both rows.
+
+## Find the clashes
+
+Two devices in the same U is the most common mistake in a hand-made rack sheet. In the Devices sheet, column M:
+
+```
+=IF(B2="","",SUMPRODUCT((A$2:A$200=A2)*(B$2:B$200<>"")
+   *(B$2:B$200<=B2+L2-1)
+   *(B$2:B$200+L$2:L$200-1>=B2))-1)
+```
+
+It counts the other devices in the same rack whose span overlaps this one and skips off-rack gear. Anything above 0 is a clash: filter the column for values greater than 0.
+
+## Plan the U before you buy
+
+The planner below draws a small elevation as you add devices and adds up the watts, so you can try a layout before you edit the sheet:
+
+<RackFit />
+
+## Keep it useful
+
+- **One sheet, one truth.** Rename racks in one place; a typo in the rack column makes a device vanish from the grid.
+- **Add the power.** A watts column next to each device turns the same sheet into a power budget: sum it per rack and compare it with your UPS and power-strip ratings.
+- **Add the ports.** A Cables sheet (from device, from port, to device, to port) is what you need when a link goes down at 2 a.m.
+
+## Sources
+- Microsoft and Google documentation for FILTER, INDEX, SUMPRODUCT and conditional formatting
+- The RACKDENSITY Excel template (Devices sheet: rack, U, model required)

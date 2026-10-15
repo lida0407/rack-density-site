@@ -1,20 +1,33 @@
+---
+// UPS runtime + sizing (lib/calc/upsRuntime.ts). Used on /calculator/ups-runtime/ and in the homelab UPS guide.
+interface Props { heading?: boolean }
+const { heading = true } = Astro.props;
+---
 <div class="calc" data-calc="ups">
-  <h3>UPS runtime calculator</h3>
+  {heading && <h3>UPS runtime calculator</h3>}
   <div class="calc-grid">
-    <label class="field">Load at the UPS output (W) <input data-l type="number" inputmode="decimal" min="0" value="150" /></label>
-    <label class="field">UPS watt rating (W, not VA) <input data-r type="number" inputmode="decimal" min="0" value="900" /></label>
-    <label class="field">Battery energy (Wh) <input data-wh type="number" inputmode="decimal" min="0" value="216" /><span class="hint">12 V × 9 Ah × 2 = 216 Wh</span></label>
-    <label class="field">Battery health (%) <input data-hp type="number" inputmode="decimal" min="10" max="100" value="80" /></label>
+    <label class="field">Load at the UPS output (W) <input data-l type="number" inputmode="decimal" min="0" value="150" /><span class="hint">Read it on the UPS display or with NUT (ups.realpower)</span></label>
+    <label class="field">UPS watt rating (W, not VA) <input data-r type="number" inputmode="decimal" min="0" value="900" /><span class="hint">On the label next to the VA figure: a 1500 VA unit is often 900 W</span></label>
+    <label class="field">Battery energy (Wh) <input data-wh type="number" inputmode="decimal" min="0" value="216" /><span class="hint">Or fill in the three fields below</span></label>
+    <label class="field">Battery health (%) <input data-hp type="number" inputmode="decimal" min="10" max="100" value="80" /><span class="hint">New battery 100 %, a few years old about 80 %</span></label>
+    <div class="field bat"><span>Battery: volts × Ah × count</span>
+      <div class="bat-row"><input data-bv type="number" inputmode="decimal" min="0" value="12" aria-label="Battery volts" /><span>V ×</span><input data-ba type="number" inputmode="decimal" min="0" value="9" aria-label="Battery amp-hours" /><span>Ah ×</span><input data-bc type="number" inputmode="decimal" min="1" value="2" aria-label="Number of batteries" /></div></div>
   </div>
   <div class="results" aria-live="polite">
     <div class="result big"><div class="k">Estimated runtime</div><div class="v" data-o="rt">–</div></div>
     <div class="result"><div class="k">Load</div><div class="v" data-o="lp">–</div></div>
     <div class="result"><div class="k">Verdict</div><div class="v" data-o="v">–</div></div>
+    <div class="result"><div class="k">Smallest UPS at ≤ 60 % load</div><div class="v" data-o="min">–</div></div>
   </div>
   <ul class="notes" data-o="notes"></ul>
 </div>
+<style>
+  .bat-row { display: flex; align-items: center; gap: 8px; }
+  .bat-row input { width: 5.5em !important; }
+  .bat-row span { text-transform: none; letter-spacing: 0; color: var(--ink-muted); font-size: 13px; }
+</style>
 <script>
-  import { upsRuntime } from '../../lib/calc/upsRuntime';
+  import { upsRuntime, minRatedW } from '../../lib/calc/upsRuntime';
   import { num, fmt } from '../../lib/prefs';
   document.querySelectorAll<HTMLElement>('[data-calc="ups"]').forEach((root) => {
     const q = (s: string) => root.querySelector(s) as HTMLInputElement;
@@ -25,10 +38,13 @@
         const m = Math.round(r.runtimeMin);
         out('rt', m >= 60 ? `≈ ${Math.floor(m / 60)} h ${m % 60} min` : `≈ ${m} min`);
         out('lp', `${fmt(r.loadPct)} %`); out('v', r.verdict === 'ok' ? 'OK' : r.verdict === 'tight' ? 'Tight' : 'Overloaded');
-        const notes = root.querySelector<HTMLElement>('[data-o="notes"]')!;
-        notes.replaceChildren(...r.notes.map((n) => { const li = document.createElement('li'); li.textContent = n; return li; }));
-      } catch { out('rt', '–'); }
+        out('min', `${fmt(minRatedW(num(q('[data-l]'))))} W`);
+        root.querySelector<HTMLElement>('[data-o="notes"]')!.replaceChildren(...r.notes.map((n) => Object.assign(document.createElement('li'), { textContent: n })));
+      } catch { out('rt', '–'); out('min', '–'); }
     };
+    // Volts × Ah × count fills the Wh field.
+    const fromParts = () => { const wh = num(q('[data-bv]')) * num(q('[data-ba]')) * Math.max(1, num(q('[data-bc]'), 1)); if (wh > 0) q('[data-wh]').value = String(Math.round(wh)); };
+    root.querySelectorAll('[data-bv],[data-ba],[data-bc]').forEach((el) => el.addEventListener('input', fromParts));
     root.addEventListener('input', run);
     run();
   });

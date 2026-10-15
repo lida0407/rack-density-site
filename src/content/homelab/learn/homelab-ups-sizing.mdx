@@ -1,0 +1,99 @@
+---
+title: "Homelab UPS sizing: how long will it last, and what size do you need?"
+metaTitle: "Homelab UPS Sizing: Runtime and Size Guide | RACKDENSITY"
+metaDescription: "How long your UPS keeps the homelab running, what load it's at, and the smallest UPS that still gives you a clean shutdown. With a free calculator."
+slug: homelab-ups-sizing
+date: 2026-10-15
+updated: 2026-10-15
+keyword: homelab ups
+supporting: [ups for homelab, how long will my ups last, ups sizing, best ups for homelab, ups runtime]
+answer: "Runtime ≈ battery watt-hours × inverter efficiency × battery health ÷ load watts. A UPS with two 12 V 9 Ah batteries (216 Wh) runs a 150 W homelab for roughly an hour on paper, less at high load or with an old battery. Aim for at least 10 minutes at your real load with the UPS under about 60 % of its watt rating."
+calculator: UpsRuntime
+tools: [/calculator/ups-runtime, /calculator]
+related: [how-much-power-does-a-homelab-use, homelab-rack-layout, homelab-power-calculator]
+howto:
+  name: "Size a UPS for a homelab"
+  totalTime: PT15M
+  steps:
+    - name: "Measure the load"
+      text: "Read the watts at the UPS output on its display or with Network UPS Tools (ups.realpower). Count only what is on the battery outlets."
+    - name: "Find the watt rating"
+      text: "Take the watt figure from the label or data sheet, not the VA figure. A 1500 VA unit is often 900 W."
+    - name: "Work out the battery energy"
+      text: "Battery Wh = volts × amp-hours × number of batteries, for example 12 V × 9 Ah × 2 = 216 Wh."
+    - name: "Estimate the runtime"
+      text: "Runtime in minutes ≈ battery Wh × 0.85 × battery health ÷ load W × 60. Treat it as an upper bound above half load."
+    - name: "Check the size and automate the shutdown"
+      text: "Keep the load under about 60 % of the watt rating and aim for at least 10 minutes, then let NUT shut the hosts down in order."
+cta:
+  title: "See UPS runtime on your rack"
+  body: "Homelab Twin shows the power chain from the wall through the UPS to each power supply, the UPS's load and runtime at today's draw, and what goes dark if the UPS fails. Estimated from each model unless you add readings."
+  button: "See it in 3D"
+  href: /try
+faq:
+  - q: "How long should a homelab UPS last?"
+    a: "Long enough to shut everything down cleanly, plus a margin: 10 minutes at your real load is a common target. Riding out longer outages takes a much bigger battery, or a generator or power station."
+  - q: "What's the difference between VA and watts on a UPS?"
+    a: "VA is apparent power, watts is real power. Your devices' watts must stay under the UPS's watt rating, which is usually 60–90 % of the VA figure. Size by watts."
+  - q: "Why is my real runtime shorter than the calculator says?"
+    a: "Batteries deliver less energy when drained fast, they lose capacity with age and heat, and the inverter has losses. The calculator assumes 85 % inverter efficiency and 80 % battery health; above about half load, use your UPS maker's runtime chart instead."
+  - q: "How do I see the UPS's own runtime estimate?"
+    a: "With Network UPS Tools: upsc <ups>@<host> battery.runtime gives the UPS's estimate in seconds, and ups.load or ups.realpower show the current load. Many UPS displays show the same numbers."
+teaser: "Aim for 10 minutes at your real load, with the UPS under about 60 % of its watt rating."
+---
+import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../../config/brand';
+import UpsRuntime from '../../../components/calc/UpsRuntime.astro';
+
+## The formula
+
+> **runtime (minutes) ≈ battery Wh × 0.85 × battery health ÷ load W × 60**
+
+0.85 is a typical inverter efficiency. Battery health is about 1.0 for a new battery and lower with age (the calculator defaults to 0.8). Battery Wh = volts × amp-hours × number of batteries: two 12 V 9 Ah batteries are 216 Wh.
+
+At 150 W, that's about **59 minutes on paper**. Treat it as an upper bound: real runtime falls off faster than this at high load.
+
+## The calculator
+
+<UpsRuntime />
+
+| Input | Default |
+|---|---|
+| Load at the UPS output (W) | 150 |
+| UPS watt rating (W, not VA) | 900 |
+| Battery: Wh, or volts × Ah × count | 12 V × 9 Ah × 2 |
+| Battery health | 80 % (new: 100 %) |
+| Inverter efficiency *(advanced)* | 85 % |
+
+| Output | With the defaults |
+|---|---|
+| Load | 17 % of the watt rating |
+| Battery energy | 216 Wh |
+| **Estimated runtime** | **≈ 59 minutes** |
+| Verdict | OK |
+| Smallest UPS for this load at ≤ 60 % | 250 W |
+
+The same calculator has its own page: the [UPS Runtime Calculator](/calculator/ups-runtime/).
+
+The verdict is **Overloaded** above 100 % of the watt rating, **Tight** above 80 % or under 10 minutes, and **OK** otherwise. Above half load, a note asks you to check the maker's runtime chart.
+
+## Get the inputs right
+
+- **Load:** measure it at the UPS output: most UPSes show watts or load % on the display or through NUT (`ups.realpower`, or `ups.load` × `ups.realpower.nominal` ÷ 100). Count everything on the battery outlets; surge-only outlets don't count.
+- **Watt rating:** on the label or the data sheet, next to the VA figure. A "1500 VA" unit is often 900 W.
+- **Battery:** the replacement-battery spec (for example "2 × 12 V 9 Ah"), or the battery Wh on the data sheet.
+
+## Sizing rules that hold up
+
+1. **Size by watts, not VA.** Keep the load under about 60 % of the watt rating for runtime and headroom.
+2. **Target 10 minutes, then automate the shutdown.** A UPS without automatic shutdown only delays the crash. Use NUT (or the UPS maker's software) to shut down hosts, then the NAS, in order.
+3. **Pure sine wave for modern power supplies.** Active-PFC supplies can misbehave on stepped ("simulated sine") output when the UPS is on battery.
+4. **Replace batteries every few years.** Runtime drops as they age. Run a self-test now and then and watch `battery.runtime`.
+5. **Put the network on it too.** A server that stays up behind a dead switch is no use.
+
+## See it on your rack
+
+Put the UPS in the template's Power sheet and connect devices to it with power cables. {PRODUCT_NAME} draws the chain from the wall outlet through the UPS and strips to each power supply, shows the UPS's load and runtime at today's draw, flags a UPS under 5 minutes, and lets you click the UPS and press **Fail** to see what goes dark.
+
+## Sources
+- Network UPS Tools: variable names (`battery.runtime`, `ups.load`, `ups.realpower`, `ups.realpower.nominal`)
+- UPS makers' runtime charts and data sheets (watt rating, battery spec)

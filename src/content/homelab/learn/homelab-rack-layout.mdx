@@ -1,0 +1,122 @@
+---
+title: "Homelab rack layout: what goes where, and why"
+metaTitle: "Homelab Rack Layout: What Goes Where | RACKDENSITY"
+metaDescription: "Where the UPS, servers, NAS, switch and patch panel go in a homelab rack, why, and three example layouts for 12U, 24U and 42U racks."
+slug: homelab-rack-layout
+date: 2026-10-15
+updated: 2026-10-15
+keyword: homelab rack layout
+supporting: [homelab rack design, homelab server rack layout, homelab rack setup, building a server rack at home, server rack layout]
+answer: "Heavy at the bottom, network at the top, air from front to back. Put the UPS and the heaviest servers in the lowest units, the patch panel and switch next to each other at the top with short patch cables, storage and compute in the middle, and power strips at the rear. Leave about a quarter of the rack free for growth and label both ends of every cable."
+calculator: RackFit
+tools: [/calculator, /calculator/ups-runtime]
+related: [rack-diagram-from-excel, 10-inch-mini-rack-planner, homelab-ups-sizing]
+howto:
+  name: "Lay out a homelab rack"
+  totalTime: PT1H
+  steps:
+    - name: "Weigh and measure"
+      text: "List every device with its height in U, depth and weight, and check each fits the rack's depth with room for cables."
+    - name: "Fill from the bottom"
+      text: "Put the UPS in the lowest units, then the heaviest servers and disk shelves above it."
+    - name: "Group the network at the top"
+      text: "Mount the patch panel and the switch next to each other so patch cables stay short; put the router or firewall beside them."
+    - name: "Keep the air moving front to back"
+      text: "Point every intake to the front, close empty slots with blanking panels and keep the rear clear for hot air."
+    - name: "Plan power and cables"
+      text: "Mount power strips at the rear, spread dual power supplies over two strips, keep each strip under 80 % of its rating and label both ends of every cable."
+cta:
+  title: "Try the layout before you move a server"
+  body: "Homelab Twin draws your rack in 3D from a spreadsheet, adds up the watts per device and per power strip, and its import report flags two devices in one U, both power supplies on one feed and strips over 80 %."
+  button: "See it in 3D"
+  href: /try
+faq:
+  - q: "Should the switch go at the top or the bottom of the rack?"
+    a: "Usually the top, next to the patch panel, because cables tend to arrive from above and short patch cables are tidier. If your cables come up from the floor, mirror the layout and put the network at the bottom, above the UPS."
+  - q: "Where does the UPS go?"
+    a: "At the bottom. UPS batteries are the heaviest thing in most homelab racks, and keeping weight low makes the rack harder to tip and easier to load."
+  - q: "Do I need blanking panels in a homelab rack?"
+    a: "In an open-frame rack in a cool room it matters little. In a closed cabinet, yes: without them hot exhaust air flows back to the front through the gaps and the devices breathe their own heat."
+  - q: "How much free space should I leave?"
+    a: "About a quarter of the rack. Homelabs grow, and moving a populated server to make room for a new one is the job everyone puts off."
+teaser: "Heavy at the bottom, network at the top, air from front to back, power at the rear."
+---
+import { PRODUCT_NAME, CONTACT_EMAIL, MAILTO } from '../../../config/brand';
+import RackFit from '../../../components/calc/RackFit.astro';
+
+## The four rules
+
+**1. Heavy at the bottom.** The UPS goes in the lowest units, then the heaviest servers and disk shelves. A rack with weight up high tips when you slide a server out on its rails, and a loaded UPS is the heaviest box in most homelabs.
+
+**2. Network together, usually at the top.** Mount the patch panel and the switch next to each other so every patch cable is short, ideally a 1U panel directly above or below a 1U switch. Put the router or firewall beside them. If your cables come up from the floor, mirror this and put the network just above the UPS.
+
+**3. Air from front to back.** Most servers, NAS units and switches pull cool air in at the front and push it out at the back. Face every intake the same way, keep the rear clear, and in a closed cabinet close empty slots with blanking panels so hot air can't loop back to the front. Some switches blow side to side or back to front: check the data sheet before you mount one in the middle of a stack.
+
+**4. Power at the rear, split across two feeds.** Power strips go at the back, ideally vertical (zero-U) if the rack has room. Devices with two power supplies get one cord on each strip, and each strip stays under 80 % of its rating. Put the network on the UPS too: a server that rides out a power cut behind a dead switch is no use.
+
+## Three example layouts
+
+Top to bottom. The numbers are the U each device occupies.
+
+**12U wall rack (network-first lab)**
+
+| U | Device |
+|---|---|
+| 12 | Patch panel, 24 ports |
+| 11 | Switch, 24-port PoE |
+| 10 | Router / firewall |
+| 9 | Cable management bar |
+| 7–8 | Shelf: two mini PCs |
+| 5–6 | Shelf: NAS, 4 bays |
+| 3–4 | Free |
+| 1–2 | UPS, 2U |
+
+**24U rack (Proxmox and storage)**
+
+| U | Device |
+|---|---|
+| 24 | Patch panel |
+| 23 | Switch |
+| 22 | Router / firewall |
+| 21 | Cable management bar |
+| 15–20 | Free (growth) |
+| 13–14 | Shelf: three mini PCs (Proxmox cluster) |
+| 9–12 | NAS or disk shelf, 4U |
+| 7–8 | 2U server |
+| 3–6 | Free |
+| 1–2 | UPS, 2U |
+
+**42U rack (bigger lab)**
+
+| U | Device |
+|---|---|
+| 41–42 | Patch panels |
+| 40 | Core switch |
+| 39 | Router / firewall |
+| 38 | Cable management bar |
+| 26–37 | Free (growth) |
+| 18–25 | Compute: 1U and 2U servers |
+| 14–17 | AI box, 4U |
+| 10–13 | Disk shelf, 4U |
+| 5–9 | Free |
+| 3–4 | Second UPS or battery pack |
+| 1–2 | UPS, 2U |
+
+Swap the AI box and the disk shelf if the shelf is heavier: weight wins.
+
+## Check the U and the watts
+
+Before you move anything, try the layout in the planner: add each device with its height and watts, and it draws the rack and adds up the power.
+
+<RackFit />
+
+## Before you bolt it in
+
+- **Depth:** measure the rack's usable depth, rail to rail, and leave room behind each device for its power and network cables.
+- **Rails:** heavy servers on sliding rails, light boxes on shelves. Never hang a server by its front ears alone.
+- **Labels:** label both ends of every cable, and keep the list in the same spreadsheet as the devices. The [rack diagram guide](/homelab/learn/rack-diagram-from-excel/) shows how to draw the rack from that sheet.
+- **Power budget:** add up the watts per strip and for the UPS, then check the runtime with the [UPS runtime calculator](/calculator/ups-runtime/).
+
+## Sources
+- Rack and UPS makers' installation guides (weight distribution, front-to-back airflow, blanking panels)
+- The RACKDENSITY Excel template and the {PRODUCT_NAME} import checks

@@ -1,0 +1,64 @@
+---
+// UPS Runtime Calculator: hub tool page (SEO-GEO-PLAN §2, hub P1: "UPS runtime calculator (homelab, rack)").
+import Base from '../../layouts/Base.astro';
+import Faq from '../../components/Faq.astro';
+import UpsRuntime from '../../components/calc/UpsRuntime.astro';
+import { u, abs } from '../../lib/url';
+import { BRAND, PRODUCT_NAME } from '../../config/brand';
+const faq = [
+  { q: 'How long should a UPS last?', a: 'Long enough to shut everything down cleanly, plus a margin: 10 minutes at your real load is a common target for a homelab or a small rack. Riding out longer outages takes a much bigger battery, a generator or a power station.' },
+  { q: "What's the difference between VA and watts on a UPS?", a: 'VA is apparent power, watts is real power. The watts your devices draw must stay under the UPS watt rating, which is usually 60–90 % of the VA figure. Size by watts.' },
+  { q: 'Why is real runtime shorter than the estimate?', a: 'Batteries deliver less energy when drained fast, they lose capacity with age and heat, and the inverter has losses. The estimate assumes 85 % inverter efficiency and the battery health you enter; above about half load, use your UPS maker’s runtime chart.' },
+  { q: 'How do I read the UPS’s own runtime estimate?', a: 'With Network UPS Tools: upsc <ups>@<host> battery.runtime gives the estimate in seconds; ups.load and ups.realpower show the current load. Many UPS displays show the same numbers.' },
+  { q: 'How big a UPS do I need?', a: 'Divide your load in watts by 0.6 to keep the UPS at or below 60 % of its watt rating: a 300 W load wants a UPS rated about 500 W or more. Then check the battery gives at least 10 minutes at that load.' },
+];
+const app = { '@context': 'https://schema.org', '@type': 'WebApplication', name: 'UPS Runtime Calculator', url: abs('/calculator/ups-runtime'),
+  description: 'Estimate how many minutes a UPS keeps your rack running on battery, its load as a share of the watt rating, and the smallest UPS that keeps the load under 60 %.',
+  applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any', isAccessibleForFree: true, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@id': `${abs('/')}#org` } };
+---
+<Base title={`UPS Runtime Calculator: Minutes on Battery | ${BRAND}`}
+  description="Free UPS runtime calculator: how many minutes your UPS keeps the rack running, its load against the watt rating, and the smallest UPS for your load."
+  path="/calculator/ups-runtime" ogImage="/og/ups-runtime.png" schema={[app]} section="hub"
+  crumbs={[{ name: 'Calculator', path: '/calculator' }, { name: 'UPS runtime' }]}>
+  <section class="section-tight">
+    <div class="wrap narrow">
+      <p class="eyebrow">Free tool · runs in your browser, no data leaves it</p>
+      <h1>UPS Runtime Calculator</h1>
+      <p class="answer">Runtime ≈ battery watt-hours × inverter efficiency × battery health ÷ load watts. Two 12 V 9 Ah batteries hold 216 Wh: at 150 W and 80 % battery health that is about 59 minutes on paper, less at high load. Aim for at least 10 minutes at your real load, with the UPS under about 60 % of its watt rating.</p>
+      <UpsRuntime heading={false} />
+    </div>
+  </section>
+  <section class="section-tight">
+    <div class="wrap narrow prose">
+      <h2>How the estimate works</h2>
+      <pre><code>battery_Wh  = volts × amp-hours × number of batteries
+runtime_min = battery_Wh × 0.85 × battery_health ÷ load_W × 60
+load_pct    = load_W ÷ UPS_watt_rating × 100
+min_rating  = load_W ÷ 0.6        (keeps the UPS at ≤ 60 % load)</code></pre>
+      <p>0.85 is a typical inverter efficiency. The estimate is linear, so it is an upper bound: batteries give less energy when drained fast, and lose capacity with age and heat. The verdict is <strong>Overloaded</strong> above 100 % of the watt rating, <strong>Tight</strong> above 80 % or under 10 minutes, and <strong>OK</strong> otherwise.</p>
+      <h2>Sizing rules that hold up</h2>
+      <ol>
+        <li><strong>Size by watts, not VA.</strong> Keep the load under about 60 % of the watt rating.</li>
+        <li><strong>Target 10 minutes, then automate the shutdown</strong> with Network UPS Tools or the maker's software, or the UPS only delays the crash.</li>
+        <li><strong>Pure sine wave output</strong> for modern active-PFC power supplies.</li>
+        <li><strong>Replace batteries every few years</strong> and run a self-test now and then.</li>
+        <li><strong>Put the network on the UPS too.</strong> A server that stays up behind a dead switch is no use.</li>
+      </ol>
+      <h2>Guides</h2>
+      <ul>
+        <li><a href={u('/homelab/learn/homelab-ups-sizing')}>Homelab UPS sizing</a>: how long it will last, and what size to buy</li>
+        <li><a href={u('/homelab/learn/how-much-power-does-a-homelab-use')}>How much power does a homelab use?</a>: the load to plug in here</li>
+        <li><a href={u('/calculator')}>Rack Density Calculator</a>: devices per rack by space, power and cooling</li>
+      </ul>
+      <aside class="card see">
+        <h2>See the UPS on your rack in 3D</h2>
+        <p class="muted">{PRODUCT_NAME} draws the power chain from the wall through the UPS to each power supply, shows the UPS load and runtime at today's draw, and lets you fail the UPS to see what goes dark. Estimated from each model unless you add readings.</p>
+        <a class="btn btn-primary" href={u('/homelab/try')}>See it</a>
+      </aside>
+    </div>
+  </section>
+  <section class="section"><div class="wrap narrow"><Faq items={faq} /></div></section>
+</Base>
+<style>
+  .see { margin-top: 2em; } .see h2 { font-size: 1.15rem; margin: 0 0 6px; }
+</style>

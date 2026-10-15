@@ -12,13 +12,17 @@ import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const SRC = process.env.PLAN_LEARN ?? join(process.env.HOME, 'Sensaka/marketing/homelab-site/learn');
 const OUT = join(here, '../src/content/homelab/learn');
-const PUBLISH = ['tokens-per-watt', '10-inch-mini-rack-planner', 'homelab-power-calculator', 'proxmox-power-usage']; // weekly runs add slugs here
+const PUBLISH = ['tokens-per-watt', '10-inch-mini-rack-planner', 'homelab-power-calculator', 'proxmox-power-usage',
+  'homelab-ups-sizing', 'rack-diagram-from-excel', 'homelab-rack-layout', 'how-much-power-does-a-homelab-use']; // SEO-GEO-PLAN weeks 1–2 (2026-10-15)
 const TEASERS = {
   'tokens-per-watt': 'Divide tokens per second by watts: that is tokens per joule. Multiply by 3.6 million for tokens per kWh.',
   '10-inch-mini-rack-planner': 'A 254 mm panel, about 222 mm between the rails, 44.45 mm per U. Check width, depth and U before you buy.',
   'homelab-power-calculator': 'Monthly cost = average watts × 730 ÷ 1,000 × your price per kWh. Idle draw is most of the bill.',
   'proxmox-power-usage': 'Proxmox has no power meter of its own: measure at the wall or the UPS, then cut idle watts.',
-  'ups-runtime-calculator': 'Aim for 10 minutes at your real load, with the UPS under about 60 % of its watt rating.',
+  'homelab-ups-sizing': 'Aim for 10 minutes at your real load, with the UPS under about 60 % of its watt rating.',
+  'rack-diagram-from-excel': 'Rack, lowest U and height: one FILTER formula draws the rack, one SUMPRODUCT finds the clashes.',
+  'homelab-rack-layout': 'Heavy at the bottom, network at the top, air from front to back, power at the rear.',
+  'how-much-power-does-a-homelab-use': 'About 70 W for two mini PCs and a NAS, 120 W for a cluster, 300 W and up with used servers.',
 };
 mkdirSync(OUT, { recursive: true });
 let problems = 0;
