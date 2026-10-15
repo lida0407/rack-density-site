@@ -35,7 +35,7 @@ export const en = {
   ] },
   who: {
     h2: 'Who we are',
-    p: `rack-density.com, ${P} and DC Sim are run by Mustard Seed Solutions (Malta, {site}), which is responsible for the data described here. Sensaka and ${BRAND} are its brands. Questions: {mail}.`,
+    p: `rack-density.com, ${P} and DC Sim are run by Mustard Seed Solutions (Malta, {site}), which is responsible for the data described here. ${BRAND} is its brand. Questions: {mail}.`,
   },
   updated: 'Last updated: 15 October 2026 (language versions and the language cookie added)',
 };
@@ -72,7 +72,7 @@ export const de: Deep<typeof en> = {
   ] },
   who: {
     h2: 'Wer wir sind',
-    p: `rack-density.com, ${P} und DC Sim werden von Mustard Seed Solutions (Malta, {site}) betrieben. Das Unternehmen ist für die hier beschriebenen Daten verantwortlich. Sensaka und ${BRAND} sind seine Marken. Fragen: {mail}.`,
+    p: `rack-density.com, ${P} und DC Sim werden von Mustard Seed Solutions (Malta, {site}) betrieben. Das Unternehmen ist für die hier beschriebenen Daten verantwortlich. ${BRAND} ist ein Angebot des Unternehmens. Fragen: {mail}.`,
   },
   updated: 'Zuletzt aktualisiert: 15. Oktober 2026 (Sprachversionen und Sprach-Cookie ergänzt)',
 };
@@ -109,7 +109,7 @@ export const zh: Deep<typeof en> = {
   ] },
   who: {
     h2: '关于我们',
-    p: `rack-density.com、${P} 和 DC Sim 由 Mustard Seed Solutions（马耳他，{site}）运营，并对此处所述的数据负责。Sensaka 和 ${BRAND} 是其旗下品牌。如有问题：{mail}。`,
+    p: `rack-density.com、${P} 和 DC Sim 由 Mustard Seed Solutions（马耳他，{site}）运营，并对此处所述的数据负责。${BRAND} 是其旗下品牌。如有问题：{mail}。`,
   },
   updated: '最后更新：2026 年 10 月 15 日（新增多语言版本和语言 Cookie）',
 };

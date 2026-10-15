@@ -2,7 +2,7 @@
  "name": "DC Sim device catalog — public specs and list prices",
  "license": "CC BY 4.0",
  "license_url": "https://creativecommons.org/licenses/by/4.0/",
- "attribution": "DC Sim device catalog by Sensaka / RACKDENSITY (rack-density.com), CC BY 4.0",
+ "attribution": "DC Sim device catalog by RACKDENSITY (rack-density.com), CC BY 4.0",
  "notice": "Specs and list prices from the cited public sources; values listed under \"estimated\" are our estimates. List prices are the vendor or launch list price on the given date, not a quote.",
  "fields": [
   "id",

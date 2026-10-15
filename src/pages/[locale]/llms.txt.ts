@@ -10,9 +10,9 @@ const url = (path: string, l: Locale) => SITE_URL.replace(/\/$/, '') + lp(path, 
 const TEXT: Record<'de' | 'zh', (l: Locale) => string> = {
   de: (l) => `# ${BRAND} (Deutsch)
 
-> Kostenlose Rack- und Rechenzentrumswerkzeuge und zwei 3D-Zwillinge im Browser unter der Marke Sensaka: ${P} für Racks zu Hause und DC Sim für Rechenzentren. Alles läuft im Browser aus einer Excel/CSV-Datei; nichts wird hochgeladen. Kontakt: ${CONTACT_EMAIL}.
+> Kostenlose Rack- und Rechenzentrumswerkzeuge und zwei 3D-Zwillinge im Browser von Mustard Seed Solutions: ${P} für Racks zu Hause und DC Sim für Rechenzentren. Alles läuft im Browser aus einer Excel/CSV-Datei; nichts wird hochgeladen. Kontakt: ${CONTACT_EMAIL}.
 
-Mustard Seed Solutions (mustardseedmt.com, Malta) betreibt rack-density.com; Sensaka und ${BRAND} sind ihre Marken. Diese Datei listet die deutschen Seiten; alle Seiten auf Englisch: ${SITE_URL.replace(/\/$/, '')}/llms.txt
+Mustard Seed Solutions (mustardseedmt.com, Malta) betreibt rack-density.com; ${BRAND} ist ein Angebot des Unternehmens. Diese Datei listet die deutschen Seiten; alle Seiten auf Englisch: ${SITE_URL.replace(/\/$/, '')}/llms.txt
 
 ## Kostenlose Rechner
 - [Rack-Rechner](${url('/calculator', l)}): Geräte pro Rack nach Platz (HE), Strom und Kühlung; kW pro Rack; Stromkosten pro Monat
@@ -31,9 +31,9 @@ Fakten: Das Blatt „Devices“ der Vorlage ist Pflicht (Rack, HE, Modell); Cabl
 `,
   zh: (l) => `# ${BRAND}（中文）
 
-> Sensaka 品牌下的免费机柜与数据中心工具，以及两个在浏览器中运行的 3D 孪生：${P} 面向家里的机柜（homelab），DC Sim 面向数据中心机房。一切都在浏览器中用 Excel/CSV 文件完成，不上传任何数据。联系方式：${CONTACT_EMAIL}。
+> Mustard Seed Solutions 出品的免费机柜与数据中心工具，以及两个在浏览器中运行的 3D 孪生：${P} 面向家里的机柜（homelab），DC Sim 面向数据中心机房。一切都在浏览器中用 Excel/CSV 文件完成，不上传任何数据。联系方式：${CONTACT_EMAIL}。
 
-Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com；Sensaka 和 ${BRAND} 是其旗下品牌。本文件列出中文页面；全部英文页面见：${SITE_URL.replace(/\/$/, '')}/llms.txt
+Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com；${BRAND} 是其旗下品牌。本文件列出中文页面；全部英文页面见：${SITE_URL.replace(/\/$/, '')}/llms.txt
 
 ## 免费计算器
 - [机柜功率密度计算器](${url('/calculator', l)})：按空间（U）、供电和制冷计算每柜设备数；单机柜功率（kW）；每月电费

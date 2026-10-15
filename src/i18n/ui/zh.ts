@@ -7,7 +7,7 @@ export const zh: Deep<UI> = {
   allProducts: '{brand}：全部产品', breadcrumb: '面包屑导航', by: 'by',
   themeAuto: '自动', themeDark: '深色', themeBright: '浅色', themeAutoTitle: '自动（跟随系统）',
   themeAutoAria: '自动外观', themeDarkAria: '深色外观', themeBrightAria: '浅色外观',
-  company: '公司', brandSuffix: '（品牌）', legal: '© 2026 {company} · {a} 和 {b} 是 {company} 旗下品牌 · 标注“估算”的数值为估算值',
+  company: '公司', legal: '© 2026 {company} · {b} 是 {company} 旗下品牌 · 标注“估算”的数值为估算值',
   faq: '常见问题', fallbackNote: '本页部分内容尚未翻译，暂以英文显示。', englishOnly: '英文',
   seeIt: '观看演示', walkthrough: '预约演示讲解', seeIn3D: '查看 3D 效果', seeOnRack: '在你的机柜上查看',
   simulated: '模拟数据', demoLab: '演示实验室', transcript: '视频内容说明', impressum: '法律声明',

@@ -7,7 +7,7 @@ import Breadcrumbs from '../components/site/Breadcrumbs.astro';
 import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
 import { ENTITY } from '../config/entity';
 import { abs, u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, PARTNER, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
+import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
 import { ui, alternates, localeOf, lp, isLive, LOCALE_META, LOCALES, hasPage, type Locale } from '../i18n';
 
 interface Props {
@@ -33,10 +33,10 @@ const alts = isLive(locale) ? alternates(path) : [];
 const org = {
   '@context': 'https://schema.org',
   '@graph': [
-    // Entity rule: the Organization is the company (Mustard Seed Solutions); Sensaka and RACKDENSITY are its brands.
+    // Entity rule: the Organization is the company (Mustard Seed Solutions); RACKDENSITY is its brand (no Sensaka on this site).
     { '@type': 'Organization', '@id': `${abs('/')}#org`, name: COMPANY.name, url: COMPANY.url, email: CONTACT_EMAIL,
       address: { '@type': 'PostalAddress', addressCountry: COMPANY.country }, description: ENTITY.company,
-      brand: [{ '@type': 'Brand', name: PARTNER.name, url: PARTNER.url }, { '@type': 'Brand', name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}` }] },
+      brand: [{ '@type': 'Brand', name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}` }] },
     { '@type': 'WebSite', '@id': `${abs('/')}#website`, name: BRAND, url: abs('/'), description: ENTITY.rackdensity, publisher: { '@id': `${abs('/')}#org` } }, // marketing/ENTITY.md, verbatim
   ],
 };

@@ -1,7 +1,8 @@
 ---
 // Shared header for every page (marketing/SITE-NAV.md; one row since 2026-10-15 late, no status strip): RACKDENSITY wordmark → hub, Homelab Twin · DC Sim switcher,
 // section menu + CTA in the section accent, Auto · Dark · Bright toggle. Phone: wordmark + switcher stay, the rest goes
-// into one sheet (section menu, CTA, both products, the hub, the theme toggle).
+// into one sheet (section menu, CTA, both products, the hub, the theme toggle). The language globe sits in the top-right
+// corner at every width (Dali 2026-10-15) and opens English · Deutsch · 中文 (launched locales only).
 // Self-contained styles: it runs on hub/homelab pages (styles/global.css) and on DC pages (styles/dc/global.css).
 import { u } from '../lib/url';
 import { BRAND } from '../config/brand';
@@ -42,10 +43,6 @@ const current = PRODUCTS.find((p) => p.edition === section);
       {menu.map((l) => <a href={lp(l.href, locale)} aria-current={here(l) ? 'page' : undefined}>{label(locale, l.label)}</a>)}
     </nav>
     <span class="sh-spacer"></span>
-    <details class="sh-lang">
-      <summary aria-label={`${t.language}: ${LOCALE_META[locale].name}`}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>{LOCALE_META[locale].label}</span></summary>
-      <div class="sh-lang-list">{langs.map((l) => <a href={switchHref(enPath, l)} hreflang={LOCALE_META[l].hreflang} lang={LOCALE_META[l].html} data-lang={l} aria-current={l === locale ? 'true' : undefined}>{LOCALE_META[l].name}</a>)}</div>
-    </details>
     <span class="sh-theme-desk"><ThemeToggle compact locale={locale} /></span>
     {cta && <a class="sh-cta" href={lp(cta.href, locale)} download={cta.download ? '' : undefined}>{label(locale, cta.label)}</a>}
     <details class="sh-sheet">
@@ -63,12 +60,16 @@ const current = PRODUCTS.find((p) => p.edition === section);
           ))}
         </div>
         <a href={lp('/', locale)}>{fill(t.allProducts, { brand: BRAND })}</a>
-        <p class="sh-h">{t.language}</p>
-        <div class="sh-lang-row">{langs.map((l) => <a href={switchHref(enPath, l)} hreflang={LOCALE_META[l].hreflang} lang={LOCALE_META[l].html} data-lang={l} aria-current={l === locale ? 'true' : undefined}>{LOCALE_META[l].name}</a>)}</div>
         <p class="sh-h">{t.theme}</p>
         <ThemeToggle locale={locale} />
       </div>
     </details>
+    {langs.length > 1 && (
+      <details class="sh-lang">
+        <summary aria-label={`${t.language}: ${LOCALE_META[locale].name}`} title={t.language}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></summary>
+        <div class="sh-lang-list">{langs.map((l) => <a href={switchHref(enPath, l)} hreflang={LOCALE_META[l].hreflang} lang={LOCALE_META[l].html} data-lang={l} aria-current={l === locale ? 'true' : undefined}>{LOCALE_META[l].menu}</a>)}</div>
+      </details>
+    )}
   </div>
 </header>
 <style>
@@ -99,16 +100,14 @@ const current = PRODUCTS.find((p) => p.edition === section);
   .sh-menu a:hover, .sh-menu a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
   .sh-spacer { flex: 1; }
   .sh-theme-desk { display: none; }
-  .sh-lang { position: relative; display: none; }
-  .sh-lang summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; height: 34px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink-muted); font: 500 12px/1 var(--font-mono); }
+  .sh-lang { position: relative; flex: none; }
+  .sh-lang summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink-muted); }
   .sh-lang summary::-webkit-details-marker { display: none; }
   .sh-lang summary:hover { color: var(--ink); background: var(--bg-200); }
   .sh-lang-list { position: absolute; right: 0; top: calc(100% + 4px); z-index: 30; display: grid; min-width: 140px; padding: 4px; background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); }
-  .sh-lang-list a, .sh-lang-row a { padding: 9px 10px; color: var(--ink); text-decoration: none; font-size: .9rem; }
-  .sh-lang-list a:hover, .sh-lang-row a:hover { background: var(--accent-soft); }
-  .sh-lang-list a[aria-current], .sh-lang-row a[aria-current] { box-shadow: inset 2px 0 0 var(--accent); background: var(--accent-soft); }
-  .sh-lang-row { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 12px 6px; }
-  .sh-lang-row a { border: 1px solid var(--line-strong); border-radius: var(--radius-1); }
+  .sh-lang-list a { padding: 10px 12px; color: var(--ink); text-decoration: none; font-size: .9rem; }
+  .sh-lang-list a:hover { background: var(--accent-soft); }
+  .sh-lang-list a[aria-current] { box-shadow: inset 2px 0 0 var(--accent); background: var(--accent-soft); }
   .sh-cta { display: none; align-items: center; min-height: 40px; padding: 0 14px; border-radius: var(--radius-1); background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: .92rem; text-decoration: none; white-space: nowrap; }
   .sh-cta:hover { background: var(--accent-strong); color: var(--on-accent); }
   .site-header a:focus-visible, .site-header summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -127,22 +126,25 @@ const current = PRODUCTS.find((p) => p.edition === section);
   .sh-switch--sheet .sh-pill { height: 36px; font-size: 13px; }
   .sh-panel :global(.sh-theme) { margin: 2px 12px 6px; justify-self: start; }
 
+  @media (min-width: 401px) and (max-width: 520px) { .sh-logo img { display: none !important; } }
   @media (max-width: 520px) {
-    .sh-logo img { display: none !important; }
     .sh-wordmark { font-size: .8rem; letter-spacing: .05em; }
     .sh-bar { gap: 8px; }
     .sh-bar > .sh-switch { gap: 4px; }
     .sh-bar > .sh-switch .sh-pill { padding: 0 8px; font-size: 11px; height: 28px; }
     .sh-bar > .sh-switch .sh-led { display: none; }
     .sh-sheet summary span { display: none; }
-    .sh-sheet summary { min-width: 40px; justify-content: center; }
+    .sh-sheet summary { min-width: 36px; padding: 0 8px; justify-content: center; }
+    .sh-lang summary { width: 38px; }
   }
+  /* Narrow phones: the mark replaces the wordmark so the globe keeps its corner (the link keeps its accessible name). */
+  @media (max-width: 400px) { .sh-wordmark { display: none; } }
   @media (max-width: 359px) { .sh-bar > .sh-switch .sh-pill { padding: 0 6px; letter-spacing: 0; } }
   @media (max-width: 1239px) { .sh-bar > .sh-switch .sh-pill small { display: none; } }
   @media (min-width: 640px) { .sh-cta { display: inline-flex; } }
-  @media (min-width: 1100px) {
+  /* 1180: the DC menu plus the globe fit from here (1100 overflowed by 68 px on /dc/). */
+  @media (min-width: 1180px) {
     .sh-menu, .sh-theme-desk { display: inline-flex; }
-    .sh-lang { display: inline-block; }
     .sh-sheet { display: none; }
   }
 </style>
@@ -162,6 +164,6 @@ const current = PRODUCTS.find((p) => p.edition === section);
   if (sheet) {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet.open) { sheet.open = false; sheet.querySelector('summary')?.focus(); } });
     document.addEventListener('click', (e) => { if (sheet.open && !sheet.contains(e.target as Node)) sheet.open = false; });
-    window.matchMedia('(min-width: 1100px)').addEventListener('change', (m) => { if (m.matches) sheet.open = false; });
+    window.matchMedia('(min-width: 1180px)').addEventListener('change', (m) => { if (m.matches) sheet.open = false; });
   }
 </script>

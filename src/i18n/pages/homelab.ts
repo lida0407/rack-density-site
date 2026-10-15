@@ -86,8 +86,8 @@ export const en = {
       { k: 'Guide · calculator', t: 'Tokens per watt: how efficient is your local AI box?', p: 'Tokens per second ÷ watts = tokens per joule.' },
     ],
   },
-  /** html: {sensaka} = the Sensaka link */
-  built: `<strong>Built by data-center people.</strong> ${P} comes from a team that builds 3D models of full data centers, scaled down to the rack in your basement. A {sensaka} product, made by Mustard Seed Solutions.`,
+  /** html */
+  built: `<strong>Built by data-center people.</strong> ${P} comes from a team that builds 3D models of full data centers, scaled down to the rack in your basement. Made by Mustard Seed Solutions.`,
   faq: homeFaq,
   final: { h2: 'See your rack in 3D.', note: `No account = we store nothing. $${A.month}/month keeps it.` },
 };
@@ -179,7 +179,7 @@ export const de: Deep<typeof en> = {
       { k: 'Leitfaden · Rechner', t: 'Tokens pro Watt: wie effizient ist Ihr lokaler KI-Server?', p: 'Tokens pro Sekunde ÷ Watt = Tokens pro Joule.' },
     ],
   },
-  built: `<strong>Von Rechenzentrumsleuten gebaut.</strong> ${P} kommt von einem Team, das 3D-Modelle ganzer Rechenzentren baut, hier verkleinert auf das Rack in Ihrem Keller. Ein Produkt von {sensaka}, entwickelt von Mustard Seed Solutions.`,
+  built: `<strong>Von Rechenzentrumsleuten gebaut.</strong> ${P} kommt von einem Team, das 3D-Modelle ganzer Rechenzentren baut, hier verkleinert auf das Rack in Ihrem Keller. Entwickelt von Mustard Seed Solutions.`,
   faq: [
     { q: `Ist ${P} kostenlos?`, a: `Try wird kostenlos sein, ohne Konto und ohne gespeicherte Daten. Noch ist es nicht öffentlich: Bis dahin zeigen wir die App in Clips, Standbildern und Vorführungen. Account (${A.month}\u00a0$/Monat oder ${A.year}\u00a0$/Jahr) speichert Ihr Lab; Pro (${R.month}\u00a0$/Monat oder ${R.year}\u00a0$/Jahr) bringt Kabelverfolgung, Tokens pro kWh, den vollständigen Flaw Finder und Berichte.${soon ? ' Account und Pro starten bald.' : ''}` },
     { q: 'Kann ich es jetzt ausprobieren?', a: 'Noch nicht selbst. Sehen Sie sich die Clips auf der Seite „Ansehen“ an oder fragen Sie eine Vorführung an, dann zeigen wir Ihnen die App in einem kurzen Gespräch. Die Importvorlage können Sie schon jetzt kostenlos herunterladen und ausfüllen.' },
@@ -279,7 +279,7 @@ export const zh: Deep<typeof en> = {
       { k: '指南 · 计算器', t: '每瓦 token 数：您的本地 AI 主机效率如何？', p: '每秒 token 数 ÷ 瓦数 = 每焦耳 token 数。' },
     ],
   },
-  built: `<strong>由数据中心团队打造。</strong>${P} 出自一支为整座数据中心建 3D 模型的团队，这次把它缩小到您家里的机柜。{sensaka} 旗下产品，由 Mustard Seed Solutions 开发。`,
+  built: `<strong>由数据中心团队打造。</strong>${P} 出自一支为整座数据中心建 3D 模型的团队，这次把它缩小到您家里的机柜。由 Mustard Seed Solutions 开发。`,
   faq: [
     { q: `${P} 免费吗？`, a: `Try 将免费提供，无需账号，不存储任何数据。目前尚未公开：现阶段我们通过视频、截图和演示讲解来展示应用。Account（每月 ${A.month} 美元或每年 ${A.year} 美元）可保存您的实验室；Pro（每月 ${R.month} 美元或每年 ${R.year} 美元）增加线缆追踪、每千瓦时 token 数、完整的 Flaw Finder 和报告。${soon ? 'Account 和 Pro 即将推出。' : ''}` },
     { q: '现在能试用吗？', a: '暂时还不能自行试用。您可以在"观看演示"页面看视频，或预约一次讲解，我们会在简短的通话中为您演示。导入模板现在就可以免费下载并填写。' },

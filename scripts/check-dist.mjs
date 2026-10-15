@@ -52,5 +52,8 @@ for (const [f, { lang, canon, map }] of alts) {
   }
 }
 console.log(`${alts.size} pages with hreflang alternates checked`);
+// No "Sensaka" on rack-density.com (Dali 2026-10-15): a warning, so a section still being cleaned does not block deploys.
+const named = walk(DIST).filter((f) => /\.(html|txt|xml|json|csv)$/.test(f) && /sensaka/i.test(readFileSync(f, 'utf8')));
+if (named.length) warn(`"Sensaka" still in ${named.length} built file(s): ${named.slice(0, 8).join(', ')}${named.length > 8 ? ' …' : ''}`);
 console.log(`${html.length} pages checked, ${bad} problem(s)`);
 process.exit(bad ? 1 : 0);

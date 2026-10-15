@@ -1,15 +1,16 @@
 // i18n (marketing/I18N.md): English unprefixed, German under /de/, Chinese (simplified, mainland) under /zh/.
-// Product and brand names stay Latin in every locale (Homelab Twin, DC Sim, RACKDENSITY, Sensaka).
+// Product and brand names stay Latin in every locale (Homelab Twin, DC Sim, RACKDENSITY).
 import { u, abs } from '../lib/url';
 
 export const LOCALES = ['en', 'de', 'zh'] as const;
 export type Locale = (typeof LOCALES)[number];
 export const OTHER_LOCALES = ['de', 'zh'] as const;
 
-export const LOCALE_META: Record<Locale, { label: string; name: string; html: string; hreflang: string; og: string; intl: string }> = {
-  en: { label: 'EN', name: 'English', html: 'en', hreflang: 'en', og: 'en_US', intl: 'en-US' },
-  de: { label: 'DE', name: 'Deutsch', html: 'de', hreflang: 'de', og: 'de_DE', intl: 'de-DE' },
-  zh: { label: '中文', name: '简体中文', html: 'zh-CN', hreflang: 'zh-CN', og: 'zh_CN', intl: 'zh-CN' },
+/** `menu` = what the language globe lists (Dali 2026-10-15: English · Deutsch · 中文). */
+export const LOCALE_META: Record<Locale, { label: string; name: string; menu: string; html: string; hreflang: string; og: string; intl: string }> = {
+  en: { label: 'EN', name: 'English', menu: 'English', html: 'en', hreflang: 'en', og: 'en_US', intl: 'en-US' },
+  de: { label: 'DE', name: 'Deutsch', menu: 'Deutsch', html: 'de', hreflang: 'de', og: 'de_DE', intl: 'de-DE' },
+  zh: { label: '中文', name: '简体中文', menu: '中文', html: 'zh-CN', hreflang: 'zh-CN', og: 'zh_CN', intl: 'zh-CN' },
 };
 
 export { LOCALE_CALC } from './calc';

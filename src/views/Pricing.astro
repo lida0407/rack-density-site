@@ -4,7 +4,7 @@ import Base from '../layouts/Base.astro';
 import Faq from '../components/Faq.astro';
 import TryButton from '../components/TryButton.astro';
 import { mailto, abs } from '../lib/url';
-import { PRODUCT_NAME, PRICES, FLAGS, FEATURE_STATUS } from '../config/brand';
+import { PRODUCT_NAME, BRAND, PRICES, FLAGS, FEATURE_STATUS } from '../config/brand';
 import { ui, fill, pageCopy, type Locale } from '../i18n';
 import * as copy from '../i18n/pages/pricing';
 interface Props { locale: Locale }
@@ -28,7 +28,7 @@ const offer = (name: string, price: number, unit: 'MON' | 'ANN', avail: string) 
   priceSpecification: { '@type': 'UnitPriceSpecification', price: String(price), priceCurrency: PRICES.currency, billingDuration: 1, unitCode: unit } });
 const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': abs('/homelab/') + '#product', name: PRODUCT_NAME, url: abs('/homelab/'),
   description: `${PRODUCT_NAME} turns a spreadsheet of your homelab gear into a 3D model of your rack: power and monthly cost per device (estimated), network and cable views, and a Fail what-if.`,
-  brand: { '@type': 'Brand', name: 'Sensaka' }, manufacturer: { '@id': `${abs('/')}#org` }, category: 'Homelab rack planning software',
+  brand: { '@type': 'Brand', name: BRAND }, manufacturer: { '@id': `${abs('/')}#org` }, category: 'Homelab rack planning software',
   offers: [
     { '@type': 'Offer', name: 'Try', price: '0', priceCurrency: PRICES.currency, availability: 'https://schema.org/PreOrder', url: abs('/homelab/waitlist') },
     offer('Account, monthly', PRICES.account.month, 'MON', soon ? 'PreOrder' : 'InStock'), offer('Account, yearly', PRICES.account.year, 'ANN', soon ? 'PreOrder' : 'InStock'),

@@ -6,7 +6,7 @@ export const en = {
   allProducts: '{brand}: all products', breadcrumb: 'Breadcrumb', by: 'by',
   themeAuto: 'Auto', themeDark: 'Dark', themeBright: 'Bright', themeAutoTitle: 'Auto (follows your system)',
   themeAutoAria: 'Auto theme', themeDarkAria: 'Dark theme', themeBrightAria: 'Bright theme',
-  company: 'Company', brandSuffix: '(brand)', legal: '© 2026 {company} · {a} and {b} are brands of {company} · figures marked estimated are estimates',
+  company: 'Company', legal: '© 2026 {company} · {b} is a brand of {company} · figures marked estimated are estimates',
   faq: 'Questions', fallbackNote: 'Parts of this page are not translated yet and are shown in English.', englishOnly: 'English',
   seeIt: 'See it', walkthrough: 'Request a walkthrough', seeIn3D: 'See it in 3D', seeOnRack: 'See it on your rack',
   simulated: 'simulated data', demoLab: 'Demo lab', transcript: 'What the clip shows', impressum: 'Legal notice',
