@@ -1,0 +1,29 @@
+---
+// Translated DC content pages (marketing/I18N.md): src/content/dc/l10n/<locale>/<English id>.md, built only for the paths
+// listed in src/config/dc/i18n.ts.
+import { getCollection } from "astro:content";
+import ContentPage from "../../../views/dc/ContentPage.astro";
+import { OTHER_LOCALES, hasPage } from "../../../i18n";
+
+export async function getStaticPaths() {
+  const en = await getCollection("pages");
+  const l10n = await getCollection("pagesL10n");
+  return OTHER_LOCALES.flatMap((locale) =>
+    l10n.filter((p) => p.id.startsWith(`${locale}/`)).flatMap((page) => {
+      const slug = page.id.slice(locale.length + 1);
+      const base = en.find((p) => p.id === slug);
+      if (!base || !hasPage(`/dc/${slug}`, locale)) return [];
+      const siblings = en
+        .filter((p) => p.data.section === base.data.section && p.id !== slug && base.data.section !== "company")
+        .sort((a, b) => a.data.order - b.data.order)
+        .map((p) => {
+          const tr = hasPage(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
+          return { slug: p.id, label: (tr ?? p).data.navLabel ?? (tr ?? p).data.h1, badge: p.data.badge };
+        });
+      return [{ params: { locale, slug }, props: { page, slug, siblings, locale } }];
+    }),
+  );
+}
+const { page, slug, siblings, locale } = Astro.props;
+---
+<ContentPage page={page} slug={slug} siblings={siblings} locale={locale} />

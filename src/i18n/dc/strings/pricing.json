@@ -1,0 +1,369 @@
+{
+ "faq.monitorCounted.q": {
+  "en": "How is Monitor counted?",
+  "de": "Wie wird Monitor abgerechnet?",
+  "zh": "Monitor 怎么计费？"
+ },
+ "faq.monitorCounted.a": {
+  "en": "Per rack in the model, billed monthly, minimum $49. Empty racks in a design do not count until the room goes live.",
+  "de": "Pro Rack im Modell, monatliche Abrechnung, mindestens 49 $. Leere Racks in einem Design zählen erst, wenn der Raum in Betrieb geht.",
+  "zh": "按模型中的机柜数计费，按月结算，最低 $49。设计中的空机柜在机房上线前不计费。"
+ },
+ "faq.buyOnline.q": {
+  "en": "Can I buy online today?",
+  "de": "Kann ich heute schon online kaufen?",
+  "zh": "现在可以在线购买吗？"
+ },
+ "faq.buyOnline.a": {
+  "en": "Not yet. Every license starts with a walkthrough on your own file. Self-serve accounts and card checkout are on the roadmap.",
+  "de": "Noch nicht. Jede Lizenz beginnt mit einer Vorführung anhand Ihrer eigenen Datei. Self-Service-Konten und Kartenzahlung stehen auf der Roadmap.",
+  "zh": "暂时还不行。每份许可都从一次基于您自己文件的演示讲解开始。自助开户和刷卡付款已列入路线图。"
+ },
+ "faq.threeMonths.q": {
+  "en": "What does \"3 months per project\" mean for Design?",
+  "de": "Was bedeutet „3 Monate pro Projekt“ bei Design?",
+  "zh": "Design 的“每个项目 3 个月”是什么意思？"
+ },
+ "faq.threeMonths.a": {
+  "en": "A Design license covers one project for three months of active design; extensions are available if the project runs longer.",
+  "de": "Eine Design-Lizenz deckt ein Projekt für drei Monate aktive Planung ab; dauert das Projekt länger, ist eine Verlängerung möglich.",
+  "zh": "一份 Design 许可覆盖一个项目三个月的设计期；项目周期更长时可以延期。"
+ },
+ "faq.switch.q": {
+  "en": "Can I switch from Design to Monitor?",
+  "de": "Kann ich von Design zu Monitor wechseln?",
+  "zh": "可以从 Design 转为 Monitor 吗？"
+ },
+ "faq.switch.a": {
+  "en": "Yes. The design becomes the twin of the running room, and Design customers get the first three months of Monitor free.",
+  "de": "Ja. Aus dem Design wird der Zwilling des Raums im laufenden Betrieb, und Design-Kunden erhalten die ersten drei Monate Monitor kostenlos.",
+  "zh": "可以。设计模型直接成为运行中机房的数字孪生，Design 客户可免费使用前三个月的 Monitor。"
+ },
+ "faq.stop.q": {
+  "en": "What happens to my data if I stop?",
+  "de": "Was passiert mit meinen Daten, wenn ich kündige?",
+  "zh": "停止使用后，我的数据怎么处理？"
+ },
+ "faq.stop.a": {
+  "en": "You can export the model as Excel and ask for deletion; deletion is confirmed within 30 days.",
+  "de": "Sie können das Modell als Excel-Datei exportieren und die Löschung verlangen; die Löschung wird innerhalb von 30 Tagen bestätigt.",
+  "zh": "您可以将模型导出为 Excel，并要求删除数据；删除会在 30 天内确认。"
+ },
+ "faq.aiExtra.q": {
+  "en": "Is the AI design assistant extra?",
+  "de": "Kostet der KI-Planungsassistent extra?",
+  "zh": "AI 设计助手要额外收费吗？"
+ },
+ "faq.aiExtra.a": {
+  "en": "No. When it ships it is included in the Design license at no extra cost, and Design customers get it first as early access.",
+  "de": "Nein. Sobald er verfügbar ist, ist er ohne Aufpreis in der Design-Lizenz enthalten, und Design-Kunden erhalten ihn zuerst als Early Access.",
+  "zh": "不需要。上线后它包含在 Design 许可中，不额外收费，Design 客户可抢先体验。"
+ },
+ "faq.partnerDiscount.q": {
+  "en": "Do partners get a discount on Design?",
+  "de": "Erhalten Partner Rabatt auf Design?",
+  "zh": "合作伙伴购买 Design 有折扣吗？"
+ },
+ "faq.partnerDiscount.a": {
+  "en": "Yes, a partner price per project under the partner agreement, so the twin can be in the proposal before the customer buys.",
+  "de": "Ja, einen Partnerpreis pro Projekt im Rahmen der Partnervereinbarung. So kann der Zwilling schon im Angebot stehen, bevor der Kunde kauft.",
+  "zh": "有。根据合作伙伴协议，每个项目享合作伙伴价，这样在客户购买之前，数字孪生就能写进方案。"
+ },
+ "faq.compare.q": {
+  "en": "How does this compare with typical DCIM pricing?",
+  "de": "Wie verhält sich das zu typischen DCIM-Preisen?",
+  "zh": "与常见 DCIM 价格相比如何？"
+ },
+ "faq.compare.a": {
+  "en": "Typical DCIM pricing starts at about $125 per month and runs $230–330 per rack per year. Monitor is $5 per rack per month with a $49 minimum, and Design is one-time per project. DC Sim sits on top of DCIM and monitoring rather than replacing them.",
+  "de": "Typische DCIM-Preise beginnen bei etwa 125 $ pro Monat und liegen bei 230–330 $ pro Rack und Jahr. Monitor kostet 5 $ pro Rack und Monat, mindestens 49 $, und Design wird einmalig pro Projekt berechnet. DC Sim setzt auf DCIM und Monitoring auf, statt sie zu ersetzen.",
+  "zh": "常见 DCIM 价格约每月 $125 起，每机柜每年 $230–330。Monitor 为每机柜每月 $5，最低 $49；Design 按项目一次性收费。DC Sim 叠加在 DCIM 和监控系统之上，而不是替代它们。"
+ },
+ "meta.title": {
+  "en": "Pricing: Design per project, Monitor per rack — DC Sim",
+  "de": "Preise: Design pro Projekt, Monitor pro Rack — DC Sim",
+  "zh": "价格：Design 按项目，Monitor 按机柜 — DC Sim"
+ },
+ "meta.description": {
+  "en": "Design from $490 per project. Monitor from $5 per rack per month, minimum $49. Partner program with a 30 % margin. Compare with typical DCIM pricing.",
+  "de": "Design ab 490 $ pro Projekt. Monitor ab 5 $ pro Rack und Monat, mindestens 49 $. Partnerprogramm mit 30 % Marge. Im Vergleich zu typischen DCIM-Preisen.",
+  "zh": "Design 每个项目 $490 起。Monitor 每机柜每月 $5 起，最低 $49。合作伙伴计划提供 30 % 的利润空间。与常见 DCIM 价格对比。"
+ },
+ "crumb.pricing": {
+  "en": "Pricing",
+  "de": "Preise"
+ },
+ "hero.eyebrow": {
+  "en": "Pricing",
+  "de": "Preise",
+  "zh": "价格"
+ },
+ "hero.h1": {
+  "en": "Pricing that fits a 10-rack room",
+  "de": "Preise, die zu einem Raum mit 10 Racks passen",
+  "zh": "10 个机柜的机房也用得起的价格"
+ },
+ "hero.intro": {
+  "en": "DC Sim has two licenses and a partner program. Design is one-time per project: $490 for up to 20 racks, $1,490 up to 100, $3,900 above that, three months per project. Monitor is about $5 per rack per month with a $49 minimum. Partners earn a 30 % margin. Today every license starts with a walkthrough on your own file; self-serve accounts and card checkout are on the roadmap. Prices in USD, excluding VAT.",
+  "de": "DC Sim bietet zwei Lizenzen und ein Partnerprogramm. Design wird einmalig pro Projekt berechnet: 490 $ für bis zu 20 Racks, 1.490 $ bis 100 Racks, 3.900 $ darüber, jeweils drei Monate pro Projekt. Monitor kostet etwa 5 $ pro Rack und Monat, mindestens 49 $. Partner erhalten 30 % Marge. Heute beginnt jede Lizenz mit einer Vorführung anhand Ihrer eigenen Datei; Self-Service-Konten und Kartenzahlung stehen auf der Roadmap. Preise in USD, zzgl. MwSt.",
+  "zh": "DC Sim 提供两种许可和一个合作伙伴计划。Design 按项目一次性收费：20 个机柜以内 $490，100 个以内 $1,490，超过 100 个 $3,900，每个项目三个月。Monitor 约为每机柜每月 $5，最低 $49。合作伙伴可获得 30 % 的利润空间。目前每份许可都从一次基于您自己文件的演示讲解开始；自助开户和刷卡付款已列入路线图。价格以美元计，不含增值税。"
+ },
+ "plans.design.kicker": {
+  "en": "Design",
+  "de": "Design",
+  "zh": "Design"
+ },
+ "plans.design.for": {
+  "en": "For owners, consultants and integrators planning a new room or an expansion. One-time, three months per project.",
+  "de": "Für Eigentümer, Berater und Systemhäuser, die einen neuen Raum oder eine Erweiterung planen. Einmalig, drei Monate pro Projekt.",
+  "zh": "面向规划新机房或扩容的业主、咨询顾问和集成商。一次性收费，每个项目三个月。"
+ },
+ "plans.design.incl": {
+  "en": "Design mode with the device picker and custom devices, all checks, N−1 audit, versions, full what-if, Excel export of the model, hand-off to Monitor with three months free.",
+  "de": "Design-Modus mit Geräteauswahl und eigenen Geräten, alle Prüfungen, N−1-Audit, Versionen, vollständiges Was-wäre-wenn, Excel-Export des Modells, Übergabe an Monitor mit drei Monaten gratis.",
+  "zh": "设计模式（含设备选择器和自定义设备）、全部检查、N−1 审核、版本管理、完整的假设推演、模型导出为 Excel、移交 Monitor 并免费使用三个月。"
+ },
+ "plans.design.note": {
+  "en": "AI design assistant <Badge kind=\"roadmap\" /> included at no extra cost when it ships",
+  "de": "KI-Planungsassistent <Badge kind=\"roadmap\" /> ohne Aufpreis enthalten, sobald er verfügbar ist"
+ },
+ "plans.design.mailtoSubject": {
+  "en": "DC Sim Design license",
+  "de": "DC Sim Design license",
+  "zh": "DC Sim Design 许可咨询"
+ },
+ "plans.design.btn": {
+  "en": "Ask about Design",
+  "de": "Design anfragen",
+  "zh": "咨询 Design"
+ },
+ "plans.monitor.kicker": {
+  "en": "Monitor",
+  "de": "Monitor",
+  "zh": "Monitor"
+ },
+ "plans.monitor.for": {
+  "en": "For operators of a running room. Monthly, cancel any time.",
+  "de": "Für Betreiber eines Raums im laufenden Betrieb. Monatlich, jederzeit kündbar.",
+  "zh": "面向运行中机房的运营方。按月付费，可随时取消。"
+ },
+ "plans.monitor.price": {
+  "en": "${PRICES.monitorPerRack}<span> / rack / month</span>",
+  "de": "{PRICES.monitorPerRack} $<span> / Rack / Monat</span>"
+ },
+ "plans.monitor.min": {
+  "en": "minimum ${PRICES.monitorMin}",
+  "de": "mindestens {PRICES.monitorMin} $",
+  "zh": "最低 ${PRICES.monitorMin}"
+ },
+ "plans.monitor.incl": {
+  "en": "All nine layers, what-if and scenarios, history and replay, reports, token layer, five users.",
+  "de": "Alle neun Ebenen, Was-wäre-wenn und Szenarien, Verlauf und Wiedergabe, Berichte, Token-Ebene, fünf Benutzer.",
+  "zh": "全部九个图层、假设推演与场景、历史与回放、报表、token 图层、五个用户。"
+ },
+ "plans.monitor.roadmapChip": {
+  "en": "Other connectors · Roadmap",
+  "de": "Weitere Connectors · Roadmap",
+  "zh": "其他连接器 · 路线图"
+ },
+ "plans.monitor.mailtoSubject": {
+  "en": "DC Sim Monitor",
+  "de": "DC Sim Monitor"
+ },
+ "plans.monitor.btn": {
+  "en": "Ask about Monitor",
+  "de": "Monitor anfragen",
+  "zh": "咨询 Monitor"
+ },
+ "plans.partner.kicker": {
+  "en": "Partner",
+  "de": "Partner",
+  "zh": "合作伙伴"
+ },
+ "plans.partner.for": {
+  "en": "For integrators, MSPs, data-center builders, consultants and vendors. Annual agreement.",
+  "de": "Für Systemhäuser, MSPs, Rechenzentrumsbauer, Berater und Hersteller. Jahresvertrag.",
+  "zh": "面向集成商、MSP、数据中心建设方、咨询顾问和厂商。按年签约。"
+ },
+ "plans.partner.price": {
+  "en": "{PRICES.partnerMargin} %<span> margin</span>",
+  "de": "{PRICES.partnerMargin} %<span> Marge</span>"
+ },
+ "plans.partner.note": {
+  "en": "or a fee plus a higher margin",
+  "de": "oder eine Gebühr plus höhere Marge",
+  "zh": "或支付一笔费用，换取更高的利润空间"
+ },
+ "plans.partner.incl": {
+  "en": "Demo rooms to present from, partner price on Design, white-label on request, training.",
+  "de": "Demo-Räume für Ihre Präsentationen, Partnerpreis für Design, White-Label auf Anfrage, Schulung.",
+  "zh": "可用于客户演示的样板机房、Design 合作伙伴价、可按需白标、培训。"
+ },
+ "plans.partner.btn": {
+  "en": "Partner program",
+  "de": "Partnerprogramm",
+  "zh": "合作伙伴计划"
+ },
+ "plans.enterprise.kicker": {
+  "en": "Enterprise",
+  "de": "Enterprise",
+  "zh": "Enterprise"
+ },
+ "plans.enterprise.for": {
+  "en": "Multi-site operators, on-premises, single sign-on.",
+  "de": "Betreiber mehrerer Standorte, On-Premises, Single Sign-on.",
+  "zh": "多站点运营方、本地部署、单点登录。"
+ },
+ "plans.enterprise.price": {
+  "en": "Quote",
+  "de": "Auf Anfrage",
+  "zh": "询价"
+ },
+ "plans.enterprise.incl": {
+  "en": "Everything above plus the on-prem container, SSO, multi-site, custom connectors and an SLA. Later; ask if you need it now.",
+  "de": "Alles oben Genannte plus On-Prem-Container, SSO, mehrere Standorte, individuelle Connectors und ein SLA. Kommt später; fragen Sie uns, wenn Sie es schon jetzt brauchen.",
+  "zh": "包含以上全部内容，另加本地部署容器、SSO、多站点、定制连接器和 SLA。稍后推出；如现在就需要，请联系我们。"
+ },
+ "plans.enterprise.mailtoSubject": {
+  "en": "DC Sim Enterprise",
+  "de": "DC Sim Enterprise",
+  "zh": "DC Sim Enterprise 咨询"
+ },
+ "plans.enterprise.btn": {
+  "en": "Talk to us",
+  "de": "Sprechen Sie uns an",
+  "zh": "联系我们"
+ },
+ "calc.eyebrow": {
+  "en": "What would my room cost?",
+  "de": "Was würde mein Raum kosten?",
+  "zh": "我的机房要花多少钱？"
+ },
+ "calc.racks": {
+  "en": "Racks",
+  "de": "Racks",
+  "zh": "机柜数"
+ },
+ "calc.unit": {
+  "en": "count",
+  "de": "Anzahl",
+  "zh": "个"
+ },
+ "calc.fine": {
+  "en": "Typical DCIM pricing: $125 per month minimums and $230–330 per rack per year are typical. Simulation tools for engineers start at several thousand dollars per seat per year and need an engineer; Monitor needs a spreadsheet.",
+  "de": "Typische DCIM-Preise: Mindestbeträge von 125 $ pro Monat und 230–330 $ pro Rack und Jahr sind üblich. Simulationswerkzeuge für Ingenieure beginnen bei mehreren tausend Dollar pro Arbeitsplatz und Jahr und brauchen einen Ingenieur; Monitor braucht eine Tabelle.",
+  "zh": "常见 DCIM 价格：通常每月最低 $125，每机柜每年 $230–330。面向工程师的仿真工具每个席位每年数千美元起，而且需要工程师操作；Monitor 只需要一张表格。"
+ },
+ "calc.label.initial": {
+  "en": "Monitor · 20 racks",
+  "de": "Monitor · 20 Racks",
+  "zh": "Monitor · 20 个机柜"
+ },
+ "calc.mon.initial": {
+  "en": "$100",
+  "de": "100 $"
+ },
+ "calc.perMonth": {
+  "en": " / month",
+  "de": " / Monat",
+  "zh": " / 月"
+ },
+ "calc.line.initial": {
+  "en": "$1,200 per year · Design one-time $490",
+  "de": "1.200 $ pro Jahr · Design einmalig 490 $",
+  "zh": "每年 $1,200 · Design 一次性 $490"
+ },
+ "calc.bar.dcsim": {
+  "en": "DC Sim Monitor",
+  "de": "DC Sim Monitor",
+  "zh": "DC Sim Monitor"
+ },
+ "calc.bar.dcsim.initial": {
+  "en": "$1,200 / yr",
+  "de": "1.200 $ / Jahr",
+  "zh": "$1,200 / 年"
+ },
+ "calc.bar.dcim": {
+  "en": "Typical DCIM, same racks",
+  "de": "Typisches DCIM, gleiche Rackzahl",
+  "zh": "常见 DCIM，相同机柜数"
+ },
+ "calc.bar.dcim.initial": {
+  "en": "$4,600–$6,600 / yr",
+  "de": "4.600–6.600 $ / Jahr",
+  "zh": "$4,600–$6,600 / 年"
+ },
+ "which.eyebrow": {
+  "en": "Which license do I need?",
+  "de": "Welche Lizenz brauche ich?",
+  "zh": "我需要哪种许可？"
+ },
+ "which.design": {
+  "en": "<span>\"I am planning a room or a new row.\"</span> <b>Design.</b> When it goes live, move to Monitor with three months free.",
+  "de": "<span>„Ich plane einen Raum oder eine neue Rack-Reihe.“</span> <b>Design.</b> Bei Inbetriebnahme wechseln Sie zu Monitor, mit drei Monaten gratis.",
+  "zh": "<span>“我在规划一个机房或新增一列机柜。”</span> <b>Design。</b>上线后转为 Monitor，免费三个月。"
+ },
+ "which.monitor": {
+  "en": "<span>\"I run a room and want to see it, fail things and report on it.\"</span> <b>Monitor.</b>",
+  "de": "<span>„Ich betreibe einen Raum und möchte ihn sehen, Ausfälle durchspielen und darüber berichten.“</span> <b>Monitor.</b>",
+  "zh": "<span>“我在运营一个机房，想看清它、做故障演练、出报表。”</span> <b>Monitor。</b>"
+ },
+ "which.partner": {
+  "en": "<span>\"I do this for customers.\"</span> <b>Partner:</b> Design per project at partner price, a share of Monitor.",
+  "de": "<span>„Ich mache das für Kunden.“</span> <b>Partner:</b> Design pro Projekt zum Partnerpreis, ein Anteil an Monitor.",
+  "zh": "<span>“我为客户做这些。”</span> <b>合作伙伴：</b>Design 按项目享合作伙伴价，并分享 Monitor 收入。"
+ },
+ "notIncluded.eyebrow": {
+  "en": "Not included (yet)",
+  "de": "(Noch) nicht enthalten",
+  "zh": "暂不包含"
+ },
+ "notIncluded.cfd": {
+  "en": "CFD-grade airflow: not offered. Thermal values come from a zonal model and are labelled estimated.",
+  "de": "Luftströmung in CFD-Qualität: nicht im Angebot. Thermische Werte stammen aus einem zonalen Modell und sind als geschätzt gekennzeichnet.",
+  "zh": "CFD 级气流分析：不提供。热工数值来自分区模型，并标注为估算。"
+ },
+ "notIncluded.roadmap": {
+  "en": "AI design assistant, a BOM export, live connectors beyond Zabbix and NetBox, partner multi-customer console <Badge kind=\"roadmap\" />",
+  "de": "KI-Planungsassistent, Stücklisten-Export (BOM), Live-Connectors über Zabbix und NetBox hinaus, Multi-Kunden-Konsole für Partner <Badge kind=\"roadmap\" />"
+ },
+ "notIncluded.selfServe": {
+  "en": "Self-serve accounts and card checkout <Badge kind=\"roadmap\" />; on-prem packaging (Enterprise, later).",
+  "de": "Self-Service-Konten und Kartenzahlung <Badge kind=\"roadmap\" />; On-Prem-Paket (Enterprise, später)."
+ },
+ "script.label": {
+  "en": "Monitor · {n} rack{n === 1 ? \"\" : \"s\"}",
+  "de": "Monitor · {n} Rack{n === 1 ? \"\" : \"s\"}",
+  "zh": "Monitor · {n} 个机柜"
+ },
+ "script.line": {
+  "en": "{usd(mon * 12)} per year · Design one-time {usd(design)}",
+  "de": "{usd(mon * 12)} pro Jahr · Design einmalig {usd(design)}",
+  "zh": "每年 {usd(mon * 12)} · Design 一次性 {usd(design)}"
+ },
+ "script.barDcsim": {
+  "en": "{usd(mon * 12)} / yr",
+  "de": "{usd(mon * 12)} / Jahr",
+  "zh": "{usd(mon * 12)} / 年"
+ },
+ "script.barDcim": {
+  "en": "{usd(lo)}–{usd(hi)} / yr",
+  "de": "{usd(lo)}–{usd(hi)} / Jahr",
+  "zh": "{usd(lo)}–{usd(hi)} / 年"
+ },
+ "const.design.tier1": {
+  "en": "up to 20 racks",
+  "de": "bis 20 Racks",
+  "zh": "20 个机柜以内"
+ },
+ "const.design.tier2": {
+  "en": "up to 100 racks",
+  "de": "bis 100 Racks",
+  "zh": "100 个机柜以内"
+ },
+ "const.design.tier3": {
+  "en": "more than 100 racks",
+  "de": "mehr als 100 Racks",
+  "zh": "超过 100 个机柜"
+ }
+}

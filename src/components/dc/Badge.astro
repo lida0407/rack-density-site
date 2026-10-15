@@ -1,7 +1,9 @@
 ---
-interface Props { kind: "available" | "partial" | "roadmap" | "planned" | "early" | "partner"; note?: string }
-const { kind, note } = Astro.props;
-const label = { available: "Available", partial: "Partial", roadmap: "Roadmap", planned: "Planned", early: "Early access", partner: "Partner" }[kind];
+import { dcCopy } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { kind: "available" | "partial" | "roadmap" | "planned" | "early" | "partner"; note?: string; locale?: Locale }
+const { kind, note, locale = "en" } = Astro.props;
+const label = dcCopy("components", locale).t(`badge.${kind}`);
 ---
 {note ? (
   <div><span class={`badge badge-${kind}`}>{label}</span><p class="badge-note">{note}</p></div>

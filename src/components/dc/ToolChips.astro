@@ -1,8 +1,11 @@
 ---
 // Integration chips with partner logos (compatibility statements, approved 2026-10-15). Status follows share/updatedc.md.
 import { u } from "../../lib/dc/url";
-interface Props { exclude?: string; links?: boolean }
-const { exclude, links = true } = Astro.props;
+import { dcCopy, dcLp } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { exclude?: string; links?: boolean; locale?: Locale }
+const { exclude, links = true, locale = "en" } = Astro.props;
+const { t: tr } = dcCopy("components", locale);
 type Tool = { name: string; slug: string; status: "available" | "roadmap" | "planned" | "partner"; logos?: { src: string; mask?: boolean }[] };
 const tools: Tool[] = [
   { name: "Zabbix", slug: "zabbix", status: "available", logos: [{ src: "logos/zabbix.png" }] },
@@ -22,15 +25,15 @@ const list = tools.filter((t) => t.slug !== exclude);
     const Tag = links ? "a" : "span";
     return (
       <li>
-        <Tag class={`cs-chip tool-chip${t.status === "available" ? " cs-chip--ok" : ""}`} href={links ? u(`integrations/${t.slug}/`) : undefined}>
+        <Tag class={`cs-chip tool-chip${t.status === "available" ? " cs-chip--ok" : ""}`} href={links ? dcLp(`integrations/${t.slug}/`, locale) : undefined}>
           {t.status === "available" && <span class="cs-shape cs-shape--ok" aria-hidden="true"></span>}
           {t.logos?.map((l) => l.mask
             ? <i class="tool-logo" style={`--logo:url(${u(l.src)})`} aria-hidden="true"></i>
             : <img class="tool-logo-img" src={u(l.src)} alt="" height="16" />)}
           <span>{t.name}</span>
-          {t.status === "roadmap" && <span class="cs-badge cs-badge--roadmap">Roadmap</span>}
-          {t.status === "planned" && <span class="cs-badge cs-badge--roadmap">Planned</span>}
-          {t.status === "partner" && <span class="tool-partner">Partner</span>}
+          {t.status === "roadmap" && <span class="cs-badge cs-badge--roadmap">{tr("toolChips.roadmap")}</span>}
+          {t.status === "planned" && <span class="cs-badge cs-badge--roadmap">{tr("toolChips.planned")}</span>}
+          {t.status === "partner" && <span class="tool-partner">{tr("toolChips.partner")}</span>}
         </Tag>
       </li>
     );

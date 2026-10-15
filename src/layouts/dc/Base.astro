@@ -10,6 +10,7 @@ import { trail, crumbsSchema } from "../../lib/crumbs";
 import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, LEGAL_NAME, LEGAL_URL } from "../../config/dc/product";
 import { SITE_URL } from "../../../site.config.mjs";
 import { abs, u, root } from "../../lib/dc/url";
+import { ui, lp, alternates, isLive, hasPage, LOCALES, LOCALE_META, type Locale } from "../../i18n";
 import ogSrc from "../../assets/dc/shots/hero-lightsoff.png";
 
 interface Crumb { name: string; path: string }
@@ -20,9 +21,14 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   crumbs?: Crumb[];
   noindex?: boolean;
+  locale?: Locale;      // marketing/I18N.md: /de/dc/… and /zh/dc/…; `path` stays the English path relative to /dc/
+  fallback?: boolean;   // some copy fell back to English → the shared "not translated yet" note
 }
-const { title, description, path, jsonLd = [], crumbs = [], noindex = false } = Astro.props;
-const canonical = abs(path);
+const { title, description, path, jsonLd = [], crumbs = [], noindex = false, locale = "en", fallback = false } = Astro.props;
+const sitePath = `/dc/${path}`.replace(/[?#].*$/, "");
+const canonical = locale === "en" ? abs(path) : `${SITE_URL.replace(/\/$/, "")}${lp(sitePath, locale)}`;
+// A locale that is not launched yet (src/i18n/live.mjs) is readable but noindex and outside hreflang.
+const alts = isLive(locale) ? alternates(sitePath) : [];
 const og = await getImage({ src: ogSrc, width: 1200, format: "jpg", quality: 80 });
 const ogUrl = new URL(og.src, SITE_URL).href;
 
@@ -38,18 +44,19 @@ const org = {
 const graph: Record<string, unknown>[] = [org, ...jsonLd];
 // RACKDENSITY › DC Sim › … (crumb paths are relative to /dc/)
 const bc = crumbs.length ? trail("dc", crumbs.map((c) => ({ name: c.name, path: `/dc/${c.path}` }))) : null;
-if (bc) { const { "@context": _ctx, ...list } = crumbsSchema(bc, `/dc/${path}`); graph.push(list); }
+if (bc) { const { "@context": _ctx, ...list } = crumbsSchema(bc, sitePath, locale); graph.push(list); }
 const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
 ---
 <!doctype html>
-<html lang="en" data-edition="dc">
+<html lang={LOCALE_META[locale].html} data-edition="dc">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {alts.length > 2 && alts.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {(noindex || !isLive(locale)) && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#080a09" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f6f7f6" media="(prefers-color-scheme: light)" />
     <ThemeScript />
@@ -61,6 +68,8 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={LOCALE_META[locale].og} />
+    {LOCALES.filter((l) => l !== locale && isLive(l) && isLive(locale) && hasPage(sitePath, l)).map((l) => <meta property="og:locale:alternate" content={LOCALE_META[l].og} />)}
     <meta property="og:image" content={ogUrl} />
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={ld} />
@@ -68,12 +77,13 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
   <body class="theme-dc">
     {/* Cloudflare's email obfuscation rewrites mailto links to /cdn-cgi/l/email-protection (404 without JS): opt out. */}
     <Fragment set:html="<!--email_off-->" />
-    <Header section="dc" />
-    {bc && <Breadcrumbs items={bc} />}
+    <Header section="dc" locale={locale} />
+    {bc && <Breadcrumbs items={bc} locale={locale} />}
+    {fallback && <p class="fb-note"><span>{ui(locale).fallbackNote}</span></p>}
     <main id="main">
       <slot />
     </main>
-    <Footer section="dc" />
+    <Footer section="dc" locale={locale} />
     <Fragment set:html="<!--/email_off-->" />
   </body>
 </html>

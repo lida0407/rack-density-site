@@ -1,16 +1,19 @@
 ---
-import { TEMPLATE_FILE, EXAMPLE_FILE, TEMPLATE_VERSION, TEMPLATE_SHEETS, mailto } from "../../config/dc/product";
+import { TEMPLATE_FILE, EXAMPLE_FILE, mailto } from "../../config/dc/product";
 import { u } from "../../lib/dc/url";
-interface Props { compact?: boolean }
-const { compact = false } = Astro.props;
+import { dcCopy, dcLp } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { compact?: boolean; locale?: Locale }
+const { compact = false, locale = "en" } = Astro.props;
+const { t } = dcCopy("components", locale);
 ---
 <section class="cta" aria-labelledby="cta-h">
-  <h2 id="cta-h">One Excel file. Your room in 3D.</h2>
-  {!compact && <p>Download the import template (v{TEMPLATE_VERSION}, {TEMPLATE_SHEETS}, only Devices required) and the filled example from our demo hall. No form, no email needed, no macros in the files.</p>}
+  <h2 id="cta-h">{t("templateCta.h2")}</h2>
+  {!compact && <p>{t("templateCta.p")}</p>}
   <div class="btn-row">
-    <a class="btn btn-primary" href={u(TEMPLATE_FILE)} download>Download the template (.xlsx)</a>
-    <a class="btn btn-ghost" href={u(EXAMPLE_FILE)} download>Download the filled example</a>
-    <a class="btn btn-ghost" href={mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n")}>Request a walkthrough</a>
+    <a class="btn btn-primary" href={u(TEMPLATE_FILE)} download>{t("templateCta.btnTemplate")}</a>
+    <a class="btn btn-ghost" href={u(EXAMPLE_FILE)} download>{t("templateCta.btnExample")}</a>
+    <a class="btn btn-ghost" href={mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n")}>{t("templateCta.btnWalkthrough")}</a>
   </div>
-  <p class="small muted" style="margin:12px 0 0">Fill in the Devices sheet and send it with your walkthrough request; we import it on the call. <a href={u("resources/excel-template/")}>What each sheet does</a></p>
+  <p class="small muted" style="margin:12px 0 0">{t("templateCta.fine")} <a href={dcLp("resources/excel-template/", locale)}>{t("templateCta.sheetsLink")}</a></p>
 </section>

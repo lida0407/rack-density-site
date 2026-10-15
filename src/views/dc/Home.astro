@@ -1,0 +1,298 @@
+---
+// DC Sim home in one locale (marketing/I18N.md); copy in src/i18n/dc/strings/home.json, English is the source.
+import { existsSync } from "node:fs";
+import HeroStage from "../../components/site/HeroStage.astro";
+// DC Sim home, from the approved page design (brand canvas "DcHome", Console, DC green).
+import Base from "../../layouts/dc/Base.astro";
+import Clip from "../../components/dc/Clip.astro";
+import Faq from "../../components/dc/Faq.astro";
+import ToolChips from "../../components/dc/ToolChips.astro";
+import { PRODUCT_NAME, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, mailto } from "../../config/dc/product";
+import { faqLd, softwareLd, videoLd } from "../../lib/dc/schema";
+import { HERO_CLIP, isoDuration } from "../../config/dc/clips";
+import { getImage } from "astro:assets";
+import heroPoster from "../../assets/video/hero-dc-dark.jpg";
+import { SITE_URL } from "../../../site.config.mjs";
+import { u } from "../../lib/dc/url";
+import { dcCopy, dcLp, rootLp, englishOnly } from "../../i18n/dc";
+import { hasPage, type Locale } from "../../i18n";
+import heroDark from "../../assets/dc/shots/hero-lightsoff-crop.png";
+import heroLight from "../../assets/dc/shots/hero-lit-crop.png";
+import estateDark from "../../assets/dc/shots/estate-dark.png";
+import estateLight from "../../assets/dc/shots/estate-bright.png";
+import { Image } from "astro:assets";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { t, fellBack } = dcCopy("home", locale);
+const { t: tc } = dcCopy("clips", locale);
+const enOnly = (p: string) => (hasPage(p, locale) ? "" : englishOnly(locale));
+
+const faq = ["whatIs", "signup", "install", "cfd", "cost", "chinese"].map((k) => ({ q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) }));
+// mailto subjects and bodies stay English: they land in our inbox (marketing/i18n/dc/README.md).
+const walkthrough = DEMO_URL ?? mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n");
+const sizes = "(min-width: 1200px) 600px, (min-width: 1000px) 50vw, 100vw";
+const demoMoments = [
+  { shape: "crit", text: t("moments.feedA"), t: "0:31" },
+  { shape: "warn", text: t("moments.cooling"), t: "0:31" },
+  { shape: "warn", text: t("moments.leak"), t: "0:31" },
+  { shape: "data", text: t("moments.excel"), t: "0:48" },
+];
+const guides = [
+  { href: "resources/guides/rack-power-capacity-planning/", title: t("guides.rackPower.title"), kind: t("guides.kind.guideCalc") },
+  { href: "resources/guides/ups-failure-impact-analysis/", title: t("guides.upsFailure.title"), kind: t("guides.kind.guide") },
+  { href: "resources/guides/tokens-per-kwh/", title: t("guides.tokensPerKwh.title"), kind: t("guides.kind.guideCalc") },
+  { href: "resources/guides/dcim-for-small-data-center/", title: t("guides.dcimSmall.title"), kind: t("guides.kind.guide") },
+];
+// Hero (HERO-INTERACTIVE.md): HeroStage swaps recorded state clips (state-dc-<view>-<on|off>) under real controls once all
+// ten are in public/dc/media/; until then it plays the 30 s loop (hero-dc-dark|bright), and the stills if that is missing too.
+const views = ["overview", "power", "network", "cabling", "tokens"];
+const stageLive = views.every((v) => ["on", "off"].every((l) => ["webm", "mp4"].some((e) => existsSync(`public/dc/media/state-dc-${v}-${l}.${e}`))));
+const heroVideo = ["webm", "mp4"].some((e) => existsSync(`public/dc/media/hero-dc-dark.${e}`));
+const heroThumb = await getImage({ src: heroPoster, width: 1280, format: "jpg", quality: 78 });
+const heroLd = videoLd({
+  name: locale === "en" ? HERO_CLIP.title : tc("hero.title"),
+  description: t("schema.heroVideo.description"),
+  contentUrl: new URL(u("media/hero-dc-dark.mp4"), SITE_URL).href,
+  thumbnailUrl: new URL(heroThumb.src, SITE_URL).href,
+  uploadDate: HERO_CLIP.uploadDate,
+  duration: isoDuration(HERO_CLIP.seconds),
+  transcript: (locale === "en" ? HERO_CLIP.transcript : HERO_CLIP.transcript.map((_, i) => tc(`hero.t${i + 1}`))).join(" "),
+});
+const html = (s: string) => s; // marker: keys rendered with set:html carry inline markup
+---
+<Base
+  title={t("meta.title")}
+  description={t("meta.description")}
+  path=""
+  jsonLd={[softwareLd(), heroLd, ...faqLd(faq)]}
+  locale={locale}
+  fallback={fellBack()}
+>
+  <div class="dch">
+    <section class="dch-hero">
+      <div class="dch-wrap dch-hero-grid">
+      <div class="dch-hero-copy">
+        <span class="eyebrow">{t("hero.eyebrow")}</span>
+        <h1>{t("hero.h1")}</h1>
+        <p class="lede">{t("hero.lede")}</p>
+        <div class="btn-row">
+          <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>{t("hero.ctaTemplate")}</a>
+          <a class="cs-btn cs-btn--secondary dch-cta" href={walkthrough}>{DEMO_URL ? t("hero.ctaDemo") : t("hero.ctaWalkthrough")}</a>
+        </div>
+        <p class="dch-note">{t("hero.note")}</p>
+      </div>
+      <div class="dch-hero-fig">
+        <HeroStage edition="dc" label={t("hero.stageLabel")} dark={heroDark} light={heroLight} sizes={sizes} locale={locale}
+          alt={t("hero.alt.dark")}
+          altLight={t("hero.alt.light")}>
+          <span slot="pin" class="cs-pin"><span class="cs-shape cs-shape--live" aria-hidden="true"></span>{heroVideo ? t("hero.pin.recorded") : <><span class="only-dark">{t("hero.pin.lightsOff")}</span><span class="only-light">{t("hero.pin.lightsOn")}</span></>}</span>
+          <figcaption>{stageLive
+            ? <span>{t("hero.caption.stage")}</span>
+            : heroVideo
+              ? <span>{t("hero.caption.video")}</span>
+              : <><span class="only-dark">{t("hero.caption.dark")}</span><span class="only-light">{t("hero.caption.light")}</span></>}<span class="sim">{heroVideo || stageLive ? t("hero.stageLabel") : t("hero.sim.aiHall")}{t("hero.sim.suffix")}</span></figcaption>
+        </HeroStage>
+      </div>
+      </div>
+    </section>
+
+    <section class="dch-band">
+      <div class="dch-wrap dch-proof">
+        <div class="dch-stat"><span class="eyebrow dch-crit">{t("proof.fail.eyebrow")}</span><div class="dch-big dch-crit">114<span>%</span></div><span class="dch-cap">{t("proof.fail.caption")}</span></div>
+        <div class="dch-stat"><span class="eyebrow">{t("hero.pin.lightsOff")}</span><div class="dch-big dch-acc">−480<span> W</span></div><span class="dch-cap">{t("proof.lights.caption")}</span></div>
+        <p set:html={html(t("proof.body"))} />
+      </div>
+    </section>
+
+    <section class="dch-wrap dch-sec dch-split">
+      <div><span class="eyebrow">{t("what.eyebrow")}</span><h2>{t("what.h2")}</h2></div>
+      <p class="dch-body">{t("what.body")}</p>
+    </section>
+
+    <section class="dch-band2">
+      <div class="dch-wrap dch-sec">
+        <div class="dch-head"><span class="eyebrow">{t("adv.eyebrow")}</span><h2>{t("adv.h2")}</h2></div>
+        <div class="dch-tiles">
+          <article><span class="dch-num">01</span><h3>{t("adv.design.h3")}</h3><p>{t("adv.design.p")}</p><span class="dch-foot" set:html={html(t("adv.design.foot"))} /></article>
+          <article><span class="dch-num">02</span><h3>{t("adv.monitoring.h3")}</h3><p>{t("adv.monitoring.p")}</p><span class="dch-foot"><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>{t("adv.monitoring.chipZabbix")}</span><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>{t("adv.monitoring.chipNetbox")}</span></span></article>
+          <article><span class="dch-num">03</span><h3>{t("adv.devices.h3")}</h3><p>{t("adv.devices.p")}</p><span class="dch-foot dch-mono"><a href={rootLp("devices/", locale)}>{t("adv.devices.link")}</a>{t("adv.devices.foot")}</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dch-wrap dch-sec dch-split">
+      <div>
+        <div class="dch-head"><span class="eyebrow">{t("how.eyebrow")}</span><h2>{t("how.h2")}</h2></div>
+        <ol class="dch-steps">
+          <li><span class="dch-num">01</span><div><h3>{t("how.fill.h3")}</h3><p>{t("how.fill.p")}</p></div></li>
+          <li><span class="dch-num dch-dim">02</span><div><h3>{t("how.import.h3")}</h3><p>{t("how.import.p")}</p></div></li>
+          <li><span class="dch-num dch-dim">03</span><div><h3>{t("how.fail.h3")}</h3><p>{t("how.fail.p")}</p></div></li>
+        </ol>
+      </div>
+      <div class="dch-moments">
+        <span class="eyebrow">{t("how.moments.eyebrow")}</span>
+        <ul>
+          {demoMoments.map((m) => <li><span class={`cs-shape cs-shape--${m.shape}`} aria-hidden="true"></span><span>{m.text}</span><span class="dch-t">{m.t}</span></li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="dch-wrap dch-clips" aria-label={t("clips.aria")}>
+      <div class="dch-clipgrid">
+        <Clip name="feed-a-fails-lightsoff" title={t("clips.feedA.title")} caption={t("clips.feedA.caption")} locale={locale} />
+        <Clip name="crah-stops" title={t("clips.crah.title")} caption={t("clips.crah.caption")} locale={locale} />
+        <Clip name="leak" title={t("clips.leak.title")} caption={t("clips.leak.caption")} locale={locale} />
+        <Clip name="excel-to-3d" title={t("clips.excel.title")} caption={t("clips.excel.caption")} locale={locale} />
+      </div>
+    </section>
+
+    <section class="dch-wrap dch-sec dch-estate" aria-labelledby="estate-h">
+      <div class="dch-estate-copy">
+        <span class="eyebrow">{t("estate.eyebrow")}</span>
+        <h2 id="estate-h">{t("estate.h2")}</h2>
+        <ul class="dch-estate-list">
+          <li set:html={html(t("estate.sites"))} />
+          <li set:html={html(t("estate.links"))} />
+          <li set:html={html(t("estate.whatIf"))} />
+        </ul>
+        <p class="dch-estate-feat"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><Fragment set:html={html(t("estate.famous"))} /></p>
+      </div>
+      <figure class="shot dch-estate-fig">
+        <Image class="only-dark" src={estateDark} alt={t("estate.alt.dark")} widths={[480, 800, 1200]} sizes="(min-width: 1000px) 600px, 100vw" format="webp" quality={74} loading="lazy" />
+        <Image class="only-light" src={estateLight} alt={t("estate.alt.light")} widths={[480, 800, 1200]} sizes="(min-width: 1000px) 600px, 100vw" format="webp" quality={74} loading="lazy" />
+        <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>{t("estate.caption")}</span><span class="sim">{t("estate.sim")}</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="dch-band2">
+      <div class="dch-wrap dch-sec">
+        <div class="dch-head"><span class="eyebrow">{t("who.eyebrow")}</span><h2>{t("who.h2")}</h2></div>
+        <div class="dch-who">
+          <a class="cs-card" href={dcLp("product/", locale)}><span class="dch-kicker">{t("who.operators.kicker")}</span><span class="dch-who-t">{t("who.operators.title")}</span><span class="dch-who-p">{t("who.operators.p")}</span><span class="dch-arrow">{t("who.operators.arrow")}</span></a>
+          <a class="cs-card" href={dcLp("partners/", locale)}><span class="dch-kicker">{t("who.partners.kicker")}</span><span class="dch-who-t">{t("who.partners.title")}</span><span class="dch-who-p">{t("who.partners.p")}</span><span class="dch-arrow">{t("who.partners.arrow")}</span></a>
+          <a class="cs-card" href={dcLp("product/it/", locale)}><span class="dch-kicker dch-ai">{t("who.ai.kicker")}</span><span class="dch-who-t">{t("who.ai.title")}</span><span class="dch-who-p">{t("who.ai.p")}</span><span class="dch-arrow">{t("who.ai.arrow")}</span></a>
+        </div>
+        <div class="dch-tools">
+          <span class="dch-kicker">{t("who.tools.kicker")}</span>
+          <ToolChips locale={locale} />
+          <p set:html={html(t("who.tools.p"))} />
+        </div>
+      </div>
+    </section>
+
+    <section class="dch-wrap dch-sec">
+      <div class="dch-rowhead"><div class="dch-head"><span class="eyebrow">{t("pricing.eyebrow")}</span><h2>{t("pricing.h2")}</h2></div><a href={dcLp("pricing/", locale)}>{t("pricing.compare")}</a></div>
+      <div class="dch-prices">
+        <div><span class="dch-kicker">{t("pricing.design.kicker")}</span><span class="dch-price" set:html={html(t("pricing.design.price"))} /><span class="dch-who-p">{t("pricing.design.p")}</span></div>
+        <div class="dch-rec"><span class="dch-kicker dch-acc">{t("pricing.monitor.kicker")}</span><span class="dch-price" set:html={html(t("pricing.monitor.price"))} /><span class="dch-who-p">{t("pricing.monitor.p")}</span></div>
+        <div><span class="dch-kicker">{t("pricing.partner.kicker")}</span><span class="dch-price" set:html={html(t("pricing.partner.price"))} /><span class="dch-who-p">{t("pricing.partner.p")}</span></div>
+      </div>
+    </section>
+
+    <section class="dch-band2">
+      <div class="dch-wrap dch-sec dch-split">
+        <Faq items={faq} locale={locale} />
+        <div class="dch-res">
+          <span class="eyebrow">{t("resources.eyebrow")}</span>
+          {guides.map((g) => <a href={dcLp(g.href, locale)}><span>{g.title}{enOnly(`/dc/${g.href}`)}</span><span class="dch-kicker">{g.kind}</span></a>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="template" class="dch-wrap dch-sec dch-template">
+      <span class="eyebrow">{t("template.eyebrow")}</span>
+      <h2>{t("template.h2")}</h2>
+      <p>{t("template.p")}</p>
+      <div class="btn-row">
+        <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>{t("template.btnTemplate")}</a>
+        <a class="cs-btn cs-btn--secondary dch-cta" href={u(EXAMPLE_FILE)} download>{t("template.btnExample")}</a>
+        <a class="cs-btn cs-btn--ghost dch-cta" href={walkthrough}>{t("template.btnWalkthrough")}</a>
+      </div>
+    </section>
+  </div>
+</Base>
+<style>
+  .dch-wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .dch-estate { display: grid; gap: 32px; align-items: center; }
+  @media (min-width: 1000px) { .dch-estate { grid-template-columns: 1fr 1.2fr; gap: 48px; } }
+  .dch-estate-copy { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .dch-estate-copy h2 { margin: 0; }
+  .dch-estate-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .dch-estate-list li { padding-left: 14px; border-left: 2px solid var(--accent); color: var(--ink-muted); line-height: 24px; }
+  .dch-estate-list b { display: block; color: var(--ink); font-weight: 600; }
+  .dch-estate-feat { margin: 0; color: var(--ink-muted); }
+  .dch-estate-feat .cs-shape { display: inline-block; margin-right: 8px; vertical-align: middle; }
+  .dch-estate-fig { margin: 0; min-width: 0; }
+  .dch-sec { padding-top: clamp(56px, 8vw, 96px); padding-bottom: clamp(56px, 8vw, 96px); }
+  .dch h1 { margin: 0; font-size: clamp(40px, 6.2vw, 84px); line-height: 0.98; letter-spacing: -0.035em; max-width: 12em; }
+  .dch h2 { margin: 0; font-size: clamp(28px, 3.2vw, 40px); }
+  .dch h3 { margin: 0; }
+  .dch-head { display: flex; flex-direction: column; gap: 12px; }
+  .dch-hero { border-bottom: 1px solid var(--line); background: var(--bg-000); }
+  /* Copy left, stage right from 1000 px (Dali 2026-10-15 late; HERO-INTERACTIVE §1, same grid as the homelab home) */
+  .dch-hero-grid { display: grid; gap: 32px; align-items: center; padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(40px, 6vw, 64px); }
+  @media (min-width: 1000px) { .dch-hero-grid { grid-template-columns: 1fr 1.2fr; gap: 48px; } .dch-hero h1 { font-size: clamp(44px, 4.6vw, 64px); } .dch-hero .lede { font-size: 18px; } }
+  .dch-hero-copy { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+  .dch-hero .lede { margin: 0; font-size: 19px; line-height: 28px; max-width: 36em; }
+  .dch-cta { height: 44px; padding: 0 20px; font-size: 15px; }
+  .dch-note { margin: 0; font: 400 12px/18px var(--font-mono); color: var(--ink-dim); }
+  .dch-hero-fig { min-width: 0; }
+  .dch-band { border-bottom: 1px solid var(--line); background: var(--bg-100); }
+  .dch-band2 { border-block: 1px solid var(--line); background: var(--bg-100); }
+  .dch-proof { padding-top: 32px; padding-bottom: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 40px; align-items: end; }
+  .dch-proof p { margin: 0; color: var(--ink-muted); line-height: 24px; }
+  .dch-stat { display: flex; flex-direction: column; gap: 6px; }
+  .dch-big { font: 600 clamp(48px, 6.4vw, 88px)/0.95 var(--font-mono); letter-spacing: -0.04em; white-space: nowrap; }
+  .dch-big span { font-size: 0.45em; margin-left: 0.1em; }
+  .dch-crit { color: var(--crit); }
+  .dch-crit.eyebrow::before { background: var(--crit); }
+  .dch-acc { color: var(--accent); }
+  .dch-big.dch-acc { font-size: clamp(36px, 4.4vw, 60px); text-shadow: 0 0 28px var(--accent-soft); }
+  .dch-big.dch-acc span { color: var(--ink-muted); text-shadow: none; }
+  .dch-cap { font: 500 13px/18px var(--font-mono); color: var(--ink-muted); }
+  .dch-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: start; }
+  .dch-split > * { min-width: 0; }
+  .dch-body { margin: 0; color: var(--ink-muted); font-size: 17px; line-height: 28px; }
+  .dch-tiles { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .dch-tiles article { background: var(--bg-000); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .dch-tiles h3 { font-size: 20px; line-height: 26px; }
+  .dch-tiles p { margin: 0; color: var(--ink-muted); line-height: 24px; font-size: 16px; }
+  .dch-num { font: 600 13px/24px var(--font-mono); color: var(--accent); }
+  .dch-dim { color: var(--ink-muted); }
+  .dch-foot { margin-top: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font: 500 12px/18px var(--font-mono); color: var(--ink-muted); }
+  .dch-mono { color: var(--ink); }
+  .dch-steps { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+  .dch-steps li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; }
+  .dch-steps h3 { font-size: 18px; line-height: 24px; margin-bottom: 6px; }
+  .dch-steps p { margin: 0; color: var(--ink-muted); line-height: 24px; font-size: 16px; }
+  .dch-moments { display: flex; flex-direction: column; gap: 16px; }
+  .dch-moments ul { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); background: var(--bg-100); }
+  .dch-moments li { display: grid; grid-template-columns: 16px 1fr auto; gap: 12px; align-items: baseline; padding: 14px 16px; border-bottom: 1px solid var(--line); line-height: 22px; font-size: 16px; }
+  .dch-moments li:last-child { border-bottom: 0; }
+  .dch-t { font: 500 12px/1 var(--font-mono); color: var(--ink-dim); }
+  .dch-clips { padding-bottom: clamp(56px, 8vw, 96px); }
+  .dch-clipgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
+  .dch-who { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px; }
+  .dch-who .cs-card { text-decoration: none; color: var(--ink); background: var(--bg-000); }
+  .dch-kicker { font: 600 11px/14px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .dch-ai { color: var(--layer-ai); }
+  .dch-who-t { font: 600 18px/24px 'Inter Variable', var(--font-sans); }
+  .dch-who-p { color: var(--ink-muted); line-height: 22px; font-size: 15px; }
+  .dch-arrow { color: var(--accent); font-size: 14px; }
+  .dch-tools { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .dch-tools p { margin: 0; color: var(--ink-muted); font-size: 14px; }
+  .dch-rowhead { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; }
+  .dch-prices { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .dch-prices > div { background: var(--bg-000); padding: 28px; display: flex; flex-direction: column; gap: 10px; }
+  .dch-prices .dch-rec { box-shadow: inset 0 2px 0 var(--accent); }
+  .dch-price { font: 600 32px/1 var(--font-mono); }
+  .dch-price span { font-size: 14px; color: var(--ink-muted); }
+  .dch .faq { margin-top: 0; }
+  .dch-res { display: flex; flex-direction: column; gap: 16px; }
+  .dch-res a { display: flex; flex-direction: column; gap: 6px; padding: 16px; border: 1px solid var(--line); background: var(--bg-000); text-decoration: none; color: var(--ink); font: 600 16px/22px 'Inter Variable', var(--font-sans); }
+  .dch-res a:hover { border-color: var(--accent); }
+  .dch-template { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+  .dch-template h2 { font-size: clamp(32px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.03em; }
+  .dch-template p { margin: 0; color: var(--ink-muted); line-height: 26px; max-width: 40em; }
+</style>

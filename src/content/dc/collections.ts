@@ -7,24 +7,24 @@ const still = { name: z.string(), alt: z.string(), caption: z.string().optional(
 const shot = z.object({ ...still, light: z.object(still).optional() });
 const clip = z.object({ name: z.string(), title: z.string(), caption: z.string().optional() });
 
-const pages = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/dc/pages" }),
-  schema: z.object({
-    title: z.string().max(70),
-    description: z.string().max(170),
-    h1: z.string(),
-    directAnswer: z.string(),
-    section: z.enum(["product", "integrations", "company", "resources"]),
-    order: z.number().default(0),
-    faq,
-    badge: z.enum(["available", "partial", "roadmap", "planned", "early", "partner"]).optional(),
-    badgeNote: z.string().optional(),
-    shots: z.array(shot).default([]),
-    clips: z.array(clip).default([]),
-    ctaTop: z.boolean().default(false),
-    navLabel: z.string().optional(),
-  }),
+const pageSchema = z.object({
+  title: z.string().max(70),
+  description: z.string().max(170),
+  h1: z.string(),
+  directAnswer: z.string(),
+  section: z.enum(["product", "integrations", "company", "resources"]),
+  order: z.number().default(0),
+  faq,
+  badge: z.enum(["available", "partial", "roadmap", "planned", "early", "partner"]).optional(),
+  badgeNote: z.string().optional(),
+  shots: z.array(shot).default([]),
+  clips: z.array(clip).default([]),
+  ctaTop: z.boolean().default(false),
+  navLabel: z.string().optional(),
 });
+const pages = defineCollection({ loader: glob({ pattern: "**/*.md", base: "./src/content/dc/pages" }), schema: pageSchema });
+// Translated pages (marketing/I18N.md), ids "de/product/it", "zh/contact"…, same schema; written by scripts/dc/i18n-import.mjs.
+const pagesL10n = defineCollection({ loader: glob({ pattern: "**/*.md", base: "./src/content/dc/l10n" }), schema: pageSchema });
 
 const guides = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/dc/guides" }),
@@ -68,4 +68,4 @@ const compare = defineCollection({
 });
 
 // Imported by src/content.config.ts (the merged site).
-export const dcCollections = { pages, guides, compare };
+export const dcCollections = { pages, pagesL10n, guides, compare };

@@ -1,0 +1,192 @@
+{
+ "metaTitle": {
+  "en": "Integrations: Zabbix, NetBox, Prometheus and more — DC Sim",
+  "de": "Integrationen: Zabbix, NetBox, Prometheus und mehr — DC Sim",
+  "zh": "集成：Zabbix、NetBox、Prometheus 等 — DC Sim"
+ },
+ "metaDescription": {
+  "en": "DC Sim sits on top of the monitoring and DCIM you already run. Zabbix and NetBox connect directly; every other tool works today through the template sheets.",
+  "de": "DC Sim setzt auf dem Monitoring und DCIM auf, das Sie bereits betreiben. Zabbix und NetBox direkt angebunden; alle anderen Tools heute über die Vorlage.",
+  "zh": "DC Sim 构建在您现有的监控和 DCIM 之上。Zabbix 和 NetBox 可直接连接；其他所有工具目前都可通过模板工作表使用。"
+ },
+ "crumbIntegrations": {
+  "en": "Integrations",
+  "de": "Integrationen",
+  "zh": "集成"
+ },
+ "h1": {
+  "en": "Works alongside the monitoring you already run",
+  "de": "Arbeitet mit dem Monitoring zusammen, das Sie bereits betreiben",
+  "zh": "与您现有的监控系统协同工作"
+ },
+ "directAnswer": {
+  "en": "DC Sim does not replace your monitoring or DCIM. It places their data on the rack, PDU or cooling unit it belongs to and lets you fail things. Zabbix and NetBox connect directly: paste a URL and a read-only token, press Test, preview, import. Every other tool reaches the twin today as an export through the template sheets.",
+  "de": "DC Sim ersetzt weder Ihr Monitoring noch Ihr DCIM. Es platziert deren Daten am zugehörigen Rack, an der PDU oder am Kühlgerät und lässt Sie Ausfälle durchspielen. Zabbix und NetBox werden direkt angebunden: URL und Read-only-Token einfügen, Test drücken, Vorschau prüfen, importieren. Alle anderen Tools gelangen heute als Export über die Blätter der Vorlage in den Zwilling.",
+  "zh": "DC Sim 不会取代您的监控或 DCIM。它把这些系统的数据放到所属的机柜、PDU 或制冷单元上，并让您模拟故障。Zabbix 和 NetBox 可直接连接：粘贴 URL 和只读令牌，按 Test（测试），预览，导入。其他所有工具目前都以导出文件的形式，通过模板工作表进入数字孪生。"
+ },
+ "statusHeading": {
+  "en": "Status, tool by tool",
+  "de": "Status, Tool für Tool",
+  "zh": "各工具的集成状态"
+ },
+ "thTool": {
+  "en": "Tool",
+  "de": "Tool",
+  "zh": "工具"
+ },
+ "thStatus": {
+  "en": "Status",
+  "de": "Status",
+  "zh": "状态"
+ },
+ "thToday": {
+  "en": "Today",
+  "de": "Heute",
+  "zh": "目前"
+ },
+ "readingsName": {
+  "en": "Readings sheet",
+  "de": "Blatt Readings",
+  "zh": "Readings 工作表"
+ },
+ "readingsNameSuffix": {
+  "en": "(any tool's CSV export)",
+  "de": "(CSV-Export aus jedem Tool)",
+  "zh": "（任何工具的 CSV 导出）"
+ },
+ "readingsToday": {
+  "en": "time, item, metric, value: metric history from any monitoring tool, fitted to the twin.",
+  "de": "time, item, metric, value: Metrikverlauf aus jedem Monitoring-Tool, abgeglichen mit dem Zwilling.",
+  "zh": "time、item、metric、value：来自任何监控工具的指标历史，用于校准数字孪生。"
+ },
+ "agentToolsName": {
+  "en": "Redfish BMCs, SNMP UPSes, Home Assistant, Proxmox, GPU telemetry",
+  "de": "Redfish-BMCs, SNMP-USVs, Home Assistant, Proxmox, GPU-Telemetrie",
+  "zh": "Redfish BMC、SNMP UPS、Home Assistant、Proxmox、GPU 遥测"
+ },
+ "agentToolsToday": {
+  "en": "Connectors are built into the agent and are not yet tested against live systems. Readings sheet today.",
+  "de": "Die Connectors sind in den Agenten eingebaut, aber noch nicht mit laufenden Systemen getestet. Heute über das Blatt Readings.",
+  "zh": "连接器已内置于代理程序中，但尚未在真实运行的系统上测试。目前请使用 Readings 工作表。"
+ },
+ "bmsName": {
+  "en": "BMS (Modbus, BACnet) and fire panels",
+  "de": "Gebäudeleittechnik/BMS (Modbus, BACnet) und Brandmelderzentralen",
+  "zh": "BMS（Modbus、BACnet）和消防报警主机"
+ },
+ "bmsToday": {
+  "en": "Readings sheet today.",
+  "de": "Heute über das Blatt Readings.",
+  "zh": "目前请使用 Readings 工作表。"
+ },
+ "howHeading": {
+  "en": "How a connector works",
+  "de": "So funktioniert ein Connector",
+  "zh": "连接器如何工作"
+ },
+ "stepConnectLabel": {
+  "en": "Connect:",
+  "de": "Verbinden:",
+  "zh": "连接："
+ },
+ "stepConnectText": {
+  "en": "open ⋯ → Connect NetBox or Zabbix, paste the URL and a read-only API token, press Test. The test shows the version and what it can see (sites, racks, devices, cables; or hosts, items, problems).",
+  "de": "Öffnen Sie ⋯ → Connect NetBox or Zabbix, fügen Sie die URL und ein Read-only-API-Token ein und drücken Sie Test. Der Test zeigt die Version und was er sieht (Standorte, Racks, Geräte, Kabel bzw. Hosts, Items, Probleme).",
+  "zh": "打开 ⋯ → Connect NetBox or Zabbix（连接 NetBox 或 Zabbix），粘贴 URL 和只读 API 令牌，按 Test（测试）。测试会显示版本以及它能看到的内容（站点、机柜、设备、线缆；或主机、监控项、问题）。"
+ },
+ "stepPreviewLabel": {
+  "en": "Preview:",
+  "de": "Vorschau:",
+  "zh": "预览："
+ },
+ "stepPreviewText": {
+  "en": "the result is rendered as the template sheets (Devices, Cables, Racks, Power, Networks, Readings) with the same import report and checks as an Excel upload.",
+  "de": "Das Ergebnis wird als Blätter der Vorlage dargestellt (Devices, Cables, Racks, Power, Networks, Readings), mit demselben Importbericht und denselben Prüfungen wie beim Excel-Upload.",
+  "zh": "结果以模板工作表（Devices、Cables、Racks、Power、Networks、Readings）的形式呈现，并附上与 Excel 上传相同的导入报告和检查项。"
+ },
+ "stepImportLabel": {
+  "en": "Import:",
+  "de": "Import:",
+  "zh": "导入："
+ },
+ "stepImportText": {
+  "en": "confirm, and the twin is built or updated. Re-sync works like a re-upload: you see a change list first.",
+  "de": "Bestätigen Sie, und der Zwilling wird erstellt oder aktualisiert. Eine erneute Synchronisierung funktioniert wie ein erneuter Upload: Sie sehen zuerst eine Änderungsliste.",
+  "zh": "确认后，数字孪生即被创建或更新。重新同步与重新上传的方式相同：您会先看到一份变更清单。"
+ },
+ "agentNote": {
+  "en": "For a system inside your own network, the same connector runs in a small outbound-only agent; tokens never reach the browser.",
+  "de": "Für ein System in Ihrem eigenen Netzwerk läuft derselbe Connector in einem kleinen Agenten, der nur ausgehende Verbindungen aufbaut; Tokens gelangen nie in den Browser.",
+  "zh": "对于部署在您自己网络内的系统，同一个连接器运行在一个仅出站连接的小型代理程序中；令牌永远不会到达浏览器。"
+ },
+ "toolMakersHeading": {
+  "en": "For tool makers",
+  "de": "Für Tool-Hersteller",
+  "zh": "致工具厂商"
+ },
+ "toolMakersBody": {
+  "en": "If you make one of these tools: we read, we never write without opt-in, we name you on your integration page, and we want to be listed where your users look for integrations. See the {partnerLink}.",
+  "de": "Wenn Sie eines dieser Tools herstellen: Wir lesen, wir schreiben nie ohne Ihr Opt-in, wir nennen Sie auf Ihrer Integrationsseite, und wir möchten dort gelistet sein, wo Ihre Nutzer nach Integrationen suchen. Mehr dazu im {partnerLink}.",
+  "zh": "如果您开发上述某款工具：我们只读取，未经主动开启绝不写入；我们会在您的集成页面上注明您的名称；我们也希望出现在您的用户查找集成的地方。请参阅{partnerLink}。"
+ },
+ "partnerLinkText": {
+  "en": "partner program",
+  "de": "Partnerprogramm",
+  "zh": "合作伙伴计划"
+ },
+ "faq1Q": {
+  "en": "Which integrations are live today?",
+  "de": "Welche Integrationen sind heute schon verfügbar?",
+  "zh": "目前哪些集成已上线？"
+ },
+ "faq1A": {
+  "en": "Zabbix and NetBox: connect with a URL and a read-only token, preview, import. Both were tested against live demo instances. Every other tool reaches DC Sim as an export through the template sheets; their live connectors are on the roadmap.",
+  "de": "Zabbix und NetBox: per URL und Read-only-Token verbinden, Vorschau prüfen, importieren. Beide wurden mit laufenden Demoinstanzen getestet. Alle anderen Tools gelangen als Export über die Blätter der Vorlage in DC Sim; ihre Live-Connectors stehen auf der Roadmap.",
+  "zh": "Zabbix 和 NetBox：用 URL 和只读令牌连接，预览，导入。两者都已在在线运行的演示实例上测试。其他所有工具都以导出文件的形式，通过模板工作表进入 DC Sim；它们的实时连接器已列入路线图。"
+ },
+ "faq2Q": {
+  "en": "Will the connectors need inbound access?",
+  "de": "Brauchen die Connectors eingehenden Zugriff?",
+  "zh": "连接器需要入站访问吗？"
+ },
+ "faq2A": {
+  "en": "No. Live data will come through a small agent inside your network that only dials out over one WebSocket and never listens on a port.",
+  "de": "Nein. Live-Daten werden über einen kleinen Agenten in Ihrem Netzwerk kommen, der nur eine ausgehende WebSocket-Verbindung aufbaut und nie auf einem Port auf eingehende Verbindungen wartet.",
+  "zh": "不需要。实时数据将通过您网络内的一个小型代理程序传入，它只通过一条 WebSocket 主动向外连接，从不监听任何端口。"
+ },
+ "faq3Q": {
+  "en": "Will DC Sim write anything into my tools?",
+  "de": "Schreibt DC Sim etwas in meine Tools?",
+  "zh": "DC Sim 会向我的工具写入任何内容吗？"
+ },
+ "faq3A": {
+  "en": "No. Reading comes first. Exporting a design back as planned inventory is on the roadmap and will be opt-in per tool.",
+  "de": "Nein. Zuerst kommt das Lesen. Einen Entwurf als geplantes Inventar zurückzuexportieren, steht auf der Roadmap und wird pro Tool nur per Opt-in aktiviert.",
+  "zh": "不会。读取优先。把设计作为规划中的资产导出回工具已列入路线图，并将按工具由您主动开启。"
+ },
+ "faq4Q": {
+  "en": "My tool is not listed. Can I still use it?",
+  "de": "Mein Tool ist nicht aufgeführt. Kann ich es trotzdem nutzen?",
+  "zh": "我用的工具不在列表中，还能用吗？"
+ },
+ "faq4A": {
+  "en": "Yes, through the Readings sheet (time, item, metric, value) and the inventory sheets. Tell us which tool you run; connectors are built in order of demand.",
+  "de": "Ja, über das Blatt Readings (time, item, metric, value) und die Inventarblätter. Sagen Sie uns, welches Tool Sie einsetzen; Connectors werden in der Reihenfolge der Nachfrage gebaut.",
+  "zh": "可以，通过 Readings 工作表（time、item、metric、value）和资产类工作表。告诉我们您在用哪款工具；连接器按需求的先后顺序开发。"
+ },
+ "badgeAvailable": {
+  "en": "Available",
+  "de": "Verfügbar",
+  "zh": "已可用"
+ },
+ "badgePlanned": {
+  "en": "Planned",
+  "de": "Geplant",
+  "zh": "计划中"
+ },
+ "badgeRoadmap": {
+  "en": "Roadmap",
+  "de": "Roadmap",
+  "zh": "路线图"
+ }
+}

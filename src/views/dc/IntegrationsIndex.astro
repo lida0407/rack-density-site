@@ -1,0 +1,90 @@
+---
+// Integrations overview in one locale (marketing/I18N.md); copy in src/i18n/dc/strings/integrations-index.json.
+import { getCollection } from "astro:content";
+import Base from "../../layouts/dc/Base.astro";
+import Badge from "../../components/dc/Badge.astro";
+import Faq from "../../components/dc/Faq.astro";
+import TemplateCTA from "../../components/dc/TemplateCTA.astro";
+import { faqLd, softwareLd } from "../../lib/dc/schema";
+import { dcCopy, dcLp, englishOnly } from "../../i18n/dc";
+import { hasPage, type Locale } from "../../i18n";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { t, fellBack } = dcCopy("integrations", locale);
+
+const pages = (await getCollection("pages", (p) => p.data.section === "integrations")).sort((a, b) => a.data.order - b.data.order);
+const l10n = locale === "en" ? [] : await getCollection("pagesL10n", (p) => p.id.startsWith(`${locale}/integrations/`));
+// Each tool row in the page's language when that tool's page is translated, else in English.
+// Tools without a translated page: name and status note from page.json (tool.<id>.*), and "(English)" after the link.
+const { t: tp } = dcCopy("page", locale);
+const rows = pages.map((p) => {
+  const id = p.id.replace(/^integrations\//, "");
+  const tr = hasPage(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
+  if (locale === "en" || tr) { const d = (tr ?? p).data; return { id: p.id, name: d.navLabel ?? d.h1, badge: p.data.badge, note: d.badgeNote, en: "" }; }
+  return { id: p.id, name: tp(`tool.${id}.name`), badge: p.data.badge, note: tp(`tool.${id}.note`), en: englishOnly(locale) };
+});
+const faq = [1, 2, 3, 4].map((n) => ({ q: t(`faq${n}Q`), a: t(`faq${n}A`) }));
+const partnerLink = `<a href="${dcLp("partners/", locale)}">${t("partnerLinkText")}</a>`;
+---
+<Base
+  title={t("metaTitle")}
+  description={t("metaDescription")}
+  path="integrations/"
+  crumbs={[{ name: t("crumbIntegrations"), path: "integrations/" }]}
+  jsonLd={[softwareLd(), ...faqLd(faq)]}
+  locale={locale}
+  fallback={fellBack()}
+>
+  <article class="container page">
+    <header class="page-head">
+      <h1>{t("h1")}</h1>
+      <p class="direct-answer">{t("directAnswer")}</p>
+    </header>
+
+    <h2>{t("statusHeading")}</h2>
+    <div class="status-table-wrap">
+      <table class="status-table">
+        <thead><tr><th scope="col">{t("thTool")}</th><th scope="col">{t("thStatus")}</th><th scope="col">{t("thToday")}</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>{t("readingsName")}</strong> {t("readingsNameSuffix")}</td>
+            <td><Badge kind="available" locale={locale} /></td>
+            <td>{t("readingsToday")}</td>
+          </tr>
+          {rows.map((r) => (
+            <tr>
+              <td><a href={dcLp(`${r.id}/`, locale)}>{r.name}</a>{r.en}</td>
+              <td>{r.badge && <Badge kind={r.badge} locale={locale} />}</td>
+              <td>{r.note}</td>
+            </tr>
+          ))}
+          <tr>
+            <td>{t("agentToolsName")}</td>
+            <td><Badge kind="roadmap" locale={locale} /></td>
+            <td>{t("agentToolsToday")}</td>
+          </tr>
+          <tr>
+            <td>{t("bmsName")}</td>
+            <td><Badge kind="roadmap" locale={locale} /></td>
+            <td>{t("bmsToday")}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose">
+      <h2>{t("howHeading")}</h2>
+      <ol>
+        <li><strong>{t("stepConnectLabel")}</strong> {t("stepConnectText")}</li>
+        <li><strong>{t("stepPreviewLabel")}</strong> {t("stepPreviewText")}</li>
+        <li><strong>{t("stepImportLabel")}</strong> {t("stepImportText")}</li>
+      </ol>
+      <p>{t("agentNote")}</p>
+      <h2>{t("toolMakersHeading")}</h2>
+      <p set:html={t("toolMakersBody", { partnerLink })} />
+    </div>
+
+    <Faq items={faq} locale={locale} />
+    <TemplateCTA compact locale={locale} />
+  </article>
+</Base>

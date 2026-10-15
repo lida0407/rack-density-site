@@ -1,0 +1,191 @@
+---
+// DC Sim pricing in one locale (marketing/I18N.md); copy in src/i18n/dc/strings/pricing.json, English is the source.
+// From the approved page design (brand canvas "PricingDc", Console, DC green).
+import Base from "../../layouts/dc/Base.astro";
+import Faq from "../../components/dc/Faq.astro";
+import TemplateCTA from "../../components/dc/TemplateCTA.astro";
+import { PRICES, mailto } from "../../config/dc/product";
+import { faqLd, softwareLd, productLd } from "../../lib/dc/schema";
+import { dcCopy, dcLp } from "../../i18n/dc";
+import { LOCALE_META, type Locale } from "../../i18n";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { t, fellBack } = dcCopy("pricing", locale);
+const { t: tc } = dcCopy("components", locale);
+const faq = ["monitorCounted", "buyOnline", "threeMonths", "switch", "stop", "aiExtra", "partnerDiscount", "compare"].map((k) => ({ q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) }));
+// USD everywhere (I18N.md: one price constant, no FX); German writes the sign after the number.
+const intl = LOCALE_META[locale].intl;
+const usd = (n: number) => (locale === "de" ? `${n.toLocaleString(intl)} $` : "$" + n.toLocaleString(locale === "en" ? "en-US" : intl));
+const tiers = ["const.design.tier1", "const.design.tier2", "const.design.tier3"];
+// Copy keys with the roadmap badge inline: the Badge component's markup, in this locale.
+const badged = (s: string) => s.replace('<Badge kind="roadmap" />', `<span class="badge badge-roadmap">${tc("badge.roadmap")}</span>`);
+// The calculator script is one bundle for every locale: it reads its templates and number format from data-i18n.
+const calcI18n = JSON.stringify({
+  intl: locale === "en" ? "en-US" : intl, after: locale === "de",
+  label: t("script.label"), line: t("script.line"), barDcsim: t("script.barDcsim"), barDcim: t("script.barDcim"),
+});
+---
+<Base
+  title={t("meta.title")}
+  description={t("meta.description")}
+  path="pricing/"
+  crumbs={[{ name: t("crumb.pricing"), path: "pricing/" }]}
+  jsonLd={[softwareLd(), productLd(), ...faqLd(faq)]}
+  locale={locale}
+  fallback={fellBack()}
+>
+  <div class="dcp">
+    <section class="dcp-wrap dcp-hero">
+      <div class="dcp-col">
+        <span class="eyebrow">{t("hero.eyebrow")}</span>
+        <h1>{t("hero.h1")}</h1>
+      </div>
+      <p class="dcp-intro">{t("hero.intro")}</p>
+    </section>
+
+    <section class="dcp-wrap dcp-pad">
+      <div class="dcp-plans">
+        <article>
+          <span class="dcp-kicker">{t("plans.design.kicker")}</span>
+          <span class="dcp-for">{t("plans.design.for")}</span>
+          <dl class="dcp-tiers">{PRICES.design.map((tier, i) => <><dt>{usd(tier.price)}</dt><dd>{t(tiers[i])}</dd></>)}</dl>
+          <span class="dcp-incl">{t("plans.design.incl")}</span>
+          <span class="dcp-note" set:html={badged(t("plans.design.note"))} />
+          <a class="cs-btn cs-btn--secondary dcp-btn" href={mailto("DC Sim Design license")}>{t("plans.design.btn")}</a>
+        </article>
+        <article class="dcp-rec">
+          <span class="dcp-kicker dcp-acc">{t("plans.monitor.kicker")}</span>
+          <span class="dcp-for">{t("plans.monitor.for")}</span>
+          <div class="dcp-price" set:html={t("plans.monitor.price")} />
+          <span class="dcp-note">{t("plans.monitor.min")}</span>
+          <span class="dcp-incl">{t("plans.monitor.incl")}</span>
+          <span class="dcp-chips"><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Zabbix · NetBox</span><span class="cs-badge cs-badge--roadmap">{t("plans.monitor.roadmapChip")}</span></span>
+          <a class="cs-btn cs-btn--primary dcp-btn" href={mailto("DC Sim Monitor")}>{t("plans.monitor.btn")}</a>
+        </article>
+        <article>
+          <span class="dcp-kicker">{t("plans.partner.kicker")}</span>
+          <span class="dcp-for">{t("plans.partner.for")}</span>
+          <div class="dcp-price" set:html={t("plans.partner.price")} />
+          <span class="dcp-note">{t("plans.partner.note")}</span>
+          <span class="dcp-incl">{t("plans.partner.incl")}</span>
+          <a class="cs-btn cs-btn--secondary dcp-btn" href={dcLp("partners/", locale)}>{t("plans.partner.btn")}</a>
+        </article>
+        <article>
+          <span class="dcp-kicker">{t("plans.enterprise.kicker")}</span>
+          <span class="dcp-for">{t("plans.enterprise.for")}</span>
+          <div class="dcp-price">{t("plans.enterprise.price")}</div>
+          <span class="dcp-incl">{t("plans.enterprise.incl")}</span>
+          <a class="cs-btn cs-btn--ghost dcp-btn" href={mailto("DC Sim Enterprise")}>{t("plans.enterprise.btn")}</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="dcp-band">
+      <div class="dcp-wrap dcp-calc" id="price-calc" data-i18n={calcI18n}>
+        <div class="dcp-col">
+          <span class="eyebrow">{t("calc.eyebrow")}</span>
+          <div class="cs-field dcp-field"><label class="cs-field__head" for="pc-racks"><span>{t("calc.racks")}</span><span class="cs-field__unit">{t("calc.unit")}</span></label><input id="pc-racks" class="cs-input" type="number" min="1" max="2000" value="20" inputmode="numeric" /></div>
+          <p class="dcp-fine">{t("calc.fine")}</p>
+        </div>
+        <div class="dcp-result" aria-live="polite">
+          <div class="dcp-col"><span class="dcp-kicker" id="pc-label">{t("calc.label.initial")}</span><span class="dcp-bignum"><output id="pc-mon">{t("calc.mon.initial")}</output><span>{t("calc.perMonth")}</span></span><span class="dcp-note" id="pc-line">{t("calc.line.initial")}</span></div>
+          <div class="dcp-col">
+            <div class="cs-bar"><div class="cs-bar__head"><span>{t("calc.bar.dcsim")}</span><span id="pc-bar-dc">{t("calc.bar.dcsim.initial")}</span></div><div class="cs-bar__track"><div class="cs-bar__fill" id="pc-fill" style="width: 18%;"></div></div></div>
+            <div class="cs-bar"><div class="cs-bar__head"><span>{t("calc.bar.dcim")}</span><span id="pc-dcim">{t("calc.bar.dcim.initial")}</span></div><div class="cs-bar__track"><div class="dcp-typ"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dcp-wrap dcp-pad dcp-two">
+      <div class="dcp-col">
+        <span class="eyebrow">{t("which.eyebrow")}</span>
+        <ul class="dcp-which">
+          <li set:html={t("which.design")} />
+          <li set:html={t("which.monitor")} />
+          <li set:html={t("which.partner")} />
+        </ul>
+      </div>
+      <div class="dcp-col">
+        <span class="eyebrow dcp-muted">{t("notIncluded.eyebrow")}</span>
+        <ul class="dcp-not">
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span>{t("notIncluded.cfd")}</span></li>
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span set:html={badged(t("notIncluded.roadmap"))} /></li>
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span set:html={badged(t("notIncluded.selfServe"))} /></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="dcp-wrap dcp-end">
+      <Faq items={faq} locale={locale} />
+      <TemplateCTA compact locale={locale} />
+    </div>
+  </div>
+</Base>
+<script>
+  const r = document.getElementById("pc-racks") as HTMLInputElement;
+  const $ = (id: string) => document.getElementById(id)!;
+  // Templates and number format of the page's locale (data-i18n, from src/i18n/dc/strings/pricing.json).
+  const L = JSON.parse(($("price-calc") as HTMLElement).dataset.i18n!) as { intl: string; after: boolean; label: string; line: string; barDcsim: string; barDcim: string };
+  const usd = (x: number) => (L.after ? `${Math.round(x).toLocaleString(L.intl)} $` : "$" + Math.round(x).toLocaleString(L.intl));
+  const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{([^{}]+)\}/g, (m, k) => (k in v ? String(v[k]) : m));
+  function calc() {
+    const n = Math.max(1, Math.min(2000, Math.round(Number(r.value) || 1)));
+    const mon = Math.max(49, 5 * n);
+    const design = n <= 20 ? 490 : n <= 100 ? 1490 : 3900;
+    const lo = Math.max(1500, 230 * n), hi = Math.max(1500, 330 * n);
+    const v = { n, 'n === 1 ? "" : "s"': n === 1 ? "" : "s", "usd(mon * 12)": usd(mon * 12), "usd(design)": usd(design), "usd(lo)": usd(lo), "usd(hi)": usd(hi) };
+    $("pc-label").textContent = fill(L.label, v);
+    ($("pc-mon") as HTMLOutputElement).value = usd(mon);
+    $("pc-line").textContent = fill(L.line, v);
+    $("pc-bar-dc").textContent = fill(L.barDcsim, v);
+    $("pc-dcim").textContent = fill(L.barDcim, v);
+    ($("pc-fill") as HTMLElement).style.width = Math.min(100, (mon * 12 / hi) * 100).toFixed(1) + "%";
+  }
+  r.addEventListener("input", calc);
+  calc();
+</script>
+<style>
+  .dcp-wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+  .dcp-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .dcp-hero { padding-top: clamp(48px, 7vw, 88px); padding-bottom: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 40px; align-items: end; }
+  .dcp-hero h1 { margin: 0; font-size: clamp(36px, 4.6vw, 60px); line-height: 1.02; }
+  .dcp-intro { margin: 0; color: var(--ink-muted); line-height: 26px; font-size: 16px; }
+  .dcp-pad { padding-bottom: 48px; }
+  .dcp-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .dcp-plans article { background: var(--bg-000); padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .dcp-plans .dcp-rec { background: var(--bg-100); box-shadow: inset 0 3px 0 var(--accent); }
+  .dcp-kicker { font: 600 12px/14px var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); }
+  .dcp-acc { color: var(--accent); }
+  .dcp-for { font-size: 14px; color: var(--ink-muted); line-height: 20px; }
+  .dcp-tiers { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; }
+  .dcp-tiers dt { font: 600 24px/1.1 var(--font-mono); }
+  .dcp-tiers dd { margin: 0; color: var(--ink-muted); font-size: 13px; align-self: center; }
+  .dcp-price { font: 600 44px/1 var(--font-mono); letter-spacing: -0.03em; }
+  .dcp-price span { font-size: 14px; color: var(--ink-muted); letter-spacing: 0; }
+  .dcp-note { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font: 500 12px/16px var(--font-mono); color: var(--ink-muted); }
+  .dcp-incl { font-size: 14px; line-height: 20px; }
+  .dcp-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .dcp-btn { margin-top: auto; }
+  .dcp-band { border-block: 1px solid var(--line); background: var(--bg-100); }
+  .dcp-calc { padding-top: 56px; padding-bottom: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: start; }
+  .dcp-field { max-width: 280px; }
+  .dcp-fine { margin: 0; font: 400 12px/18px var(--font-mono); color: var(--ink-dim); max-width: 44em; }
+  .dcp-result { border: 1px solid var(--line); background: var(--bg-000); padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+  .dcp-result .dcp-col { gap: 10px; }
+  .dcp-bignum { font: 600 64px/0.95 var(--font-mono); letter-spacing: -0.04em; color: var(--accent); text-shadow: 0 0 28px var(--accent-soft); }
+  .dcp-bignum output { font: inherit; color: inherit; }
+  .dcp-bignum span { font-size: 0.3em; color: var(--ink-muted); text-shadow: none; letter-spacing: 0; }
+  .dcp-typ { height: 100%; width: 100%; background: var(--ink-dim); }
+  .dcp-two { padding-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; }
+  .dcp-which { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .dcp-which li { padding: 14px 0; border-bottom: 1px solid var(--line); line-height: 22px; }
+  .dcp-which li > span { color: var(--ink-muted); }
+  .dcp-muted { color: var(--ink-muted); }
+  .dcp-muted::before { background: var(--ink-muted); }
+  .dcp-not { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 22px; }
+  .dcp-not li { display: flex; gap: 10px; }
+  .dcp-not .cs-shape { margin-top: 7px; flex: none; }
+  .dcp-end { padding-bottom: 80px; }
+</style>

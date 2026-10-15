@@ -1,16 +1,19 @@
 ---
-import { PRICES } from "../../config/dc/product";
-import { u } from "../../lib/dc/url";
+import { dcCopy, dcLp } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { locale?: Locale }
+const { locale = "en" } = Astro.props;
+const { t } = dcCopy("components", locale);
 ---
 <section class="section" aria-labelledby="ps-h">
-  <span class="eyebrow">Pricing</span>
-  <h2 id="ps-h" style="margin-top:12px">Pricing that fits a 10-rack room</h2>
+  <span class="eyebrow">{t("pricingStrip.eyebrow")}</span>
+  <h2 id="ps-h" style="margin-top:12px">{t("pricingStrip.h2")}</h2>
   <div class="grid grid-3 tiles">
-    <div class="card"><h3>Design</h3><p class="price">from ${PRICES.design[0].price} <small>per project, one-time</small></p><p class="muted">Plan a room or a new row; three months per project. The AI design assistant comes at no extra cost when it ships.</p></div>
-    <div class="card ps-rec"><h3>Monitor</h3><p class="price">${PRICES.monitorPerRack} <small>per rack per month, min ${PRICES.monitorMin}</small></p><p class="muted">The twin of a running room, with what-if and reports.</p></div>
-    <div class="card"><h3>Partner</h3><p class="price">{PRICES.partnerMargin} % <small>margin</small></p><p class="muted">For integrators, MSPs and consultants.</p></div>
+    <div class="card"><h3>{t("pricingStrip.design.h3")}</h3><p class="price" set:html={t("pricingStrip.design.price")} /><p class="muted">{t("pricingStrip.design.p")}</p></div>
+    <div class="card ps-rec"><h3>{t("pricingStrip.monitor.h3")}</h3><p class="price" set:html={t("pricingStrip.monitor.price")} /><p class="muted">{t("pricingStrip.monitor.p")}</p></div>
+    <div class="card"><h3>{t("pricingStrip.partner.h3")}</h3><p class="price" set:html={t("pricingStrip.partner.price")} /><p class="muted">{t("pricingStrip.partner.p")}</p></div>
   </div>
-  <p style="margin-top:14px"><a href={u("pricing/")}>Compare with typical DCIM pricing</a></p>
+  <p style="margin-top:14px"><a href={dcLp("pricing/", locale)}>{t("pricingStrip.compare")}</a></p>
 </section>
 
 <style>

@@ -1,0 +1,192 @@
+{
+ "wantThis": {
+  "en": "I want this",
+  "de": "Ich habe Interesse",
+  "zh": "我想要"
+ },
+ "templateSheets": {
+  "en": "The template sheets",
+  "de": "Die Blätter der Vorlage",
+  "zh": "模板工作表"
+ },
+ "connectAria": {
+  "en": "Connect {tool}, as shown in the app",
+  "de": "{tool} verbinden, wie in der App",
+  "zh": "连接 {tool}（应用内界面）"
+ },
+ "tokenUnit": {
+  "en": "never shown in the browser",
+  "de": "nie im Browser sichtbar",
+  "zh": "绝不在浏览器中显示"
+ },
+ "demoTested": {
+  "en": "demo instance · tested",
+  "de": "Demo-Instanz · getestet",
+  "zh": "演示实例 · 已测试"
+ },
+ "today": {
+  "en": "Today",
+  "de": "Heute",
+  "zh": "目前"
+ },
+ "today.export": {
+  "en": "Export from {tool}",
+  "de": "Export aus {tool}",
+  "zh": "从 {tool} 导出"
+ },
+ "today.map": {
+  "en": "Map the columns onto the template sheets (synonyms accepted)",
+  "de": "Spalten den Blättern der Vorlage zuordnen (Synonyme werden erkannt)",
+  "zh": "将列映射到模板工作表（支持同义列名）"
+ },
+ "today.import": {
+  "en": "Import: the same report and checks as any Excel upload",
+  "de": "Import: derselbe Bericht und dieselben Prüfungen wie bei jedem Excel-Upload",
+  "zh": "导入：报告和检查与任何 Excel 上传相同"
+ },
+ "steps.eyebrow": {
+  "en": "How the connector works",
+  "de": "So funktioniert der Connector",
+  "zh": "连接器如何工作"
+ },
+ "steps.h2": {
+  "en": "Connect, preview, import.",
+  "de": "Verbinden, prüfen, importieren.",
+  "zh": "连接、预览、导入。"
+ },
+ "steps.connect": {
+  "en": "Connect",
+  "de": "Verbinden",
+  "zh": "连接"
+ },
+ "steps.connect.p": {
+  "en": "Open ⋯ → Connect, paste the URL and a read-only API token, press Test. The test shows the version and what it can see.",
+  "de": "Öffnen Sie ⋯ → Connect, fügen Sie die URL und ein Read-only-Token ein und klicken Sie auf Test. Der Test zeigt die Version und alles, was er lesen kann.",
+  "zh": "打开 ⋯ → Connect，粘贴 URL 和只读 API 令牌，点击 Test。测试会显示版本以及能读取到的内容。"
+ },
+ "steps.connect.ld": {
+  "en": "Open ⋯ → Connect, choose {tool}, paste the URL and a read-only API token, press Test. The test shows the version and what it can see.",
+  "de": "Öffnen Sie ⋯ → Connect, wählen Sie {tool}, fügen Sie die URL und ein Read-only-Token ein und klicken Sie auf Test. Der Test zeigt die Version und alles, was er lesen kann.",
+  "zh": "打开 ⋯ → Connect，选择 {tool}，粘贴 URL 和只读 API 令牌，点击 Test。测试会显示版本以及能读取到的内容。"
+ },
+ "steps.preview": {
+  "en": "Preview",
+  "de": "Vorschau",
+  "zh": "预览"
+ },
+ "steps.preview.p": {
+  "en": "The result is rendered as the template sheets with the same import report and checks as an Excel upload.",
+  "de": "Das Ergebnis erscheint als Blätter der Vorlage, mit demselben Importbericht und denselben Prüfungen wie ein Excel-Upload.",
+  "zh": "结果以模板工作表的形式呈现，导入报告和检查与 Excel 上传相同。"
+ },
+ "steps.import": {
+  "en": "Import",
+  "de": "Import",
+  "zh": "导入"
+ },
+ "steps.import.p": {
+  "en": "Confirm, and the twin is built or updated. Re-sync shows exactly what changed.",
+  "de": "Bestätigen Sie, und der Zwilling wird erstellt oder aktualisiert. Eine erneute Synchronisierung zeigt genau, was sich geändert hat.",
+  "zh": "确认后即创建或更新孪生。重新同步会准确显示变更内容。"
+ },
+ "howto.name": {
+  "en": "Connect {tool} to DC Sim",
+  "de": "{tool} mit DC Sim verbinden",
+  "zh": "将 {tool} 连接到 DC Sim"
+ },
+ "howto.description": {
+  "en": "Turn {tool} data into a 3D data center twin with a read-only token.",
+  "de": "Aus {tool}-Daten wird mit einem Read-only-Token ein 3D-Zwilling des Rechenzentrums.",
+  "zh": "用只读令牌把 {tool} 数据变成数据中心 3D 孪生。"
+ },
+ "otherIntegrations": {
+  "en": "Other integrations",
+  "de": "Weitere Integrationen",
+  "zh": "其他集成"
+ },
+ "moreIn": {
+  "en": "More in {section}",
+  "de": "Mehr unter {section}",
+  "zh": "{section}：更多内容"
+ },
+ "moreInAria": {
+  "en": "More in this section",
+  "de": "Mehr in diesem Bereich",
+  "zh": "本栏目更多内容"
+ },
+ "thisSection": {
+  "en": "this section",
+  "de": "diesem Bereich",
+  "zh": "本栏目"
+ },
+ "clipsAria": {
+  "en": "Clips",
+  "de": "Clips",
+  "zh": "视频片段"
+ },
+ "simulated": {
+  "en": "simulated data",
+  "de": "simulierte Daten",
+  "zh": "模拟数据"
+ },
+ "tool.grafana.name": {
+  "en": "Grafana and Prometheus",
+  "de": "Prometheus-Metriken am Rack",
+  "zh": "Prometheus 指标，落到机柜上"
+ },
+ "tool.grafana.note": {
+  "en": "Grafana CSV exports today. Prometheus collector: built into the agent, not yet tested against live exporters. Grafana panel: roadmap.",
+  "de": "Heute Grafana-CSV-Exporte. Prometheus-Collector: im Agent enthalten, noch nicht mit laufenden Exportern getestet. Grafana-Panel: Roadmap.",
+  "zh": "目前支持 Grafana CSV 导出。Prometheus 采集器：已内置于代理程序，尚未在真实的 exporter 上测试。Grafana 面板：路线图。"
+ },
+ "tool.solarwinds.name": {
+  "en": "SolarWinds",
+  "de": "SolarWinds in 3D",
+  "zh": "SolarWinds，3D 呈现"
+ },
+ "tool.solarwinds.note": {
+  "en": "CSV today: export nodes and metrics from SolarWinds → map to the DC Sim sheets → import; read-only connector on the roadmap",
+  "de": "Heute per CSV: Knoten und Metriken aus SolarWinds exportieren → den DC-Sim-Blättern zuordnen → importieren; Read-only-Connector auf der Roadmap",
+  "zh": "目前通过 CSV：从 SolarWinds 导出节点和指标 → 映射到 DC Sim 工作表 → 导入；只读连接器在路线图上"
+ },
+ "tool.manageengine-opmanager.name": {
+  "en": "ManageEngine OpManager",
+  "de": "OpManager in 3D",
+  "zh": "OpManager，3D 呈现"
+ },
+ "tool.manageengine-opmanager.note": {
+  "en": "CSV today: export inventory and monitor values from OpManager → map to the DC Sim sheets → import; read-only REST connector on the roadmap",
+  "de": "Heute per CSV: Inventar und Messwerte aus OpManager exportieren → den DC-Sim-Blättern zuordnen → importieren; Read-only-REST-Connector auf der Roadmap",
+  "zh": "目前通过 CSV：从 OpManager 导出资产和监控值 → 映射到 DC Sim 工作表 → 导入；只读 REST 连接器在路线图上"
+ },
+ "tool.sunbird-dctrack.name": {
+  "en": "Sunbird dcTrack",
+  "de": "dcTrack, simuliert",
+  "zh": "dcTrack，仿真推演"
+ },
+ "tool.sunbird-dctrack.note": {
+  "en": "CSV today: export cabinets, items and circuits from dcTrack → map to the DC Sim sheets → import; read-only REST connector on the roadmap",
+  "de": "Heute per CSV: Schränke, Objekte und Stromkreise aus dcTrack exportieren → den DC-Sim-Blättern zuordnen → importieren; Read-only-REST-Connector auf der Roadmap",
+  "zh": "目前通过 CSV：从 dcTrack 导出机柜、设备项和电路 → 映射到 DC Sim 工作表 → 导入；只读 REST 连接器在路线图上"
+ },
+ "tool.prtg.name": {
+  "en": "PRTG",
+  "de": "PRTG in 3D",
+  "zh": "PRTG，3D 呈现"
+ },
+ "tool.prtg.note": {
+  "en": "CSV today: export devices and sensor values from PRTG → map to the DC Sim sheets → import; read-only API connector on the roadmap",
+  "de": "Heute per CSV: Geräte und Sensorwerte aus PRTG exportieren → den DC-Sim-Blättern zuordnen → importieren; Read-only-API-Connector auf der Roadmap",
+  "zh": "目前通过 CSV：从 PRTG 导出设备和传感器数值 → 映射到 DC Sim 工作表 → 导入；只读 API 连接器在路线图上"
+ },
+ "tool.cloudsino.name": {
+  "en": "CloudSino",
+  "de": "CloudSino-Partnerschaft",
+  "zh": "与 CloudSino 的合作"
+ },
+ "tool.cloudsino.note": {
+  "en": "CloudSino distributes the Chinese-language edition of DC Sim; CloudSino DCIM exports are a CSV data source for the English edition today; live connector on the roadmap",
+  "de": "CloudSino vertreibt die chinesischsprachige Edition von DC Sim; CloudSino-DCIM-Exporte sind heute eine CSV-Datenquelle für die englischsprachige Edition; Live-Connector auf der Roadmap",
+  "zh": "CloudSino 分销 DC Sim 中文版；CloudSino DCIM 导出数据目前可作为英文版的 CSV 数据源；实时连接器在路线图上"
+ }
+}

@@ -2,6 +2,8 @@ import { getCollection } from "astro:content";
 import { PRODUCT_NAME, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } from "../../config/dc/product";
 import { abs } from "../../lib/dc/url";
 import { ENTITY_DC, LEGAL_NAME } from "../../config/dc/product";
+import { SITE_URL } from "../../../site.config.mjs";
+import { lp, hasPage, type Locale } from "../../i18n";
 
 // The DC Sim section of the site-wide /llms.txt (https://llmstxt.org). Underscore file: not a route.
 // Owned by DC marketing; the root src/pages/llms.txt.ts embeds it under the hub summary.
@@ -56,4 +58,25 @@ ${compare.map((c) => line(c.data.h1, `compare/${c.id}/`, `${c.data.description} 
 ${section("company")}
 `;
   return body;
+};
+
+/** The DC Sim part of /de/llms.txt and /zh/llms.txt (src/pages/[locale]/llms.txt.ts picks it up): the translated DC pages
+ *  only, with their titles and descriptions in that language; empty while a locale has no DC pages (src/config/dc/i18n.ts). */
+export const dcLlmsLocale = async (locale: Locale): Promise<string> => {
+  if (!hasPage("/dc", locale)) return "";
+  const { dcCopy } = await import("../../i18n/dc");
+  const home = dcCopy("home", locale).t, pricing = dcCopy("pricing", locale).t, integ = dcCopy("integrations", locale).t, priv = dcCopy("privacy", locale).t;
+  const url = (p: string) => SITE_URL.replace(/\/$/, "") + lp(p, locale);
+  const pages = (await getCollection("pagesL10n", (p) => p.id.startsWith(`${locale}/`)))
+    .map((p) => ({ slug: p.id.slice(locale.length + 1), d: p.data }))
+    .filter((p) => hasPage(`/dc/${p.slug}`, locale))
+    .sort((a, b) => a.d.section.localeCompare(b.d.section) || a.d.order - b.d.order);
+  const lines = [
+    `- [${home("meta.title")}](${url("/dc")}): ${home("meta.description")}`,
+    `- [${pricing("meta.title")}](${url("/dc/pricing")}): ${pricing("meta.description")}`,
+    `- [${integ("metaTitle")}](${url("/dc/integrations")}): ${integ("metaDescription")}`,
+    ...pages.map((p) => `- [${p.d.h1}](${url(`/dc/${p.slug}`)}): ${p.d.description}`),
+    `- [${priv("meta.title")}](${url("/dc/legal/privacy")}): ${priv("meta.description")}`,
+  ];
+  return `## ${PRODUCT_NAME}\n\n> ${home("what.body")}\n\n${lines.join("\n")}\n`;
 };

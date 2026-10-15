@@ -7,14 +7,22 @@ import { u } from "../../lib/dc/url";
 import { videoLd } from "../../lib/dc/schema";
 import { CLIPS, isoDuration } from "../../config/dc/clips";
 import { SITE_URL } from "../../../site.config.mjs";
+import { dcCopy } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
 
-interface Props { name: string; title: string; caption?: string }
-const { name, title, caption } = Astro.props;
+interface Props { name: string; title: string; caption?: string; locale?: Locale }
+const { name, title, caption, locale = "en" } = Astro.props;
+const { t } = dcCopy("clips", locale);
+// Translated transcripts (src/i18n/dc/strings/clips.json, keys <prefix>.title / <prefix>.t1…); English = config/dc/clips.ts.
+const PREFIX: Record<string, string> = { "feed-a-fails-lightsoff": "feedA", "crah-stops": "crah", leak: "leak", "excel-to-3d": "excel" };
 const posters = import.meta.glob<{ default: ImageMetadata }>("../../assets/dc/posters/*.png", { eager: true });
 const src = posters[`../../assets/dc/posters/${name}.png`]?.default;
 if (!src) throw new Error(`Unknown poster: ${name}`);
 const poster = await getImage({ src, width: 1280, format: "webp", quality: 72 });
-const meta = CLIPS[name];
+const en = CLIPS[name];
+const meta = en && locale !== "en" && PREFIX[name]
+  ? { ...en, title: t(`${PREFIX[name]}.title`), transcript: en.transcript.map((_, i) => t(`${PREFIX[name]}.t${i + 1}`)) }
+  : en;
 const file = u(`media/dcsim-${name}.mp4`);
 const ld = meta && JSON.stringify({
   "@context": "https://schema.org",
@@ -33,10 +41,10 @@ const ld = meta && JSON.stringify({
   <video controls muted playsinline preload="none" poster={poster.src} width="1920" height="1080" aria-label={title}>
     <source src={file} type="video/mp4" />
   </video>
-  {caption && <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>{caption}</span><span class="sim">recorded in the app</span></figcaption>}
+  {caption && <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>{caption}</span><span class="sim">{locale === "en" ? "recorded in the app" : t("ui.recorded")}</span></figcaption>}
   {meta && (
     <details class="clip-tx">
-      <summary>What happens in this clip</summary>
+      <summary>{locale === "en" ? "What happens in this clip" : t("ui.transcriptSummary")}</summary>
       <ol>{meta.transcript.map((t) => <li>{t}</li>)}</ol>
     </details>
   )}

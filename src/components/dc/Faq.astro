@@ -1,6 +1,8 @@
 ---
-interface Props { items: { q: string; a: string }[]; heading?: string }
-const { items, heading = "Questions people ask" } = Astro.props;
+import { dcCopy } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { items: { q: string; a: string }[]; heading?: string; locale?: Locale }
+const { items, locale = "en", heading = dcCopy("components", locale).t("faq.heading") } = Astro.props;
 ---
 {items.length > 0 && (
   <section class="faq" aria-labelledby="faq-h">

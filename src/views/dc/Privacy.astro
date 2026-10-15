@@ -1,0 +1,37 @@
+---
+// DC privacy notice in one locale (marketing/I18N.md); copy in src/i18n/dc/strings/privacy.json, English is the source.
+import Base from "../../layouts/dc/Base.astro";
+import { CF_WEB_ANALYTICS_ON, CF_WEB_ANALYTICS_TOKEN } from "../../config/brand";
+import { dcCopy } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { t, fellBack } = dcCopy("privacy", locale);
+const counting = CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN !== "";
+---
+<Base
+  title={t("meta.title")}
+  description={t("meta.description")}
+  path="legal/privacy/"
+  crumbs={[{ name: t("crumb.privacy"), path: "legal/privacy/" }]}
+  locale={locale}
+  fallback={fellBack()}
+>
+  <article class="container page prose">
+    <h1>{t("h1")}</h1>
+    <p class="direct-answer" set:html={`${t("lede.noCookies")} ${counting ? t("lede.counting") : t("lede.notCounting")} ${t("lede.downloadsAndWaitlist")}`} />
+    <h2>{t("who.h2")}</h2>
+    <p set:html={t("who.p")} />
+    <h2>{t("hosting.h2")}</h2>
+    <p>{t("hosting.p")}</p>
+    {counting && <><h2>{t("visits.h2")}</h2>
+    <p>{t("visits.p")}</p></>}
+    <h2>{t("email.h2")}</h2>
+    <p set:html={t("email.p")} />
+    <h2>{t("waitlist.h2")}</h2>
+    <p set:html={t("waitlist.p")} />
+    <h2>{t("files.h2")}</h2>
+    <p set:html={t("files.p")} />
+    <p class="small muted">{t("lastUpdated")}</p>
+  </article>
+</Base>

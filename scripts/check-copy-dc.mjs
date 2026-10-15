@@ -4,7 +4,7 @@
 // - no AI model or AI company names,
 // - "CFD" only in the negative ("not CFD", "no CFD", "CFD-grade airflow: not offered"),
 // - no leftover spec placeholders.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 // Merged site: the DC rules apply to the /dc section and the site-wide llms.txt.
@@ -16,6 +16,8 @@ const walk = (d) => readdirSync(d).forEach((f) => {
   else if (/\.(html|txt|xml)$/.test(f)) files.push(p);
 });
 walk(DIST + "dc");
+// Translated DC pages (marketing/I18N.md) follow the same rules.
+for (const l of ["de", "zh"]) if (existsSync(DIST + l + "/dc")) walk(DIST + l + "/dc");
 files.push(DIST + "llms.txt");
 
 const competitors = /\b(nlyte|hyperview|schneider|ecostruxure|cadence|6sigma|ekkosense|device42|rackdaddy|coldaisle|vertiv|eaton|apc|legrand|raritan|rittal|siemens|fnt command|nautobot|racktables|opendcim|i-doit|netterrain|patch manager|vigilent|omniverse|future facilities)\b/i;
@@ -30,8 +32,8 @@ const problems = [];
 for (const f of files) {
   const raw = readFileSync(f, "utf8");
   const rel = f.slice(DIST.length);
-  const compare = /^dc\/compare\//.test(rel);
-  const world = /^dc\/world\//.test(rel);
+  const compare = /^(de\/|zh\/)?dc\/compare\//.test(rel);
+  const world = /^(de\/|zh\/)?dc\/world\//.test(rel);
   const t = f.endsWith(".html") ? text(raw) : raw.split("\n").filter((l) => !l.includes("/dc/compare/") && !l.includes("/dc/world/")).join("\n");
   for (const [name, re] of [["competitor", compare ? null : world ? worldCompetitors : competitors], ["AI name", world ? null : aiNames], ["placeholder", placeholders]]) {
     if (!re) continue;
@@ -48,7 +50,9 @@ for (const f of files) {
   for (const m of world ? [] : t.matchAll(/CFD/g)) { // world records describe other sites' workloads, not our product
     const before = t.slice(Math.max(0, m.index - 12), m.index).toLowerCase();
     const after = t.slice(m.index, m.index + 40).toLowerCase();
-    if (!/(not |no |non-|is this |here is )$/.test(before) && !after.startsWith("cfd-grade airflow: not offered")) {
+    // Negations in English, German (/de/dc/) and Chinese (/zh/dc/): "no CFD", "keine CFD", "ohne CFD", "不是 CFD" …
+    const negated = /(not |no |non-|is this |here is |keine |kein |ohne |ist das |不是 ?|并非 ?|不做 ?|不提供 ?)$/.test(before);
+    if (!negated && !/^cfd(-grade airflow: not offered|-qualität: nicht im angebot)/.test(after)) {
       problems.push(`${rel}: CFD claim? … ${t.slice(Math.max(0, m.index - 60), m.index + 40)}`);
     }
   }
