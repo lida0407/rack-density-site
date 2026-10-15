@@ -2,8 +2,12 @@
 import { SITE_URL, BASE_PATH } from "../../../site.config.mjs";
 
 export const PRODUCT_NAME = "DC Sim";
+// Sensaka is the brand shown on the product ("DC Sim by Sensaka"); the legal entity is Mustard Seed Solutions
+// (marketing/ENTITY.md, Dali 2026-10-15): schema Organization, privacy, copyright and vendor fields use LEGAL_*.
 export const COMPANY = "Sensaka";
 export const COMPANY_URL = "https://sensaka.com";
+export const LEGAL_NAME = "Mustard Seed Solutions";
+export const LEGAL_URL = "https://mustardseedmt.com";
 export const CONTACT_EMAIL = "da@mustardseedmt.com";
 /** Public demo of the English build. null = not public yet; the site shows stills and offers a walkthrough. */
 export const DEMO_URL: string | null = null;

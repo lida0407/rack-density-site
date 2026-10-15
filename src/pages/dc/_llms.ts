@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import { PRODUCT_NAME, COMPANY, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } from "../../config/dc/product";
 import { abs } from "../../lib/dc/url";
-import { ENTITY_DC } from "../../config/dc/product";
+import { ENTITY_DC, LEGAL_NAME } from "../../config/dc/product";
 
 // The DC Sim section of the site-wide /llms.txt (https://llmstxt.org). Underscore file: not a route.
 // Owned by DC marketing; the root src/pages/llms.txt.ts embeds it under the hub summary.
@@ -16,6 +16,8 @@ export const dcLlms = async (): Promise<string> => {
   const body = `# ${PRODUCT_NAME}
 
 > ${ENTITY_DC}
+
+DC Sim is a Sensaka product; Sensaka is a brand of ${LEGAL_NAME} (Malta).
 
 Status: the product runs today on demo data and on imported files, shown in walkthroughs. Zabbix and NetBox connect directly with a read-only token (tested against live demo instances); other live connectors, self-serve accounts, checkout and the AI design assistant are on the roadmap. Pricing: Design from $${PRICES.design[0].price} one-time per project; Monitor $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}; partners earn a ${PRICES.partnerMargin} % margin. Contact: ${CONTACT_EMAIL}.
 

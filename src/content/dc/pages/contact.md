@@ -6,7 +6,7 @@ navLabel: "Contact"
 directAnswer: "Three good reasons to write: a walkthrough with your own Excel file, a question about a license, or a partner conversation. Email da@mustardseedmt.com and you get an answer from Sensaka within two working days."
 section: "company"
 order: 3
-faq: [{"q": "Do you do demos on my own data?", "a": "Yes. Send the Devices sheet with your request; the other sheets are optional. We import it during the call."}, {"q": "Where are you based?", "a": "Sensaka serves Europe and English-speaking markets; the Chinese-language edition is distributed by CloudSino."}]
+faq: [{"q": "Do you do demos on my own data?", "a": "Yes. Send the Devices sheet with your request; the other sheets are optional. We import it during the call."}, {"q": "Where are you based?", "a": "In Malta: DC Sim is a Sensaka product, and Sensaka is a brand of Mustard Seed Solutions. We serve Europe and English-speaking markets; the Chinese-language edition is distributed by CloudSino."}]
 ---
 
 ## Write to us
@@ -25,5 +25,5 @@ Download the [Excel template](/resources/excel-template/), fill in the Devices s
 
 ## Elsewhere
 
-- Company: [sensaka.com](https://sensaka.com)
+- Company: Mustard Seed Solutions, Malta ([mustardseedmt.com](https://mustardseedmt.com)); DC Sim is sold under its brand Sensaka ([sensaka.com](https://sensaka.com))
 - Chinese-language edition: distributed by CloudSino

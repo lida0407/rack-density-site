@@ -28,7 +28,7 @@ export const articleLd = (headline: string, description: string, path: string) =
   headline,
   description,
   mainEntityOfPage: abs(path),
-  author: { "@type": "Organization", name: COMPANY },
+  author: { "@id": abs("#org") },
   publisher: { "@id": abs("#org") },
 });
 
