@@ -1,9 +1,9 @@
 ---
 title: "Free data center Excel template: racks, power, cables"
-description: "One file, nine sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.3."
+description: "One file, eleven sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.4."
 h1: "The Excel template that becomes a 3D twin"
 navLabel: "Excel template"
-directAnswer: "The DC Sim template is one Excel workbook with nine sheets: Devices, Cables, Rooms, Racks, Power, Networks, Cooling, CustomDevices and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
+directAnswer: "The DC Sim template is one Excel workbook with eleven sheets: Devices, Cables, Sites, Rooms, Racks, Power, Networks, Links, Cooling, CustomDevices and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
 section: "resources"
 order: 1
 ctaTop: true
@@ -18,10 +18,12 @@ clips:
 |---|---|---|---|
 | **Devices** (required) | rack, u, model | name, role, height_u, power_cords (A/B/AB), serial, owner, warranty_end, runs | 3D racks, weight, power and heat per rack, airflow, open any device, warranty flags |
 | Cables | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | Cabling view with trace, Power and Network diagrams, port checks |
-| Rooms | room | length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | room size and lighting load (template v1.3) |
+| Sites | site, lat, lon | city, country, timezone, role, provider, it_kw, pue | the Estate view: every site on the earth (template v1.4) |
+| Rooms | room | site, length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | one hall per room, room size and lighting load (template v1.3; `site` in v1.4) |
 | Racks | rack, row, position | room, height_u, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets |
 | Power | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | "what if feed A, a UPS or a breaker fails", overload checks |
 | Networks | vlan, name | purpose, subnet | VLAN colours in the Network view |
+| Links | site_a, site_b, type | bandwidth_gbps, latency_ms, utilization_pct, protected, carrier | WAN and cable links between sites; cut a link or lose a site (template v1.4) |
 | Cooling | name, type | capacity_kw, serves, model | cooling against heat, "what if AC-1 stops" |
 | CustomDevices | name, category | brand, model, height_u, width_in, depth_mm, weight_kg, psu_count, psu_w, idle_w, typical_w, max_w, airflow, inlet_max_c, ports | devices the catalog does not know, reusable by name (template v1.2) |
 | Readings | time, item, metric, value | | the model fitted to your real room; any monitoring tool's CSV export fits here |
@@ -30,7 +32,9 @@ clips:
 
 Additions only, so older files still import.
 
-**Version 1.3:** an optional **Rooms** sheet (size, raised floor, lighting load, time zone) and `Racks.room` to put each rack in its room. Reading the Rooms sheet in the importer is on the roadmap <span class="badge badge-roadmap">Roadmap</span>; until then all racks sit in one room and the lighting load uses the default density.
+**Version 1.4:** optional **Sites** (coordinates, role, provider, IT kW, PUE) and **Links** (between sites: type, bandwidth, latency, utilisation, protected, carrier) sheets, and `Rooms.site`. They draw the Estate view: every site on one earth, the links as arcs, and what-ifs across sites (cut a link, lose a site). The import report flags a site without coordinates, a link to an unknown site, a latency below the physical minimum, an unprotected link carrying replication, and utilisation over 80 %.
+
+**Version 1.3:** an optional **Rooms** sheet (size, raised floor, lighting load, time zone) and `Racks.room` to put each rack in its room; each room becomes its own hall.
 
 **Version 1.2:** an optional **CustomDevices** sheet for devices the catalog does not know (brand, model, size, power, ports). The importer reads it, and the model exports back to the same sheets.
 

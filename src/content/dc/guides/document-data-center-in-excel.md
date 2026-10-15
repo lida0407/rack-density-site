@@ -53,7 +53,7 @@ One row per node: utility, generator, ATS, UPS, panel, breaker, PDU. The columns
 
 ## 4. Racks and rooms
 
-`rack`, `row` and `position` give the real layout; `height_u`, `width_in` (10 for mini racks) and `max_kw` give the budgets. Template v1.3 adds an optional Rooms sheet and a `room` column for halls with more than one room.
+`rack`, `row` and `position` give the real layout; `height_u`, `width_in` (10 for mini racks) and `max_kw` give the budgets. Template v1.3 adds an optional Rooms sheet and a `room` column for halls with more than one room; v1.4 adds Sites and Links for more than one site.
 
 ## 5. Cables: start with what fails
 

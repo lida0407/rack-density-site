@@ -9,6 +9,7 @@ export const dcLlms = async (): Promise<string> => {
   const pages = (await getCollection("pages")).sort((a, b) => a.data.section.localeCompare(b.data.section) || a.data.order - b.data.order);
   const guides = (await getCollection("guides")).sort((a, b) => a.data.order - b.data.order);
   const compare = (await getCollection("compare")).sort((a, b) => a.data.order - b.data.order);
+  const { SITES, ESTATES } = await import("../../lib/dc/world");
   const line = (title: string, path: string, desc: string) => `- [${title}](${abs(path)}): ${desc}`;
   const section = (name: string) =>
     pages.filter((p) => p.data.section === name).map((p) => line(p.data.h1, `${p.id}/`, p.data.description)).join("\n");
@@ -38,6 +39,13 @@ ${section("resources")}
 ${guides.map((g) => line(g.data.h1, `resources/guides/${g.id}/`, g.data.description)).join("\n")}
 ${line("Rack power calculator", "resources/calculators/rack-power/", "Load per PDU in normal and failover against the 80 % rule.")}
 ${line("Tokens per kWh calculator", "resources/calculators/tokens-per-kwh/", "Tokens per second and watts to tokens per kWh and cost per 1M tokens.")}
+
+## Famous data centers of the world (open data, CC BY 4.0)
+${line("The earth", "world/", `${SITES.length} famous data centers and ${ESTATES.length} estates on an interactive globe: cut a link, compare two sites, find yours.`)}
+${line("Open dataset", "world/data/", "GeoJSON, CSV and DC Sim workbooks with sources for every record.")}
+${line("Estates", "world/estates/", "Submarine cables, cloud backbones, national compute networks, exchanges and financial routes.")}
+${ESTATES.map((e) => line(e.name, `world/estates/${e.id}/`, e.famous_for ?? "")).join("\n")}
+${SITES.map((s) => line(s.name, `world/${s.id}/`, s.famous_for ?? "")).join("\n")}
 
 ## Comparisons (public prices with dates and sources)
 ${line("All comparisons", "compare/", "DC Sim next to the DCIM and monitoring tools people compare it with.")}

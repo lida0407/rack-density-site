@@ -19,6 +19,7 @@ export const DC_FOOTER = [
   { href: "/dc/resources/excel-template/", label: "Excel template" },
   { href: "/dc/resources/guides/", label: "Guides" },
   { href: "/dc/compare/", label: "Comparisons" },
+  { href: "/dc/world/", label: "Famous data centers" },
   { href: "/dc/resources/changelog/", label: "Changelog" },
   { href: "/dc/security/", label: "Security & data" },
 ];

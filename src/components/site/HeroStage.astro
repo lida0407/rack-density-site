@@ -13,12 +13,17 @@ interface Props { edition: 'homelab' | 'dc'; label: string; readout?: string; da
 // The demo readout that used to sit in the header strip (SITE-NAV.md change 2026-10-15 late): it describes the picture.
 const READOUT = { homelab: '1.02 kW · €165/mo · UPS 18 min', dc: 'IT 79.1 kW · PUE 1.16 · ▲ 2 alarms' };
 const { edition, label, readout = READOUT[edition], dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
-const VIEWS = edition === 'homelab'
-  ? [['overview', 'Overview'], ['power', 'Power'], ['cables', 'Cables'], ['tokens', 'Tokens']]
-  : [['overview', 'Overview'], ['power', 'Power'], ['network', 'Network'], ['cabling', 'Cabling'], ['tokens', 'Tokens']];
 const dir = `/${edition}/media`;
 const posters = import.meta.glob<{ default: ImageMetadata }>('/src/assets/video/*.jpg', { eager: true });
 const has = (f: string) => fs.existsSync(nodePath.join(process.cwd(), 'public', dir, f));
+// Optional views join the menu only when both their clips exist, so a missing take never drops the stage to the loop.
+// DC: Estate (state-dc-estate-on|off, DC dev) second in the menu (planner 2026-10-15, DC marketing).
+const OPTIONAL = new Set(['estate']);
+const both = (v: string) => ['on', 'off'].every((l) => has(`state-${edition}-${v}-${l}.webm`) || has(`state-${edition}-${v}-${l}.mp4`));
+const VIEWS = (edition === 'homelab'
+  ? [['overview', 'Overview'], ['power', 'Power'], ['cables', 'Cables'], ['tokens', 'Tokens']]
+  : [['overview', 'Overview'], ['estate', 'Estate'], ['power', 'Power'], ['network', 'Network'], ['cabling', 'Cabling'], ['tokens', 'Tokens']]
+).filter(([v]) => !OPTIONAL.has(v) || both(v));
 const clip = async (key: string, still: ImageMetadata) => {
   const n = `state-${edition}-${key}`, p = posters[`/src/assets/video/${n}.jpg`]?.default ?? still;
   return { webm: has(`${n}.webm`) ? u(`${dir}/${n}.webm`) : '', mp4: has(`${n}.mp4`) ? u(`${dir}/${n}.mp4`) : '', poster: (await getImage({ src: p, width: 1280, format: 'webp', quality: 72 })).src, img: p };

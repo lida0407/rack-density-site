@@ -1,0 +1,103 @@
+---
+// /dc/world/<country>/<slug>/ — one page per famous site (WORLD-PAGE.md §1). Facts exactly as in the dc-world record.
+import fs from "node:fs";
+import Base from "../../../layouts/dc/Base.astro";
+import Faq from "../../../components/dc/Faq.astro";
+import WorldMap from "../../../components/dc/world/WorldMap.astro";
+import { SITES, estatesFor, estatePath, TYPE_LABEL, countryName, fmt, type Site } from "../../../lib/dc/world";
+import { u, abs, root } from "../../../lib/dc/url";
+import { faqLd } from "../../../lib/dc/schema";
+
+export function getStaticPaths() {
+  return SITES.map((s) => ({ params: { site: s.id }, props: { s } }));
+}
+const { s } = Astro.props as { s: Site };
+const path = `world/${s.id}/`;
+const est = (f: string) => s.estimated?.includes(f);
+const tag = (f: string) => (est(f) ? " (estimated)" : "");
+const where = [s.city, countryName(s.country)].filter(Boolean).join(", ");
+const imgFile = `dc/world/img/${s.id.replace("/", "-")}.jpg`;
+const hasImg = !!s.image && fs.existsSync(`public/${imgFile}`);
+const facts: [string, string][] = [
+  ["Operator", s.operator ?? "—"], ["Owner", s.owner ?? "—"], ["Type", TYPE_LABEL[s.tenant_type ?? ""] ?? s.tenant_type ?? "—"], ["Location", where],
+  ["Opened", s.year_opened ? String(s.year_opened) : "—"], ["Status", s.status ?? "—"],
+  ["IT power", s.it_mw != null ? `${fmt(s.it_mw)} MW${tag("it_mw")}` : "—"], ["Total power", s.total_mw != null ? `${fmt(s.total_mw)} MW${tag("total_mw")}` : "—"],
+  ["PUE", s.pue?.value != null ? `${s.pue.value}${s.pue.kind ? ` (${s.pue.kind})` : ""}` : "—"],
+  ["Site area", s.site_area_m2 ? `${fmt(s.site_area_m2)} m²${tag("site_area_m2")}` : "—"], ["Building area", s.building_area_m2 ? `${fmt(s.building_area_m2)} m²${tag("building_area_m2")}` : "—"],
+  ["Cooling", s.cooling?.length ? s.cooling.join(", ") : "—"],
+  ["Power", s.power ? Object.entries(s.power).filter(([, v]) => v != null && v !== "").map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}${k === "renewable_pct" ? " %" : ""}`).join(" · ") : "—"],
+  ["Certifications", s.certifications?.length ? s.certifications.join(", ") : "—"],
+];
+const related = estatesFor(s);
+const faq = [
+  ...(s.famous_for ? [{ q: `What is ${s.name} famous for?`, a: s.famous_for }] : []),
+  { q: `Where is ${s.name}?`, a: `${s.name} is in ${where} (${s.lat.toFixed(3)}, ${s.lon.toFixed(3)}).${s.operator ? ` It is operated by ${s.operator}.` : ""}` },
+  ...(s.it_mw != null ? [{ q: `How much power does ${s.name} use?`, a: `About ${fmt(s.it_mw)} MW of IT load${s.total_mw != null ? ` and ${fmt(s.total_mw)} MW in total` : ""}, according to the sources listed on this page${est("it_mw") ? " (estimated)" : ""}.` }] : []),
+  ...(s.pue?.value != null ? [{ q: `What is the PUE of ${s.name}?`, a: `${s.pue.value}${s.pue.kind ? `, ${s.pue.kind}` : ""}.` }] : []),
+];
+const place = {
+  "@type": "Place", name: s.name, address: { "@type": "PostalAddress", addressLocality: s.city, addressCountry: s.country?.toUpperCase() },
+  geo: { "@type": "GeoCoordinates", latitude: s.lat, longitude: s.lon }, ...(s.wikidata ? { sameAs: [`https://www.wikidata.org/wiki/${s.wikidata}`] } : {}),
+};
+const dataset = {
+  "@type": "Dataset", name: `${s.name}: public facts`, description: s.famous_for ?? s.name, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: s.updated, creator: { "@id": abs("#org") },
+  citation: (s.sources ?? []).map((x) => x.url),
+};
+const title = [`${s.name}: facts, power, PUE — DC Sim world`, `${s.name}: facts and power`, s.name].find((t) => t.length <= 60)!;
+---
+<Base title={title} description={(s.famous_for ?? `${s.name} in ${where}.`).slice(0, 165)} path={path}
+  crumbs={[{ name: "World", path: "world/" }, { name: s.name, path }]} jsonLd={[place, dataset, ...faqLd(faq)]}>
+  <article class="container page wsite">
+    <span class="eyebrow">{TYPE_LABEL[s.tenant_type ?? ""] ?? "Data center"} · {where}</span>
+    <h1>{s.name}</h1>
+    {s.famous_for && <p class="direct-answer">{s.famous_for}</p>}
+    <div class="wsite-grid">
+      <div class="wsite-main">
+        {hasImg ? (
+          <figure class="wsite-img"><img src={root(imgFile)} alt={s.name} loading="lazy" width="1200" height="800" />
+            <figcaption>Photo: {s.image!.author}, {s.image!.license}, via <a href={s.image!.source_page} rel="noopener">Wikimedia Commons</a></figcaption></figure>
+        ) : <WorldMap points={[{ lat: s.lat, lon: s.lon, label: s.name, hot: true }]} title={`${s.name} on the map`} pad={140} />}
+        {s.story && <section><h2>The story</h2><p>{s.story}</p></section>}
+        {s.notable?.length ? <section><h2>Notable</h2><ul>{s.notable.map((n) => <li>{n}</li>)}</ul></section> : null}
+        {s.expansions?.length ? <section><h2>Expansions</h2><ul>{s.expansions.map((n) => <li>{n}</li>)}</ul></section> : null}
+      </div>
+      <aside class="wsite-side">
+        <table class="wsite-facts"><tbody>{facts.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table>
+        <a class="cs-btn cs-btn--primary" href={`${u("world/")}#site=${encodeURIComponent(s.id)}`}>See it on the earth</a>
+        {s.confidence && <p class="small muted">Record confidence: {s.confidence}. Values marked "estimated" are estimates in the source data.</p>}
+      </aside>
+    </div>
+    {related.length > 0 && (
+      <section class="wsite-rel"><h2>Estates that include it</h2>
+        <ul>{related.map((e) => <li><a href={u(estatePath(e))}>{e.name}</a> — {e.famous_for}</li>)}</ul></section>
+    )}
+    <section class="wsite-src"><h2>Sources</h2>
+      <ol>{(s.sources ?? []).map((x) => <li><a href={x.url} rel="noopener">{x.title ?? x.url}</a>{x.publisher && <> · {x.publisher}</>}{x.date && <> · {x.date}</>}</li>)}</ol>
+      <p class="small muted">Part of the open <a href={u("world/data/")}>famous data centers dataset</a> (CC BY 4.0). Updated {s.updated}. A correction? <a href={`mailto:da@mustardseedmt.com?subject=${encodeURIComponent(`Correction: ${s.name}`)}`}>da@mustardseedmt.com</a></p>
+    </section>
+    <Faq items={faq} />
+    <aside class="wsite-cta"><p>Your own sites, power chain and links on this earth, and what fails with what: <a href={u("product/")}>DC Sim</a>.</p></aside>
+  </article>
+</Base>
+<style>
+  .wsite h1 { margin: 8px 0 0; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.05; }
+  .wsite .direct-answer { margin-top: 24px; }
+  .wsite-grid { margin-top: 32px; display: grid; gap: 32px; }
+  @media (min-width: 960px) { .wsite-grid { grid-template-columns: 1.6fr 1fr; align-items: start; } }
+  .wsite-main { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+  .wsite-main h2, .wsite-rel h2, .wsite-src h2 { margin: 0 0 10px; font-size: 22px; }
+  .wsite-main p { margin: 0; line-height: 1.65; }
+  .wsite-main ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .wsite-img { margin: 0; border: 1px solid var(--line-strong); }
+  .wsite-img img { display: block; width: 100%; height: auto; }
+  .wsite-img figcaption { padding: 8px 12px; font: 500 12px/18px var(--font-mono); color: var(--ink-muted); }
+  .wsite-side { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 80px; }
+  .wsite-facts { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .wsite-facts th { text-align: left; font: 500 11px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-dim); padding: 8px 10px 8px 0; vertical-align: top; width: 38%; border-bottom: 1px solid var(--line); }
+  .wsite-facts td { padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .wsite-rel, .wsite-src { margin-top: 40px; }
+  .wsite-rel ul, .wsite-src ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .wsite-cta { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line-strong); background: var(--bg-100); }
+  .wsite-cta p { margin: 0; }
+</style>

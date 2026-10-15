@@ -1,0 +1,315 @@
+---
+// /dc/world/ — the famous data centers of the world on an interactive earth (marketing/WORLD-PAGE.md).
+// Site-only code: globe.gl (MIT) from jsdelivr, loaded after the page; no code from the product. State lives in the URL hash.
+import Base from "../../../layouts/dc/Base.astro";
+import Faq from "../../../components/dc/Faq.astro";
+import { SITES, ESTATES, REGIONS, TYPE_LABEL, KIND_LABEL, countryName, fmt } from "../../../lib/dc/world";
+import { u, abs, root } from "../../../lib/dc/url";
+import { faqLd } from "../../../lib/dc/schema";
+
+const types = [...new Set(SITES.map((s) => s.tenant_type).filter(Boolean))] as string[];
+const kinds = [...new Set(ESTATES.map((e) => e.kind).filter(Boolean))] as string[];
+const faq = [
+  { q: "Which are the most famous data centers in the world?", a: `This earth shows ${SITES.length} of them, chosen for what they are known for: the largest hyperscale and AI campuses, record-efficient sites, supercomputers, internet exchanges and unusual locations such as mines and bunkers. Each has a page with its facts and sources.` },
+  { q: "How is the latency between two data centers estimated?", a: "From the great-circle distance, multiplied by 1.5 for the real route of the fibre, at about 5 microseconds per kilometre one way. It is an estimate from public numbers, not a measured or operator figure." },
+  { q: "What happens when you cut a link?", a: "On an estate, cutting a link removes it from the network; sites with no other path are shown as isolated, and when a detour exists its estimated latency is shown. It shows the shape of the network as published, not the operator's real routing or protection." },
+  { q: "Can I use the data?", a: "Yes. The dataset is open under CC BY 4.0, as GeoJSON, CSV and DC Sim workbooks, with sources for every record." },
+];
+const ld = { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/"), description: `${SITES.length} famous data centers and ${ESTATES.length} estates on an interactive earth.`, license: "https://creativecommons.org/licenses/by/4.0/", creator: { "@id": abs("#org") } };
+const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region === r) })).filter((x) => x.list.length);
+---
+<Base title="Famous data centers of the world on a 3D earth — DC Sim" description={`${SITES.length} famous data centers and ${ESTATES.length} cable and cloud estates on an interactive earth: facts, PUE and power, cut a link, compare two sites, find yours.`}
+  path="world/" crumbs={[{ name: "World", path: "world/" }]} jsonLd={[ld, ...faqLd(faq)]}>
+  <section class="wg">
+    <div class="container wg-head">
+      <span class="eyebrow">World · open data</span>
+      <h1>The world's famous data centers, on one earth</h1>
+      <p class="wg-lede">{SITES.length} famous sites and {ESTATES.length} estates (submarine cables, cloud backbones, national compute networks) from public sources. Spin the earth, open a site, pick an estate and cut a link, compare two sites, or drop a pin on your own data center.</p>
+    </div>
+    <div class="wg-stage" data-world data-src={u("world/globe-data.json")} data-land={root("dc/world/countries-110m.json")} data-cities={root("dc/world/cities.json")}
+      data-tex-day={root("dc/world/tex/earth-blue-marble.jpg")} data-tex-night={root("dc/world/tex/earth-night.jpg")} data-product={u("product/")}>
+      <div class="wg-globe" id="wg-globe" aria-hidden="true"><div class="wg-poster"><span>Loading the earth…</span></div></div>
+      <div class="wg-tools" role="toolbar" aria-label="Earth controls">
+        <label class="wg-f"><span>Search</span><input id="wg-q" type="search" list="wg-names" placeholder="Name, operator, city" autocomplete="off" /></label>
+        <datalist id="wg-names">{SITES.map((s) => <option value={s.name} />)}</datalist>
+        <label class="wg-f"><span>Type</span><select id="wg-type"><option value="">All</option>{types.map((t) => <option value={t}>{TYPE_LABEL[t] ?? t}</option>)}</select></label>
+        <label class="wg-f"><span>Region</span><select id="wg-region"><option value="">All</option>{REGIONS.map((r) => <option value={r}>{r}</option>)}</select></label>
+        <label class="wg-f"><span>Estate</span><select id="wg-estate"><option value="">None</option>{kinds.map((k) => <optgroup label={KIND_LABEL[k] ?? k}>{ESTATES.filter((e) => e.kind === k).map((e) => <option value={e.id}>{e.name}</option>)}</optgroup>)}</select></label>
+        <div class="wg-btns">
+          <button type="button" id="wg-next">Next famous site</button>
+          <button type="button" id="wg-look" aria-pressed="false">Photo earth</button>
+          <button type="button" id="wg-reset">Reset</button>
+        </div>
+        <form class="wg-me" id="wg-me-form"><label class="wg-f"><span>Where's my data center?</span><input id="wg-me" list="wg-cities" placeholder="City, or lat, lon" autocomplete="off" /></label><datalist id="wg-cities"></datalist><button type="submit">Pin it</button></form>
+      </div>
+      <aside class="wg-panel" id="wg-panel" aria-live="polite">
+        <p class="wg-hint">Click a pin to open a site. Shift-click two pins to compare. With an estate open, click a link to cut it or right-click a site to lose it. Every what-if is estimated from public numbers.</p>
+      </aside>
+    </div>
+    <div class="container wg-below">
+      <p class="small muted wg-note">Latency and what-ifs are estimates from public numbers (route = great circle × 1.5, 5 µs per km), not operators' routing. Base map: Natural Earth; photo earth: NASA Blue and Black Marble; cities: GeoNames.</p>
+      <section class="wg-list" aria-labelledby="wl-h">
+        <h2 id="wl-h">All {SITES.length} sites</h2>
+        {byRegion.map(({ r, list }) => (
+          <details open={r === "Europe"}><summary>{r} <span>{list.length}</span></summary>
+            <ul>{list.map((s) => (
+              <li><a href={u(`world/${s.id}/`)}>{s.name}</a><span class="wl-meta">{[s.city, countryName(s.country)].filter(Boolean).join(", ")}{s.it_mw != null ? ` · ${fmt(s.it_mw)} MW` : ""}{s.pue?.value != null ? ` · PUE ${s.pue.value}` : ""}</span>
+                <button type="button" class="wl-show" data-site={s.id}>Show on earth</button></li>))}</ul>
+          </details>
+        ))}
+      </section>
+      <section class="wg-estates" aria-labelledby="we-h">
+        <h2 id="we-h">{ESTATES.length} estates</h2>
+        <ul>{ESTATES.map((e) => <li><a href={u(`world/estates/${e.id}/`)}>{e.name}</a> <span class="wl-meta">{KIND_LABEL[e.kind ?? ""] ?? ""} · {e.sites.length} sites · {e.links.length} links</span> <button type="button" class="wl-est" data-estate={e.id}>Open on earth</button></li>)}</ul>
+      </section>
+      <p class="wg-data"><a class="cs-btn cs-btn--secondary" href={u("world/data/")}>The open dataset (CC BY 4.0)</a> <a class="cs-btn cs-btn--primary" href={u("product/")}>Your own estate on this earth: DC Sim</a></p>
+      <Faq items={faq} />
+    </div>
+  </section>
+</Base>
+<style>
+  .wg-head { padding-top: clamp(28px, 4vw, 48px); }
+  .wg-head h1 { margin: 10px 0 0; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.04; max-width: 18em; }
+  .wg-lede { margin: 16px 0 0; max-width: 48em; color: var(--ink-muted); font-size: 18px; line-height: 28px; }
+  .wg-stage { position: relative; margin-top: 24px; height: min(78vh, 820px); min-height: 520px; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 7%, var(--bg-000)) 0%, var(--bg-000) 70%); border-block: 1px solid var(--line); overflow: hidden; }
+  .wg-globe { position: absolute; inset: 0; }
+  .wg-globe canvas { display: block; outline: none; }
+  .wg-poster { position: absolute; inset: 0; display: grid; place-items: center; }
+  .wg-poster span { font: 500 12px/1 var(--font-mono); color: var(--ink-dim); letter-spacing: .08em; text-transform: uppercase; }
+  .wg-poster::before { content: ""; position: absolute; width: min(64vh, 640px); aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line-strong); background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%); }
+  .wg-tools { position: absolute; left: 16px; top: 16px; width: min(300px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 8px; padding: 12px; background: color-mix(in srgb, var(--bg-100) 88%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(8px); z-index: 2; }
+  .wg-f { display: flex; flex-direction: column; gap: 4px; }
+  .wg-f span { font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
+  .wg-f input, .wg-f select { min-height: 34px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 14px/1.2 var(--font-sans); }
+  .wg-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wg-tools button { min-height: 32px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 600 12px/1 var(--font-mono); cursor: pointer; }
+  .wg-tools button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .wg-tools button:focus-visible, .wg-f input:focus-visible, .wg-f select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .wg-me { display: flex; gap: 6px; align-items: end; }
+  .wg-me .wg-f { flex: 1; }
+  .wg-panel { position: absolute; right: 16px; top: 16px; bottom: 16px; width: min(360px, calc(100% - 32px)); overflow: auto; padding: 16px; background: color-mix(in srgb, var(--bg-100) 92%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(8px); z-index: 2; font-size: 14px; line-height: 21px; }
+  .wg-panel :global(h2) { margin: 4px 0 6px; font-size: 20px; line-height: 26px; }
+  .wg-panel :global(.wp-k) { font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
+  .wg-panel :global(table) { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  .wg-panel :global(th) { text-align: left; font: 500 11px/16px var(--font-mono); color: var(--ink-dim); padding: 4px 8px 4px 0; vertical-align: top; }
+  .wg-panel :global(td) { padding: 4px 0; }
+  .wg-panel :global(.wp-bad) { color: var(--crit); font-weight: 600; }
+  .wg-panel :global(.wp-cta) { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .wg-panel :global(button) { min-height: 30px; margin: 2px 4px 2px 0; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 600 11px/1 var(--font-mono); cursor: pointer; }
+  .wg-panel :global(ul) { margin: 6px 0; padding-left: 18px; }
+  .wg-hint { margin: 0; color: var(--ink-muted); }
+  .wg-below { padding-bottom: 48px; }
+  .wg-note { margin: 12px 0 0; }
+  .wg-list, .wg-estates { margin-top: 36px; }
+  .wg-list h2, .wg-estates h2 { margin: 0 0 12px; font-size: 24px; }
+  .wg-list details { border-top: 1px solid var(--line); }
+  .wg-list summary { cursor: pointer; padding: 12px 0; font-weight: 600; }
+  .wg-list summary span { font: 500 12px/1 var(--font-mono); color: var(--ink-dim); margin-left: 6px; }
+  .wg-list ul, .wg-estates ul { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 2px; }
+  .wg-list li, .wg-estates li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .wl-meta { color: var(--ink-dim); font: 500 12px/18px var(--font-mono); }
+  .wl-show, .wl-est { margin-left: auto; min-height: 30px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: transparent; color: var(--ink-muted); font: 600 11px/1 var(--font-mono); cursor: pointer; }
+  .wg-data { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; }
+  @media (max-width: 860px) {
+    .wg-stage { height: auto; min-height: 0; display: flex; flex-direction: column; }
+    .wg-globe { position: relative; height: 62vh; min-height: 380px; }
+    .wg-tools, .wg-panel { position: static; width: auto; margin: 0; border-inline: 0; backdrop-filter: none; }
+    .wg-panel { max-height: none; }
+  }
+</style>
+<script>
+  // The earth: globe.gl (MIT, three.js) loaded from jsdelivr after the page; all play features are this file's own logic.
+  type S = { id: string; n: string; op: string; t: string; tl: string; r: string; p: string; lat: number; lng: number; mw: number | null; pue: number | null; pk: string; y: number | null; f: string; st: string; nt: string[]; url: string };
+  type ES = { c: string; lat: number; lng: number; p: string; ref: string | null };
+  type EL = { a: string; b: string; t: string; pr: string; km: number | null };
+  type E = { id: string; n: string; k: string; kl: string; f: string; url: string; s: ES[]; l: EL[] };
+  const GLOBE_URL = "https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js";
+  const box = document.querySelector<HTMLElement>("[data-world]")!;
+  const el = document.getElementById("wg-globe")!, panel = document.getElementById("wg-panel")!;
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
+  const R = 6371, rad = Math.PI / 180;
+  const km = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => { const dLa = (b.lat - a.lat) * rad, dLo = (b.lng - a.lng) * rad; const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+  const ms = (d: number) => d * 1.5 * 0.005; // one way, estimated
+  const f0 = (n: number) => Math.round(n).toLocaleString("en-US");
+
+  let SITES: S[] = [], ESTATES: E[] = [], G: any = null, land: any = null;
+  const st = { site: "", estate: "", cut: new Set<string>(), lose: new Set<string>(), cmp: [] as string[], me: null as null | { lat: number; lng: number; label: string }, photo: false, type: "", region: "", q: "" };
+
+  // ---------- URL state ----------
+  const readHash = () => {
+    const h = new URLSearchParams(location.hash.slice(1));
+    st.site = h.get("site") ?? ""; st.estate = h.get("estate") ?? "";
+    st.cut = new Set((h.get("cut") ?? "").split(",").filter(Boolean)); st.lose = new Set((h.get("lose") ?? "").split(",").filter(Boolean));
+    st.cmp = (h.get("cmp") ?? "").split(",").filter(Boolean).slice(0, 2); st.photo = h.get("look") === "photo";
+    const me = h.get("me"); if (me) { const [a, b, ...l] = me.split(","); if (isFinite(+a) && isFinite(+b)) st.me = { lat: +a, lng: +b, label: l.join(",").trim() || "My data center" }; }
+  };
+  const writeHash = () => {
+    const h = new URLSearchParams();
+    if (st.site) h.set("site", st.site); if (st.estate) h.set("estate", st.estate);
+    if (st.cut.size) h.set("cut", [...st.cut].join(",")); if (st.lose.size) h.set("lose", [...st.lose].join(","));
+    if (st.cmp.length) h.set("cmp", st.cmp.join(",")); if (st.photo) h.set("look", "photo");
+    if (st.me) h.set("me", `${st.me.lat.toFixed(3)},${st.me.lng.toFixed(3)},${st.me.label}`);
+    const s = h.toString().replace(/%2F/g, "/").replace(/%2C/g, ",").replace(/\+/g, "%20");
+    history.replaceState(null, "", s ? `#${s}` : location.pathname);
+  };
+
+  // ---------- colours from the theme tokens ----------
+  const css = (v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim() || "#22c55e";
+  const pal = () => ({ acc: css("--accent"), ink: css("--ink"), dim: css("--ink-dim"), crit: css("--crit") || "#ef4444", warn: css("--warn") || "#f59e0b", data: css("--data") || "#38bdf8", bg: css("--bg-000"), line: css("--line-strong") });
+  const TYPE_COL: Record<string, string> = { hyperscale: "acc", colocation: "data", ai: "warn", hpc: "ink", research: "ink", enterprise: "dim" };
+
+  // ---------- estate graph ----------
+  const est = () => ESTATES.find((e) => e.id === st.estate);
+  const linkKey = (l: EL) => `${l.a}-${l.b}`;
+  const graph = (e: E) => {
+    const pos = new Map(e.s.map((s) => [s.c, s]));
+    const alive = e.l.filter((l) => !st.cut.has(linkKey(l)) && !st.lose.has(l.a) && !st.lose.has(l.b) && pos.has(l.a) && pos.has(l.b));
+    const adj = new Map<string, { to: string; w: number }[]>(); e.s.forEach((s) => adj.set(s.c, []));
+    alive.forEach((l) => { const w = (l.km ?? km(pos.get(l.a)!, pos.get(l.b)!) * 1.5); adj.get(l.a)!.push({ to: l.b, w }); adj.get(l.b)!.push({ to: l.a, w }); });
+    const comp = new Map<string, number>(); let n = 0;
+    for (const s of e.s) { if (st.lose.has(s.c) || comp.has(s.c)) continue; const q = [s.c]; comp.set(s.c, n); while (q.length) { const x = q.pop()!; for (const y of adj.get(x)!) if (!comp.has(y.to)) { comp.set(y.to, n); q.push(y.to); } } n++; }
+    const sizes = new Map<number, number>(); comp.forEach((c) => sizes.set(c, (sizes.get(c) ?? 0) + 1));
+    const main = [...sizes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    const isolated = e.s.filter((s) => !st.lose.has(s.c) && comp.get(s.c) !== main).map((s) => s.c);
+    const path = (a: string, b: string) => { // Dijkstra, route km
+      const d = new Map<string, number>([[a, 0]]), done = new Set<string>();
+      while (true) { let u = "", best = Infinity; d.forEach((v, k) => { if (!done.has(k) && v < best) { best = v; u = k; } }); if (!u) return null; if (u === b) return best; done.add(u);
+        for (const y of adj.get(u) ?? []) { const nd = best + y.w; if (nd < (d.get(y.to) ?? Infinity)) d.set(y.to, nd); } }
+    };
+    return { pos, alive, isolated, path };
+  };
+
+  // ---------- panel ----------
+  const cta = () => `<p class="wp-cta">Do this with your own racks, power chain and cables: <a href="${box.dataset.product}">DC Sim</a>. Estimated from public numbers.</p>`;
+  const sitePanel = (s: S) => {
+    panel.innerHTML = `<span class="wp-k">${esc(s.tl || "Data center")} · ${esc(s.p)}</span><h2>${esc(s.n)}</h2>${s.f ? `<p><strong>${esc(s.f)}</strong></p>` : ""}
+      <table><tbody>${s.op ? `<tr><th>Operator</th><td>${esc(s.op)}</td></tr>` : ""}${s.y ? `<tr><th>Opened</th><td>${s.y}</td></tr>` : ""}${s.mw != null ? `<tr><th>IT power</th><td>${s.mw} MW</td></tr>` : ""}${s.pue != null ? `<tr><th>PUE</th><td>${s.pue}${s.pk ? ` (${esc(s.pk)})` : ""}</td></tr>` : ""}</tbody></table>
+      ${s.st ? `<p>${esc(s.st)}</p>` : ""}${s.nt.length ? `<ul>${s.nt.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+      <p><a href="${s.url}">Open the page: facts and sources</a></p>${st.me ? mePanelLine(s) : ""}`;
+  };
+  const mePanelLine = (s: S) => { const d = km(st.me!, s); return `<p class="wp-k">From your pin: ${f0(d)} km · ≈ ${(ms(d) * 2).toFixed(1)} ms round trip (estimated)</p>`; };
+  const cmpPanel = () => {
+    const [a, b] = st.cmp.map((id) => SITES.find((s) => s.id === id)!).filter(Boolean); if (!a || !b) return;
+    const d = km(a, b);
+    panel.innerHTML = `<span class="wp-k">Compare two sites</span><h2>${esc(a.n)} ↔ ${esc(b.n)}</h2>
+      <table><tbody><tr><th>Distance</th><td>${f0(d)} km (great circle)</td></tr><tr><th>Round trip</th><td>≈ ${(ms(d) * 2).toFixed(1)} ms (estimated)</td></tr>
+      <tr><th></th><td><strong>${esc(a.n)}</strong> · <strong>${esc(b.n)}</strong></td></tr>
+      <tr><th>IT power</th><td>${a.mw ?? "—"} MW · ${b.mw ?? "—"} MW</td></tr><tr><th>PUE</th><td>${a.pue ?? "—"} · ${b.pue ?? "—"}</td></tr>
+      <tr><th>Opened</th><td>${a.y ?? "—"} · ${b.y ?? "—"}</td></tr><tr><th>Type</th><td>${esc(a.tl)} · ${esc(b.tl)}</td></tr></tbody></table>
+      <p><a href="${a.url}">${esc(a.n)}</a> · <a href="${b.url}">${esc(b.n)}</a></p>${cta()}`;
+  };
+  const estatePanel = () => {
+    const e = est(); if (!e) return; const g = graph(e);
+    const cutL = e.l.filter((l) => st.cut.has(linkKey(l)));
+    const detours = cutL.map((l) => { const a = g.pos.get(l.a), b = g.pos.get(l.b); if (!a || !b) return ""; const direct = l.km ?? km(a, b) * 1.5; const r = g.path(l.a, l.b);
+      return `<li>${esc(l.a)} ↔ ${esc(l.b)} cut: ${r == null ? `<span class="wp-bad">no other path</span>` : `detour ${f0(r)} km, ≈ ${(r * 0.005).toFixed(1)} ms one way instead of ≈ ${(direct * 0.005).toFixed(1)} ms`}</li>`; }).join("");
+    panel.innerHTML = `<span class="wp-k">${esc(e.kl || "Estate")} · ${e.s.length} sites · ${e.l.length} links</span><h2>${esc(e.n)}</h2><p>${esc(e.f)}</p>
+      ${st.cut.size || st.lose.size ? `<p><strong>What-if:</strong> ${st.cut.size} link(s) cut, ${st.lose.size} site(s) lost.${g.isolated.length ? ` <span class="wp-bad">Isolated: ${g.isolated.map(esc).join(", ")}</span>` : " Every remaining site still has a path."}</p>${detours ? `<ul>${detours}</ul>` : ""}<button type="button" data-act="reset-wi">Reset what-ifs</button>${cta()}` : `<p class="wg-hint">Click a link on the earth to cut it, right-click (or long-press) a site to lose it. Or use the buttons:</p>`}
+      <p class="wp-k">Links</p>${e.l.map((l) => `<button type="button" data-cut="${esc(linkKey(l))}" aria-pressed="${st.cut.has(linkKey(l))}">${st.cut.has(linkKey(l)) ? "Restore" : "Cut"} ${esc(l.a)}–${esc(l.b)}${l.pr === "no" ? " ·unprotected" : ""}</button>`).join("")}
+      <p class="wp-k">Sites</p>${e.s.map((s) => `<button type="button" data-lose="${esc(s.c)}" aria-pressed="${st.lose.has(s.c)}">${st.lose.has(s.c) ? "Restore" : "Lose"} ${esc(s.c)}</button>`).join("")}
+      <p><a href="${e.url}">Open the estate page: links table and sources</a></p>`;
+  };
+  const mePanel = () => {
+    if (!st.me) return; const near = SITES.map((s) => ({ s, d: km(st.me!, s) })).sort((a, b) => a.d - b.d).slice(0, 6);
+    const ne = ESTATES.map((e) => ({ e, d: Math.min(...e.s.map((x) => km(st.me!, x))) })).sort((a, b) => a.d - b.d).slice(0, 3);
+    panel.innerHTML = `<span class="wp-k">Your pin · ${esc(st.me.label)}</span><h2>Nearest famous data centers</h2>
+      <table><tbody>${near.map(({ s, d }) => `<tr><th>${f0(d)} km</th><td><a href="${s.url}">${esc(s.n)}</a> · ≈ ${(ms(d) * 2).toFixed(1)} ms RTT</td></tr>`).join("")}</tbody></table>
+      <p class="wp-k">Nearest estates</p><ul>${ne.map(({ e, d }) => `<li><button type="button" data-estate="${esc(e.id)}">${esc(e.n)}</button> ${f0(d)} km</li>`).join("")}</ul>
+      <button type="button" data-act="copy">Copy link</button>${cta()}`;
+  };
+  const renderPanel = () => { if (st.cmp.length === 2) cmpPanel(); else if (st.estate) estatePanel(); else if (st.site) { const s = SITES.find((x) => x.id === st.site); if (s) sitePanel(s); } else if (st.me) mePanel(); };
+
+  // ---------- globe layers ----------
+  const visible = () => SITES.filter((s) => (!st.type || s.t === st.type) && (!st.region || s.r === st.region) && (!st.q || `${s.n} ${s.op} ${s.p}`.toLowerCase().includes(st.q.toLowerCase())));
+  const draw = () => {
+    if (!G) return; const c = pal(); const e = est(); const g = e ? graph(e) : null;
+    const pts: any[] = visible().map((s) => ({ ...s, kind: "site" }));
+    if (e) e.s.forEach((s) => pts.push({ kind: "est", id: `est:${s.c}`, c: s.c, n: `${s.c} · ${s.p}`, lat: s.lat, lng: s.lng, lost: st.lose.has(s.c), iso: g!.isolated.includes(s.c) }));
+    if (st.me) pts.push({ kind: "me", id: "me", n: st.me.label, lat: st.me.lat, lng: st.me.lng });
+    G.pointsData(pts)
+      .pointColor((p: any) => p.kind === "me" ? c.ink : p.kind === "est" ? (p.lost || p.iso ? c.crit : c.ink) : (st.cmp.includes(p.id) || p.id === st.site ? c.ink : (c as any)[TYPE_COL[p.t] ?? "acc"]))
+      .pointAltitude((p: any) => p.kind === "site" ? Math.min(0.12, 0.012 + (p.mw ?? 10) / 4000) : 0.02)
+      .pointRadius((p: any) => p.kind === "me" ? 0.9 : p.kind === "est" ? 0.55 : (p.id === st.site ? 0.7 : 0.42))
+      .pointLabel((p: any) => p.kind === "site" ? `<div class="wg-tip"><b>${esc(p.n)}</b><br>${esc(p.op)}${p.op ? " · " : ""}${esc(p.p)}<br>${esc(p.f)}${p.mw != null ? `<br>${p.mw} MW` : ""}${p.pue != null ? ` · PUE ${p.pue}` : ""}</div>` : `<div class="wg-tip"><b>${esc(p.n)}</b>${p.lost ? " · lost" : p.iso ? " · isolated" : ""}</div>`);
+    const arcs = e ? e.l.filter((l) => g!.pos.has(l.a) && g!.pos.has(l.b)).map((l) => ({ l, key: linkKey(l), a: g!.pos.get(l.a)!, b: g!.pos.get(l.b)!, dead: st.cut.has(linkKey(l)) || st.lose.has(l.a) || st.lose.has(l.b) })) : [];
+    G.arcsData(arcs).arcStartLat((x: any) => x.a.lat).arcStartLng((x: any) => x.a.lng).arcEndLat((x: any) => x.b.lat).arcEndLng((x: any) => x.b.lng)
+      .arcColor((x: any) => x.dead ? [c.crit, c.crit] : x.l.pr === "no" ? [c.warn, c.acc] : [c.acc, c.data])
+      .arcDashLength((x: any) => x.dead ? 0.08 : 0.5).arcDashGap((x: any) => x.dead ? 0.08 : 0.2).arcDashAnimateTime((x: any) => x.dead || reduce ? 0 : 2400)
+      .arcStroke((x: any) => x.dead ? 0.35 : 0.6).arcLabel((x: any) => `<div class="wg-tip"><b>${esc(x.l.a)} ↔ ${esc(x.l.b)}</b> ${esc(x.l.t)}${x.l.pr === "no" ? " · not protected" : ""}<br>${x.dead ? "cut" : "click to cut"}</div>`);
+    applyLook();
+  };
+  const applyLook = () => {
+    if (!G) return; const c = pal(); const dark = document.documentElement.dataset.theme !== "light";
+    $("wg-look").setAttribute("aria-pressed", String(st.photo));
+    if (st.photo) { G.globeImageUrl(dark ? box.dataset.texNight : box.dataset.texDay).hexPolygonsData([]); }
+    else { G.globeImageUrl(null); try { G.globeMaterial().color.set(dark ? "#06110b" : "#e9efeb"); } catch {} G.hexPolygonsData((land?.features ?? []).filter((f: any) => f.properties?.n !== "Antarctica")).hexPolygonColor(() => dark ? "rgba(34,197,94,0.7)" : "rgba(19,122,52,0.6)"); }
+    G.polygonsData(land?.features ?? []).polygonCapColor(() => "rgba(0,0,0,0)").polygonSideColor(() => "rgba(0,0,0,0)").polygonStrokeColor(() => dark ? "rgba(140,170,150,0.35)" : "rgba(40,60,50,0.35)").polygonAltitude(0.005);
+    G.atmosphereColor(c.acc);
+  };
+  const fly = (lat: number, lng: number, alt = 1.7) => G?.pointOfView({ lat, lng, altitude: alt }, reduce ? 0 : 1100);
+  const update = (flyTo?: { lat: number; lng: number; alt?: number }) => { writeHash(); draw(); renderPanel(); if (flyTo) fly(flyTo.lat, flyTo.lng, flyTo.alt); };
+
+  // ---------- actions ----------
+  const openSite = (id: string) => { const s = SITES.find((x) => x.id === id); if (!s) return; st.site = id; st.cmp = []; update({ lat: s.lat, lng: s.lng, alt: 1.4 }); };
+  const openEstate = (id: string) => { st.estate = id; st.cut.clear(); st.lose.clear(); st.cmp = []; $<HTMLSelectElement>("wg-estate").value = id; const e = est(); if (!e) { update(); return; }
+    const lat = e.s.reduce((a, s) => a + s.lat, 0) / e.s.length, lng = Math.atan2(e.s.reduce((a, s) => a + Math.sin(s.lng * rad), 0), e.s.reduce((a, s) => a + Math.cos(s.lng * rad), 0)) / rad; update({ lat, lng, alt: 2.3 }); };
+  let tour = -1;
+  $("wg-next").addEventListener("click", () => { const v = visible(); if (!v.length) return; tour = (tour + 1) % v.length; openSite(v[tour].id); });
+  $("wg-look").addEventListener("click", () => { st.photo = !st.photo; writeHash(); applyLook(); });
+  $("wg-reset").addEventListener("click", () => { Object.assign(st, { site: "", estate: "", cmp: [], me: null, photo: false }); st.cut.clear(); st.lose.clear(); $<HTMLSelectElement>("wg-estate").value = ""; panel.innerHTML = '<p class="wg-hint">Click a pin to open a site. Shift-click two pins to compare.</p>'; update({ lat: 30, lng: 10, alt: 2.4 }); });
+  $<HTMLSelectElement>("wg-type").addEventListener("change", (ev) => { st.type = (ev.target as HTMLSelectElement).value; draw(); });
+  $<HTMLSelectElement>("wg-region").addEventListener("change", (ev) => { st.region = (ev.target as HTMLSelectElement).value; draw(); });
+  $<HTMLSelectElement>("wg-estate").addEventListener("change", (ev) => { const v = (ev.target as HTMLSelectElement).value; if (v) openEstate(v); else { st.estate = ""; st.cut.clear(); st.lose.clear(); update(); } });
+  $<HTMLInputElement>("wg-q").addEventListener("input", (ev) => { st.q = (ev.target as HTMLInputElement).value.trim(); draw(); const m = SITES.find((s) => s.n === st.q); if (m) openSite(m.id); });
+  let cities: [string, string, number, number][] | null = null;
+  $<HTMLInputElement>("wg-me").addEventListener("focus", async () => { if (cities) return; cities = await fetch(box.dataset.cities!).then((r) => r.json()).catch(() => []);
+    $("wg-cities").innerHTML = cities!.map((c) => `<option value="${esc(`${c[0]}, ${c[1]}`)}">`).join(""); }, { once: true });
+  $("wg-me-form").addEventListener("submit", (ev) => { ev.preventDefault(); const v = $<HTMLInputElement>("wg-me").value.trim(); if (!v) return;
+    const m = v.match(/^\s*(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)\s*$/);
+    let pin: typeof st.me = null;
+    if (m && Math.abs(+m[1]) <= 90 && Math.abs(+m[2]) <= 180) pin = { lat: +m[1], lng: +m[2], label: "My data center" };
+    else { const c = (cities ?? []).find((c) => `${c[0]}, ${c[1]}`.toLowerCase() === v.toLowerCase()) ?? (cities ?? []).find((c) => c[0].toLowerCase() === v.split(",")[0].trim().toLowerCase()); if (c) pin = { lat: c[2], lng: c[3], label: `${c[0]}, ${c[1]}` }; }
+    if (!pin) { panel.innerHTML = '<p class="wg-hint">City not found in the bundled list of the 1,000 largest cities. Try "lat, lon", for example 52.37, 4.90.</p>'; return; }
+    st.me = pin; st.site = ""; st.estate = ""; st.cmp = []; update({ lat: pin.lat, lng: pin.lng, alt: 2 }); });
+  panel.addEventListener("click", (ev) => { const b = (ev.target as HTMLElement).closest("button"); if (!b) return;
+    if (b.dataset.cut) { st.cut.has(b.dataset.cut) ? st.cut.delete(b.dataset.cut) : st.cut.add(b.dataset.cut); update(); }
+    else if (b.dataset.lose) { st.lose.has(b.dataset.lose) ? st.lose.delete(b.dataset.lose) : st.lose.add(b.dataset.lose); update(); }
+    else if (b.dataset.estate) openEstate(b.dataset.estate);
+    else if (b.dataset.act === "reset-wi") { st.cut.clear(); st.lose.clear(); update(); }
+    else if (b.dataset.act === "copy") { navigator.clipboard?.writeText(location.href).then(() => (b.textContent = "Copied")); } });
+  document.querySelectorAll<HTMLButtonElement>(".wl-show").forEach((b) => b.addEventListener("click", () => { box.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); openSite(b.dataset.site!); }));
+  document.querySelectorAll<HTMLButtonElement>(".wl-est").forEach((b) => b.addEventListener("click", () => { box.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); openEstate(b.dataset.estate!); }));
+  addEventListener("hashchange", () => { readHash(); draw(); renderPanel(); });
+
+  // ---------- boot ----------
+  readHash();
+  const boot = async () => {
+    const [data, landJson] = await Promise.all([fetch(box.dataset.src!).then((r) => r.json()), fetch(box.dataset.land!).then((r) => r.json())]);
+    SITES = data.sites; ESTATES = data.estates; land = landJson;
+    await new Promise<void>((ok, fail) => { const s = document.createElement("script"); s.src = GLOBE_URL; s.async = true; s.crossOrigin = "anonymous"; s.onload = () => ok(); s.onerror = () => fail(); document.head.appendChild(s); });
+    const GlobeCtor = (window as any).Globe;
+    el.innerHTML = "";
+    G = (() => { try { return new GlobeCtor(el, { animateIn: !reduce }); } catch { return GlobeCtor()(el); } })();
+    G.width(el.clientWidth).height(el.clientHeight).backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereAltitude(0.14)
+      .hexPolygonResolution(3).hexPolygonMargin(0.4).hexPolygonAltitude(0.012);
+    G.onPointClick((p: any, ev: MouseEvent) => { if (p.kind === "site") { if (ev?.shiftKey) { st.cmp = [...st.cmp.filter((x) => x !== p.id), p.id].slice(-2); st.site = ""; update(); } else openSite(p.id); } else if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } else if (p.kind === "me") mePanel(); })
+      .onPointRightClick((p: any) => { if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } })
+      .onArcClick((x: any) => { st.cut.has(x.key) ? st.cut.delete(x.key) : st.cut.add(x.key); update(); });
+    const ctl = G.controls(); ctl.autoRotate = !reduce; ctl.autoRotateSpeed = 0.35; ctl.enableDamping = true;
+    el.addEventListener("pointerdown", () => { ctl.autoRotate = false; }, { once: true });
+    addEventListener("resize", () => G.width(el.clientWidth).height(el.clientHeight));
+    new MutationObserver(() => draw()).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    if (st.estate) $<HTMLSelectElement>("wg-estate").value = st.estate;
+    draw(); renderPanel();
+    const s = SITES.find((x) => x.id === st.site), e = est();
+    if (s) fly(s.lat, s.lng, 1.4); else if (e) { const c0 = e.s[0]; fly(c0.lat, c0.lng, 2.3); } else if (st.me) fly(st.me.lat, st.me.lng, 2); else G.pointOfView({ lat: 30, lng: 10, altitude: 2.4 });
+  };
+  const start = () => boot().catch(() => { el.querySelector(".wg-poster span")!.textContent = "The earth could not load. The list below has every site."; });
+  const idle = () => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(start, { timeout: 2000 }) : setTimeout(start, 400));
+  if (document.readyState === "complete") idle(); else addEventListener("load", idle, { once: true });
+</script>
+<style is:global>
+  .wg-tip { padding: 8px 10px; max-width: 280px; background: var(--bg-100); color: var(--ink); border: 1px solid var(--line-strong); font: 13px/19px var(--font-sans); }
+</style>

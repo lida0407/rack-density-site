@@ -18,7 +18,7 @@ const guides = (await getCollection("guides")).sort((a, b) => a.data.order - b.d
       <p class="direct-answer">Everything you need to try DC Sim without a sales call: the Excel template that becomes a twin, the sample hall built from it, calculators for rack power and tokens per kWh, practical guides, and the changelog of what shipped.</p>
     </header>
     <div class="grid grid-3" style="margin-top:20px">
-      <a class="card" href={u("resources/excel-template/")}><h3>Excel template</h3><p class="muted">Version {TEMPLATE_VERSION}. Nine sheets, only Devices required.</p></a>
+      <a class="card" href={u("resources/excel-template/")}><h3>Excel template</h3><p class="muted">Version {TEMPLATE_VERSION}. Eleven sheets, only Devices required.</p></a>
       <a class="card" href={u("resources/sample-twin/")}><h3>Sample twin</h3><p class="muted">The demo hall and its filled spreadsheet.</p></a>
       <a class="card" href={u("resources/calculators/")}><h3>Calculators</h3><p class="muted">Rack power with the 80 % rule; tokens per kWh.</p></a>
       <a class="card" href={u("resources/guides/")}><h3>Guides</h3><p class="muted">{guides.length} practical guides, more every week.</p></a>

@@ -1,0 +1,82 @@
+---
+// /dc/world/estates/<id>/ — one page per famous estate (WORLD-PAGE.md §1): story, sites, links, a build-time map, sources.
+import Base from "../../../../layouts/dc/Base.astro";
+import Faq from "../../../../components/dc/Faq.astro";
+import WorldMap from "../../../../components/dc/world/WorldMap.astro";
+import { ESTATES, SITES, KIND_LABEL, countryName, fmt, km, latencyMs, sitePath, type Estate } from "../../../../lib/dc/world";
+import { u, abs, root } from "../../../../lib/dc/url";
+import { faqLd } from "../../../../lib/dc/schema";
+
+export function getStaticPaths() {
+  return ESTATES.map((e) => ({ params: { id: e.id }, props: { e } }));
+}
+const { e } = Astro.props as { e: Estate };
+const path = `world/estates/${e.id}/`;
+const byCode = new Map(e.sites.map((s) => [s.site, s]));
+const famous = new Map(SITES.map((s) => [s.id, s]));
+const linkRows = e.links.map((l) => {
+  const a = byCode.get(l.site_a), b = byCode.get(l.site_b);
+  const d = a && b ? km(a, b) : null;
+  return { ...l, a, b, d, est: d != null ? latencyMs(d) : null };
+});
+const unprotected = e.links.filter((l) => l.protected === "no").length;
+const faq = [
+  ...(e.famous_for ? [{ q: `What is ${e.name} famous for?`, a: e.famous_for }] : []),
+  { q: `How many sites and links does ${e.name} have in this dataset?`, a: `${e.sites.length} sites and ${e.links.length} links, of which ${unprotected} are recorded as not protected. Figures are from the public sources listed on the page.` },
+  ...(e.operator ? [{ q: `Who operates ${e.name}?`, a: e.operator }] : []),
+];
+const dataset = { "@type": "Dataset", name: `${e.name}: sites and links`, description: e.famous_for ?? e.name, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
+  distribution: [{ "@type": "DataDownload", encodingFormat: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentUrl: new URL(root(`dc/world/data/estates/${e.id}.xlsx`), "https://rack-density.com").href }],
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: e.updated, creator: { "@id": abs("#org") } };
+const title = [`${e.name}: sites, links and map — DC Sim world`, `${e.name}: sites and links`, e.name].find((t) => t.length <= 60)!;
+---
+<Base title={title} description={(e.famous_for ?? e.name).slice(0, 165)} path={path}
+  crumbs={[{ name: "World", path: "world/" }, { name: "Estates", path: "world/estates/" }, { name: e.name, path }]} jsonLd={[dataset, ...faqLd(faq)]}>
+  <article class="container page west">
+    <span class="eyebrow">{KIND_LABEL[e.kind ?? ""] ?? "Estate"}{e.year ? ` · ${e.year}` : ""}</span>
+    <h1>{e.name}</h1>
+    {e.famous_for && <p class="direct-answer">{e.famous_for}</p>}
+    <div class="west-map"><WorldMap title={`${e.name}: ${e.sites.length} sites, ${e.links.length} links (dashed = not protected)`}
+      points={e.sites.map((s) => ({ lat: s.lat, lon: s.lon, label: s.site }))}
+      links={linkRows.filter((l) => l.a && l.b).map((l) => ({ a: l.a!, b: l.b!, dashed: l.protected === "no" }))} /></div>
+    <p class="west-actions"><a class="cs-btn cs-btn--primary" href={`${u("world/")}#estate=${encodeURIComponent(e.id)}`}>Open it on the earth: cut a link, lose a site</a>
+      <a class="cs-btn cs-btn--secondary" href={root(`dc/world/data/estates/${e.id}.xlsx`)} download>Workbook (DC Sim template v1.4)</a></p>
+    {e.story && <section><h2>The story</h2><p>{e.story}</p></section>}
+    {e.notable?.length ? <section><h2>Notable</h2><ul>{e.notable.map((n) => <li>{n}</li>)}</ul></section> : null}
+    <section><h2>Sites</h2>
+      <div class="west-table"><table><thead><tr><th>Code</th><th>Place</th><th>Role</th><th>Provider</th></tr></thead>
+        <tbody>{e.sites.map((s) => { const f = s.site_ref ? famous.get(s.site_ref) : null; return (
+          <tr><td>{s.site}</td><td>{f ? <a href={u(sitePath(f))}>{f.name}</a> : [s.city, countryName(s.country)].filter(Boolean).join(", ")}</td><td>{s.role ?? "—"}</td><td>{s.provider ?? "—"}</td></tr>); })}</tbody></table></div>
+    </section>
+    <section><h2>Links</h2>
+      <div class="west-table"><table><thead><tr><th>From</th><th>To</th><th>Type</th><th>Capacity</th><th>Length</th><th>Year</th><th>Protected</th><th>Est. one-way latency</th></tr></thead>
+        <tbody>{linkRows.map((l) => <tr><td>{l.site_a}</td><td>{l.site_b}</td><td>{l.type ?? "—"}</td>
+          <td>{l.capacity_tbps != null ? `${fmt(l.capacity_tbps)} Tbps` : l.bandwidth_gbps != null ? `${fmt(l.bandwidth_gbps)} Gbps` : "—"}</td>
+          <td>{l.length_km != null ? `${fmt(Math.round(l.length_km))} km` : l.d != null ? `≈ ${fmt(Math.round(l.d))} km (great circle)` : "—"}</td>
+          <td>{l.year ?? "—"}</td><td>{l.protected ?? "—"}</td><td>{l.latency_ms != null ? `${l.latency_ms} ms` : l.est != null ? `≈ ${l.est.toFixed(1)} ms` : "—"}</td></tr>)}</tbody></table></div>
+      <p class="small muted">Latency marked ≈ is our estimate from the great-circle distance × 1.5 at 5 µs per km, not the operator's figure.</p>
+    </section>
+    <section class="west-src"><h2>Sources</h2>
+      <ol>{(e.sources ?? []).map((x) => <li><a href={x.url} rel="noopener">{x.title ?? x.url}</a>{x.publisher && <> · {x.publisher}</>}{x.date && <> · {x.date}</>}</li>)}</ol>
+      <p class="small muted">Part of the open <a href={u("world/data/")}>famous data centers dataset</a> (CC BY 4.0). Updated {e.updated}.</p>
+    </section>
+    <Faq items={faq} />
+    <aside class="west-cta"><p>Your own estate on this earth, with the halls, power chains and links behind it: <a href={u("product/")}>DC Sim</a>.</p></aside>
+  </article>
+</Base>
+<style>
+  .west h1 { margin: 8px 0 0; font-size: clamp(32px, 4.4vw, 52px); line-height: 1.05; }
+  .west .direct-answer { margin-top: 24px; }
+  .west-map { margin-top: 28px; }
+  .west-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 0; }
+  .west section { margin-top: 36px; }
+  .west h2 { margin: 0 0 10px; font-size: 22px; }
+  .west section > p { margin: 0; line-height: 1.65; }
+  .west ul, .west ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .west-table { overflow-x: auto; border: 1px solid var(--line); }
+  .west-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .west-table th { text-align: left; font: 500 11px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-dim); padding: 8px 10px; background: var(--bg-100); white-space: nowrap; }
+  .west-table td { padding: 8px 10px; border-top: 1px solid var(--line); }
+  .west-cta { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line-strong); background: var(--bg-100); }
+  .west-cta p { margin: 0; }
+</style>
