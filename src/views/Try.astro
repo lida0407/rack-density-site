@@ -1,0 +1,118 @@
+---
+// "See it" (Dali, 2026-10-15: no public demo). Clips + stills of the gated demo build, Request a walkthrough (mailto),
+// notify-me for the self-serve Try. Route stays /homelab/try/ so existing links keep working.
+// Shared by /homelab/try/, /de/homelab/try/, /zh/homelab/try/; copy in src/i18n/pages/try.ts.
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import Faq from '../components/Faq.astro';
+import { u, mailto } from '../lib/url';
+import { TRY, WAITLIST, FLAGS } from '../config/brand';
+import Transcript from '../components/site/Transcript.astro';
+import { VIDEOS, videoLd } from '../data/videos';
+import { ui, pageCopy, notifyLp, walkMail, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/try';
+import heroDark from '../assets/shots/hero-lightsoff.png';
+import heroLight from '../assets/shots/hero-office.png';
+import flaw from '../assets/shots/flaw-finder.png';
+import viewMenu from '../assets/shots/view-menu.png';
+import cables from '../assets/shots/cables.png';
+import phone from '../assets/shots/phone-lightsoff.png';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale), t = ui(locale);
+const half = '(min-width: 760px) 560px, 100vw';
+const page = locale === 'en' ? '/homelab/try' : `/${locale}/homelab/try`;
+const tour = locale === 'en' ? VIDEOS.tour : { ...VIDEOS.tour, transcript: c.tour.transcript };
+const lights = locale === 'en' ? VIDEOS.lightsOff : { ...VIDEOS.lightsOff, transcript: c.lights.transcript };
+const stills = [[heroDark, heroLight], [flaw], [viewMenu], [cables]].map(([src, light], i) => ({ src, light, ...c.stills.shots[i] }));
+---
+<Base title={c.title} description={c.description}
+  path="/homelab/try" ogImage="/homelab/og/try.png" schema={[videoLd(tour, page), videoLd(lights, page)]} section="homelab" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack}>
+  <section class="section-tight head">
+    <div class="wrap head-grid">
+      <div>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1>{c.h1}</h1>
+        <p class="lead">{c.lead}</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={mailto(walkMail(locale).subject, walkMail(locale).body)}>{t.walkthrough}</a>
+          <a class="btn btn-ghost" href={notifyLp('seeit', locale)}>{WAITLIST.live ? c.join : c.notify}</a>
+        </div>
+        {c.langNote && <p class="small muted">{c.langNote}</p>}
+      </div>
+      <div class="cs-banner"><span class="cs-shape cs-shape--off"></span><span set:html={c.banner}></span></div>
+    </div>
+  </section>
+
+  <section class="section-tight" id="clips">
+    <div class="wrap grid grid-2 clips">
+      <figure class="shot">
+        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{c.tour.label}</b><span>{c.tour.meta}</span></div>
+        <video controls muted playsinline preload="none" poster={u('/homelab/media/demo-tour.jpg')} width="1280" height="720" aria-label={c.tour.aria}>
+          <source src={u('/homelab/media/demo-tour.mp4')} type="video/mp4" />
+        </video>
+        <figcaption>{c.tour.caption}<Transcript video={VIDEOS.tour} lines={c.tour.transcript} locale={locale} /></figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{c.lights.label}</b><span>{c.lights.meta}</span></div>
+        <video autoplay muted loop playsinline preload="none" poster={u('/homelab/media/lights-off-loop.jpg')} width="1280" height="654" aria-label={c.lights.aria}>
+          <source src={u('/homelab/media/lights-off-loop.webm')} type="video/webm" />
+          <source src={u('/homelab/media/lights-off-loop.mp4')} type="video/mp4" />
+        </video>
+        <figcaption>{c.lights.caption}<Transcript video={VIDEOS.lightsOff} lines={c.lights.transcript} locale={locale} /></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">{c.stills.eyebrow}</p>
+      <div class="grid grid-2">
+        {stills.map((s) => <Shot src={s.src} light={s.light} label={s.label} alt={s.alt} sizes={half} locale={locale} />)}
+      </div>
+      <div class="phone"><Shot src={phone} label={c.stills.phone.label} alt={c.stills.phone.alt} caption={c.stills.phone.caption} widths={[390, 780]} sizes="320px" locale={locale} /></div>
+    </div>
+  </section>
+
+  <section class="section alt" id="steps">
+    <div class="wrap grid grid-2 two">
+      <div>
+        <p class="eyebrow">{c.steps.eyebrow}</p>
+        <h2>{c.steps.h2}</h2>
+        <ol class="steps">
+          {c.steps.items.map((s, i) => <li><span class="num">0{i + 1}</span><span><b>{s.b}</b> <span class="muted">{s.p}</span></span></li>)}
+        </ol>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href={u('/downloads/homelab-template.xlsx')} download>{c.steps.template}</a>
+          <a class="btn btn-ghost" href={u('/downloads/basement-lab.xlsx')} download>{c.steps.example}</a>
+        </div>
+        {c.steps.templateNote && <p class="small muted">{c.steps.templateNote}</p>}
+      </div>
+      <div class="card privacy">
+        <p class="eyebrow" style="color:var(--ink-muted)">{c.privacy.eyebrow}</p>
+        <p class="muted">{c.privacy.p}{FLAGS.billingLive ? '' : c.privacy.soon}</p>
+        <div class="chips">{c.privacy.chips.map((x) => <span class="cs-chip"><span class="cs-shape cs-shape--off"></span>{x}</span>)}</div>
+        <p class="eyebrow" style="color:var(--ink-muted); margin-top:16px">{c.privacy.checksEyebrow}</p>
+        <p class="muted small">{c.privacy.checks}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap narrow"><Faq items={c.faq} locale={locale} /></div></section>
+  {TRY.live && <p class="sr-only">{c.open}</p>}
+</Base>
+<style>
+  .head-grid { display: grid; gap: 20px; align-items: end; }
+  @media (min-width: 900px) { .head-grid { grid-template-columns: 1.4fr 1fr; } }
+  .head h1 { margin-bottom: .3em; }
+  .clips { align-items: start; }
+  video { width: 100%; height: auto; display: block; background: #000; }
+  .phone { max-width: 320px; margin: 18px auto 0; }
+  .alt { background: var(--bg-100); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .two { gap: 48px; align-items: start; }
+  .steps { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 14px; }
+  .steps li { display: grid; grid-template-columns: 36px 1fr; gap: 10px; }
+  .steps .num { font: 600 13px/24px var(--font-mono); color: var(--accent); }
+  .privacy { background: var(--bg-000); }
+  .privacy .chips { gap: 8px; }
+</style>

@@ -1,0 +1,30 @@
+---
+// /de/impressum/ (German only; I18N.md §3). Details from src/config/impressum.ts; gaps show "[wird ergänzt]" and keep it noindex.
+import Base from '../../layouts/Base.astro';
+import { COMPANY, CONTACT_EMAIL, MAILTO } from '../../config/brand';
+import { IMPRESSUM as I, impressumComplete } from '../../config/impressum';
+import { localePaths, type Locale } from '../../i18n';
+export const getStaticPaths = () => localePaths('/impressum');
+const locale = Astro.params.locale as Locale;
+const gap = '[wird ergänzt]';
+---
+<Base title="Impressum | RACKDENSITY" description={`Impressum von rack-density.com: Anbieter, Anschrift und Kontakt (${COMPANY.name}, Malta).`}
+  path="/impressum" ogImage="/og/hub.png" section="hub" crumbs={[{ name: 'Impressum' }]} locale={locale} noindex={!impressumComplete()}>
+  <section class="section-tight">
+    <div class="wrap narrow prose">
+      <h1>Impressum</h1>
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>{I.legalName ?? `${COMPANY.name} ${gap}`}<br />
+        {I.address ? I.address.map((l, k) => <>{l}{k < I.address!.length - 1 && <br />}</>) : <>Anschrift {gap}<br />Malta</>}</p>
+      <p>Vertreten durch: {I.representative ?? gap}</p>
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href={MAILTO}>{CONTACT_EMAIL}</a>{I.phone && <><br />Telefon: {I.phone}</>}<br />
+        Website: <a href={COMPANY.url} rel="noopener">{COMPANY.url.replace(/^https:\/\//, '')}</a></p>
+      <h2>Registereintrag und Umsatzsteuer</h2>
+      <p>Registereintrag: {I.register ?? gap}<br />Umsatzsteuer-Identifikationsnummer: {I.vat ?? gap}</p>
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>{I.representative ?? gap}, Anschrift wie oben.</p>
+      <p class="small muted">rack-density.com, Homelab Twin und DC Sim sind Angebote von {COMPANY.name}. Sensaka und RACKDENSITY sind Marken von {COMPANY.name}.</p>
+    </div>
+  </section>
+</Base>

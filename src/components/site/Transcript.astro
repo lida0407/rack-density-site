@@ -1,12 +1,14 @@
 ---
 // Visible transcript for a clip (indexable text; the clips are silent, so this is the captions plus what is on screen).
 import type { Video } from '../../data/videos';
-interface Props { video: Video; label?: string }
-const { video, label = 'What the clip shows' } = Astro.props;
+import { ui, type Locale } from '../../i18n';
+interface Props { video: Video; label?: string; locale?: Locale; lines?: string[] }
+// `lines`: a translated transcript (the clips are silent, so the transcript is the only text to translate).
+const { video, label = ui(Astro.props.locale ?? 'en').transcript, lines = video.transcript } = Astro.props;
 ---
 <details class="transcript">
   <summary>{label}</summary>
-  <ol>{video.transcript.map((t) => <li>{t}</li>)}</ol>
+  <ol>{lines.map((t) => <li>{t}</li>)}</ol>
 </details>
 <style>
   .transcript { margin-top: 10px; font: 400 13px/1.6 var(--font-mono); color: var(--ink-muted); }

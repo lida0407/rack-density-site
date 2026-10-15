@@ -1,0 +1,76 @@
+---
+// The rack-density.com hub (/, /de/, /zh/): both product lines and a teaser for the free calculator (/calculator/, CALCULATOR-PAGE.md).
+// Copy: src/i18n/pages/hub.ts.
+import Base from '../layouts/Base.astro';
+import { DENSITY_PRESETS } from '../lib/calc/presets';
+import { PRODUCT_NAME, TRY } from '../config/brand';
+import { lp, ui, pageCopy, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/hub';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale), presets = ui(locale).density.presets;
+---
+<Base title={c.title} description={c.description} path="/" ogImage="/og/hub.png" section="hub" locale={locale} fallback={fellBack}>
+  <section class="hub-hero">
+    <div class="wrap">
+      <p class="status"><span class="dot" aria-hidden="true"></span>{c.status}</p>
+      <h1>{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      <div class="grid grid-2 products">
+        <a class="card product product--homelab" href={lp('/homelab', locale)}>
+          <p class="eyebrow">{c.homelab.eyebrow}</p>
+          <h2>{PRODUCT_NAME}</h2>
+          <p>{c.homelab.body}</p>
+          <span class="go">{c.homelab.go}</span>
+          {!TRY.live && <span class="cs-badge cs-badge--roadmap">{c.homelab.badge}</span>}
+        </a>
+        <a class="card product product--dc" href={lp('/dc', locale)}>
+          <p class="eyebrow">{c.dc.eyebrow}</p>
+          <h2>{c.dc.h2}</h2>
+          <p>{c.dc.body}</p>
+          <span class="go">{c.dc.go}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight teaser" id="calculator">
+    <div class="wrap">
+      <div class="card teaser-card">
+        <div>
+          <p class="eyebrow">{c.teaser.eyebrow}</p>
+          <h2>{c.teaser.h2}</h2>
+          <p class="muted">{c.teaser.body}</p>
+          <div class="chips">
+            {DENSITY_PRESETS.map((p) => <a class="cs-chip" href={lp(`/calculator?preset=${p.id}`, locale)}>{presets[p.id] ?? p.label}</a>)}
+          </div>
+        </div>
+        <a class="btn btn-primary" href={lp('/calculator', locale)}>{c.teaser.open}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .hub-hero { padding: 48px 0 28px; background: radial-gradient(700px 360px at 20% 0%, rgba(229,112,0,.10), transparent 70%), radial-gradient(700px 360px at 85% 10%, rgba(34,197,94,.08), transparent 70%); }
+  .hub-hero h1 { max-width: 18em; }
+  .status { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); padding: 6px 10px; border-radius: var(--radius-1); margin-bottom: 22px; }
+  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .products { margin-top: 28px; }
+  /* Edition accent per card. Only the accent tokens switch (values from tokens.css, both themes); the card keeps the page's
+     neutrals, so it follows the bright theme too (data-edition on a card would pull in the dark neutrals). */
+  .product--dc { --accent: #22c55e; --accent-strong: #4ade80; --accent-soft: rgba(34,197,94,0.14); --glow-accent: 0 0 0 1px rgba(57,255,20,0.45), 0 0 24px rgba(57,255,20,0.28); }
+  :global([data-theme='light']) .product--dc { --accent: #137a34; --accent-strong: #0f6a2c; --accent-soft: rgba(34,197,94,0.12); --glow-accent: 0 0 0 1px rgba(34,197,94,0.45), 0 0 18px rgba(34,197,94,0.22); }
+  .product { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 6px; transition: border-color .15s, box-shadow .15s; border-top: 3px solid var(--accent); }
+  .product h2 { margin: 0; }
+  .product p { color: var(--ink-muted); margin: 0; }
+  .product .eyebrow { margin: 0; }
+  .product .go { color: var(--accent); font-weight: 650; margin-top: 8px; }
+  .product .cs-badge { align-self: flex-start; }
+  .product:hover { border-color: var(--accent); color: var(--ink); box-shadow: var(--glow-accent); }
+  .teaser-card { display: grid; gap: 18px; align-items: center; border-top: 3px solid var(--accent); }
+  @media (min-width: 860px) { .teaser-card { grid-template-columns: 1fr auto; } }
+  .teaser-card h2 { margin: 0 0 6px; font-size: clamp(1.3rem, 2.6vw, 1.7rem); }
+  .teaser-card p { margin: 0 0 14px; }
+  .teaser-card .chips { gap: 8px; }
+  .teaser-card .cs-chip { text-decoration: none; min-height: 36px; }
+</style>

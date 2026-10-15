@@ -9,12 +9,28 @@ Production: **https://rack-density.com** on Cloudflare Pages (project `rack-dens
 | `/homelab/…` | Homelab Twin: home, try, pricing, learn (+ calculators), changelog (+ RSS) | homelab marketing |
 | `/dc/…` | DC Sim: home, product, integrations, pricing, resources, guides, partners, legal | **DC marketing** |
 | `/privacy/`, `/404`, `robots.txt`, `sitemap-index.xml`, `llms.txt` | site-wide | homelab marketing (llms.txt embeds `src/pages/dc/_llms.ts`) |
+| `/de/…`, `/zh/…` | German and Chinese versions of translated pages (see Languages) | each section for its own pages; plumbing homelab marketing |
 
 ## Ownership and how to commit
 - **DC marketing** edits only `src/**/dc/**`, `public/dc/**` and `scripts/check-copy-dc.mjs`, `scripts/dc/**`: pages `src/pages/dc/`, content `src/content/dc/` (incl. `collections.ts`), components `src/components/dc/`, layout `src/layouts/dc/`, helpers `src/lib/dc/`, constants `src/config/dc/product.ts`, styles `src/styles/dc/`, images `src/assets/dc/`.
 - **Homelab marketing** owns everything else (shared layout, hub, homelab, build, workflow, site config).
 - Always `git pull --rebase` before you push. Never edit the other section's files; ask through `share/updateplan.md`.
 - Links: DC code uses `u()` from `src/lib/dc/url.ts` (prefixes `<base>/dc/`; `root()` for site-wide files). Homelab and hub code use `u()` from `src/lib/url.ts` with full paths (`u('/homelab/try')`). Root-relative links in DC Markdown (`/pricing/`) are prefixed with `<base>/dc/` by the rehype plugin in `astro.config.mjs`.
+
+## Languages (en · de · zh)
+`marketing/I18N.md` in the plan repo. English is unprefixed; German lives under `/de/…`, Chinese (simplified, mainland) under `/zh/…`, mirroring the English path. Product and brand names stay Latin.
+- **Plumbing (homelab marketing):** `src/i18n/config.ts` (locales, which English paths exist in each locale, `lp()` locale links, `switchHref()` for the switcher, `alternates()` for hreflang, `nf()` numbers, `withFallback()`); `src/i18n/index.ts` (`ui(locale)`, `label()`, `fill()`, `pageCopy()`, `localePaths()`); `src/i18n/calc.ts` (per-locale currency, tariff, circuit: DE € 0.35 / 230 V 16 A, CN ¥ 0.6 / 220 V 16 A). UI strings: `src/i18n/ui/{en,de,zh}.ts` (de/zh may leave keys out → English).
+- **Pages:** each translated page is a view in `src/views/` with its copy in `src/i18n/pages/<page>.ts` (`en`, `de`, `zh` objects, same keys). `src/pages/<path>.astro` renders the view with `locale="en"`; `src/pages/[locale]/<path>.astro` renders it for the locales from `localePaths('<path>')`. A key missing in de/zh falls back to English and the page shows a small "not translated yet" note (`Base` `fallback`). Links to English-only pages get "(English)".
+- **Layout:** `Base.astro` sets `<html lang>`, canonical, hreflang (en, de, zh-CN, x-default = English) and `og:locale`; the header has the EN · DE · 中文 switcher (sets the `lang` cookie for a year); the German footer links `/de/impressum/` (details in `src/config/impressum.ts`; noindex until Dali fills them).
+- **Language by country:** `functions/_middleware.ts` 302s a first visit to an unprefixed page from DE/AT/CH/LI to `/de/…` and from CN to `/zh/…` when that page exists (Accept-Language only when the country is unknown), sets `lang`, and never touches crawlers, `lang` cookies, `/api/`, assets or prefixed URLs. `public/_routes.json` keeps assets off the function. Cloudflare Pages only (GitHub Pages has no functions).
+- **SEO files:** the sitemap carries hreflang alternates (`astro.config.mjs` `i18n`); `/de/llms.txt` and `/zh/llms.txt` come from `src/pages/[locale]/llms.txt.ts` plus the post-build index in `scripts/llms-index.mjs`; `scripts/check-dist.mjs` fails the build on a broken or one-way hreflang.
+
+**How DC marketing adds its locale content**
+1. List each English DC path you translate in `src/config/dc/i18n.ts`: `export const DC_TRANSLATED = { de: ['/dc', '/dc/pricing', …], zh: […] }`. Only listed paths get hreflang, switcher targets and `lp()` links; unlisted paths keep linking to English.
+2. Add the routes under `src/pages/[locale]/dc/…` (`getStaticPaths = () => localePaths('/dc/pricing')`) and render your page with the locale; keep the copy in your own files under `src/**/dc/**` (for example `src/i18n/dc/`, or Markdown under `src/content/dc/de/` and `zh/`).
+3. In `src/layouts/dc/Base.astro`: `<html lang={LOCALE_META[locale].html}>`, canonical via `lp(path, locale)`, and the hreflang links from `alternates(path)` (copy the block from `src/layouts/Base.astro`); pass `locale` to the shared `Header`/`Footer`. Shared nav labels translate through `label(locale, …)`; add missing ones to `labels` in `src/i18n/ui/de.ts`/`zh.ts` (ask homelab marketing, it owns those files).
+4. Optional: export `dcLlmsLocale(locale)` from `src/pages/dc/_llms.ts` to add the DC part to `/de/llms.txt` and `/zh/llms.txt`.
+5. `npm run build` checks the hreflang pairs; the middleware starts sending German/Chinese visitors to your pages as soon as they exist.
 
 ## Commands
 ```

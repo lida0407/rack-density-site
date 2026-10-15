@@ -1,0 +1,60 @@
+---
+// Rack Density Calculator: the domain's own tool (CALCULATOR-PAGE.md). Hub section, indexable; the hub keeps a teaser at /#calculator.
+// Shared by /calculator/, /de/calculator/, /zh/calculator/; copy in src/i18n/pages/calculator.ts.
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import RackDensity from '../components/calc/RackDensity.astro';
+import { abs } from '../lib/url';
+import { SITE_URL } from '../config/brand';
+import { lp, ui, hasPage, pageCopy, LOCALE_META, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/calculator';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale), t = ui(locale);
+const enOnly = (href: string) => locale !== 'en' && !hasPage(href, locale);
+const MORE = ['/calculator/ups-runtime', '/homelab/learn/homelab-power-calculator', '/homelab/learn/tokens-per-watt', '/homelab/learn/10-inch-mini-rack-planner', '/homelab/learn/proxmox-power-usage', '/dc/resources/calculators/rack-power'];
+const calc = { '@context': 'https://schema.org', '@type': 'WebApplication', name: c.schemaName, url: locale === 'en' ? abs('/calculator') : SITE_URL + lp('/calculator', locale),
+  description: c.schemaDescription, ...(locale === 'en' ? {} : { inLanguage: LOCALE_META[locale].html }),
+  applicationCategory: 'UtilitiesApplication', operatingSystem: 'Any', isAccessibleForFree: true, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@id': `${abs('/')}#org` } };
+---
+<Base title={c.title} description={c.description} path="/calculator" ogImage="/og/calculator.png" schema={[calc]} section="hub" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack}>
+  <section class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1 class="calc-h">{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      <RackDensity locale={locale} />
+      <aside class="card see">
+        <div>
+          <h2>{c.see.h2}</h2>
+          <p class="muted">{c.see.body}</p>
+        </div>
+        <a class="btn btn-primary" href={lp('/homelab/try', locale)}>{c.see.button}</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap narrow prose">
+      <h2>{c.how.h2}</h2>
+      <pre><code>by_space   = floor(rack_U / device_U)
+by_power   = floor(circuit_kW × 1000 / W_per_device)
+by_cooling = floor(cooling_kW × 1000 / W_per_device)
+devices    = min(by_space, by_power, by_cooling)
+circuit_kW = V × A × PF / 1000          {c.how.single}
+circuit_kW = √3 × V × A × PF / 1000     {c.how.three}</code></pre>
+      <p>{c.how.p}</p>
+      <h2>{c.more.h2}</h2>
+      <ul>
+        {c.more.items.map((i, k) => { const href = MORE[k]; return <li><a href={lp(href, locale)}>{i.a}</a>{enOnly(href) && <span class="en-only"> ({t.englishOnly})</span>}{i.rest}</li>; })}
+      </ul>
+    </div>
+  </section>
+  <section class="section"><div class="wrap narrow"><Faq items={c.faq} locale={locale} /></div></section>
+</Base>
+<style>
+  .calc-h { font-size: clamp(1.9rem, 4.4vw, 2.8rem); }
+  .see { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 20px; }
+  .see h2 { font-size: 1.15rem; margin: 0 0 4px; }
+  .see p { margin: 0; }
+</style>

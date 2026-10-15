@@ -1,22 +1,23 @@
 ---
 // "See it on your rack" card (brand handoff §3, Learn articles): lights-off still + CTA. No public demo → See it + walkthrough.
 import { Image } from 'astro:assets';
-import { u, mailto } from '../lib/url';
-import { WALKTHROUGH } from '../config/brand';
+import { mailto } from '../lib/url';
+import { ui, lp, walkMail, type Locale } from '../i18n';
 import still from '../assets/shots/hero-lightsoff.png';
-interface Props { title: string; body: string; button?: string; utm?: string }
-const { title, body, button = 'See it in 3D', utm } = Astro.props;
-const href = u('/homelab/try') + (utm ? `?utm_source=learn&utm_medium=cta&utm_content=${utm}` : '');
+interface Props { title: string; body: string; button?: string; utm?: string; locale?: Locale }
+const { locale = 'en' } = Astro.props, t = ui(locale);
+const { title, body, button = t.seeIn3D, utm } = Astro.props;
+const href = lp('/homelab/try', locale) + (utm ? `?utm_source=learn&utm_medium=cta&utm_content=${utm}` : '');
 ---
 <aside class="see3d">
   <Image src={still} alt="The Basement Lab demo rack with the room lights off" widths={[480, 800]} sizes="(min-width: 760px) 380px, 100vw" format="webp" quality={70} loading="lazy" />
   <div class="body">
-    <p class="cs-eyebrow">See it on your rack</p>
+    <p class="cs-eyebrow">{t.seeOnRack}</p>
     <h3>{title}</h3>
     <p>{body}</p>
     <div class="btn-row">
       <a class="btn btn-primary" href={href}>{button}</a>
-      <a class="btn btn-ghost" href={mailto(WALKTHROUGH.subject, WALKTHROUGH.body)}>Request a walkthrough</a>
+      <a class="btn btn-ghost" href={mailto(walkMail(locale).subject, walkMail(locale).body)}>{t.walkthrough}</a>
     </div>
   </div>
 </aside>

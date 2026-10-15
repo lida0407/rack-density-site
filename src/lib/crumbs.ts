@@ -1,5 +1,6 @@
 // Breadcrumb trail for the shared layout: RACKDENSITY › <section> › … › page, plus the matching BreadcrumbList JSON-LD.
-import { abs } from './url';
+import { SITE_URL } from '../../site.config.mjs';
+import { lp, type Locale } from '../i18n/config';
 import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME } from '../config/brand';
 import type { Section } from '../config/nav';
 
@@ -13,8 +14,8 @@ export const trail = (section: Section, page: Crumb[]): Crumb[] => {
   return [...head, ...page];
 };
 
-export const crumbsSchema = (items: Crumb[], pagePath: string) => ({
+export const crumbsSchema = (items: Crumb[], pagePath: string, locale: Locale = 'en') => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
-  itemListElement: items.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: abs(c.path ?? pagePath) })),
+  itemListElement: items.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: SITE_URL.replace(/\/$/, '') + lp(c.path ?? pagePath, locale) })),
 });

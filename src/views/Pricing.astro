@@ -1,0 +1,104 @@
+---
+// Homelab Twin pricing, shared by /homelab/pricing/, /de/homelab/pricing/, /zh/homelab/pricing/; copy in src/i18n/pages/pricing.ts.
+import Base from '../layouts/Base.astro';
+import Faq from '../components/Faq.astro';
+import TryButton from '../components/TryButton.astro';
+import { mailto, abs } from '../lib/url';
+import { PRODUCT_NAME, PRICES, FLAGS, FEATURE_STATUS } from '../config/brand';
+import { ui, fill, pageCopy, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/pricing';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale), t = ui(locale);
+const usd = (n: number) => fill(t.usd, { n });
+
+type Cell = string;
+const rows: { f: string; key: string; c: [Cell, Cell, Cell] }[] = ([
+  ['fourRacks', ['2', '2', '4']], ['import3d', ['✓', '✓', '✓']], ['views', ['✓', '✓', '✓']], ['diagrams', ['✓', '✓', '✓']],
+  ['failWhatIf', ['✓', '✓', '✓']], ['checks', ['✓', '✓', '✓']], ['shareImage', ['✓', '✓', '✓']], ['downloadLab', ['✓', '✓', '✓']],
+  ['savedLab', ['—', '✓', '✓']], ['history', ['24 hours', '30 days', '1 year']], ['shareLink', ['—', '✓', '✓']],
+  ['cablingView', ['preview', 'preview', '✓']], ['aiTokensPerSecond', ['✓', '✓', '✓']], ['aiTokensPerKwh', ['preview', 'preview', '✓']],
+  ['flawFinder', ['one run', 'one run per lab', 'full, with fixes']], ['pdfExport', ['—', '—', '✓']], ['upgradePlanner', ['—', '—', '✓']],
+  ['alerts', ['—', '—', '✓']], ['agent', ['this session', 'unattended', 'unattended']],
+] as [string, Cell[]][]).map(([key, cells], i) => ({ f: c.compare.rows[i], key, c: cells.map((x) => c.compare.cells[x] ?? x) as [Cell, Cell, Cell] }));
+const soon = !FLAGS.billingLive;
+// Product + offers (SEO-GEO-PLAN §3). Paid plans are not purchasable yet (billingLive false) → PreOrder; Try → free.
+const offer = (name: string, price: number, unit: 'MON' | 'ANN', avail: string) => ({ '@type': 'Offer', name, price: String(price), priceCurrency: PRICES.currency,
+  availability: `https://schema.org/${avail}`, url: abs('/homelab/pricing'),
+  priceSpecification: { '@type': 'UnitPriceSpecification', price: String(price), priceCurrency: PRICES.currency, billingDuration: 1, unitCode: unit } });
+const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': abs('/homelab/') + '#product', name: PRODUCT_NAME, url: abs('/homelab/'),
+  description: `${PRODUCT_NAME} turns a spreadsheet of your homelab gear into a 3D model of your rack: power and monthly cost per device (estimated), network and cable views, and a Fail what-if.`,
+  brand: { '@type': 'Brand', name: 'Sensaka' }, manufacturer: { '@id': `${abs('/')}#org` }, category: 'Homelab rack planning software',
+  offers: [
+    { '@type': 'Offer', name: 'Try', price: '0', priceCurrency: PRICES.currency, availability: 'https://schema.org/PreOrder', url: abs('/homelab/waitlist') },
+    offer('Account, monthly', PRICES.account.month, 'MON', soon ? 'PreOrder' : 'InStock'), offer('Account, yearly', PRICES.account.year, 'ANN', soon ? 'PreOrder' : 'InStock'),
+    offer('Pro, monthly', PRICES.pro.month, 'MON', soon ? 'PreOrder' : 'InStock'), offer('Pro, yearly', PRICES.pro.year, 'ANN', soon ? 'PreOrder' : 'InStock'),
+  ] };
+---
+<Base title={c.title} description={c.description}
+  path="/homelab/pricing" ogImage="/homelab/og/pricing.png" schema={[product]} section="homelab" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack}>
+  <section class="section-tight">
+    <div class="wrap">
+      <h1>{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      <p class="muted">{c.short}</p>
+      {c.currencyNote && <p class="small muted">{c.currencyNote}</p>}
+      <div class="tiles tiles-3 plans">
+        <div class="card featured">
+          <h2>{c.try.h2}</h2><p class="price">{c.try.price}</p><p class="muted"><em>{c.try.tag}</em></p><p class="small muted">{c.try.note}</p>
+          <ul>{c.try.items.map((i) => <li set:html={i} />)}</ul>
+          <TryButton label={c.try.button} locale={locale} />
+        </div>
+        <div class="card">
+          <h2>{c.account.h2} {soon && <span class="pill pill-soon">{c.soon}</span>}</h2>
+          <p class="price">{usd(PRICES.account.month)} <span>{c.perMonth}</span></p><p class="muted">{c.account.or}{fill(c.perYear, { price: usd(PRICES.account.year) })}</p>
+          <p class="small muted">{c.account.plus}</p>
+          <ul>{c.account.items.map((i) => <li>{i}</li>)}</ul>
+          {soon ? <a class="btn btn-ghost" href={mailto(c.account.mailSubject, c.account.mailBody)}>{c.account.mail}</a> : <a class="btn btn-primary" href="#">{c.account.get}</a>}
+        </div>
+        <div class="card">
+          <h2>{c.pro.h2} {soon && <span class="pill pill-soon">{c.soon}</span>}</h2>
+          <p class="price">{usd(PRICES.pro.month)} <span>{c.perMonth}</span></p><p class="muted">{c.pro.or}{fill(c.perYear, { price: usd(PRICES.pro.year) })} · <em>{c.pro.tag}</em></p>
+          <p class="small muted">{c.pro.plus}</p>
+          <ul>{c.pro.items.map((i, k) => <li>{i}{k === c.pro.items.length - 1 && <> <span class="pill pill-roadmap">{c.roadmap}</span></>}</li>)}</ul>
+          {soon ? <a class="btn btn-ghost" href={mailto(c.pro.mailSubject, c.pro.mailBody)}>{c.pro.mail}</a> : <a class="btn btn-primary" href="#">{c.pro.get}</a>}
+          <p class="small muted" style="margin-top:10px">{c.pro.msp}</p>
+        </div>
+      </div>
+      {soon && <p class="small muted" style="margin-top:12px">{c.mailNote}</p>}
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <h2>{c.compare.h2}</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>{c.compare.feature}</th><th>Try</th><th>Account</th><th>Pro</th></tr></thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr><td>{r.f} {FEATURE_STATUS[r.key] === 'roadmap' && <span class="pill pill-roadmap">{c.roadmap}</span>}</td>
+                {r.c.map((c) => <td>{c}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted">{c.compare.note}</p>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap narrow"><Faq items={c.faq} locale={locale} /></div></section>
+</Base>
+<style>
+  .plans { margin-top: 24px; }
+  .plans h2 { font: 600 12px/14px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .featured h2 { color: var(--accent); }
+  .price { font-family: var(--font-mono); font-size: 2rem; font-weight: 600; margin: 0; font-variant-numeric: tabular-nums; }
+  .price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+  .plans ul { padding-left: 1.1em; margin: 0 0 18px; }
+  .plans li { margin: .35em 0; }
+  .plans .card { border: 0; background: var(--bg-000); display: flex; flex-direction: column; }
+  .plans .card > .btn { margin-top: auto; align-self: flex-start; }
+  .featured { box-shadow: inset 0 3px 0 var(--accent); }
+  td:not(:first-child), th:not(:first-child) { text-align: center; white-space: nowrap; }
+</style>

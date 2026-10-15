@@ -1,0 +1,34 @@
+---
+// Privacy, shared by /privacy/, /de/privacy/, /zh/privacy/; copy in src/i18n/pages/privacy.ts (items are our own html).
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../config/brand';
+import { fill, pageCopy, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/privacy';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale);
+const h = (s: string) => fill(s, { mail: `<a href="${MAILTO}">${CONTACT_EMAIL}</a>`, site: '<a href="https://mustardseedmt.com" rel="noopener">mustardseedmt.com</a>' });
+const analytics = CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN ? c.site.analyticsOn : c.site.analyticsOff;
+---
+<Base title={c.title} description={c.description} path="/privacy" ogImage="/og/hub.png" section="hub" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack}>
+  <section class="section-tight">
+    <div class="wrap narrow prose">
+      <h1>{c.h1}</h1>
+      <p class="lead" set:html={c.lead}></p>
+      <h2>{c.try.h2}</h2>
+      <ul>{c.try.items.map((i) => <li set:html={h(i)} />)}</ul>
+      <h2>{c.site.h2}</h2>
+      <ul>
+        <li>{analytics}{c.site.hosting}</li>
+        {c.site.items.map((i) => <li set:html={h(i)} />)}
+      </ul>
+      <h2>{c.waitlist.h2}</h2>
+      <ul>{c.waitlist.items.map((i) => <li set:html={h(i)} />)}</ul>
+      <h2>{c.account.h2}</h2>
+      <ul>{c.account.items.map((i) => <li set:html={h(i)} />)}</ul>
+      <h2>{c.who.h2}</h2>
+      <p set:html={h(c.who.p)}></p>
+      <p class="small muted">{c.updated}</p>
+    </div>
+  </section>
+</Base>

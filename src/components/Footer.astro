@@ -1,29 +1,30 @@
 ---
 // Shared footer (marketing/SITE-NAV.md): RACKDENSITY · Homelab Twin · DC Sim · Company, plus the product switcher.
 // Self-contained styles (hub/homelab and DC stylesheets).
-import { u } from '../lib/url';
+import { ui, fill, label, lp, type Locale } from '../i18n';
 import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, COMPANY } from '../config/brand';
 import { FOOTER, PRODUCTS, type Section } from '../config/nav';
 
-interface Props { section?: Section }
-const { section = 'hub' } = Astro.props;
+interface Props { section?: Section; locale?: Locale }
+const { section = 'hub', locale = 'en' } = Astro.props;
+const t = ui(locale);
 const brandA = BRAND.slice(0, 4), brandB = BRAND.slice(4);
 const cols = [
   { h: BRAND, links: FOOTER.hub },
   { h: PRODUCT_NAME, links: FOOTER.homelab },
   { h: DC_PRODUCT_NAME, links: FOOTER.dc },
-  { h: 'Company', links: FOOTER.company },
+  { h: t.company, links: locale === 'de' ? [...FOOTER.company, { href: '/impressum', label: 'Legal notice' }] : FOOTER.company },
 ];
 const ext = (href: string) => /^(https?:|mailto:)/.test(href);
 ---
 <footer class="site-footer">
   <div class="sf-wrap">
     <div class="sf-top">
-      <a class="sf-wm" href={u('/')}>{brandA}<span>{brandB}</span></a>
-      <span class="sf-by">by <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a></span>
-      <div class="sf-switch" role="group" aria-label="Products">
+      <a class="sf-wm" href={lp('/', locale)}>{brandA}<span>{brandB}</span></a>
+      <span class="sf-by">{t.by} <a href={PARTNER.url} rel="noopener">{PARTNER.name}</a></span>
+      <div class="sf-switch" role="group" aria-label={t.products}>
         {PRODUCTS.map((p) => (
-          <a class:list={['sf-pill', `sf-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}>
+          <a class:list={['sf-pill', `sf-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={lp(p.href, locale)}>
             <span class="sf-led" aria-hidden="true"></span>{p.label}
           </a>
         ))}
@@ -34,12 +35,12 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
         <div>
           <p class="sf-h">{c.h}</p>
           <ul>
-            {c.links.map((l) => <li><a href={ext(l.href) ? l.href : u(l.href)} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a></li>)}
+            {c.links.map((l) => <li><a href={ext(l.href) ? l.href : lp(l.href, locale)} rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label.endsWith(' (brand)') ? `${l.label.replace(' (brand)', '')} ${t.brandSuffix}` : label(locale, l.label)}</a></li>)}
           </ul>
         </div>
       ))}
     </div>
-    <p class="sf-legal">© 2026 {COMPANY.name} · {PARTNER.name} and {BRAND} are brands of {COMPANY.name} · figures marked estimated are estimates</p>
+    <p class="sf-legal">{fill(t.legal, { company: COMPANY.name, a: PARTNER.name, b: BRAND })}</p>
   </div>
 </footer>
 <style>

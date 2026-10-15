@@ -8,11 +8,13 @@ import fs from 'node:fs';
 import nodePath from 'node:path';
 import HeroVideo from './HeroVideo.astro';
 import { u } from '../../lib/url';
+import { ui, type Locale } from '../../i18n';
 
-interface Props { edition: 'homelab' | 'dc'; label: string; readout?: string; dark: ImageMetadata; light: ImageMetadata; alt: string; altLight: string; sizes?: string }
+interface Props { edition: 'homelab' | 'dc'; label: string; readout?: string; dark: ImageMetadata; light: ImageMetadata; alt: string; altLight: string; sizes?: string; locale?: Locale }
 // The demo readout that used to sit in the header strip (SITE-NAV.md change 2026-10-15 late): it describes the picture.
-const READOUT = { homelab: '1.02 kW · €165/mo · UPS 18 min', dc: 'IT 79.1 kW · PUE 1.16 · ▲ 2 alarms' };
-const { edition, label, readout = READOUT[edition], dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
+// Labels come from the UI dictionary (src/i18n/ui/*.ts, stage); without a locale prop the stage is English.
+const { edition, label, locale = 'en', dark, light, alt, altLight, sizes = '(min-width: 1000px) 640px, 100vw' } = Astro.props;
+const T = ui(locale).stage, readout = Astro.props.readout ?? T.readout[edition];
 const dir = `/${edition}/media`;
 const posters = import.meta.glob<{ default: ImageMetadata }>('/src/assets/video/*.jpg', { eager: true });
 const has = (f: string) => fs.existsSync(nodePath.join(process.cwd(), 'public', dir, f));
@@ -21,9 +23,9 @@ const has = (f: string) => fs.existsSync(nodePath.join(process.cwd(), 'public', 
 const OPTIONAL = new Set(['estate']);
 const both = (v: string) => ['on', 'off'].every((l) => has(`state-${edition}-${v}-${l}.webm`) || has(`state-${edition}-${v}-${l}.mp4`));
 const VIEWS = (edition === 'homelab'
-  ? [['overview', 'Overview'], ['power', 'Power'], ['cables', 'Cables'], ['tokens', 'Tokens']]
-  : [['overview', 'Overview'], ['estate', 'Estate'], ['power', 'Power'], ['network', 'Network'], ['cabling', 'Cabling'], ['tokens', 'Tokens']]
-).filter(([v]) => !OPTIONAL.has(v) || both(v));
+  ? ['overview', 'power', 'cables', 'tokens']
+  : ['overview', 'estate', 'power', 'network', 'cabling', 'tokens']
+).filter((v) => !OPTIONAL.has(v) || both(v)).map((v) => [v, T.views[v]]);
 const clip = async (key: string, still: ImageMetadata) => {
   const n = `state-${edition}-${key}`, p = posters[`/src/assets/video/${n}.jpg`]?.default ?? still;
   return { webm: has(`${n}.webm`) ? u(`${dir}/${n}.webm`) : '', mp4: has(`${n}.mp4`) ? u(`${dir}/${n}.mp4`) : '', poster: (await getImage({ src: p, width: 1280, format: 'webp', quality: 72 })).src, img: p };
@@ -39,13 +41,13 @@ const img = { widths: [480, 800, 1280], sizes, format: 'webp' as const, quality:
 // through a media-keyed preload (same URLs as <Image>), and the inline script below re-points it for a manual theme.
 const pre = live ? await Promise.all([map['overview-off'].img, map['overview-on'].img].map((src) => getImage({ src, ...img }))) : [];
 ---
-<figure class="shot hs" data-hs={live ? JSON.stringify(sources) : undefined}>
+<figure class="shot hs" data-hs={live ? JSON.stringify(sources) : undefined} data-hs-t={live ? JSON.stringify({ fail: T.fail, restore: T.restore, say: T.say, failed: T.failed, on: T.lightsSay.on, off: T.lightsSay.off }) : undefined}>
   <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{label}</b>{readout && <span class="hs-read">{readout}</span>}
     {live ? (<>
-      <span class="hs-ctl"><details class="hs-menu"><summary aria-label="Choose a view">View: <span data-hs-view>Overview</span></summary>
+      <span class="hs-ctl"><details class="hs-menu"><summary title={T.chooseView}>{T.view}: <span data-hs-view>{VIEWS[0][1]}</span></summary>
         <div class="hs-list">{VIEWS.map(([v, t]) => <button type="button" data-view={v} aria-pressed={v === 'overview' ? 'true' : 'false'}>{t}</button>)}</div></details>
-      <span class="hs-lights" role="group" aria-label="Lights">Lights <button type="button" data-lights="on" aria-pressed="false">On</button><button type="button" data-lights="off" aria-pressed="true">Off</button></span>
-      {map['fail-on'] && <button type="button" class="hs-fail" data-fail hidden>Fail UPS-A</button>}</span>
+      <span class="hs-lights" role="group" aria-label={T.lights}>{T.lights} <button type="button" data-lights="on" aria-pressed="false">{T.on}</button><button type="button" data-lights="off" aria-pressed="true">{T.off}</button></span>
+      {map['fail-on'] && <button type="button" class="hs-fail" data-fail hidden>{T.fail}</button>}</span>
     </>) : <><span class="sp"></span><slot name="pin" /></>}
   </div>
   {live ? (
@@ -58,9 +60,9 @@ const pre = live ? await Promise.all([map['overview-off'].img, map['overview-on'
       <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
       <video class="hs-v" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
     </div>
-  ) : <HeroVideo name={`hero-${edition}`} dir={dir} dark={dark} light={light} alt={alt} altLight={altLight} widths={img.widths} sizes={sizes} />}
+  ) : <HeroVideo locale={locale} name={`hero-${edition}`} dir={dir} dark={dark} light={light} alt={alt} altLight={altLight} widths={img.widths} sizes={sizes} />}
   <slot />
-  {live && <p class="hs-note">Recorded from the app. Every control here swaps a clip.</p>}
+  {live && <p class="hs-note">{T.note}</p>}
   {live && <p class="sr-only" aria-live="polite" data-hs-say></p>}
 </figure>
 <style>
@@ -92,6 +94,7 @@ const pre = live ? await Promise.all([map['overview-off'].img, map['overview-on'
   type Src = { webm: string; mp4: string; poster: string };
   document.querySelectorAll<HTMLElement>('.hs[data-hs]').forEach((el) => {
     const S: Record<string, Src> = JSON.parse(el.dataset.hs!), root = document.documentElement;
+    const T: Record<string, string> = JSON.parse(el.dataset.hsT!), fill = (s: string, v: Record<string, string>) => s.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? '');
     const [a, b] = [...el.querySelectorAll<HTMLVideoElement>('.hs-v')], imgs = [...el.querySelectorAll<HTMLImageElement>('.hs-img')];
     const conn = (navigator as any).connection, still = () => matchMedia('(prefers-reduced-motion: reduce)').matches || !!conn?.saveData;
     const fail = el.querySelector<HTMLButtonElement>('[data-fail]'), say = el.querySelector('[data-hs-say]')!;
@@ -106,8 +109,8 @@ const pre = live ? await Promise.all([map['overview-off'].img, map['overview-on'
       el.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.view === view)));
       el.querySelectorAll<HTMLButtonElement>('[data-lights]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.lights === lights)));
       el.querySelector('[data-hs-view]')!.textContent = el.querySelector(`[data-view="${view}"]`)!.textContent;
-      if (fail) { fail.hidden = view !== 'power'; fail.textContent = failing && still() ? 'Restore' : 'Fail UPS-A'; fail.disabled = failing && !still(); }
-      say.textContent = `${el.querySelector(`[data-view="${view}"]`)!.textContent} view, lights ${lights}${failing ? ', UPS-A failed' : ''}`;
+      if (fail) { fail.hidden = view !== 'power'; fail.textContent = failing && still() ? T.restore : T.fail; fail.disabled = failing && !still(); }
+      say.textContent = fill(T.say, { view: el.querySelector(`[data-view="${view}"]`)!.textContent!, lights: T[lights] }) + (failing ? T.failed : '');
       if (still()) { [a, b].forEach((v) => { v.pause(); v.classList.remove('front'); }); return poster(k); }
       const s = url(S[k]); if (back.getAttribute('src') !== s) back.src = s;
       back.loop = !failing; back.onended = null; back.currentTime = 0;

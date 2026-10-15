@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/_astro/*",
+    "/brand/*",
+    "/og/*",
+    "/downloads/*",
+    "/homelab/media/*",
+    "/homelab/og/*",
+    "/dc/media/*",
+    "/dc/logos/*",
+    "/dc/downloads/*",
+    "/de/*",
+    "/zh/*",
+    "/icon-512.png",
+    "/robots.txt",
+    "/llms.txt",
+    "/sitemap-index.xml",
+    "/sitemap-0.xml",
+    "/homelab/changelog.xml"
+  ]
+}

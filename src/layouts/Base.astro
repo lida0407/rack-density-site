@@ -8,6 +8,7 @@ import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
 import { ENTITY } from '../config/entity';
 import { abs, u } from '../lib/url';
 import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, PARTNER, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
+import { ui, alternates, localeOf, lp, isLive, LOCALE_META, LOCALES, hasPage, type Locale } from '../i18n';
 
 interface Props {
   title: string;               // full <title>
@@ -18,11 +19,17 @@ interface Props {
   noindex?: boolean;
   section?: 'hub' | 'homelab';  // drives the header and the theme class (theme-hub / theme-homelab); DC pages use layouts/dc/Base.astro
   crumbs?: Crumb[];             // page crumbs after RACKDENSITY › section (last = this page); omit on section homes
+  locale?: Locale;              // default: from the URL (/de/…, /zh/…); `path` is always the English path
+  fallback?: boolean;           // some copy fell back to English → small note under the breadcrumbs
 }
-const { title, description, path, ogImage = '/og/hub.png', schema = [], noindex = false, section = 'hub', crumbs } = Astro.props;
+const { title, description, path, ogImage = '/og/hub.png', schema = [], noindex = false, section = 'hub', crumbs, fallback = false } = Astro.props;
+const locale: Locale = Astro.props.locale ?? localeOf(Astro.url.pathname);
+const t = ui(locale);
 const bc = crumbs ? trail(section, crumbs) : null;
-const ld = bc ? [...schema, crumbsSchema(bc, path)] : schema;
-const canonical = abs(path);
+const ld = bc ? [...schema, crumbsSchema(bc, path, locale)] : schema;
+const canonical = locale === 'en' ? abs(path) : `${SITE_URL}${lp(path, locale)}`;
+// A locale that is not launched yet (src/i18n/live.mjs) is readable but noindex and outside hreflang.
+const alts = isLive(locale) ? alternates(path) : [];
 const org = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -36,14 +43,15 @@ const org = {
 const ogTitle = title.replace(/ \| .*$/, '');
 ---
 <!doctype html>
-<html lang="en" data-edition={section === 'homelab' ? 'homelab' : undefined}>
+<html lang={LOCALE_META[locale].html} data-edition={section === 'homelab' ? 'homelab' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {alts.length > 2 && alts.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    {(noindex || !isLive(locale)) && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0b0a09" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <ThemeScript />
@@ -52,6 +60,8 @@ const ogTitle = title.replace(/ \| .*$/, '');
     {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME} changelog`} href={u('/homelab/changelog.xml')} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={BRAND} />
+    <meta property="og:locale" content={LOCALE_META[locale].og} />
+    {LOCALES.filter((l) => l !== locale && isLive(l) && isLive(locale) && hasPage(path, l)).map((l) => <meta property="og:locale:alternate" content={LOCALE_META[l].og} />)}
     <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -69,10 +79,11 @@ const ogTitle = title.replace(/ \| .*$/, '');
   <body class={`theme-${section}`}>
     {/* Cloudflare's email obfuscation rewrites mailto links to /cdn-cgi/l/email-protection (404 without JS): opt out. */}
     <Fragment set:html="<!--email_off-->" />
-    <Header section={section} />
-    {bc && <Breadcrumbs items={bc} />}
+    <Header section={section} locale={locale} />
+    {bc && <Breadcrumbs items={bc} locale={locale} />}
+    {fallback && <p class="fb-note"><span>{t.fallbackNote}</span></p>}
     <main id="main"><slot /></main>
-    <Footer section={section} />
+    <Footer section={section} locale={locale} />
     <Fragment set:html="<!--/email_off-->" />
   </body>
 </html>

@@ -1,0 +1,104 @@
+---
+// Waitlist (marketing/WAITLIST.md §1). /waitlist 301s here (public/_redirects); ?src= and ?edition= are kept.
+// The form posts natively to the Pages Function (works if this script fails); with JS it posts JSON and answers inline.
+// Shared by /homelab/waitlist/, /de/homelab/waitlist/, /zh/homelab/waitlist/; copy in src/i18n/pages/waitlist.ts.
+// On a locale page the stored src gets the language as a suffix (site-de, yt-zh) so the one e-mail can go out in that language.
+import Base from '../layouts/Base.astro';
+import { mailto } from '../lib/url';
+import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../config/brand';
+import { lp, fill, pageCopy, notifyMail, LOCALE_META, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/waitlist';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale);
+const js = { ...c.js, lang: locale === 'en' ? '' : locale, intl: LOCALE_META[locale].intl };
+---
+<Base title={c.title} description={c.description}
+  path="/homelab/waitlist" ogImage="/homelab/og/try.png" section="homelab" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack}>
+  <section class="section-tight">
+    <div class="wrap narrow wl">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1}</h1>
+      <p class="lead">{c.lead}</p>
+      {WAITLIST.live ? (
+        <form class="card form" method="post" action={WAITLIST.api} data-wl data-t={JSON.stringify(js)}>
+          <label class="field">{c.email} <input type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" /></label>
+          <label class="field">{c.rack} <span class="hint">{c.optional}</span>
+            <input type="text" name="note" maxlength="120" placeholder={c.placeholder} /></label>
+          <fieldset class="field ed"><legend>{c.for}</legend>
+            <label><input type="radio" name="edition" value="homelab" checked /> {PRODUCT_NAME}</label>
+            <label><input type="radio" name="edition" value="dc" /> {DC_PRODUCT_NAME}</label>
+          </fieldset>
+          <input type="hidden" name="src" value={locale === 'en' ? 'site' : `site-${locale}`} />
+          <div class="cf-turnstile" data-sitekey={WAITLIST.siteKey} data-theme="dark" data-size="flexible"></div>
+          <button class="btn btn-primary" type="submit">{c.submit}</button>
+          <p class="small muted" data-msg aria-live="polite"></p>
+          <p class="small muted"><Fragment set:html={fill(c.keep, { src: '<code>?src</code>' })} /> {CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN ? c.analyticsOn : c.analyticsOff} <a href={lp('/privacy', locale)}>{c.privacy}</a>.</p>
+        </form>
+      ) : (
+        <div class="card form">
+          <p>{c.closed}</p>
+          <a class="btn btn-primary" href={mailto(notifyMail(locale).subject, notifyMail(locale).body)}>{c.closedButton}</a>
+        </div>
+      )}
+      <p class="small muted count" data-count></p>
+      <p class="small asked" data-asked></p>
+      <p class="small muted" set:html={fill(c.prefer, { clips: `<a href="${lp('/homelab/try', locale)}">${c.clips}</a>` })}></p>
+    </div>
+  </section>
+  {WAITLIST.live && <script is:inline>
+    document.querySelectorAll('.cf-turnstile').forEach(function (e) { e.dataset.theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'; });
+  </script>}
+  {WAITLIST.live && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</Base>
+<style>
+  .wl h1 { margin-bottom: .3em; }
+  .form { display: grid; gap: 14px; margin: 22px 0 12px; }
+  .ed { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .ed legend { padding: 0; margin-bottom: 6px; }
+  .ed label { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; text-transform: none; letter-spacing: 0; font: 400 1rem/1.4 var(--font-sans, inherit); color: var(--ink); cursor: pointer; }
+  .ed input[type='radio'] { width: 18px; height: 18px; min-height: 0; margin: 0; padding: 0; flex: none; accent-color: var(--accent); }
+  .form .btn { justify-self: start; }
+  [data-msg]:empty, [data-count]:empty, [data-asked]:empty { display: none; }
+  .asked { color: var(--ink-muted); }
+  [data-msg].ok { color: var(--ok); font-weight: 600; font-size: 1rem; }
+  [data-msg].err { color: var(--crit); }
+</style>
+<script>
+  import { WAITLIST } from '../config/brand';
+  const f = document.querySelector<HTMLFormElement>('[data-wl]');
+  const q = new URLSearchParams(location.search);
+  const countEl = document.querySelector<HTMLElement>('[data-count]')!;
+  const T: Record<string, string> = JSON.parse(f?.dataset.t ?? '{}');
+  const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ''));
+  const showCount = () => fetch(`${WAITLIST.api}/count`).then((r) => r.json()).then(({ count }) => { if (count > 0) countEl.textContent = fill(count === 1 ? T.one : T.many, { n: count.toLocaleString(T.intl) }); }).catch(() => {});
+  if (f) {
+    const src = q.get('src'); if (src && /^[a-z0-9_-]{1,24}$/i.test(src)) (f.elements.namedItem('src') as HTMLInputElement).value = T.lang ? `${src.toLowerCase().slice(0, 21)}-${T.lang}` : src.toLowerCase();
+    if (q.get('edition') === 'dc') (f.querySelector('[value="dc"]') as HTMLInputElement).checked = true;
+    // Planned connectors send people here with ?src=<tool> ("I want this" on /dc/integrations/<tool>/): say so.
+    const ASKED: Record<string, string> = { librenms: T.librenms };
+    const asked = ASKED[(src ?? '').toLowerCase()];
+    if (asked) document.querySelector('[data-asked]')!.textContent = fill(T.asked, { x: asked });
+    const msg = f.querySelector<HTMLElement>('[data-msg]')!;
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(f).entries()) as Record<string, string>;
+      const btn = f.querySelector('button')!; btn.disabled = true; msg.className = ''; msg.textContent = T.sending;
+      try {
+        const r = await fetch(WAITLIST.api, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: data.email, note: data.note, edition: data.edition, src: data.src, turnstile: data['cf-turnstile-response'] }) });
+        const j = await r.json();
+        if (j.ok) {
+          msg.className = 'ok';
+          msg.textContent = fill(T.ahead, { msg: j.already ? T.already : T.on, n: j.position, who: j.position === 1 ? T.person : T.people });
+          f.querySelectorAll('input, button').forEach((el) => ((el as HTMLInputElement).disabled = true));
+          showCount(); return;
+        }
+        msg.className = 'err';
+        msg.textContent = ({ email: T.email, turnstile: T.turnstile, rate: T.rate } as Record<string, string>)[j.error as string] ?? T.down;
+      } catch { msg.className = 'err'; msg.textContent = T.down; }
+      btn.disabled = false; (window as any).turnstile?.reset();
+    });
+    showCount();
+  }
+</script>

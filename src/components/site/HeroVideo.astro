@@ -9,6 +9,7 @@ import type { ImageMetadata } from 'astro';
 import fs from 'node:fs';
 import nodePath from 'node:path';
 import { u } from '../../lib/url';
+import { ui, type Locale } from '../../i18n';
 
 interface Props {
   name: string;            // e.g. 'hero-homelab'
@@ -19,8 +20,10 @@ interface Props {
   altLight?: string;
   widths?: number[];
   sizes?: string;
+  locale?: Locale;
 }
-const { name, dir, dark, light, alt, altLight = alt, widths = [480, 800, 1280], sizes = '100vw' } = Astro.props;
+const { name, dir, dark, light, alt, altLight = alt, widths = [480, 800, 1280], sizes = '100vw', locale = 'en' } = Astro.props;
+const V = ui(locale).video;
 const posters = import.meta.glob<{ default: ImageMetadata }>('/src/assets/video/*.jpg', { eager: true });
 const has = (f: string) => fs.existsSync(nodePath.join(process.cwd(), 'public', dir, f));
 const files = (mode: 'dark' | 'bright') => ({
@@ -36,16 +39,16 @@ const img = { widths, sizes, format: 'webp' as const, quality: 72 };
 const ratio = `${posterDark.width} / ${posterDark.height}`;
 ---
 <div class="hv" style={`aspect-ratio:${ratio}`} data-video={hasVideo ? '' : undefined}
-  data-dark-webm={d.webm} data-dark-mp4={d.mp4} data-bright-webm={b.webm} data-bright-mp4={b.mp4}>
+  data-t={hasVideo ? JSON.stringify(V) : undefined} data-dark-webm={d.webm} data-dark-mp4={d.mp4} data-bright-webm={b.webm} data-bright-mp4={b.mp4}>
   <Image src={posterDark} class="hv-img only-dark" alt={alt} loading="eager" decoding="async" {...img} />
   <Image src={posterLight} class="hv-img only-light" alt={altLight} loading="eager" decoding="async" {...img} />
   <script is:inline>(function (s) { var i = s.parentNode.querySelectorAll('.hv-img'), l = document.documentElement.dataset.theme === 'light'; i[l ? 1 : 0].fetchPriority = 'high'; i[l ? 0 : 1].fetchPriority = 'low'; })(document.currentScript);</script>
   {hasVideo && <video class="hv-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>}
   {hasVideo && (
-    <button class="hv-btn" type="button" hidden aria-label="Pause the video">
+    <button class="hv-btn" type="button" hidden aria-label={V.pauseAria}>
       <svg class="i-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
       <svg class="i-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
-      <span class="hv-btn-label">Pause</span>
+      <span class="hv-btn-label">{V.pause}</span>
     </button>
   )}
 </div>
@@ -72,12 +75,13 @@ const ratio = `${posterDark.width} / ${posterDark.height}`;
   document.querySelectorAll<HTMLElement>('.hv[data-video]').forEach((el) => {
     const v = el.querySelector<HTMLVideoElement>('.hv-video')!;
     const btn = el.querySelector<HTMLButtonElement>('.hv-btn')!;
+    const T: Record<string, string> = JSON.parse(el.dataset.t!);
     let userPaused = false, userPlayed = false, onScreen = true, current = '';
     const mode = (): Mode => (root.dataset.theme === 'light' ? 'bright' : 'dark');
     const setBtn = (playing: boolean) => {
       btn.dataset.state = playing ? 'pause' : 'play';
-      btn.setAttribute('aria-label', playing ? 'Pause the video' : 'Play the video');
-      btn.querySelector('.hv-btn-label')!.textContent = playing ? 'Pause' : 'Play';
+      btn.setAttribute('aria-label', playing ? T.pauseAria : T.playAria);
+      btn.querySelector('.hv-btn-label')!.textContent = playing ? T.pause : T.play;
     };
     const play = () => { v.play().then(() => setBtn(true)).catch(() => setBtn(false)); };
     const pick = () => {

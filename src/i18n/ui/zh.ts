@@ -1,0 +1,47 @@
+// UI strings, simplified Chinese (mainland terms: 机柜, 制冷, 布线, 配电). Product names stay Latin.
+import type { UI } from './en';
+import type { Deep } from '../config';
+export const zh: Deep<UI> = {
+  skip: '跳到正文',
+  menu: '菜单', products: '产品', theme: '外观', language: '语言', main: '主导航', sectionMenu: '{name} 菜单',
+  allProducts: '{brand}：全部产品', breadcrumb: '面包屑导航', by: 'by',
+  themeAuto: '自动', themeDark: '深色', themeBright: '浅色', themeAutoTitle: '自动（跟随系统）',
+  themeAutoAria: '自动外观', themeDarkAria: '深色外观', themeBrightAria: '浅色外观',
+  company: '公司', brandSuffix: '（品牌）', legal: '© 2026 {company} · {a} 和 {b} 是 {company} 旗下品牌 · 标注“估算”的数值为估算值',
+  faq: '常见问题', fallbackNote: '本页部分内容尚未翻译，暂以英文显示。', englishOnly: '英文',
+  seeIt: '观看演示', walkthrough: '预约演示讲解', seeIn3D: '查看 3D 效果', seeOnRack: '在你的机柜上查看',
+  simulated: '模拟数据', demoLab: '演示实验室', transcript: '视频内容说明', impressum: '法律声明',
+  labels: {
+    Calculator: '计算器', Devices: '设备', Learn: '学习', Pricing: '价格', Changelog: '更新日志', 'See it': '观看演示',
+    'All products': '全部产品', 'Rack Density Calculator': '机柜密度计算器', 'UPS Runtime Calculator': 'UPS 续航计算器',
+    'Device database': '设备数据库', Overview: '概览', Privacy: '隐私', 'Legal notice': '法律声明',
+    Product: '产品', Integrations: '集成', Partners: '合作伙伴', Resources: '资源', 'Excel template': 'Excel 模板',
+    Guides: '指南', 'Security & data': '安全与数据', Contact: '联系我们', Waitlist: '候补名单', Comparisons: '对比', 'Famous data centers': '知名数据中心',
+  },
+  usd: '${n}',
+  mail: { walkSubject: '预约 {p} 演示讲解', walkBody: '我想预约一次 {p} 演示讲解。我的环境：（机柜尺寸、设备、想看的内容）。', notifySubject: '{p} Try 开放时请通知我', notifyBody: '自助试用 Try 开放时，请发一封邮件通知我。' },
+  stage: {
+    view: '视图', lights: '灯光', on: '开', off: '关', fail: '模拟 UPS-A 故障', restore: '恢复', chooseView: '选择视图',
+    note: '录制自应用本身。这里的每个控件都会切换一段视频。', say: '{view}视图，灯光{lights}', failed: '，UPS-A 已故障',
+    lightsSay: { on: '开', off: '关' },
+    readout: { homelab: '1.02 kW · €165/月 · UPS 18 分钟', dc: 'IT 79.1 kW · PUE 1.16 · ▲ 2 条告警' },
+    views: { overview: '总览', power: '电力', cables: '线缆', tokens: 'Token', network: '网络', cabling: '布线', estate: '多站点' },
+  },
+  video: { play: '播放', pause: '暂停', playAria: '播放视频', pauseAria: '暂停视频' },
+  price: { label: '电价', currency: '货币', perKwh: '每千瓦时电价', hint: '每千瓦时：按电费账单填写' },
+  density: {
+    startFrom: '从预设开始', presetsNote: '家庭实验室数值为典型起点，并非实测值。所有字段都可修改。',
+    presets: { '10': '10 英寸迷你机柜（8U）', '12': '12U 壁挂机柜', '22': '22U 半高机柜', '42': '42U 标准机柜' },
+    rackU: '机柜高度（U）', rackUHint: '42U 标准 · 22–24U 半高 · 12U 壁挂 · 6–12U 10 英寸',
+    devU: '设备高度（每台 U 数）', devU8: '8U（GPU / 刀片）',
+    watts: '每台设备功耗（W）', wattsHint: '迷你主机 10–40 W · NAS 30–80 W · 1U/2U 服务器 100–400 W · GPU 主机 300–1,200 W',
+    cooling: '制冷能力（kW）', coolingHint: '带风扇的储物间 ≈ 0.3–1 kW · 地下室 ≈ 1–3 kW · 数据中心机柜列 5–30 kW',
+    circuit: '供电回路', single: '单相', three: '三相', pf: '功率因数', unitU: 'U', uN: '{n}U',
+    perRack: '每柜设备数', draw: '功率', cost247: '全天候运行', status: '状态', util: '空间 · 电力 · 制冷', perMonth: '/ 月',
+    ok: '正常', tight: '偏紧', critical: '临界', space: '空间', power: '供电', coolingW: '制冷',
+    msgCritical: '{word}是瓶颈，且没有安全余量。请增加容量或降低密度。',
+    msgWarn: '{word}是瓶颈，余量不足 20%。', msgOk: '{word}是限制因素；电力和制冷都保留 ≥ 20% 的余量。',
+    foot: '费用 = 功率（kW）× 730 小时 × 你的电价。此为估算：实际功率取决于负载。绿色表示电力和制冷均有 ≥ 20% 余量。',
+  },
+  diagram: { unitU: 'U', one: '{n} 台设备', devices: '{n} 台设备', perMonth: '/月', limit: '上限', of: '共 {x}', caption: '示意图。设备从底部向上排布；发光的指示条代表最先耗尽的资源。' },
+};

@@ -2,6 +2,7 @@
 // (components/calc/RackDiagram.astro); drawRack() only moves devices and toggles classes/attributes.
 import type { DensityResult, DensityInput } from './rackDensity';
 import { rackSlots } from './rackSlots';
+import { fmt } from '../prefs';
 
 export const G = { x: 46, w: 148, top: 78, h: 288, gaugeTop: 96, gaugeH: 220 } as const;
 export const level = (u: number, axis: 'space' | 'power' | 'cooling') => (axis === 'space' ? 'data' : u > 0.95 ? 'crit' : u > 0.8 ? 'warn' : 'ok');
@@ -10,15 +11,19 @@ export const devBox = (i: number, slots: number, perDevice: number) => {
   const sh = G.h / slots;
   return { y: G.top + G.h - (i + 1) * perDevice * sh + 0.75, h: Math.max(1.5, perDevice * sh - 1.5) };
 };
-const f2 = (v: number) => v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); // same as the tiles
+const f2 = (v: number) => fmt(v, 2); // same as the tiles (page locale)
+/** Labels: the figure's data-t (RackDiagram.astro, from the UI dictionary), English if missing. */
+const EN = { one: '{n} device', devices: '{n} devices', perMonth: '/month', of: 'of {x}', unitU: 'U' };
+const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{(\w+)\}/g, (_, k) => String(v[k] ?? ''));
 
 const timers = new WeakMap<Element, number[]>();
 export function drawRack(root: Element, r: DensityResult, i: DensityInput, cost: string) {
   const svg = root.querySelector('svg')!;
+  let T = EN; try { T = { ...EN, ...JSON.parse(root.getAttribute('data-t') ?? '{}') }; } catch { /* keep English */ }
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const L = rackSlots(i.rackU, i.serverU, r.servers);
   const set = (sel: string, k: string, v: string) => svg.querySelectorAll(sel).forEach((e) => e.setAttribute(k, v));
-  svg.querySelector('[data-d="head"]')!.textContent = `${r.servers} devices · ${f2(r.drawKw)} kW · ${cost}/month`;
+  svg.querySelector('[data-d="head"]')!.textContent = `${fill(r.servers === 1 ? T.one : T.devices, { n: r.servers })} · ${f2(r.drawKw)} kW · ${cost}${T.perMonth}`;
   svg.querySelector('[data-d="more"]')!.textContent = L.more ? `… ×${r.servers}` : '';
   svg.querySelector('[data-d="circ"]')!.textContent = `${i.supply.volts} V · ${i.supply.amps} A${i.supply.phase === 'three' ? ' · 3φ' : ''}`;
   // Empty slots (dashed) and device positions.
@@ -51,7 +56,7 @@ export function drawRack(root: Element, r: DensityResult, i: DensityInput, cost:
     g.setAttribute('class', `gauge g-${level(u, a)}${r.bottleneck === a ? ' limit' : ''}`);
     (g.querySelector('.fill') as SVGElement).style.transform = `scaleY(${Math.min(1, Math.max(0, u))})`;
     g.querySelector('.pct')!.textContent = `${Math.round(u * 100)} %`;
-    const [v1, v2] = a === 'space' ? [`${r.servers * i.serverU} U`, `of ${i.rackU} U`] : [`${f2(r.drawKw)} kW`, `of ${f2(a === 'power' ? r.supplyKw : i.coolingKw)} kW`];
+    const [v1, v2] = a === 'space' ? [`${fmt(r.servers * i.serverU)} ${T.unitU}`, fill(T.of, { x: `${fmt(i.rackU)} ${T.unitU}` })] : [`${f2(r.drawKw)} kW`, fill(T.of, { x: `${f2(a === 'power' ? r.supplyKw : i.coolingKw)} kW` })];
     g.querySelector('.v1')!.textContent = v1; g.querySelector('.v2')!.textContent = v2;
   });
   // Power flow speed follows load; heat chevrons follow cooling.

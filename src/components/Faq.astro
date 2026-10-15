@@ -1,8 +1,9 @@
 ---
 // Renders a visible FAQ and its FAQPage JSON-LD from the same array, so schema text = page text.
+import { ui, type Locale } from '../i18n';
 interface Item { q: string; a: string }
-interface Props { items: Item[]; heading?: string }
-const { items, heading = 'Questions' } = Astro.props;
+interface Props { items: Item[]; heading?: string; locale?: Locale }
+const { items, heading = ui(Astro.props.locale ?? 'en').faq } = Astro.props;
 const schema = { '@context': 'https://schema.org', '@type': 'FAQPage',
   mainEntity: items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })) };
 ---

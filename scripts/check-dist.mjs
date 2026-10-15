@@ -2,7 +2,7 @@
 // Post-build checks: every internal link/asset resolves, every page has one H1, a title, description, canonical, and valid JSON-LD.
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { BASE } from '../site.config.mjs';
+import { BASE, SITE_URL } from '../site.config.mjs';
 const ROOT = BASE.replace(/\/$/, '');   // '' on rack-density.com, '/rack-density-site' on github.io
 const DIST = 'dist';
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
@@ -13,8 +13,14 @@ const warn = (m) => console.log('⚠', m);
 // Paths served by Cloudflare redirects (public/_redirects → dist/_redirects) count as valid link targets if their target exists.
 const redirects = new Map((existsSync(join(DIST, '_redirects')) ? readFileSync(join(DIST, '_redirects'), 'utf8') : '').split('\n')
   .map((l) => l.trim().split(/\s+/)).filter((r) => r.length >= 2 && r[0].startsWith('/')).map(([from, to]) => [from, to]));
+// hreflang (I18N.md): every alternate must exist, link back, and include the page itself; <html lang> must match.
+const SITE = SITE_URL.replace(/\/$/, '');
+const pageOf = (url) => join(DIST, decodeURI(url.slice(SITE.length + ROOT.length)), 'index.html');
+const alts = new Map(); // file → Map(hreflang → href)
 for (const f of html) {
   const s = readFileSync(f, 'utf8');
+  const a = [...s.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)];
+  if (a.length) alts.set(f, { lang: (s.match(/<html lang="([^"]+)"/) || [])[1], canon: (s.match(/<link rel="canonical" href="([^"]+)"/) || [])[1], map: new Map(a.map((m) => [m[1], m[2]])) });
   if (/http-equiv="refresh"/.test(s)) continue;   // redirect stubs
   const h1 = (s.match(/<h1[\s>]/g) || []).length;
   if (h1 !== 1) fail(`${f}: ${h1} <h1>`);
@@ -34,5 +40,17 @@ for (const f of html) {
     }
   }
 }
+for (const [f, { lang, canon, map }] of alts) {
+  if (map.get(lang === 'en' ? 'en' : lang) !== canon) fail(`${f}: hreflang has no self-reference for ${lang} (${canon})`);
+  if (!map.has('x-default')) fail(`${f}: hreflang without x-default`);
+  for (const [hl, href] of map) {
+    if (hl === 'x-default') continue;
+    const target = alts.get(pageOf(href));
+    if (!existsSync(pageOf(href))) fail(`${f}: hreflang ${hl} → missing ${href}`);
+    else if (!target || ![...target.map.values()].includes(canon)) fail(`${f}: hreflang ${hl} → ${href} does not link back`);
+    else if (target.lang !== hl) fail(`${f}: hreflang ${hl} → ${href} has <html lang="${target.lang}">`);
+  }
+}
+console.log(`${alts.size} pages with hreflang alternates checked`);
 console.log(`${html.length} pages checked, ${bad} problem(s)`);
 process.exit(bad ? 1 : 0);

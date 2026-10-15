@@ -1,0 +1,243 @@
+---
+// Homelab Twin home — Console design (brand page canvas "Main"), adapted to: no public demo (See it + walkthrough),
+// Pro $20/mo, product name from the constant. Numbers only from the dev logs (share/updatehl.md).
+// Shared by /homelab/, /de/homelab/, /zh/homelab/; copy in src/i18n/pages/homelab.ts.
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import Faq from '../components/Faq.astro';
+import TryButton from '../components/TryButton.astro';
+import HeroStage from '../components/site/HeroStage.astro';
+import Transcript from '../components/site/Transcript.astro';
+import { VIDEOS, videoLd } from '../data/videos';
+import { u, abs } from '../lib/url';
+import { PRODUCT_NAME, PRICES, FLAGS, WAITLIST } from '../config/brand';
+import { ENTITY } from '../config/entity';
+import { lp, ui, fill, hasPage, pageCopy, notifyLp, type Locale } from '../i18n';
+import * as copy from '../i18n/pages/homelab';
+import heroDark from '../assets/shots/hero-lightsoff.png';
+import heroLight from '../assets/shots/hero-office.png';
+import overview from '../assets/shots/overview.png';
+import viewMenu from '../assets/shots/view-menu.png';
+import flaw from '../assets/shots/flaw-finder.png';
+import cables from '../assets/shots/cables.png';
+import ai from '../assets/shots/ai.png';
+import report from '../assets/shots/import-report.png';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const { c, fellBack } = pageCopy(copy, locale), t = ui(locale);
+const usd = (n: number) => fill(t.usd, { n });
+const enOnly = (href: string) => locale !== 'en' && !hasPage(href, locale);
+const page = locale === 'en' ? '/homelab' : `/${locale}/homelab`;
+// The clip is the same; its name, description and transcript follow the page language.
+const heroVideo = locale === 'en' ? VIDEOS.hero : { ...VIDEOS.hero, transcript: c.hero.transcript };
+
+const app = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', '@id': abs('/homelab/') + '#app', name: PRODUCT_NAME,
+  applicationCategory: 'UtilitiesApplication', operatingSystem: 'Web browser', url: abs('/homelab/'),
+  description: ENTITY.homelabTwin, publisher: { '@id': `${abs('/')}#org` } };
+const views = [['overview', overview], ['views', viewMenu], ['flaws', flaw], ['cables', cables], ['ai', ai]].map(([id, img], k) => ({ id, img, ...c.views.items[k] })) as { id: string; img: typeof overview; label: string; alt: string; text: string }[];
+const checks = ['crit', 'warn', 'warn', 'crit', 'warn', 'warn', 'data', 'data'].map((k, i) => [k, c.checks.items[i]]);
+const guides = ['/homelab/learn/homelab-power-calculator', '/homelab/learn/10-inch-mini-rack-planner', '/homelab/learn/proxmox-power-usage', '/homelab/learn/tokens-per-watt'];
+const soon = !FLAGS.billingLive;
+const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 100vw' };
+---
+<Base title={c.title} description={c.description}
+  path="/homelab" ogImage="/homelab/og/home.png" schema={[app, videoLd(heroVideo, page)]} section="homelab" locale={locale} fallback={fellBack}>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{c.hero.eyebrow}</p>
+        <h1>{c.hero.h1}</h1>
+        <p class="lead">{c.hero.lead}</p>
+        <div class="btn-row"><TryButton walkthrough locale={locale} /></div>
+        <p class="note"><span class="run"><span class="cs-shape cs-shape--off" aria-hidden="true"></span>{c.hero.run}</span><Fragment set:html={fill(c.hero.note, { link: `<a href="${notifyLp('home', locale)}">${WAITLIST.live ? c.hero.join : c.hero.notify}</a>` })} />{c.hero.langNote}</p>
+      </div>
+      <HeroStage edition="homelab" label={c.hero.stage} dark={heroDark} light={heroLight} sizes={heroImg.sizes} locale={locale}
+        alt={c.hero.alt} altLight={c.hero.altLight}>
+        <span slot="pin" class="cs-pin cs-pin--warn"><span class="cs-shape cs-shape--warn"></span>{c.hero.pin}</span>
+        <figcaption class="readouts"><span><span class="cs-shape cs-shape--warn"></span>{c.hero.issues}</span><span class="dim">{c.hero.demo}</span></figcaption>
+        <div class="hero-tx"><Transcript video={VIDEOS.hero} label={c.hero.tx} lines={c.hero.transcript} /></div>
+      </HeroStage>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="wrap tiles tiles-3">
+      <div class="tile"><p class="cs-eyebrow">{c.proof.eyebrow}</p><p class="big">−145<small>W</small></p></div>
+      <div class="tile"><p class="big2">{c.proof.saving} <small>{c.proof.perMonth}</small></p><p class="muted">{c.proof.body} <span class="cs-badge cs-badge--estimated">{c.proof.estimated}</span></p></div>
+      <div class="tile cta"><a class="btn btn-ghost" href={lp('/homelab/try#clips', locale)}>{c.proof.watch}</a></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">{c.shows.eyebrow}</p>
+      <h2>{c.shows.h2}</h2>
+      <div class="tiles tiles-3 feats">
+        <article class="tile"><span class="tag" style="color:var(--layer-power)">{c.shows.power.tag}</span><h3>{c.shows.power.h3}</h3><p class="muted">{c.shows.power.p}</p><code>{c.shows.power.code}</code></article>
+        <article class="tile"><span class="tag" style="color:var(--layer-net)">{c.shows.network.tag}</span><h3>{c.shows.network.h3}</h3><p class="muted">{c.shows.network.p}</p><code>{c.shows.network.code}</code></article>
+        <article class="tile"><span class="tag" style="color:var(--crit)">{c.shows.fail.tag}</span><h3>{c.shows.fail.h3}</h3><p class="muted" set:html={c.shows.fail.p}></p><span class="cs-chip cs-chip--crit"><span class="cs-shape cs-shape--crit"></span>{c.shows.fail.chip}</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="how">
+    <div class="wrap">
+      <p class="eyebrow">{c.how.eyebrow}</p>
+      <h2>{c.how.h2}</h2>
+      <ol class="steps tiles tiles-3">
+        {c.how.steps.map((s, i) => <li class="tile"><span class="num">0{i + 1}</span><h3>{s.h3}</h3><p class="muted">{s.p}</p></li>)}
+      </ol>
+      <div class="btn-row" style="margin-top:18px">
+        <a class="btn btn-ghost" href={u('/downloads/homelab-template.xlsx')} download>{c.how.template}</a>
+        <a class="btn btn-ghost" href={u('/downloads/basement-lab.xlsx')} download>{c.how.example}</a>
+      </div>
+      <p class="note">{c.how.note}{c.how.templateNote}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-2 two">
+      <div>
+        <p class="eyebrow">{c.views.eyebrow}</p>
+        <h2>{c.views.h2}</h2>
+        <div class="viewtabs">
+          {views.map((v, i) => <input type="radio" name="view" id={`v-${v.id}`} checked={i === 0} class="sr-only" />)}
+          <div class="tablist" role="presentation">{views.map((v) => <label for={`v-${v.id}`} class="cs-chip">{v.label}</label>)}</div>
+          {views.map((v) => <div class={`panel p-${v.id}`}><p class="muted">{v.text}</p><Shot src={v.img} alt={v.alt} label={v.label.replace(' · Pro', '')} sizes="(min-width: 1000px) 560px, 100vw" locale={locale} /></div>)}
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">{c.checks.eyebrow}</p>
+        <h2>{c.checks.h2}</h2>
+        <p class="muted">{c.checks.p}</p>
+        <ul class="checks">{checks.map(([k, t]) => <li><span class={`cs-shape cs-shape--${k}`}></span>{t}</li>)}</ul>
+        <Shot src={report} alt={c.checks.reportAlt} label={c.checks.report} sizes="(min-width: 1000px) 560px, 100vw" locale={locale} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap grid grid-2 two">
+      <figure class="shot">
+        <div class="bar"><span class="cs-shape cs-shape--live" aria-hidden="true"></span><b>{c.share.bar}</b><span>· {t.simulated}</span></div>
+        <video autoplay muted loop playsinline preload="none" poster={u('/homelab/media/lights-off-loop.jpg')} width="1280" height="654" aria-label={c.share.videoAria}>
+          <source src={u('/homelab/media/lights-off-loop.webm')} type="video/webm" />
+          <source src={u('/homelab/media/lights-off-loop.mp4')} type="video/mp4" />
+        </video>
+      </figure>
+      <div>
+        <p class="eyebrow">{c.share.eyebrow}</p>
+        <h2>{c.share.h2}</h2>
+        <p class="muted">{c.share.p}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid grid-2 two">
+      <div>
+        <p class="eyebrow" style="color:var(--layer-ai)">{c.ai.eyebrow}</p>
+        <h2>{c.ai.h2}</h2>
+        <p class="muted">{c.ai.p}</p>
+        <p><a href={lp('/homelab/learn/tokens-per-watt', locale)}>{c.ai.link}</a>{enOnly('/homelab/learn/tokens-per-watt') && <span class="en-only"> ({t.englishOnly})</span>}</p>
+        <p class="note">{c.ai.note}</p>
+      </div>
+      <div class="tiles tiles-2 ai-tiles">
+        <div class="tile"><span class="k">{c.ai.today}</span><span class="v">719k</span><span class="note">{c.ai.demo}</span></div>
+        <div class="tile"><span class="k">{c.ai.perKwh}</span><span class="v blur" aria-hidden="true">495k</span><span class="cs-badge cs-badge--pro">Pro</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="head-row"><div><p class="eyebrow">{c.pricing.eyebrow}</p><h2>{c.pricing.h2}</h2></div><a href={lp('/homelab/pricing', locale)}>{c.pricing.compare}</a></div>
+      <div class="tiles tiles-3 prices">
+        <div class="tile rec"><span class="k">{c.pricing.try.k}</span><span class="p">{c.pricing.try.p}</span><span class="muted">{c.pricing.try.body}</span></div>
+        <div class="tile"><span class="k">{c.pricing.account.k} {soon && <span class="cs-badge cs-badge--roadmap">{c.pricing.soon}</span>}</span><span class="p">{usd(PRICES.account.month)}<small>{c.pricing.perMonth}</small></span><span class="muted">{c.pricing.or}{fill(c.pricing.account.body, { year: usd(PRICES.account.year) })}</span></div>
+        <div class="tile"><span class="k">{c.pricing.pro.k} {soon && <span class="cs-badge cs-badge--roadmap">{c.pricing.soon}</span>}</span><span class="p">{usd(PRICES.pro.month)}<small>{c.pricing.perMonth}</small></span><span class="muted">{c.pricing.or}{fill(c.pricing.pro.body, { year: usd(PRICES.pro.year) })}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head-row"><div><p class="eyebrow">{c.learn.eyebrow}</p><h2>{c.learn.h2}</h2></div><a href={lp('/homelab/learn', locale)}>{c.learn.all}</a></div>
+      <div class="grid grid-4 guides">
+        {c.learn.cards.map((g, i) => <a class="card" href={lp(guides[i], locale)}><span class="k">{g.k}{enOnly(guides[i]) && ` · ${t.englishOnly}`}</span><span class="t">{g.t}</span><span class="muted">{g.p}</span></a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap narrow">
+      <p class="lead" set:html={fill(c.built, { sensaka: '<a href="https://sensaka.com" rel="noopener">Sensaka</a>' })}></p>
+    </div>
+  </section>
+
+  <section class="section"><div class="wrap narrow"><Faq items={c.faq} locale={locale} /></div></section>
+
+  <section class="section final">
+    <div class="wrap center">
+      <h2>{c.final.h2}</h2>
+      <div class="btn-row" style="justify-content:center"><TryButton walkthrough locale={locale} /></div>
+      <p class="note" style="margin-top:14px">{c.final.note}</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .hero { padding: 40px 0 32px; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 48px 48px; background-position: -1px -1px; border-bottom: 1px solid var(--line); }
+  .hero-grid { display: grid; gap: 28px; align-items: center; }
+  @media (min-width: 1000px) { .hero-grid { grid-template-columns: 1fr 1.2fr; } .hero { padding: 64px 0 48px; } }
+  .hero-copy { background: var(--bg-000); padding: 8px 0; }
+  .note { font: 400 12px/18px var(--font-mono); color: var(--ink-dim); margin-top: 14px; }
+  .note .run { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--ink-muted); letter-spacing: .06em; text-transform: uppercase; font-size: 11px; }
+  .readouts { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 13px/18px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .readouts i { font-style: normal; color: var(--ink-muted); }
+  .readouts span { display: inline-flex; align-items: center; gap: 6px; }
+  .readouts .dim { color: var(--ink-dim); margin-left: auto; }
+  .hero-tx { padding: 0 12px 8px; background: var(--bg-100); }
+  .proof .tiles { margin-top: -1px; }
+  .tile { background: var(--bg-100); padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+  .proof .tile { background: var(--bg-000); }
+  .big { font: 600 clamp(56px, 8vw, 96px)/0.9 var(--font-mono); letter-spacing: -0.04em; color: var(--accent); text-shadow: 0 0 32px var(--accent-soft); margin: 0; }
+  .big small, .big2 small { font-size: .4em; color: var(--ink-muted); letter-spacing: 0; text-shadow: none; margin-left: .1em; }
+  .big2 { font: 600 clamp(32px, 4vw, 44px)/1 var(--font-mono); letter-spacing: -0.03em; margin: 0; }
+  .cta { align-items: flex-start; }
+  .feats { margin-top: 18px; }
+  .feats .tag { font: 600 11px/14px var(--font-mono); letter-spacing: .14em; }
+  .feats h3 { margin: 0; }
+  .feats code { display: block; margin-top: auto; background: var(--bg-000); border: 1px solid var(--line); padding: 8px 10px; font-size: 12px; white-space: normal; }
+  .alt { background: var(--bg-100); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .alt .tile { background: var(--bg-000); }
+  .steps { list-style: none; padding: 0; margin: 18px 0 0; }
+  .steps .num { font: 600 13px/1 var(--font-mono); color: var(--accent); }
+  .steps h3 { margin: 0; }
+  .two { gap: 48px; align-items: start; }
+  .tablist { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0; }
+  .tablist label { cursor: pointer; height: 32px; }
+  .panel { display: none; }
+  #v-overview:checked ~ .p-overview, #v-views:checked ~ .p-views, #v-flaws:checked ~ .p-flaws, #v-cables:checked ~ .p-cables, #v-ai:checked ~ .p-ai { display: block; }
+  #v-overview:checked ~ .tablist label[for='v-overview'], #v-views:checked ~ .tablist label[for='v-views'], #v-flaws:checked ~ .tablist label[for='v-flaws'],
+  #v-cables:checked ~ .tablist label[for='v-cables'], #v-ai:checked ~ .tablist label[for='v-ai'] { color: var(--ink); border-color: var(--accent); background: var(--accent-soft); }
+  #v-overview:focus-visible ~ .tablist label[for='v-overview'], #v-views:focus-visible ~ .tablist label[for='v-views'], #v-flaws:focus-visible ~ .tablist label[for='v-flaws'],
+  #v-cables:focus-visible ~ .tablist label[for='v-cables'], #v-ai:focus-visible ~ .tablist label[for='v-ai'] { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .checks { list-style: none; padding: 0; margin: 14px 0 20px; display: grid; gap: 8px; }
+  @media (min-width: 640px) { .checks { grid-template-columns: 1fr 1fr; } }
+  .checks li { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+  video { width: 100%; height: auto; display: block; background: #000; }
+  .ai-tiles .k, .prices .k, .guides .k { font: 600 11px/14px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .ai-tiles .v { font: 600 52px/1 var(--font-mono); letter-spacing: -0.03em; color: var(--layer-ai); }
+  .ai-tiles .blur { filter: blur(10px); user-select: none; }
+  .ai-tiles .cs-badge { align-self: flex-start; }
+  .head-row { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+  .head-row h2 { margin: 0; }
+  .prices .p { font: 600 44px/1 var(--font-mono); letter-spacing: -0.03em; }
+  .prices .p small { font-size: 15px; color: var(--ink-muted); letter-spacing: 0; }
+  .prices .rec { box-shadow: inset 0 3px 0 var(--accent); }
+  .guides .card { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 8px; transition: border-color .15s; }
+  .guides .card:hover { border-color: var(--accent); }
+  .guides .t { font: 600 17px/23px var(--font-sans); }
+  .final { border-top: 1px solid var(--line); }
+</style>

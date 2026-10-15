@@ -1,12 +1,14 @@
 ---
 // Auto · Dark · Bright, three small buttons (works in the header and in the phone sheet). Needs ThemeScript in <head>.
-interface Props { compact?: boolean }
-const { compact = false } = Astro.props;
+import { ui, type Locale } from '../../i18n';
+interface Props { compact?: boolean; locale?: Locale }
+const { compact = false, locale = 'en' } = Astro.props;
+const t = ui(locale);
 ---
-<div class:list={['sh-theme', { compact }]} role="group" aria-label="Theme">
-  <button type="button" data-mode="auto" title="Auto (follows your system)" aria-label="Auto theme"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>{!compact && <span>Auto</span>}</button>
-  <button type="button" data-mode="dark" title="Dark" aria-label="Dark theme"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>{!compact && <span>Dark</span>}</button>
-  <button type="button" data-mode="light" title="Bright" aria-label="Bright theme"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>{!compact && <span>Bright</span>}</button>
+<div class:list={['sh-theme', { compact }]} role="group" aria-label={t.theme}>
+  <button type="button" data-mode="auto" title={t.themeAutoTitle} aria-label={t.themeAutoAria}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>{!compact && <span>{t.themeAuto}</span>}</button>
+  <button type="button" data-mode="dark" title={t.themeDark} aria-label={t.themeDarkAria}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>{!compact && <span>{t.themeDark}</span>}</button>
+  <button type="button" data-mode="light" title={t.themeBright} aria-label={t.themeBrightAria}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>{!compact && <span>{t.themeBright}</span>}</button>
 </div>
 <style>
   .sh-theme { display: inline-flex; border: 1px solid var(--line-strong); border-radius: var(--radius-1); overflow: hidden; }

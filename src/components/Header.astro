@@ -7,55 +7,66 @@ import { u } from '../lib/url';
 import { BRAND } from '../config/brand';
 import { MENU, CTA, PRODUCTS, type Section, type NavLink } from '../config/nav';
 import ThemeToggle from './site/ThemeToggle.astro';
+import { ui, fill, label, lp, switchHref, basePath, isLive, LOCALES, LOCALE_META, type Locale } from '../i18n';
 
-interface Props { section?: Section }
-const { section = 'hub' } = Astro.props;
+interface Props { section?: Section; locale?: Locale }
+const { section = 'hub', locale = 'en' } = Astro.props;
+const t = ui(locale);
 const path = Astro.url.pathname;
+const enPath = basePath(path);
+// Launched locales, plus the page's own (a locale under review is readable at its URL but not offered).
+const langs = LOCALES.filter((l) => isLive(l) || l === locale);
 const menu = MENU[section];
 const cta = CTA[section];
-const here = (l: NavLink) => !l.href.includes('#') && !l.download && path.startsWith(u(l.href));
+const here = (l: NavLink) => !l.href.includes('#') && !l.download && path.startsWith(lp(l.href, locale));
 const brandA = BRAND.slice(0, 4), brandB = BRAND.slice(4);
 const current = PRODUCTS.find((p) => p.edition === section);
 ---
-<a class="sh-skip" href="#main">Skip to content</a>
+<a class="sh-skip" href="#main">{t.skip}</a>
 <header class="site-header" data-section={section}>
   <div class="sh-wrap sh-bar">
-    <a class="sh-logo" href={u('/')} aria-label={`${BRAND}: all products`}>
+    <a class="sh-logo" href={lp('/', locale)} aria-label={fill(t.allProducts, { brand: BRAND })}>
       <img class="only-dark" src={u('/brand/mark-rackdensity.svg')} alt="" width="24" height="24" />
       <img class="only-light" src={u('/brand/mark-rackdensity-print.svg')} alt="" width="24" height="24" />
       <span class="sh-wordmark">{brandA}<span>{brandB}</span></span>
     </a>
-    <div class="sh-switch" role="group" aria-label="Products">
+    <div class="sh-switch" role="group" aria-label={t.products}>
       {PRODUCTS.map((p) => (
-        <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}
-          aria-current={p.edition === section ? (path === u(p.href) ? 'page' : 'true') : undefined}>
+        <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={lp(p.href, locale)}
+          aria-current={p.edition === section ? (path === lp(p.href, locale) ? 'page' : 'true') : undefined}>
           <span class="sh-led" aria-hidden="true"></span>{p.label}{'suffix' in p && p.suffix && <small> {p.suffix}</small>}
         </a>
       ))}
     </div>
-    <nav class="sh-menu" aria-label={current ? `${current.label} menu` : 'Main'}>
-      {menu.map((l) => <a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a>)}
+    <nav class="sh-menu" aria-label={current ? fill(t.sectionMenu, { name: current.label }) : t.main}>
+      {menu.map((l) => <a href={lp(l.href, locale)} aria-current={here(l) ? 'page' : undefined}>{label(locale, l.label)}</a>)}
     </nav>
     <span class="sh-spacer"></span>
-    <span class="sh-theme-desk"><ThemeToggle compact /></span>
-    {cta && <a class="sh-cta" href={u(cta.href)} download={cta.download ? '' : undefined}>{cta.label}</a>}
+    <details class="sh-lang">
+      <summary aria-label={`${t.language}: ${LOCALE_META[locale].name}`}><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>{LOCALE_META[locale].label}</span></summary>
+      <div class="sh-lang-list">{langs.map((l) => <a href={switchHref(enPath, l)} hreflang={LOCALE_META[l].hreflang} lang={LOCALE_META[l].html} data-lang={l} aria-current={l === locale ? 'true' : undefined}>{LOCALE_META[l].name}</a>)}</div>
+    </details>
+    <span class="sh-theme-desk"><ThemeToggle compact locale={locale} /></span>
+    {cta && <a class="sh-cta" href={lp(cta.href, locale)} download={cta.download ? '' : undefined}>{label(locale, cta.label)}</a>}
     <details class="sh-sheet">
-      <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Menu</span></summary>
+      <summary aria-label={t.menu}><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>{t.menu}</span></summary>
       <div class="sh-panel">
         <p class="sh-h">{current ? current.label : BRAND}</p>
-        {menu.map((l) => <a href={u(l.href)} aria-current={here(l) ? 'page' : undefined}>{l.label}</a>)}
-        {cta && <a class="sh-panel-cta" href={u(cta.href)} download={cta.download ? '' : undefined}>{cta.label}</a>}
-        <p class="sh-h">Products</p>
-        <div class="sh-switch sh-switch--sheet" role="group" aria-label="Products">
+        {menu.map((l) => <a href={lp(l.href, locale)} aria-current={here(l) ? 'page' : undefined}>{label(locale, l.label)}</a>)}
+        {cta && <a class="sh-panel-cta" href={lp(cta.href, locale)} download={cta.download ? '' : undefined}>{label(locale, cta.label)}</a>}
+        <p class="sh-h">{t.products}</p>
+        <div class="sh-switch sh-switch--sheet" role="group" aria-label={t.products}>
           {PRODUCTS.map((p) => (
-            <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={u(p.href)}>
+            <a class:list={['sh-pill', `sh-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={lp(p.href, locale)}>
               <span class="sh-led" aria-hidden="true"></span>{p.label}{'suffix' in p && p.suffix && <small> {p.suffix}</small>}
             </a>
           ))}
         </div>
-        <a href={u('/')}>{BRAND}: all products</a>
-        <p class="sh-h">Theme</p>
-        <ThemeToggle />
+        <a href={lp('/', locale)}>{fill(t.allProducts, { brand: BRAND })}</a>
+        <p class="sh-h">{t.language}</p>
+        <div class="sh-lang-row">{langs.map((l) => <a href={switchHref(enPath, l)} hreflang={LOCALE_META[l].hreflang} lang={LOCALE_META[l].html} data-lang={l} aria-current={l === locale ? 'true' : undefined}>{LOCALE_META[l].name}</a>)}</div>
+        <p class="sh-h">{t.theme}</p>
+        <ThemeToggle locale={locale} />
       </div>
     </details>
   </div>
@@ -88,9 +99,20 @@ const current = PRODUCTS.find((p) => p.edition === section);
   .sh-menu a:hover, .sh-menu a[aria-current='page'] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
   .sh-spacer { flex: 1; }
   .sh-theme-desk { display: none; }
+  .sh-lang { position: relative; display: none; }
+  .sh-lang summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; height: 34px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink-muted); font: 500 12px/1 var(--font-mono); }
+  .sh-lang summary::-webkit-details-marker { display: none; }
+  .sh-lang summary:hover { color: var(--ink); background: var(--bg-200); }
+  .sh-lang-list { position: absolute; right: 0; top: calc(100% + 4px); z-index: 30; display: grid; min-width: 140px; padding: 4px; background: var(--bg-100); border: 1px solid var(--line-strong); box-shadow: var(--shadow-panel); }
+  .sh-lang-list a, .sh-lang-row a { padding: 9px 10px; color: var(--ink); text-decoration: none; font-size: .9rem; }
+  .sh-lang-list a:hover, .sh-lang-row a:hover { background: var(--accent-soft); }
+  .sh-lang-list a[aria-current], .sh-lang-row a[aria-current] { box-shadow: inset 2px 0 0 var(--accent); background: var(--accent-soft); }
+  .sh-lang-row { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 12px 6px; }
+  .sh-lang-row a { border: 1px solid var(--line-strong); border-radius: var(--radius-1); }
   .sh-cta { display: none; align-items: center; min-height: 40px; padding: 0 14px; border-radius: var(--radius-1); background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: .92rem; text-decoration: none; white-space: nowrap; }
   .sh-cta:hover { background: var(--accent-strong); color: var(--on-accent); }
   .site-header a:focus-visible, .site-header summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  :global(html[lang^='zh']) .sh-menu a, :global(html[lang^='zh']) .sh-cta { letter-spacing: .02em; }
 
   .sh-sheet summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); color: var(--ink); font-size: .9rem; }
   .sh-sheet summary::-webkit-details-marker { display: none; }
@@ -120,10 +142,21 @@ const current = PRODUCTS.find((p) => p.edition === section);
   @media (min-width: 640px) { .sh-cta { display: inline-flex; } }
   @media (min-width: 1100px) {
     .sh-menu, .sh-theme-desk { display: inline-flex; }
+    .sh-lang { display: inline-block; }
     .sh-sheet { display: none; }
   }
 </style>
 <script>
+  // The language you pick is kept for a year in the `lang` cookie, which overrides the by-country redirect
+  // (functions/_middleware.ts, I18N.md §1). The language menu closes like the sheet.
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang]').forEach((a) => a.addEventListener('click', () => {
+    document.cookie = `lang=${a.dataset.lang}; Max-Age=31536000; Path=/; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`;
+  }));
+  const lang = document.querySelector<HTMLDetailsElement>('.sh-lang');
+  if (lang) {
+    document.addEventListener('click', (e) => { if (lang.open && !lang.contains(e.target as Node)) lang.open = false; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lang.open) { lang.open = false; lang.querySelector('summary')?.focus(); } });
+  }
   // Close the phone sheet on Escape, on an outside click, or when the viewport grows past the breakpoint.
   const sheet = document.querySelector<HTMLDetailsElement>('.sh-sheet');
   if (sheet) {

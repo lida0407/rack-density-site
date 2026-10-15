@@ -1,16 +1,16 @@
 ---
 // Breadcrumbs with real links (SITE-NAV.md): RACKDENSITY › Homelab Twin › Learn › page. The last crumb is the page itself.
 // The BreadcrumbList JSON-LD is built by the layout from the same list (see crumbsSchema in lib/crumbs.ts).
-import { u } from '../../lib/url';
+import { lp, ui, type Locale } from '../../i18n';
 import type { Crumb } from '../../lib/crumbs';
-interface Props { items: Crumb[] }
-const { items } = Astro.props;
+interface Props { items: Crumb[]; locale?: Locale }
+const { items, locale = 'en' } = Astro.props;
 ---
-<nav class="bc" aria-label="Breadcrumb">
+<nav class="bc" aria-label={ui(locale).breadcrumb}>
   <ol class="bc-wrap">
     {items.map((c, i) => (
       <li>{i < items.length - 1 && c.path !== undefined
-        ? <a href={u(c.path)}>{c.name}</a>
+        ? <a href={lp(c.path, locale)}>{c.name}</a>
         : <span aria-current="page">{c.name}</span>}</li>
     ))}
   </ol>

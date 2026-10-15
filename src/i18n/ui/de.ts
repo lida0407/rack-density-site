@@ -1,0 +1,47 @@
+// UI strings, German (formal "Sie"). Rack units are HE (Höheneinheiten) in German practice; UPS = USV.
+import type { UI } from './en';
+import type { Deep } from '../config';
+export const de: Deep<UI> = {
+  skip: 'Zum Inhalt springen',
+  menu: 'Menü', products: 'Produkte', theme: 'Darstellung', language: 'Sprache', main: 'Hauptmenü', sectionMenu: 'Menü {name}',
+  allProducts: '{brand}: alle Produkte', breadcrumb: 'Pfadnavigation', by: 'von',
+  themeAuto: 'Auto', themeDark: 'Dunkel', themeBright: 'Hell', themeAutoTitle: 'Automatisch (wie Ihr System)',
+  themeAutoAria: 'Automatische Darstellung', themeDarkAria: 'Dunkle Darstellung', themeBrightAria: 'Helle Darstellung',
+  company: 'Unternehmen', brandSuffix: '(Marke)', legal: '© 2026 {company} · {a} und {b} sind Marken von {company} · als geschätzt markierte Werte sind Schätzungen',
+  faq: 'Häufige Fragen', fallbackNote: 'Teile dieser Seite sind noch nicht übersetzt und erscheinen auf Englisch.', englishOnly: 'Englisch',
+  seeIt: 'Ansehen', walkthrough: 'Vorführung anfragen', seeIn3D: 'In 3D ansehen', seeOnRack: 'An Ihrem Rack ansehen',
+  simulated: 'simulierte Daten', demoLab: 'Demo-Lab', transcript: 'Was der Clip zeigt', impressum: 'Impressum',
+  labels: {
+    Calculator: 'Rechner', Devices: 'Geräte', Learn: 'Ratgeber', Pricing: 'Preise', Changelog: 'Änderungen', 'See it': 'Ansehen',
+    'All products': 'Alle Produkte', 'Rack Density Calculator': 'Rack-Rechner', 'UPS Runtime Calculator': 'USV-Laufzeitrechner',
+    'Device database': 'Gerätedatenbank', Overview: 'Überblick', Privacy: 'Datenschutz', 'Legal notice': 'Impressum',
+    Product: 'Produkt', Integrations: 'Integrationen', Partners: 'Partner', Resources: 'Ressourcen', 'Excel template': 'Excel-Vorlage',
+    Guides: 'Leitfäden', 'Security & data': 'Sicherheit & Daten', Contact: 'Kontakt', Waitlist: 'Warteliste', Comparisons: 'Vergleiche', 'Famous data centers': 'Bekannte Rechenzentren',
+  },
+  usd: '{n}\u00a0$',
+  mail: { walkSubject: 'Vorführung {p}', walkBody: 'Ich hätte gern eine Vorführung von {p}. Mein Lab: (Rackgröße, Geräte, was Sie sehen möchten).', notifySubject: 'Bitte benachrichtigen, wenn {p} Try öffnet', notifyBody: 'Bitte eine E-Mail, sobald Try zum Selbsttesten öffnet.' },
+  stage: {
+    view: 'Ansicht', lights: 'Licht', on: 'An', off: 'Aus', fail: 'USV-A ausfallen lassen', restore: 'Wiederherstellen', chooseView: 'Ansicht wählen',
+    note: 'Aus der App aufgenommen. Jedes Bedienelement hier schaltet auf einen anderen Clip um.', say: 'Ansicht {view}, Licht {lights}', failed: ', USV-A ausgefallen',
+    lightsSay: { on: 'an', off: 'aus' },
+    readout: { homelab: '1,02 kW · 165 €/Monat · USV 18 min', dc: 'IT 79,1 kW · PUE 1,16 · ▲ 2 Alarme' },
+    views: { overview: 'Überblick', power: 'Strom', cables: 'Kabel', tokens: 'Tokens', network: 'Netzwerk', cabling: 'Verkabelung', estate: 'Standorte' },
+  },
+  video: { play: 'Abspielen', pause: 'Pause', playAria: 'Video abspielen', pauseAria: 'Video anhalten' },
+  price: { label: 'Strompreis', currency: 'Währung', perKwh: 'Preis pro kWh', hint: 'pro kWh, wie auf Ihrer Stromrechnung' },
+  density: {
+    startFrom: 'Ausgangspunkt', presetsNote: 'Die Homelab-Werte sind typische Ausgangswerte, keine Messungen. Jedes Feld lässt sich ändern.',
+    presets: { '10': '10-Zoll-Minirack (8 HE)', '12': '12-HE-Wandschrank', '22': '22-HE-Halbrack', '42': '42-HE-Vollrack' },
+    rackU: 'Rackhöhe (HE)', rackUHint: '42 HE voll · 22–24 HE halb · 12 HE Wandschrank · 6–12 HE 10-Zoll',
+    devU: 'Gerätehöhe (HE je Gerät)', devU8: '8 HE (GPU / Blade)',
+    watts: 'Leistungsaufnahme je Gerät (W)', wattsHint: 'Mini-PC 10–40 W · NAS 30–80 W · 1-/2-HE-Server 100–400 W · GPU-Rechner 300–1.200 W',
+    cooling: 'Kühlleistung (kW)', coolingHint: 'Abstellraum mit Lüfter ≈ 0,3–1 kW · Kellerraum ≈ 1–3 kW · Rechenzentrumsreihe 5–30 kW',
+    circuit: 'Stromkreis', single: 'Einphasig', three: 'Drehstrom', pf: 'Leistungsfaktor', unitU: 'HE', uN: '{n} HE',
+    perRack: 'Geräte pro Rack', draw: 'Leistung', cost247: 'Bei Dauerbetrieb', status: 'Status', util: 'Platz · Strom · Kühlung', perMonth: '/ Monat',
+    ok: 'OK', tight: 'Knapp', critical: 'Kritisch', space: 'Platz', power: 'Strom', coolingW: 'Kühlung',
+    msgCritical: '{word} ist der Engpass, ohne sichere Reserve. Erhöhen Sie die Kapazität oder senken Sie die Dichte.',
+    msgWarn: '{word} ist der Engpass, mit weniger als 20 % Reserve.', msgOk: '{word} ist die Grenze; Strom und Kühlung behalten mindestens 20 % Reserve.',
+    foot: 'Kosten = Leistung (kW) × 730 Stunden × Ihr Strompreis. Eine Schätzung: Die tatsächliche Leistung hängt von der Last ab. Grün bedeutet mindestens 20 % Reserve bei Strom und Kühlung.',
+  },
+  diagram: { unitU: 'HE', one: '{n} Gerät', devices: '{n} Geräte', perMonth: '/Monat', limit: 'Grenze', of: '/ {x}', caption: 'Schema. Die Geräte füllen das Rack von unten; die leuchtende Anzeige zeigt, was zuerst ausgeht.' },
+};

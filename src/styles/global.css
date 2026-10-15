@@ -186,3 +186,12 @@ details.faq summary { font-size: 15px; font-weight: 600; }
 /* Code blocks: Shiki renders the dark colours inline and the bright ones as --shiki-light vars (astro.config.mjs). */
 [data-theme='light'] .astro-code, [data-theme='light'] .astro-code span { color: var(--shiki-light) !important; background-color: var(--shiki-light-bg) !important; }
 .astro-code { border: 1px solid var(--line); }
+
+/* i18n: Chinese uses the system CJK fonts (no webfont download for CJK); German keeps Inter/Plex (umlauts and ß covered). */
+html[lang^='zh'] body { font-family: 'Inter Variable', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Microsoft YaHei', system-ui, sans-serif; }
+html[lang^='zh'] .eyebrow, html[lang^='zh'] .cs-eyebrow { letter-spacing: .08em; }
+.fb-note { margin: 0; border-bottom: 1px solid var(--line); background: var(--warn-soft); }
+.fb-note span { display: block; max-width: var(--max, 1160px); margin: 0 auto; padding: 6px var(--gutter, 16px); font: 500 12px/1.5 var(--font-mono); color: var(--ink-muted); }
+
+/* A link to a page that exists in English only (locale pages, I18N.md). */
+.en-only { color: var(--ink-dim); font-size: .85em; }
