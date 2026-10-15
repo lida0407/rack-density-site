@@ -2,17 +2,17 @@
  "templateCta.h2": {
   "en": "One Excel file. Your room in 3D.",
   "de": "Eine Excel-Datei. Ihr Raum in 3D.",
-  "zh": "一个 Excel 文件，您的机房即成 3D。"
+  "zh": "一个 Excel 文件，即可 3D 呈现您的机房。"
  },
  "templateCta.p": {
   "en": "Download the import template (v{TEMPLATE_VERSION}, {TEMPLATE_SHEETS}, only Devices required) and the filled example from our demo hall. No form, no email needed, no macros in the files.",
   "de": "Laden Sie die Import-Vorlage (v{TEMPLATE_VERSION}, {TEMPLATE_SHEETS}, nur das Blatt Devices ist Pflicht) und das ausgefüllte Beispiel aus unserer Demohalle herunter. Kein Formular, keine E-Mail-Adresse nötig, keine Makros in den Dateien.",
-  "zh": "下载导入模板（v{TEMPLATE_VERSION}，{TEMPLATE_SHEETS}，仅 Devices 必填）和我们演示机房的填写示例。无需填写表单，无需留邮箱，文件中不含宏。"
+  "zh": "下载导入模板（v{TEMPLATE_VERSION}，{TEMPLATE_SHEETS}，仅 Devices 为必填）及演示机房的填写示例。无需填写表单，无需提供邮箱，文件不含宏。"
  },
  "templateCta.btnTemplate": {
   "en": "Download the template (.xlsx)",
   "de": "Vorlage herunterladen (.xlsx)",
-  "zh": "下载模板（.xlsx）"
+  "zh": "下载导入模板（.xlsx）"
  },
  "templateCta.btnExample": {
   "en": "Download the filled example",
@@ -22,27 +22,27 @@
  "templateCta.mailtoSubject": {
   "en": "DC Sim walkthrough",
   "de": "DC Sim walkthrough",
-  "zh": "预约 DC Sim 演示讲解"
+  "zh": "DC Sim 演示预约"
  },
  "templateCta.mailtoBody": {
   "en": "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n",
   "de": "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n",
-  "zh": "Da 您好，\n\n我们想用自己的文件预约一次 DC Sim 演示讲解。\n\n机柜数：\n公司：\n"
+  "zh": "Da 您好：\n\n我希望基于我方的数据文件预约一次 DC Sim 演示。\n\n机柜数量：\n公司名称：\n"
  },
  "templateCta.btnWalkthrough": {
   "en": "Request a walkthrough",
   "de": "Vorführung anfragen",
-  "zh": "预约演示讲解"
+  "zh": "预约演示"
  },
  "templateCta.fine": {
   "en": "Fill in the Devices sheet and send it with your walkthrough request; we import it on the call.",
   "de": "Füllen Sie das Blatt Devices aus und senden Sie es mit Ihrer Anfrage für eine Vorführung; wir importieren es während des Gesprächs.",
-  "zh": "填好 Devices 工作表，随演示讲解申请一起发给我们；我们会在通话中导入。"
+  "zh": "填写 Devices 工作表，随演示预约一并发送；我们将在演示通话中现场导入。"
  },
  "templateCta.sheetsLink": {
   "en": "What each sheet does",
   "de": "Wozu jedes Blatt dient",
-  "zh": "各工作表的作用"
+  "zh": "各工作表说明"
  },
  "pricingStrip.eyebrow": {
   "en": "Pricing",
@@ -52,27 +52,27 @@
  "pricingStrip.h2": {
   "en": "Pricing that fits a 10-rack room",
   "de": "Preise, die zu einem Raum mit 10 Racks passen",
-  "zh": "10 个机柜的机房也用得起的价格"
+  "zh": "适合 10 个机柜机房的定价"
  },
  "pricingStrip.design.h3": {
   "en": "Design",
   "de": "Design",
-  "zh": "Design"
+  "zh": "设计版（Design）"
  },
  "pricingStrip.design.price": {
   "en": "from ${PRICES.design[0].price} <small>per project, one-time</small>",
   "de": "ab {PRICES.design[0].price} $ <small>pro Projekt, einmalig</small>",
-  "zh": "${PRICES.design[0].price} 起 <small>按项目，一次性收费</small>"
+  "zh": "${PRICES.design[0].price} 起 <small>按项目一次性收费</small>"
  },
  "pricingStrip.design.p": {
   "en": "Plan a room or a new row; three months per project. The AI design assistant comes at no extra cost when it ships.",
   "de": "Planen Sie einen Raum oder eine neue Rack-Reihe; drei Monate pro Projekt. Der KI-Planungsassistent kommt ohne Aufpreis dazu, sobald er verfügbar ist.",
-  "zh": "规划一个机房或新增一列机柜；每个项目三个月。AI 设计助手上线后不额外收费。"
+  "zh": "用于规划机房或新增机柜列；每个项目使用期三个月。AI 设计助手上线后包含在内，不另收费。"
  },
  "pricingStrip.monitor.h3": {
   "en": "Monitor",
   "de": "Monitor",
-  "zh": "Monitor"
+  "zh": "监测版（Monitor）"
  },
  "pricingStrip.monitor.price": {
   "en": "${PRICES.monitorPerRack} <small>per rack per month, min ${PRICES.monitorMin}</small>",
@@ -82,7 +82,7 @@
  "pricingStrip.monitor.p": {
   "en": "The twin of a running room, with what-if and reports.",
   "de": "Der Zwilling eines Raums im laufenden Betrieb, mit Was-wäre-wenn-Analysen und Berichten.",
-  "zh": "运行中机房的数字孪生，含假设推演和报表。"
+  "zh": "运行中机房的数字孪生，含故障推演与报表。"
  },
  "pricingStrip.partner.h3": {
   "en": "Partner",
@@ -97,12 +97,12 @@
  "pricingStrip.partner.p": {
   "en": "For integrators, MSPs and consultants.",
   "de": "Für Systemhäuser, MSPs und Berater.",
-  "zh": "面向集成商、MSP 和咨询顾问。"
+  "zh": "面向系统集成商、托管服务商（MSP）和咨询顾问。"
  },
  "pricingStrip.compare": {
   "en": "Compare with typical DCIM pricing",
   "de": "Mit typischen DCIM-Preisen vergleichen",
-  "zh": "与常见 DCIM 价格对比"
+  "zh": "与常见 DCIM 定价对比"
  },
  "faq.heading": {
   "en": "Questions people ask",
@@ -127,7 +127,7 @@
  "deviceData.titleDefault": {
   "en": "Open device data behind this layer",
   "de": "Offene Gerätedaten hinter dieser Ebene",
-  "zh": "该图层背后的开放设备数据"
+  "zh": "本图层所用的开放设备数据"
  },
  "deviceData.eyebrow": {
   "en": "Device data",
@@ -137,12 +137,12 @@
  "deviceData.lede": {
   "en": "The catalog that fills in size, weight, power and airflow when you import a model is open: {total} models in these categories, with idle, typical and maximum watts, U, weight, ports and dated list prices, sources cited.",
   "de": "Der Katalog, der beim Import eines Modells Größe, Gewicht, Leistung und Luftstrom ergänzt, ist offen: {total} Modelle in diesen Kategorien, mit Leerlauf-, typischer und maximaler Leistung in Watt, HE, Gewicht, Ports und datierten Listenpreisen, jeweils mit Quellenangabe.",
-  "zh": "导入型号时自动填入尺寸、重量、功率和气流的设备库是开放的：这些类别中共有 {total} 个型号，包含空载、典型和最大功率（W）、U 数、重量、端口以及注明日期的目录价，并注明来源。"
+  "zh": "导入型号时自动补全尺寸、重量、功率和气流的设备库为开放数据：以下类别共 {total} 个型号，含空载、典型和最大功率（W）、U 数、重量、端口及注明日期的目录价，并标注数据来源。"
  },
  "deviceData.all": {
   "en": "All device data (CSV and JSON, CC BY 4.0)",
   "de": "Alle Gerätedaten (CSV und JSON, CC BY 4.0)",
-  "zh": "全部设备数据（CSV 和 JSON，CC BY 4.0）"
+  "zh": "全部设备数据（CSV 与 JSON，CC BY 4.0）"
  },
  "dcimCost.h2": {
   "en": "DCIM cost calculator",
@@ -152,12 +152,12 @@
  "dcimCost.intro": {
   "en": "Yearly license cost from published list prices. Assets are racks plus the devices in them; services, sensors and implementation are not included.",
   "de": "Jährliche Lizenzkosten auf Basis veröffentlichter Listenpreise. Assets sind Racks plus die darin verbauten Geräte; Dienstleistungen, Sensoren und Implementierung sind nicht enthalten.",
-  "zh": "根据公开目录价计算的年度许可费用。资产指机柜及其中的设备；不含服务、传感器和实施费用。"
+  "zh": "按公开目录价计算的年度授权费用。资产指机柜及其中的设备；不含服务、传感器和实施费用。"
  },
  "dcimCost.racks": {
   "en": "Racks",
   "de": "Racks",
-  "zh": "机柜数"
+  "zh": "机柜数量"
  },
  "dcimCost.devicesPerRack": {
   "en": "Devices per rack",
@@ -167,27 +167,27 @@
  "dcimCost.row.perAsset": {
   "en": "Cloud DCIM, priced per asset",
   "de": "Cloud-DCIM, Preis pro Asset",
-  "zh": "云 DCIM，按资产计价"
+  "zh": "云端 DCIM，按资产计价"
  },
  "dcimCost.row.perRack": {
   "en": "Mid-market DCIM, priced per rack",
   "de": "DCIM für den Mittelstand, Preis pro Rack",
-  "zh": "中端 DCIM，按机柜计价"
+  "zh": "中端市场 DCIM，按机柜计价"
  },
  "dcimCost.row.enterprise": {
   "en": "Enterprise suite (reported)",
   "de": "Enterprise-Suite (laut Berichten)",
-  "zh": "企业级套件（据报道）"
+  "zh": "企业级套件（公开报道数据）"
  },
  "dcimCost.row.dcsim": {
   "en": "DC Sim Monitor",
   "de": "DC Sim Monitor",
-  "zh": "DC Sim Monitor"
+  "zh": "DC Sim 监测版"
  },
  "dcimCost.fine": {
   "en": "Per year. Per asset: $3 per asset, $1,500 minimum. Per rack: $234–333. Enterprise: $800–2,500 per rack as reported by industry research, usually quote-only. DC Sim Monitor: ${PRICES.monitorPerRack} per rack per month, ${PRICES.monitorMin} minimum.",
   "de": "Pro Jahr. Pro Asset: 3 $ pro Asset, mindestens 1.500 $. Pro Rack: 234–333 $. Enterprise: 800–2.500 $ pro Rack laut Branchenstudien, meist nur auf Anfrage. DC Sim Monitor: {PRICES.monitorPerRack} $ pro Rack und Monat, mindestens {PRICES.monitorMin} $.",
-  "zh": "按年计。按资产：每项资产 $3，最低 $1,500。按机柜：$234–333。企业级：据行业研究报道每机柜 $800–2,500，通常仅提供报价。DC Sim Monitor：每机柜每月 ${PRICES.monitorPerRack}，最低 ${PRICES.monitorMin}。"
+  "zh": "均为年费。按资产计价：每项资产 $3，最低 $1,500。按机柜计价：每机柜 $234–333。企业级：据行业研究报道为每机柜 $800–2,500，通常需单独询价。DC Sim 监测版：每机柜每月 ${PRICES.monitorPerRack}，最低 ${PRICES.monitorMin}。"
  },
  "rackPower.h2": {
   "en": "Rack power calculator",
@@ -197,7 +197,7 @@
  "rackPower.intro": {
   "en": "Enter the devices in one rack with their typical draw (measured if you have it, otherwise an estimate per model). Results are estimates.",
   "de": "Tragen Sie die Geräte eines Racks mit ihrer typischen Leistungsaufnahme ein (gemessen, falls vorhanden, sonst als Schätzwert pro Modell). Die Ergebnisse sind Schätzungen.",
-  "zh": "输入一个机柜内的设备及其典型功耗（有实测值就用实测值，否则按型号估算）。结果为估算值。"
+  "zh": "输入单个机柜内的设备及其典型功耗（如有实测值请使用实测值，否则按型号估算）。计算结果均为估算值。"
  },
  "rackPower.th.device": {
   "en": "Device",
@@ -222,7 +222,7 @@
  "rackPower.row.servers.aria": {
   "en": "Watts per server",
   "de": "Watt pro Server",
-  "zh": "每台服务器功率（W）"
+  "zh": "单台服务器功率（W）"
  },
  "rackPower.row.gpu": {
   "en": "GPU nodes",
@@ -232,17 +232,17 @@
  "rackPower.row.gpu.aria": {
   "en": "Watts per GPU node",
   "de": "Watt pro GPU-Knoten",
-  "zh": "每个 GPU 节点功率（W）"
+  "zh": "单个 GPU 节点功率（W）"
  },
  "rackPower.row.storage": {
   "en": "Storage shelves",
   "de": "Storage-Shelves",
-  "zh": "存储盘柜"
+  "zh": "存储扩展柜"
  },
  "rackPower.row.storage.aria": {
   "en": "Watts per storage shelf",
   "de": "Watt pro Storage-Shelf",
-  "zh": "每个存储盘柜功率（W）"
+  "zh": "单个存储扩展柜功率（W）"
  },
  "rackPower.row.switches": {
   "en": "Switches and other",
@@ -252,7 +252,7 @@
  "rackPower.row.switches.aria": {
   "en": "Watts per switch",
   "de": "Watt pro Switch",
-  "zh": "每台交换机功率（W）"
+  "zh": "单台交换机功率（W）"
  },
  "rackPower.voltage": {
   "en": "Voltage",
@@ -272,17 +272,17 @@
  "rackPower.breaker": {
   "en": "Breaker per PDU",
   "de": "Schutzschalter pro PDU",
-  "zh": "每个 PDU 的断路器"
+  "zh": "每个 PDU 的断路器规格"
  },
  "rackPower.feeds": {
   "en": "Feeds",
   "de": "Einspeisungen",
-  "zh": "供电路数"
+  "zh": "供电方式"
  },
  "rackPower.feeds.dual": {
   "en": "A + B (dual-corded)",
   "de": "A + B (zwei Netzkabel)",
-  "zh": "A + B（双电源）"
+  "zh": "A + B 双路（双电源）"
  },
  "rackPower.feeds.single": {
   "en": "Single feed",
@@ -297,17 +297,17 @@
  "rackPower.out.capacity": {
   "en": "Breaker capacity (80 % rule)",
   "de": "Kapazität des Schutzschalters (80-%-Regel)",
-  "zh": "断路器容量（80 % 规则）"
+  "zh": "断路器容量（80 % 降额规则）"
  },
  "rackPower.out.normal": {
   "en": "Each PDU, normal",
   "de": "Je PDU im Normalbetrieb",
-  "zh": "每个 PDU，正常运行"
+  "zh": "单个 PDU，正常工况"
  },
  "rackPower.out.fail": {
   "en": "Surviving PDU if one feed fails",
   "de": "Verbleibende PDU bei Ausfall einer Einspeisung",
-  "zh": "一路失电后剩余的 PDU"
+  "zh": "单路失电时的剩余 PDU"
  },
  "rackPower.script.load": {
   "en": "{fmt(kw)} (estimated)",
@@ -322,42 +322,42 @@
  "rackPower.script.normal": {
   "en": "{fmt(normal)} · {Math.round((normal / capKw) * 100)} % of breaker",
   "de": "{fmt(normal)} · {Math.round((normal / capKw) * 100)} % des Schutzschalters",
-  "zh": "{fmt(normal)} · 占断路器 {Math.round((normal / capKw) * 100)} %"
+  "zh": "{fmt(normal)} · 占断路器容量 {Math.round((normal / capKw) * 100)} %"
  },
  "rackPower.script.fail": {
   "en": "{fmt(fail)} · {Math.round((fail / capKw) * 100)} % of breaker",
   "de": "{fmt(fail)} · {Math.round((fail / capKw) * 100)} % des Schutzschalters",
-  "zh": "{fmt(fail)} · 占断路器 {Math.round((fail / capKw) * 100)} %"
+  "zh": "{fmt(fail)} · 占断路器容量 {Math.round((fail / capKw) * 100)} %"
  },
  "rackPower.script.failSingle": {
   "en": "single feed: a feed loss takes the rack down",
   "de": "nur eine Einspeisung: Fällt sie aus, fällt das ganze Rack aus",
-  "zh": "单路供电：一旦失电，整个机柜停机"
+  "zh": "单路供电：该路失电即整机柜停机"
  },
  "rackPower.script.msgSingle": {
   "en": "Single feed: this rack has no redundancy. Any breaker, PDU or upstream failure on the feed takes it down.",
   "de": "Nur eine Einspeisung: Dieses Rack hat keine Redundanz. Jeder Ausfall auf dieser Einspeisung, ob Schutzschalter, PDU oder vorgelagerte Komponente, legt es lahm.",
-  "zh": "单路供电：该机柜没有冗余。这一路上任何断路器、PDU 或上游故障都会让它停机。"
+  "zh": "单路供电：该机柜无供电冗余。该路上任一断路器、PDU 或上游设备故障，均会导致机柜停机。"
  },
  "rackPower.script.msgOver": {
   "en": "If feed A fails, the B PDU must carry {fmt(fail)}, above its 80 % limit of {fmt(limit)}. This rack is 2N on paper only.",
   "de": "Fällt Einspeisung A aus, muss die PDU an B {fmt(fail)} tragen, mehr als ihre 80-%-Grenze von {fmt(limit)}. Dieses Rack ist nur auf dem Papier 2N.",
-  "zh": "如果 A 路失电，B 路 PDU 需要承载 {fmt(fail)}，超过其 80 % 上限 {fmt(limit)}。这个机柜的 2N 只停留在纸面上。"
+  "zh": "A 路失电时，B 路 PDU 须承载 {fmt(fail)}，超过其 80 % 限值 {fmt(limit)}。该机柜仅在名义上满足 2N。"
  },
  "rackPower.script.msgOk": {
   "en": "Either PDU can carry the whole rack under the 80 % limit, with {fmt(limit - fail)} to spare.",
   "de": "Jede der beiden PDUs kann das ganze Rack unter der 80-%-Grenze tragen, mit {fmt(limit - fail)} Reserve.",
-  "zh": "任一 PDU 都能在 80 % 上限内承载整个机柜，还有 {fmt(limit - fail)} 余量。"
+  "zh": "任一 PDU 均可在 80 % 限值内承载整个机柜，尚余 {fmt(limit - fail)} 裕量。"
  },
  "tokens.h2": {
   "en": "Tokens per kWh calculator",
   "de": "Rechner: Token pro kWh",
-  "zh": "每 kWh token 数计算器"
+  "zh": "每千瓦时 token 数计算器"
  },
  "tokens.intro": {
   "en": "Use the server's measured power if you have it. The overhead factor adds the facility's share (cooling, UPS losses); 1.0 means the server alone.",
   "de": "Verwenden Sie die gemessene Leistung des Servers, falls vorhanden. Der Overhead-Faktor rechnet den Anteil der Infrastruktur hinzu (Kühlung, USV-Verluste); 1,0 steht für den Server allein.",
-  "zh": "有服务器实测功率就用实测值。开销系数计入基础设施分摊（制冷、UPS 损耗）；1.0 表示只算服务器本身。"
+  "zh": "如有服务器实测功率，请使用实测值。开销系数计入基础设施分摊部分（制冷、UPS 损耗）；1.0 表示仅计服务器本身。"
  },
  "tokens.tps": {
   "en": "Tokens per second (server)",
@@ -377,32 +377,32 @@
  "tokens.tariff": {
   "en": "Electricity price per kWh",
   "de": "Strompreis pro kWh",
-  "zh": "每 kWh 电价"
+  "zh": "电价（每 kWh）"
  },
  "tokens.out.perKwh": {
   "en": "Tokens per kWh",
   "de": "Token pro kWh",
-  "zh": "每 kWh token 数"
+  "zh": "每千瓦时 token 数"
  },
  "tokens.out.energy": {
   "en": "Energy per 1M tokens",
   "de": "Energie pro 1 Mio. Token",
-  "zh": "每 1M token 能耗"
+  "zh": "每百万 token 能耗"
  },
  "tokens.out.cost": {
   "en": "Energy cost per 1M tokens",
   "de": "Energiekosten pro 1 Mio. Token",
-  "zh": "每 1M token 电费"
+  "zh": "每百万 token 电费"
  },
  "tokens.out.day": {
   "en": "Per day at this rate",
   "de": "Pro Tag bei diesem Durchsatz",
-  "zh": "按此速率每天"
+  "zh": "按当前速率每日"
  },
  "tokens.formula": {
   "en": "Formula: tokens per kWh = tokens/s × 3,600 ÷ (power in kW × overhead factor). Example: 20,000 tokens/s at 6 kW and factor 1.0 = 12,000,000 tokens per kWh.",
   "de": "Formel: Token pro kWh = Token/s × 3.600 ÷ (Leistung in kW × Overhead-Faktor). Beispiel: 20.000 Token/s bei 6 kW und Faktor 1,0 = 12.000.000 Token pro kWh.",
-  "zh": "公式：每 kWh token 数 = tokens/s × 3,600 ÷（功率 kW × 开销系数）。示例：20,000 tokens/s、6 kW、系数 1.0 = 每 kWh 12,000,000 token。"
+  "zh": "公式：每千瓦时 token 数 = tokens/s × 3,600 ÷（以 kW 计的功率 × 开销系数）。示例：20,000 tokens/s、6 kW、系数 1.0 时，每千瓦时 12,000,000 token。"
  },
  "tokens.script.million": {
   "en": "{(x / 1e6).toFixed(2)} million",
@@ -412,7 +412,7 @@
  "tokens.script.cost": {
   "en": "{(kwhPerM * tariff).toFixed(4)} per 1M tokens (your currency)",
   "de": "{(kwhPerM * tariff).toFixed(4)} pro 1 Mio. Token (Ihre Währung)",
-  "zh": "每 1M token {(kwhPerM * tariff).toFixed(4)}（按您的货币）"
+  "zh": "每百万 token {(kwhPerM * tariff).toFixed(4)}（以您输入的币种计）"
  },
  "tokens.script.day": {
   "en": "{big(tps * 86400)} tokens · {(kw * pue * 24).toFixed(1)} kWh",
@@ -442,7 +442,7 @@
  "badge.early": {
   "en": "Early access",
   "de": "Early Access",
-  "zh": "抢先体验"
+  "zh": "早期试用"
  },
  "badge.partner": {
   "en": "Partner",

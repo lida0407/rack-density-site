@@ -7,12 +7,12 @@
  "meta.description": {
   "en": "No cookies; a cookieless visit counter; one form (the waitlist). Downloads are static files. Email us and we use your address only to reply.",
   "de": "Keine Cookies, ein Besuchszähler ohne Cookies, ein Formular (die Warteliste). Downloads sind statische Dateien. Ihre Adresse nutzen wir nur für die Antwort.",
-  "zh": "不使用 Cookie；一个不用 Cookie 的访问计数器；一个表单（候补名单）。下载内容均为静态文件。如果您给我们发邮件，我们只用您的地址回复。"
+  "zh": "DC Sim 页面不使用 Cookie，仅以无 Cookie 方式统计访问量；唯一的表单为候补名单。下载内容均为静态文件。您来信时，我们仅将您的邮箱地址用于回复。"
  },
  "crumb.privacy": {
   "en": "Privacy",
   "de": "Datenschutz",
-  "zh": "隐私"
+  "zh": "隐私说明"
  },
  "h1": {
   "en": "Privacy",
@@ -22,42 +22,42 @@
  "lede.noCookies": {
   "en": "The DC Sim pages set no cookies.",
   "de": "Die Seiten von DC Sim setzen keine Cookies.",
-  "zh": "DC Sim 页面不设置 Cookie。"
+  "zh": "DC Sim 各页面不设置 Cookie。"
  },
  "lede.counting": {
   "en": "We count visits with a cookieless counter (below); there are no ads and no tracking scripts.",
   "de": "Besuche zählen wir mit einem Zähler ohne Cookies (siehe unten); es gibt keine Werbung und keine Tracking-Skripte.",
-  "zh": "我们使用一个不依赖 Cookie 的计数器统计访问量（见下文）；没有广告，也没有跟踪脚本。"
+  "zh": "访问量通过不使用 Cookie 的计数工具统计（详见下文）；页面不含广告，也不含跟踪脚本。"
  },
  "lede.notCounting": {
   "en": "They run no analytics or tracking scripts.",
   "de": "Die Seiten laden keine Analyse- oder Tracking-Skripte.",
-  "zh": "页面不运行任何分析或跟踪脚本。"
+  "zh": "页面不运行任何统计分析或跟踪脚本。"
  },
  "lede.downloadsAndWaitlist": {
   "en": "The template and example files are plain downloads that do not ask for your e-mail. The one form on the site is the waitlist, described in the <a href=\"{root(\"privacy/\")}\">site-wide privacy notice</a>.",
   "de": "Die Vorlage und die Beispieldatei sind einfache Downloads, für die Sie keine E-Mail-Adresse angeben müssen. Das einzige Formular der Website ist die Warteliste; sie ist in der <a href=\"{root(\"privacy/\")}\">Datenschutzerklärung der gesamten Website</a> beschrieben.",
-  "zh": "模板和示例文件可直接下载，不要求您留下邮箱。本站唯一的表单是候补名单，详见<a href=\"{root(\"privacy/\")}\">全站隐私声明</a>。"
+  "zh": "导入模板和示例文件均可直接下载，无需提供电子邮箱。本站唯一的表单为候补名单，相关说明见<a href=\"{root(\"privacy/\")}\">全站隐私说明</a>。"
  },
  "who.h2": {
   "en": "Who we are",
   "de": "Wer wir sind",
-  "zh": "我们是谁"
+  "zh": "运营主体"
  },
  "who.p": {
   "en": "DC Sim is a product of <a href=\"{LEGAL_URL}\">{LEGAL_NAME}</a> (Malta), which is responsible for this site and for the data described here.",
   "de": "DC Sim ist ein Produkt von <a href=\"{LEGAL_URL}\">{LEGAL_NAME}</a> (Malta), die für diese Website und die hier beschriebenen Daten verantwortlich ist.",
-  "zh": "DC Sim 是 <a href=\"{LEGAL_URL}\">{LEGAL_NAME}</a>（马耳他）的产品，该公司对本网站及此处所述数据负责。"
+  "zh": "DC Sim 是 <a href=\"{LEGAL_URL}\">{LEGAL_NAME}</a>（马耳他）的产品。该公司对本网站及本说明所述数据负责。"
  },
  "hosting.h2": {
   "en": "Hosting",
   "de": "Hosting",
-  "zh": "托管"
+  "zh": "网站托管"
  },
  "hosting.p": {
   "en": "The site is served as static files by Cloudflare Pages. Cloudflare receives your IP address to deliver and protect the pages, under its own privacy policy. We do not receive or use those logs.",
   "de": "Die Website wird als statische Dateien über Cloudflare Pages ausgeliefert. Cloudflare erhält Ihre IP-Adresse, um die Seiten auszuliefern und zu schützen, und verarbeitet sie nach der eigenen Datenschutzrichtlinie. Wir erhalten und nutzen diese Protokolle nicht.",
-  "zh": "本站以静态文件形式由 Cloudflare Pages 提供。Cloudflare 依据其自身的隐私政策接收您的 IP 地址，用于传送和保护页面。我们不接收、也不使用这些日志。"
+  "zh": "本网站以静态文件形式经 Cloudflare Pages 发布。为传输和保护页面，Cloudflare 依据其自身的隐私政策接收您的 IP 地址。我们不接收、也不使用相关日志。"
  },
  "visits.h2": {
   "en": "Visit counts",
@@ -67,7 +67,7 @@
  "visits.p": {
   "en": "We count visits with Cloudflare Web Analytics: no cookies, no browser storage, no fingerprinting. It records the page, the referring site, the country and the device type, and we only see totals. No other analytics, no ads, and no other third-party scripts except Cloudflare's bot check on the waitlist form.",
   "de": "Wir zählen Besuche mit Cloudflare Web Analytics: keine Cookies, kein Speicher im Browser, kein Fingerprinting. Erfasst werden die Seite, die verweisende Website, das Land und der Gerätetyp; wir sehen nur Summen. Keine weitere Analyse, keine Werbung und keine weiteren Skripte von Drittanbietern außer der Bot-Prüfung von Cloudflare im Wartelistenformular.",
-  "zh": "我们使用 Cloudflare Web Analytics 统计访问量：不使用 Cookie，不使用浏览器存储，不做指纹识别。它记录访问的页面、来源网站、国家和设备类型，我们只能看到汇总数据。除候补名单表单上 Cloudflare 的人机验证外，没有其他分析工具、没有广告，也没有其他第三方脚本。"
+  "zh": "访问量通过 Cloudflare Web Analytics 统计：不使用 Cookie，不使用浏览器存储，不进行设备指纹识别。该工具记录访问页面、来源网站、国家/地区和设备类型，我们仅能查看汇总数据。除候补名单表单所用的 Cloudflare 人机验证外，本站不使用其他统计分析工具，不投放广告，也不加载其他第三方脚本。"
  },
  "email.h2": {
   "en": "E-mail",
@@ -77,31 +77,31 @@
  "email.p": {
   "en": "If you write to <a href=\"mailto:{CONTACT_EMAIL}\">{CONTACT_EMAIL}</a>, {LEGAL_NAME} uses your address and message only to reply and to follow up on what you asked for. Ask us to delete the correspondence at any time.",
   "de": "Wenn Sie an <a href=\"mailto:{CONTACT_EMAIL}\">{CONTACT_EMAIL}</a> schreiben, verwendet {LEGAL_NAME} Ihre Adresse und Ihre Nachricht nur, um zu antworten und Ihr Anliegen weiterzuverfolgen. Sie können jederzeit verlangen, dass wir die Korrespondenz löschen.",
-  "zh": "如果您写信至 <a href=\"mailto:{CONTACT_EMAIL}\">{CONTACT_EMAIL}</a>，{LEGAL_NAME} 仅将您的地址和邮件内容用于回复及跟进您提出的事项。您可以随时要求我们删除往来邮件。"
+  "zh": "您发送邮件至 <a href=\"mailto:{CONTACT_EMAIL}\">{CONTACT_EMAIL}</a> 时，{LEGAL_NAME} 仅将您的邮箱地址和邮件内容用于回复及跟进您所咨询的事项。您可随时要求我们删除相关往来邮件。"
  },
  "waitlist.h2": {
   "en": "Waitlist and \"I want this\"",
   "de": "Warteliste und „Ich habe Interesse“",
-  "zh": "候补名单与“我想要”"
+  "zh": "候补名单与“申请优先体验”按钮"
  },
  "waitlist.p": {
   "en": "The \"I want this\" buttons on planned integrations open the site's waitlist form with the integration's name in the link. What it stores and for how long is in the <a href=\"{root(\"privacy/\")}\">site-wide privacy notice</a>.",
   "de": "Die Schaltflächen „Ich habe Interesse“ bei geplanten Integrationen öffnen das Wartelistenformular der Website, mit dem Namen der Integration im Link. Was das Formular speichert und wie lange, steht in der <a href=\"{root(\"privacy/\")}\">Datenschutzerklärung der gesamten Website</a>.",
-  "zh": "计划中集成页面上的“我想要”按钮会打开本站的候补名单表单，链接中带有该集成的名称。表单存储哪些内容、保存多久，请见<a href=\"{root(\"privacy/\")}\">全站隐私声明</a>。"
+  "zh": "计划中集成页面上的“申请优先体验”按钮会打开本站的候补名单表单，链接中附带该集成的名称。该表单存储哪些信息、保存多长时间，详见<a href=\"{root(\"privacy/\")}\">全站隐私说明</a>。"
  },
  "files.h2": {
   "en": "Files you send us",
   "de": "Dateien, die Sie uns senden",
-  "zh": "您发给我们的文件"
+  "zh": "您发送给我们的文件"
  },
  "files.p": {
   "en": "If you send a filled template for a walkthrough, we import it only to show you your room, and delete it on request. See <a href=\"{u(\"security/\")}\">security and data</a> for how the product handles customer data.",
   "de": "Wenn Sie uns eine ausgefüllte Vorlage für eine Vorführung senden, importieren wir sie nur, um Ihnen Ihren Raum zu zeigen, und löschen sie auf Wunsch. Wie das Produkt mit Kundendaten umgeht, lesen Sie unter <a href=\"{u(\"security/\")}\">Sicherheit und Daten</a>.",
-  "zh": "如果您为预约演示讲解发来填好的模板，我们只会导入它来向您展示您的机房，并可应您的要求删除。产品如何处理客户数据，请见<a href=\"{u(\"security/\")}\">安全与数据</a>。"
+  "zh": "如您为预约演示发送已填写的导入模板，我们仅将其导入系统，用于向您展示您的机房，并可应您的要求删除。产品如何处理客户数据，详见<a href=\"{u(\"security/\")}\">安全与数据</a>。"
  },
  "lastUpdated": {
   "en": "Last updated: 15 October 2026",
   "de": "Zuletzt aktualisiert: 15. Oktober 2026",
-  "zh": "最后更新：2026 年 10 月 15 日"
+  "zh": "最近更新：2026 年 10 月 15 日"
  }
 }

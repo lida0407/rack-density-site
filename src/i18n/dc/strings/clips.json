@@ -2,107 +2,107 @@
  "feedA.title": {
   "en": "Lose feed A at peak in DC Sim",
   "de": "Einspeisung A fällt bei Spitzenlast aus, in DC Sim",
-  "zh": "在 DC Sim 中模拟峰值时 A 路失电"
+  "zh": "DC Sim 故障推演：峰值负载下 A 路失电"
  },
  "feedA.t1": {
   "en": "Demo hall: 13 racks, fed from feed A and feed B, in the Power layer with the room lights off.",
   "de": "Demohalle: 13 Racks, versorgt über Einspeisung A und Einspeisung B, in der Ebene Strom bei ausgeschaltetem Raumlicht.",
-  "zh": "演示机房：13 个机柜，由 A、B 两路供电，当前为供电图层，机房关灯。"
+  "zh": "演示机房：13 个机柜，由 A 路、B 路双路供电；画面为 Power（供配电）图层，机房处于关灯模式。"
  },
  "feedA.t2": {
   "en": "Lose feed A at peak: the one-line power diagram shows the chain from utility and generator through the ATS, UPS-A and UPS-B, the panels and every rack PDU.",
   "de": "Einspeisung A fällt bei Spitzenlast aus: Das Einlinienschaltbild zeigt die Kette vom Versorgungsnetz und der Netzersatzanlage über den Umschalter (ATS), UPS-A und UPS-B und die Unterverteilungen bis zu jeder Rack-PDU.",
-  "zh": "峰值时 A 路失电：配电单线图显示整条供电链路，从市电和发电机，经 ATS、UPS-A 和 UPS-B、配电柜，直到每个机柜 PDU。"
+  "zh": "峰值负载下 A 路失电：配电单线图呈现完整的供配电链路，自市电和发电机起，经 ATS、UPS-A 与 UPS-B、配电柜，直至每个机柜 PDU。"
  },
  "feedA.t3": {
   "en": "Fail UPS-A. Banner: 2 devices lose power, 90 run on one feed, overloaded: PDU-R05-B at 113.9 %.",
   "de": "UPS-A fällt aus. Banner: 2 Geräte verlieren den Strom, 90 laufen an nur einer Einspeisung, überlastet: PDU-R05-B bei 113,9 %.",
-  "zh": "让 UPS-A 故障。横幅提示：2 台设备掉电，90 台仅剩单路供电，过载：PDU-R05-B 负载 113.9 %。"
+  "zh": "对 UPS-A 执行 Fail（模拟故障）。横幅提示：2 台设备失电，90 台设备单路运行，过载：PDU-R05-B 负载率 113.9 %。"
  },
  "feedA.t4": {
   "en": "Single-corded devices go dark and the other PDU overloads; the 3D room shows the racks on one feed in amber.",
   "de": "Geräte mit nur einem Netzkabel werden dunkel, die andere PDU wird überlastet; der 3D-Raum zeigt die Racks an nur einer Einspeisung in Bernsteingelb.",
-  "zh": "单电源设备掉电，另一路 PDU 过载；3D 机房中仅剩单路供电的机柜显示为琥珀色。"
+  "zh": "单电源设备停运，另一路 PDU 过载；3D 机房中仅剩单路供电的机柜以琥珀色标示。"
  },
  "feedA.t5": {
   "en": "The scenario timeline lists which services stop and which racks survive on one feed.",
   "de": "Die Szenario-Zeitleiste zeigt, welche Dienste stoppen und welche Racks mit einer Einspeisung weiterlaufen.",
-  "zh": "场景时间线列出哪些业务中断、哪些机柜靠单路供电维持运行。"
+  "zh": "场景时间线列出中断的业务，以及依靠单路供电维持运行的机柜。"
  },
  "feedA.t6": {
   "en": "End card: Fail anything. See what goes dark.",
   "de": "Schlusstafel: Simulieren Sie jeden Ausfall. Sehen Sie, was dunkel wird.",
-  "zh": "片尾：模拟任何故障，看清哪些会停摆。"
+  "zh": "片尾：模拟任意故障，查看哪些设备随之停运。"
  },
  "crah.title": {
   "en": "A cooling unit stops: minutes to 27, 32 and 35 °C",
   "de": "Ein Kühlgerät fällt aus: Minuten bis 27, 32 und 35 °C",
-  "zh": "一台精密空调停机：升至 27、32、35 °C 各需几分钟"
+  "zh": "一台精密空调停机：升温至 27、32、35 °C 的时间"
  },
  "crah.t1": {
   "en": "Air layer: rack inlet temperatures as a floor heat map, estimated.",
   "de": "Ebene Luft: Zulufttemperaturen der Racks als Heatmap auf dem Boden, geschätzt.",
-  "zh": "气流图层：机柜进风温度以地面热力图显示，估算值。"
+  "zh": "Air（气流）图层：机柜进风温度以地面热力图呈现，为估算值。"
  },
  "crah.t2": {
   "en": "The CRAH unit AC-1 stops at peak load (Simulate failure in its inspector).",
   "de": "Das Umluftkühlgerät (CRAH) AC-1 fällt bei Spitzenlast aus („Simulate failure“ in seinem Inspektor).",
-  "zh": "精密空调（CRAH）AC-1 在峰值负载时停机（在其属性面板中点击 Simulate failure）。"
+  "zh": "精密空调 AC-1（CRAH）在峰值负载下停机（操作：在其属性面板中点击 Simulate failure，即模拟故障）。"
  },
  "crah.t3": {
   "en": "The scenario panel shows the minutes until the hottest rack inlet passes 27, 32 and 35 °C (10:35, 21:15 and 28:00 in this run), estimated by a zonal air model, not CFD; peak inlet 35.9 °C, no devices off.",
   "de": "Das Szenario-Panel zeigt die Minuten, bis die heißeste Rack-Zuluft 27, 32 und 35 °C überschreitet (in diesem Durchlauf 10:35, 21:15 und 28:00), geschätzt mit einem zonalen Luftmodell, keine CFD; höchste Zulufttemperatur 35,9 °C, kein Gerät abgeschaltet.",
-  "zh": "场景面板显示最热机柜进风温度超过 27、32、35 °C 前的分钟数（本次运行分别为 10:35、21:15 和 28:00），由分区气流模型估算，不是 CFD；进风温度峰值 35.9 °C，没有设备停机。"
+  "zh": "场景面板显示最热机柜进风温度超过 27、32、35 °C 前的剩余时间（本次运行分别为 10:35、21:15 和 28:00），由分区气流模型估算，不是 CFD；进风温度峰值 35.9 °C，无设备停机。"
  },
  "crah.t4": {
   "en": "The alarm comes with advice before the real one: the remaining units AC-2 and AC-3 run at 95 % of capacity.",
   "de": "Der Alarm kommt mit Handlungsempfehlung, noch bevor der echte Alarm auslöst: Die verbleibenden Geräte AC-2 und AC-3 laufen mit 95 % ihrer Kapazität.",
-  "zh": "仿真告警先于真实告警出现，并附带处置建议：剩余的 AC-2 和 AC-3 以 95 % 的容量运行。"
+  "zh": "告警连同处置建议先于真实告警给出：其余机组 AC-2 和 AC-3 以 95 % 容量运行。"
  },
  "crah.t5": {
   "en": "End card: Design it. Run it. Fail it first.",
   "de": "Schlusstafel: Planen. Betreiben. Ausfälle zuerst im Modell.",
-  "zh": "片尾：设计它，运行它，先让它故障一次。"
+  "zh": "片尾：设计、运行，故障先行推演。"
  },
  "leak.title": {
   "en": "Manifold leak on a liquid-cooled GPU row",
   "de": "Leckage am Verteiler einer flüssigkeitsgekühlten GPU-Reihe",
-  "zh": "液冷 GPU 机柜列的分集水器漏液"
+  "zh": "液冷 GPU 机柜列分集水器漏液"
  },
  "leak.t1": {
   "en": "Water layer: coolant distribution units, manifolds and the liquid-cooled GPU rows of the AI hall demo.",
   "de": "Ebene Wasser: Kühlmittelverteileinheiten (CDUs), Verteiler und die flüssigkeitsgekühlten GPU-Reihen der KI-Hallen-Demo.",
-  "zh": "水系统图层：AI 机房演示中的冷却液分配单元（CDU）、分集水器和液冷 GPU 机柜列。"
+  "zh": "Water（水系统）图层：AI 机房演示中的 CDU（冷量分配单元）、分集水器和液冷 GPU 机柜列。"
  },
  "leak.t2": {
   "en": "A leak at manifold R02.",
   "de": "Eine Leckage am Verteiler R02.",
-  "zh": "分集水器 R02 漏液。"
+  "zh": "分集水器 R02 发生漏液。"
  },
  "leak.t3": {
   "en": "1.4 L released (estimated); the valve isolates the manifold; 2 devices (16 GPUs) are throttled or trip; tokens lost: 7.8 M.",
   "de": "1,4 l ausgetreten (geschätzt); das Ventil sperrt den Verteiler ab; 2 Geräte (16 GPUs) werden gedrosselt oder schalten ab; verlorene Token: 7,8 Mio.",
-  "zh": "泄漏 1.4 L（估算）；阀门隔离该分集水器；2 台设备（16 块 GPU）降频或保护性停机；token 损失：7.8 M。"
+  "zh": "泄漏量 1.4 L（估算）；阀门关断，隔离该分集水器；2 台设备（16 块 GPU）降频或保护停机；token 损失：7.8 M。"
  },
  "leak.t4": {
   "en": "Who is on this loop and what they run: the racks, devices, workloads and tenants on the isolated manifold.",
   "de": "Wer an diesem Kreislauf hängt und was dort läuft: die Racks, Geräte, Workloads und Mandanten am abgesperrten Verteiler.",
-  "zh": "这条回路上有谁、在跑什么：被隔离分集水器上的机柜、设备、工作负载和租户。"
+  "zh": "该回路的承载对象：被隔离分集水器上的机柜、设备、工作负载和租户。"
  },
  "leak.t5": {
   "en": "End card: Liquid and air in one model.",
   "de": "Schlusstafel: Flüssigkühlung und Luftkühlung in einem Modell.",
-  "zh": "片尾：液冷与风冷，同一个模型。"
+  "zh": "片尾：液冷与风冷，同一模型。"
  },
  "excel.title": {
   "en": "From an Excel file to a 3D data center twin",
   "de": "Von der Excel-Datei zum 3D-Zwilling des Rechenzentrums",
-  "zh": "从 Excel 文件到数据中心 3D 孪生"
+  "zh": "从 Excel 文件到数据中心 3D 数字孪生"
  },
  "excel.t1": {
   "en": "One file: the demo hall workbook in Excel. Devices is the only required sheet (rack, U, model, name, role, power cords, owner, warranty, what runs on it); the Cables sheet adds the cords.",
   "de": "Eine Datei: die Arbeitsmappe der Demohalle in Excel. Devices ist das einzige Pflichtblatt (Rack, HE, Modell, Name, Rolle, Netzkabel, Verantwortlicher, Garantie, was darauf läuft); das Blatt Cables ergänzt die Verkabelung.",
-  "zh": "一个文件：Excel 中的演示机房工作簿。Devices 是唯一必填的工作表（机柜、U 位、型号、名称、角色、电源线、负责人、保修、运行的业务）；Cables 工作表补充线缆。"
+  "zh": "一个文件：演示机房的 Excel 工作簿。Devices（设备）是唯一必填的工作表（机柜、U 位、型号、名称、角色、电源线、负责人、保修、承载业务）；Cables（线缆）工作表补充线缆连接。"
  },
  "excel.t2": {
   "en": "Import: the preview counts 121 devices, 13 racks, 910 cables and 35 power items and lists the matched models.",
@@ -112,62 +112,62 @@
  "excel.t3": {
   "en": "Checks with 3D locations: U overlaps, breakers above 80 %, both power supplies on the same feed, heat above cooling.",
   "de": "Prüfungen mit Position in 3D: HE-Überschneidungen, Schutzschalter über 80 %, beide Netzteile an derselben Einspeisung, mehr Wärme als Kühlleistung.",
-  "zh": "带 3D 定位的检查：U 位重叠、断路器负载超过 80 %、两个电源接在同一路、发热量超过制冷能力。"
+  "zh": "带 3D 定位的检查项：U 位重叠、断路器负载率超过 80 %、双电源接入同一路、发热量超过制冷能力。"
  },
  "excel.t4": {
   "en": "Apply: the room builds from the spreadsheet; Overview, Power (load per rack) and the Cabling view.",
   "de": "Übernehmen: Der Raum entsteht aus der Tabelle; Überblick, Strom (Last pro Rack) und die Ansicht Verkabelung.",
-  "zh": "应用：机房按表格生成；依次为总览、供电（每机柜负载）和布线视图。"
+  "zh": "应用：机房依据表格生成；依次展示 Overview（总览）、Power（供配电，单机柜负载）和 Cabling（布线）视图。"
  },
  "excel.t5": {
   "en": "Back in Excel one row is edited (a server moved from U2 to U30) and the file re-uploaded: the change list shows exactly what changed.",
   "de": "Zurück in Excel wird eine Zeile geändert (ein Server von HE 2 auf HE 30 verschoben) und die Datei erneut hochgeladen: Die Änderungsliste zeigt genau, was sich geändert hat.",
-  "zh": "回到 Excel 修改一行（一台服务器从 U2 移到 U30）并重新上传：变更清单准确显示改了什么。"
+  "zh": "回到 Excel 修改一行（一台服务器由 U2 移至 U30）后重新上传：变更清单准确列出所有改动。"
  },
  "excel.t6": {
   "en": "End card: Download the template.",
   "de": "Schlusstafel: Laden Sie die Vorlage herunter.",
-  "zh": "片尾：下载模板。"
+  "zh": "片尾：下载导入模板。"
  },
  "hero.title": {
   "en": "DC Sim tour: views, a UPS failure, network, tokens and lights off",
   "de": "DC Sim im Überblick: Ansichten, ein USV-Ausfall, Netzwerk, Token und Licht aus",
-  "zh": "DC Sim 导览：视图、UPS 故障、网络、token 与关灯"
+  "zh": "DC Sim 功能导览：视图、UPS 故障、网络、token 与关灯模式"
  },
  "hero.t1": {
   "en": "Overview of the demo hall in 3D.",
   "de": "Überblick über die Demohalle in 3D.",
-  "zh": "演示机房的 3D 总览。"
+  "zh": "演示机房 3D 总览。"
  },
  "hero.t2": {
   "en": "The View menu opens and the cursor moves down the layers: Floor, Air, Water, Fire, Power, Cabling, Network, Device, Token.",
   "de": "Das Menü View öffnet sich, und der Cursor geht die Ebenen durch: Fläche, Luft, Wasser, Brand, Strom, Verkabelung, Netzwerk, Gerät, Token.",
-  "zh": "打开视图（View）菜单，光标依次划过各图层：地板、气流、水系统、消防、供电、布线、网络、设备、Token。"
+  "zh": "打开 View（视图）菜单，光标依次经过各图层：Floor（平面）、Air（气流）、Water（水系统）、Fire（消防）、Power（供配电）、Cabling（布线）、Network（网络）、Device（设备）、Token。"
  },
  "hero.t3": {
   "en": "Power: load per rack in 3D, then the one-line diagram; UPS-A is failed and the impact banner reads: 2 devices lose power, 90 run on one feed, PDU-R05-B at 113.9 %.",
   "de": "Strom: Last pro Rack in 3D, dann das Einlinienschaltbild; UPS-A fällt aus, und das Banner zur Auswirkung meldet: 2 Geräte verlieren den Strom, 90 laufen an nur einer Einspeisung, PDU-R05-B bei 113,9 %.",
-  "zh": "供电：先是 3D 中的每机柜负载，然后是单线图；UPS-A 被设为故障，影响横幅显示：2 台设备掉电，90 台仅剩单路供电，PDU-R05-B 负载 113.9 %。"
+  "zh": "Power：先在 3D 中显示单机柜负载，再切换至配电单线图；UPS-A 被置为故障，影响横幅显示：2 台设备失电，90 台设备单路运行，PDU-R05-B 负载率 113.9 %。"
  },
  "hero.t4": {
   "en": "Network: utilisation on every link, and one cable traced end to end.",
   "de": "Netzwerk: Auslastung jeder Verbindung, und ein Kabel wird von Ende zu Ende verfolgt.",
-  "zh": "网络：每条链路的利用率，以及对一条线缆的端到端追踪。"
+  "zh": "Network：显示每条链路的利用率，并对一条线缆进行端到端链路追踪。"
  },
  "hero.t5": {
   "en": "Token: tokens per second per rack as bars with numbers, coloured by tokens per kWh.",
   "de": "Token: Token pro Sekunde je Rack als Balken mit Zahlen, eingefärbt nach Token pro kWh.",
-  "zh": "Token：每个机柜每秒 token 数以带数值的柱体显示，按每 kWh token 数着色。"
+  "zh": "Token：以带数值的柱体显示每个机柜每秒 token 数，并按每千瓦时 token 数着色。"
  },
  "hero.t6": {
   "en": "Lights off: the room goes dark, device LEDs blink, and walking in lights one row.",
   "de": "Licht aus: Der Raum wird dunkel, die LEDs der Geräte blinken, und beim Hineingehen geht über einer Reihe das Licht an.",
-  "zh": "关灯：机房暗下来，设备 LED 闪烁，走进去时一列机柜亮起。"
+  "zh": "关灯模式：机房熄灯，设备 LED 闪烁；漫游进入后，一列机柜的照明随之点亮。"
  },
  "ui.recorded": {
   "en": "recorded in the app",
   "de": "in der App aufgezeichnet",
-  "zh": "录制自应用"
+  "zh": "应用内录制"
  },
  "ui.transcriptSummary": {
   "en": "What happens in this clip",

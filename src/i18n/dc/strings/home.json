@@ -7,27 +7,27 @@
  "faq.whatIs.a": {
   "en": "A browser-based data center simulator by {COMPANY}: one Excel import becomes a 3D twin with floor, air, water, fire, power, cabling, network, device and token layers, and any power, cooling or network node can be failed to see what goes dark.",
   "de": "Ein browserbasierter Rechenzentrums-Simulator von {COMPANY}: Aus einem Excel-Import wird ein 3D-Zwilling mit den Ebenen Fläche, Luft, Wasser, Brand, Strom, Verkabelung, Netzwerk, Gerät und Token. Jeden Knoten in Stromversorgung, Kühlung oder Netzwerk können Sie ausfallen lassen und sehen, was dunkel wird.",
-  "zh": "{COMPANY} 出品的浏览器端数据中心仿真工具：导入一个 Excel 文件，即生成包含地板、气流、水系统、消防、供电、布线、网络、设备和 token 图层的 3D 孪生；任何供电、制冷或网络节点都可以模拟故障，看清哪些会停摆。"
+  "zh": "由 {COMPANY} 提供的基于浏览器的数据中心仿真软件：导入一个 Excel 文件即生成 3D 数字孪生，涵盖平面、气流、水系统、消防、供配电、布线、网络、设备和 Token 图层；任一供电、制冷或网络节点均可模拟故障，查看哪些设备随之停运。"
  },
  "faq.signup.q": {
   "en": "Can I sign up today?",
   "de": "Kann ich mich heute schon registrieren?",
-  "zh": "现在可以注册吗？"
+  "zh": "目前能否注册使用？"
  },
  "faq.signup.a": {
   "en": "Not yet. The product runs today on demo data and on files you send us; we walk you through your own room on a call. Self-serve accounts and checkout are on the roadmap.",
   "de": "Noch nicht. Das Produkt läuft heute mit Demodaten und mit Dateien, die Sie uns senden; Ihren eigenen Raum gehen wir in einem gemeinsamen Termin mit Ihnen durch. Self-Service-Konten und Online-Kauf stehen auf der Roadmap.",
-  "zh": "暂时还不行。产品目前基于演示数据和您发给我们的文件运行；我们会在通话中带您查看您自己的机房。自助开户和在线付款已列入路线图。"
+  "zh": "暂不支持。产品目前基于演示数据和您发送给我们的文件运行；我们将通过线上会议为您演示您自己的机房。自助开通账户和在线支付已列入路线图。"
  },
  "faq.install.q": {
   "en": "Do I have to install anything?",
   "de": "Muss ich etwas installieren?",
-  "zh": "需要安装什么吗？"
+  "zh": "是否需要安装软件？"
  },
  "faq.install.a": {
   "en": "No. The twin runs in the browser. Zabbix and NetBox connect with a URL and a read-only token; inside your own network the same connectors run in a small agent that only dials out. Any other tool's export comes in as a sheet.",
   "de": "Nein. Der Zwilling läuft im Browser. Zabbix und NetBox binden Sie mit einer URL und einem Read-only-Token an; in Ihrem eigenen Netz laufen dieselben Connectors in einem kleinen Agenten, der nur ausgehende Verbindungen aufbaut. Exporte anderer Tools importieren Sie als Tabellenblatt.",
-  "zh": "不需要。数字孪生在浏览器中运行。Zabbix 和 NetBox 只需一个 URL 和一个只读 token 即可接入；在您自己的内网中，同样的连接器运行在一个只向外发起连接的小型 agent 里。其他任何工具的导出数据都以工作表形式导入。"
+  "zh": "不需要。数字孪生在浏览器中运行。Zabbix 和 NetBox 通过 URL 和只读令牌对接；在您的内网中，同样的对接组件运行于仅主动向外连接的轻量采集代理中。其他工具的导出数据均以工作表形式导入。"
  },
  "faq.cfd.q": {
   "en": "Is this CFD?",
@@ -37,47 +37,47 @@
  "faq.cfd.a": {
   "en": "No. Air and water layers use a zonal model and every projected number is labelled estimated. It is built for questions like \"what happens if this cooling unit stops\", not for detailed airflow engineering.",
   "de": "Nein. Die Ebenen Luft und Wasser arbeiten mit einem zonalen Modell, und jeder hochgerechnete Wert ist als geschätzt gekennzeichnet. Gedacht ist es für Fragen wie „Was passiert, wenn dieses Kühlgerät ausfällt?“, nicht für die detaillierte Auslegung von Luftströmungen.",
-  "zh": "不是 CFD。气流和水系统图层采用分区模型，每个预测数值都标注为估算。它面向的是“这台空调停了会怎样”这类问题，而不是精细的气流工程分析。"
+  "zh": "不是 CFD。气流和水系统图层采用分区模型，所有预测数值均标注为估算值。它面向“这台空调停机会怎样”这类问题，而非精细的气流工程分析。"
  },
  "faq.cost.q": {
   "en": "How much does it cost?",
   "de": "Was kostet es?",
-  "zh": "费用是多少？"
+  "zh": "如何收费？"
  },
  "faq.cost.a": {
   "en": "Monitor is about $5 per rack per month with a $49 minimum. Design is one-time per project from $490. Integrators and MSPs earn a 30 % margin as partners.",
   "de": "Monitor kostet etwa 5 $ pro Rack und Monat, mindestens 49 $. Design wird einmalig pro Projekt berechnet, ab 490 $. Systemhäuser und MSPs erhalten als Partner 30 % Marge.",
-  "zh": "Monitor 约为每机柜每月 $5，最低 $49。Design 按项目一次性收费，$490 起。集成商和 MSP 作为合作伙伴可获得 30 % 的利润空间。"
+  "zh": "监测版约为每机柜每月 $5，最低 $49。设计版按项目一次性收费，$490 起。系统集成商和托管服务商作为合作伙伴可获得 30 % 利润空间。"
  },
  "faq.chinese.q": {
   "en": "Is there a Chinese edition?",
   "de": "Gibt es eine chinesische Ausgabe?",
-  "zh": "有中文版吗？"
+  "zh": "是否提供中文版？"
  },
  "faq.chinese.a": {
   "en": "Yes. The Chinese-language edition is distributed by our partner CloudSino.",
   "de": "Ja. Die chinesischsprachige Ausgabe vertreibt unser Partner CloudSino.",
-  "zh": "有。中文版由我们的合作伙伴 CloudSino 发行。"
+  "zh": "提供。中文版由我们的合作伙伴 CloudSino 发行。"
  },
  "mailto.walkthrough.subject": {
   "en": "DC Sim walkthrough",
   "de": "DC Sim walkthrough",
-  "zh": "预约 DC Sim 演示讲解"
+  "zh": "DC Sim 演示预约"
  },
  "mailto.walkthrough.body": {
   "en": "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n",
   "de": "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n",
-  "zh": "Da 您好，\n\n我们想用自己的文件预约一次 DC Sim 演示讲解。\n\n机柜数：\n公司：\n"
+  "zh": "Da 您好：\n\n我希望基于我方的数据文件预约一次 DC Sim 演示。\n\n机柜数量：\n公司名称：\n"
  },
  "moments.feedA": {
   "en": "Lose feed A at peak: single-corded devices go dark and the other PDU overloads.",
   "de": "Einspeisung A fällt bei Spitzenlast aus: Geräte mit nur einem Netzkabel werden dunkel, die andere PDU wird überlastet.",
-  "zh": "峰值时 A 路失电：单电源设备掉电，另一路 PDU 过载。"
+  "zh": "峰值负载下 A 路失电：单电源设备停运，另一路 PDU 过载。"
  },
  "moments.cooling": {
   "en": "A cooling unit stops: minutes to 27, 32 and 35 °C, estimated by a zonal model, not CFD.",
   "de": "Ein Kühlgerät fällt aus: Minuten bis 27, 32 und 35 °C, geschätzt mit einem zonalen Modell, keine CFD.",
-  "zh": "一台精密空调停机：升至 27、32、35 °C 各需几分钟，由分区模型估算，不是 CFD。"
+  "zh": "一台精密空调停机：升温至 27、32、35 °C 的时间（分钟），由分区模型估算，不是 CFD。"
  },
  "moments.leak": {
   "en": "A manifold leaks: litres released (estimated), the valve isolates, tokens lost.",
@@ -87,12 +87,12 @@
  "moments.excel": {
   "en": "One Excel file in, the room in 3D, checks pinned, a change list on re-upload.",
   "de": "Eine Excel-Datei hinein, der Raum in 3D, Prüfergebnisse direkt in 3D markiert, eine Änderungsliste beim erneuten Hochladen.",
-  "zh": "导入一个 Excel 文件，机房即成 3D，检查结果标注在对应位置，重新上传时给出变更清单。"
+  "zh": "导入一个 Excel 文件，生成 3D 机房，检查结果定位标注，重新上传时生成变更清单。"
  },
  "guides.rackPower.title": {
   "en": "Rack power capacity planning with a spreadsheet and the 80 % rule",
   "de": "Kapazitätsplanung für Rack-Leistung mit einer Tabelle und der 80-%-Regel",
-  "zh": "用一张表格和 80 % 规则做机柜功率容量规划"
+  "zh": "基于表格与 80 % 规则的机柜功率容量规划"
  },
  "guides.kind.guideCalc": {
   "en": "Guide · calculator",
@@ -112,27 +112,27 @@
  "guides.tokensPerKwh.title": {
   "en": "Tokens per kWh: the one metric for an AI room",
   "de": "Token pro kWh: die eine Kennzahl für einen KI-Raum",
-  "zh": "每 kWh token 数：AI 机房的核心指标"
+  "zh": "每千瓦时 token 数：AI 机房的核心指标"
  },
  "guides.dcimSmall.title": {
   "en": "DCIM for a small server room: what you need and what it should cost",
   "de": "DCIM für einen kleinen Serverraum: was Sie brauchen und was es kosten sollte",
-  "zh": "小型服务器机房的 DCIM：需要什么、该花多少钱"
+  "zh": "小型服务器机房的 DCIM：需要哪些功能、合理费用是多少"
  },
  "schema.heroVideo.description": {
   "en": "A 30-second tour of DC Sim recorded from the app on the demo hall: the View menu, a UPS failure in the power chain, network utilisation, tokens per kWh and the lights-off view.",
   "de": "Ein 30-sekündiger Rundgang durch DC Sim, aufgezeichnet in der App in der Demohalle: das Menü View, ein USV-Ausfall in der Stromversorgungskette, Netzwerkauslastung, Token pro kWh und die Ansicht bei ausgeschaltetem Licht.",
-  "zh": "在演示机房中录制自应用的 30 秒 DC Sim 导览：视图菜单、供电链路中的 UPS 故障、网络利用率、每 kWh token 数，以及关灯视图。"
+  "zh": "DC Sim 30 秒功能导览，于演示机房中应用内录制：View（视图）菜单、供配电链路中的 UPS 故障、网络利用率、每千瓦时 token 数，以及关灯模式。"
  },
  "meta.title": {
   "en": "{PRODUCT_NAME} — Your data center, simulated",
   "de": "{PRODUCT_NAME} — Ihr Rechenzentrum, simuliert",
-  "zh": "{PRODUCT_NAME} — 您的数据中心，仿真重现"
+  "zh": "{PRODUCT_NAME} — 您的数据中心，仿真呈现"
  },
  "meta.description": {
   "en": "Turn one Excel file into a 3D twin of your data center. Fail any UPS, feed, switch or cooler and see what goes dark. Built to sit on top of the monitoring you run.",
   "de": "Eine Excel-Datei wird zum 3D-Zwilling Ihres Rechenzentrums. USV, Einspeisung, Switch oder Kühlgerät ausfallen lassen: Was wird dunkel? Setzt auf Ihr Monitoring auf.",
-  "zh": "把一个 Excel 文件变成您数据中心的 3D 孪生。让任意 UPS、供电回路、交换机或空调故障，看清哪些会停摆。专为叠加在您现有的监控之上而设计。"
+  "zh": "以一个 Excel 文件生成数据中心 3D 数字孪生。可对任意 UPS、供电回路、交换机或空调设备模拟故障，查看哪些设备随之停运。叠加于您现有的监控系统之上。"
  },
  "hero.eyebrow": {
   "en": "{PRODUCT_NAME} · data center simulator",
@@ -142,32 +142,32 @@
  "hero.h1": {
   "en": "Your data center, simulated.",
   "de": "Ihr Rechenzentrum, simuliert.",
-  "zh": "您的数据中心，仿真重现。"
+  "zh": "您的数据中心，仿真呈现。"
  },
  "hero.lede": {
   "en": "From a spreadsheet to a living 3D twin in minutes. Fail anything. See what goes dark.",
   "de": "In Minuten von der Tabelle zum lebendigen 3D-Zwilling. Simulieren Sie jeden Ausfall. Sehen Sie, was dunkel wird.",
-  "zh": "几分钟内，从一张表格变成动态的 3D 孪生。模拟任何故障，看清哪些会停摆。"
+  "zh": "几分钟内，由一份表格生成动态 3D 数字孪生。任意节点均可模拟故障，停运范围清晰可见。"
  },
  "hero.ctaTemplate": {
   "en": "Download the Excel template",
   "de": "Excel-Vorlage herunterladen",
-  "zh": "下载 Excel 模板"
+  "zh": "下载 Excel 导入模板"
  },
  "hero.ctaDemo": {
   "en": "Open the demo",
   "de": "Demo öffnen",
-  "zh": "打开演示"
+  "zh": "进入演示"
  },
  "hero.ctaWalkthrough": {
   "en": "Request a walkthrough",
   "de": "Vorführung anfragen",
-  "zh": "预约演示讲解"
+  "zh": "预约演示"
  },
  "hero.note": {
   "en": "Built by data-center people. Estimated where we estimate, labelled every time.",
   "de": "Von Rechenzentrumspraktikern gebaut. Geschätzte Werte kennzeichnen wir, jedes Mal.",
-  "zh": "由数据中心从业者打造。凡是估算，必有标注。"
+  "zh": "由数据中心从业者开发。凡属估算，均予标注。"
  },
  "hero.stageLabel": {
   "en": "Demo hall",
@@ -177,17 +177,17 @@
  "hero.alt.dark": {
   "en": "A data hall in DC Sim with the lights off: rows of racks glow green from their LEDs, the NOC wall screen lit.",
   "de": "Eine Rechenzentrumshalle in DC Sim bei ausgeschaltetem Licht: Rack-Reihen leuchten grün durch ihre LEDs, die Monitorwand des NOC ist beleuchtet.",
-  "zh": "DC Sim 中关灯状态下的数据机房：一列列机柜的 LED 发出绿光，NOC 大屏亮着。"
+  "zh": "DC Sim 中关灯状态下的数据机房：成列机柜的设备 LED 发出绿光，NOC 大屏亮起。"
  },
  "hero.alt.light": {
   "en": "The same data hall with the lights on: white walls, light grey floor, rows of black racks, cooling units along the walls.",
   "de": "Dieselbe Rechenzentrumshalle bei eingeschaltetem Licht: weiße Wände, hellgrauer Boden, Reihen schwarzer Racks, Kühlgeräte entlang der Wände.",
-  "zh": "开灯状态下的同一个数据机房：白墙、浅灰色地板、一列列黑色机柜，沿墙布置着精密空调。"
+  "zh": "开灯状态下的同一数据机房：白色墙面、浅灰色地面、成列的黑色机柜，沿墙布置精密空调。"
  },
  "hero.pin.recorded": {
   "en": "Recorded in the app",
   "de": "In der App aufgezeichnet",
-  "zh": "录制自应用"
+  "zh": "应用内录制"
  },
  "hero.pin.lightsOff": {
   "en": "Lights off",
@@ -202,22 +202,22 @@
  "hero.caption.stage": {
   "en": "Runs in the browser. Pick a view, switch the lights, fail UPS-A.",
   "de": "Läuft im Browser. Ansicht wählen, Licht schalten, UPS-A ausfallen lassen.",
-  "zh": "在浏览器中运行。选择视图、开关灯光、让 UPS-A 故障。"
+  "zh": "在浏览器中运行。可切换视图、开关照明，并对 UPS-A 模拟故障。"
  },
  "hero.caption.video": {
   "en": "Fail UPS-A, trace the network, count the tokens, turn the lights off.",
   "de": "UPS-A ausfallen lassen, das Netzwerk verfolgen, die Token zählen, das Licht ausschalten.",
-  "zh": "让 UPS-A 故障、追踪网络、统计 token、关灯。"
+  "zh": "UPS-A 故障推演、网络链路追踪、token 统计、关灯模式。"
  },
  "hero.caption.dark": {
   "en": "Lights off: what still glows is what is running.",
   "de": "Licht aus: Was noch leuchtet, läuft.",
-  "zh": "关灯：仍在发光的，就是仍在运行的。"
+  "zh": "关灯模式：仍在发光的即为运行中的设备。"
  },
  "hero.caption.light": {
   "en": "Lights on: the same hall, the same numbers.",
   "de": "Licht an: dieselbe Halle, dieselben Werte.",
-  "zh": "开灯：同一个机房，同样的数字。"
+  "zh": "开灯：同一机房，同一组数据。"
  },
  "hero.sim.aiHall": {
   "en": "AI hall demo",
@@ -232,12 +232,12 @@
  "proof.fail.eyebrow": {
   "en": "Fail · UPS-A",
   "de": "Ausfall · UPS-A",
-  "zh": "故障 · UPS-A"
+  "zh": "模拟故障 · UPS-A"
  },
  "proof.fail.caption": {
   "en": "PDU-R05-B at 113.9 % · 90 devices on one feed",
   "de": "PDU-R05-B bei 113,9 % · 90 Geräte an nur einer Einspeisung",
-  "zh": "PDU-R05-B 负载 113.9 % · 90 台设备仅剩单路供电"
+  "zh": "PDU-R05-B 负载率 113.9 % · 90 台设备单路运行"
  },
  "proof.lights.caption": {
   "en": "−€53 / month · PUE 1.16 → 1.15",
@@ -247,57 +247,57 @@
  "proof.body": {
   "en": "Single-corded devices go dark and the other feed overloads. Every number comes from the demo hall's own spreadsheet, every projection is labelled <span class=\"cs-badge cs-badge--estimated\">estimated</span>",
   "de": "Geräte mit nur einem Netzkabel werden dunkel, die andere Einspeisung wird überlastet. Jede Zahl stammt aus der Tabelle der Demohalle selbst, jede Hochrechnung ist als <span class=\"cs-badge cs-badge--estimated\">geschätzt</span> gekennzeichnet",
-  "zh": "单电源设备掉电，另一路供电过载。每个数字都来自演示机房自己的表格，每个预测值都标注为<span class=\"cs-badge cs-badge--estimated\">估算</span>"
+  "zh": "单电源设备停运，另一路供电过载。所有数字均取自演示机房自身的表格，所有预测值均标注<span class=\"cs-badge cs-badge--estimated\">估算</span>"
  },
  "what.eyebrow": {
   "en": "What it is",
   "de": "Was es ist",
-  "zh": "产品简介"
+  "zh": "产品概述"
  },
  "what.h2": {
   "en": "One Excel file. Nine layers. Fail any node.",
   "de": "Eine Excel-Datei. Neun Ebenen. Jeden Knoten ausfallen lassen.",
-  "zh": "一个 Excel 文件。九个图层。任意节点都能模拟故障。"
+  "zh": "一个 Excel 文件，九个图层，任意节点均可模拟故障。"
  },
  "what.body": {
   "en": "{PRODUCT_NAME} is a browser-based data center simulator. You import one Excel file with your racks, devices, power chain and cables, and get a 3D twin with floor, air, water, fire, power, cabling, network, device and token layers. Click any node, press Fail, and see which racks go dark and which services stop.",
   "de": "{PRODUCT_NAME} ist ein browserbasierter Rechenzentrums-Simulator. Sie importieren eine Excel-Datei mit Ihren Racks, Geräten, Ihrer Stromversorgungskette und Ihren Kabeln und erhalten einen 3D-Zwilling mit den Ebenen Fläche, Luft, Wasser, Brand, Strom, Verkabelung, Netzwerk, Gerät und Token. Klicken Sie auf einen beliebigen Knoten, lösen Sie den Ausfall aus und sehen Sie, welche Racks dunkel werden und welche Dienste stoppen.",
-  "zh": "{PRODUCT_NAME} 是一款在浏览器中运行的数据中心仿真工具。导入一个包含机柜、设备、供电链路和线缆的 Excel 文件，即可得到一个 3D 孪生，包含地板、气流、水系统、消防、供电、布线、网络、设备和 token 图层。点击任意节点，按下 Fail，就能看到哪些机柜掉电、哪些业务中断。"
+  "zh": "{PRODUCT_NAME} 是一款基于浏览器的数据中心仿真软件。导入一个包含机柜、设备、供配电链路和线缆信息的 Excel 文件，即可生成 3D 数字孪生，涵盖平面、气流、水系统、消防、供配电、布线、网络、设备和 Token 图层。点击任意节点，再点击 Fail（模拟故障），即可查看哪些机柜停运、哪些业务中断。"
  },
  "adv.eyebrow": {
   "en": "Three advantages",
   "de": "Drei Vorteile",
-  "zh": "三大优势"
+  "zh": "三项优势"
  },
  "adv.h2": {
   "en": "Three things nobody else gives you",
   "de": "Drei Dinge, die Ihnen sonst niemand bietet",
-  "zh": "别人给不了的三样东西"
+  "zh": "三项独有能力"
  },
  "adv.design.h3": {
   "en": "Design → Monitor in one tool",
   "de": "Design → Monitor in einem Tool",
-  "zh": "从设计到监控，同一个工具"
+  "zh": "设计 → 监测，一个工具完成"
  },
  "adv.design.p": {
   "en": "Lay out the room before it exists, with U, weight, breaker and cooling checks as you go. Publish a version, import the as-built, keep the same model as the running twin.",
   "de": "Planen Sie den Raum, bevor es ihn gibt, mit laufenden Prüfungen für HE, Gewicht, Schutzschalter und Kühlung. Veröffentlichen Sie eine Version, importieren Sie den tatsächlichen Aufbau (As-built) und nutzen Sie dasselbe Modell weiter als Zwilling im Betrieb.",
-  "zh": "机房建成之前就能完成布局，边布置边检查 U 位、承重、断路器和制冷。发布一个版本，导入竣工数据，同一个模型继续作为运行中的数字孪生。"
+  "zh": "机房建成前即可完成布局，布置过程中同步校验 U 位、承重、断路器与制冷。发布版本、导入竣工数据，同一模型继续作为运行中的数字孪生。"
  },
  "adv.design.foot": {
   "en": "AI design assistant <span class=\"cs-badge cs-badge--roadmap\">Roadmap</span> no extra cost",
   "de": "KI-Planungsassistent <span class=\"cs-badge cs-badge--roadmap\">Roadmap</span> ohne Aufpreis",
-  "zh": "AI 设计助手 <span class=\"cs-badge cs-badge--roadmap\">路线图</span> 不额外收费"
+  "zh": "AI 设计助手 <span class=\"cs-badge cs-badge--roadmap\">路线图</span> 不另收费"
  },
  "adv.monitoring.h3": {
   "en": "On top of the monitoring you run",
   "de": "Aufgesetzt auf Ihr bestehendes Monitoring",
-  "zh": "叠加在您现有的监控之上"
+  "zh": "叠加于现有监控系统之上"
  },
  "adv.monitoring.p": {
   "en": "{PRODUCT_NAME} does not replace your monitoring or DCIM. Zabbix and NetBox connect with a URL and a read-only token: inventory, readings and alarms become the twin. Every other tool comes in as a sheet export.",
   "de": "{PRODUCT_NAME} ersetzt weder Ihr Monitoring noch Ihr DCIM. Zabbix und NetBox binden Sie mit einer URL und einem Read-only-Token an: Aus Inventar, Messwerten und Alarmen wird der Zwilling. Jedes andere Tool liefert seine Daten als Tabellen-Export.",
-  "zh": "{PRODUCT_NAME} 不替代您的监控系统或 DCIM。Zabbix 和 NetBox 只需一个 URL 和一个只读 token 即可接入：资产清单、读数和告警都进入数字孪生。其他工具一律以工作表导出的形式导入。"
+  "zh": "{PRODUCT_NAME} 不替代您的监控系统或 DCIM。Zabbix 和 NetBox 只需 URL 和只读令牌即可对接：资产清单、监测数据和告警进入数字孪生。其他工具均以工作表导出形式导入。"
  },
  "adv.monitoring.chipZabbix": {
   "en": "Zabbix · Available",
@@ -312,17 +312,17 @@
  "adv.devices.h3": {
   "en": "Device data that knows the hardware",
   "de": "Gerätedaten, die die Hardware kennen",
-  "zh": "懂硬件的设备数据"
+  "zh": "覆盖硬件细节的设备数据"
  },
  "adv.devices.p": {
   "en": "Type the model the way the vendor prints it, or pick it from the catalog. It fills in size, weight, power, airflow and the parts inside; a device the catalog does not know you describe once and reuse.",
   "de": "Geben Sie das Modell so ein, wie der Hersteller es schreibt, oder wählen Sie es aus dem Katalog. Größe, Gewicht, Leistung, Luftstrom und die verbauten Komponenten werden ergänzt; ein Gerät, das der Katalog nicht kennt, beschreiben Sie einmal und verwenden es wieder.",
-  "zh": "按厂商标注的写法输入型号，或从设备库中选择。系统会自动填入尺寸、重量、功率、气流方向和内部部件；设备库中没有的设备，描述一次即可反复使用。"
+  "zh": "按厂商标注的型号直接输入，或从设备库中选择。系统自动补全尺寸、重量、功率、气流和内部部件；设备库未收录的设备，只需描述一次即可重复使用。"
  },
  "adv.devices.link": {
   "en": "Open device data →",
   "de": "Gerätedaten öffnen →",
-  "zh": "打开设备数据 →"
+  "zh": "查看设备数据 →"
  },
  "adv.devices.foot": {
   "en": " model → U · kg · W · airflow",
@@ -337,7 +337,7 @@
  "how.h2": {
   "en": "Fill, import, fail.",
   "de": "Ausfüllen, importieren, ausfallen lassen.",
-  "zh": "填表、导入、模拟故障。"
+  "zh": "填写、导入、故障推演。"
  },
  "how.fill.h3": {
   "en": "Fill one Excel file",
@@ -347,7 +347,7 @@
  "how.fill.p": {
   "en": "Devices is the only required sheet: rack, U and model per row. Cables, Racks, Power, Networks, Cooling and Readings each unlock another layer.",
   "de": "Devices ist das einzige Pflichtblatt: Rack, HE und Modell pro Zeile. Cables, Racks, Power, Networks, Cooling und Readings schalten jeweils eine weitere Ebene frei.",
-  "zh": "Devices 是唯一必填的工作表：每行填写机柜、U 位和型号。Cables、Racks、Power、Networks、Cooling 和 Readings 每填一个，就多解锁一个图层。"
+  "zh": "Devices 是唯一必填的工作表：每行填写机柜、U 位和型号。Cables、Racks、Power、Networks、Cooling 和 Readings 每填写一张，即多启用一个图层。"
  },
  "how.import.h3": {
   "en": "Import",
@@ -357,22 +357,22 @@
  "how.import.p": {
   "en": "Preview, a check list with 3D locations, apply. Re-upload later and see exactly what changed. Values only: formulas, macros and encrypted files are refused.",
   "de": "Vorschau, Prüfliste mit Position in 3D, übernehmen. Laden Sie die Datei später erneut hoch und sehen Sie genau, was sich geändert hat. Nur Werte: Formeln, Makros und verschlüsselte Dateien werden abgewiesen.",
-  "zh": "预览、查看带 3D 定位的检查清单、应用。之后重新上传，可以准确看到哪些内容有变化。只接受数值：含公式或宏的文件以及加密文件会被拒绝。"
+  "zh": "预览、查看带 3D 定位的检查清单、应用。后续重新上传时，可准确查看所有变更。仅接受数值：公式、宏和加密文件均不予接收。"
  },
  "how.fail.h3": {
   "en": "Fail things first",
   "de": "Ausfälle zuerst im Modell",
-  "zh": "先做故障演练"
+  "zh": "故障先行推演"
  },
  "how.fail.p": {
   "en": "A scenario library built from your own model: feed loss, UPS, cooling, leak, fire, more load. Each run sits next to an untouched baseline.",
   "de": "Eine Szenariobibliothek aus Ihrem eigenen Modell: Ausfall einer Einspeisung, USV, Kühlung, Leckage, Brand, mehr Last. Jeder Durchlauf steht neben einer unveränderten Baseline.",
-  "zh": "基于您自己的模型生成的场景库：单路失电、UPS、制冷、漏液、火灾、负载增加。每次运行都与未改动的基线并排对比。"
+  "zh": "基于您自有模型生成的场景库：供电中断、UPS、制冷、漏液、火灾、负载增加。每次推演结果均与未改动的基线并列对比。"
  },
  "how.moments.eyebrow": {
   "en": "The demo moment",
   "de": "Der Demo-Moment",
-  "zh": "演示看点"
+  "zh": "演示要点"
  },
  "clips.aria": {
   "en": "Clips",
@@ -382,12 +382,12 @@
  "clips.feedA.title": {
   "en": "Lose feed A at peak, lights off",
   "de": "Einspeisung A fällt bei Spitzenlast aus, Licht aus",
-  "zh": "峰值时 A 路失电，关灯视图"
+  "zh": "峰值负载下 A 路失电（关灯模式）"
  },
  "clips.feedA.caption": {
   "en": "Lose feed A at peak (31 s)",
   "de": "Einspeisung A fällt bei Spitzenlast aus (31 s)",
-  "zh": "峰值时 A 路失电（31 秒）"
+  "zh": "峰值负载下 A 路失电（31 秒）"
  },
  "clips.crah.title": {
   "en": "Cooling unit AC-1 stops",
@@ -397,27 +397,27 @@
  "clips.crah.caption": {
   "en": "AC-1 stops, minutes to threshold, estimated (31 s)",
   "de": "AC-1 fällt aus, Minuten bis zum Grenzwert, geschätzt (31 s)",
-  "zh": "AC-1 停机，距各温度阈值的分钟数，估算（31 秒）"
+  "zh": "AC-1 停机，距温度阈值的时间，估算（31 秒）"
  },
  "clips.leak.title": {
   "en": "Manifold leak on a liquid-cooled GPU row",
   "de": "Leckage am Verteiler einer flüssigkeitsgekühlten GPU-Reihe",
-  "zh": "液冷 GPU 机柜列的分集水器漏液"
+  "zh": "液冷 GPU 机柜列分集水器漏液"
  },
  "clips.leak.caption": {
   "en": "A manifold leaks, tokens lost (31 s)",
   "de": "Ein Verteiler leckt, verlorene Token (31 s)",
-  "zh": "分集水器漏液，token 损失（31 秒）"
+  "zh": "分集水器漏液与 token 损失（31 秒）"
  },
  "clips.excel.title": {
   "en": "From an Excel file to a 3D twin",
   "de": "Von der Excel-Datei zum 3D-Zwilling",
-  "zh": "从 Excel 文件到 3D 孪生"
+  "zh": "从 Excel 文件到 3D 数字孪生"
  },
  "clips.excel.caption": {
   "en": "Excel to 3D, with a change list (50 s)",
   "de": "Von Excel zu 3D, mit Änderungsliste (50 s)",
-  "zh": "Excel 变 3D，附变更清单（50 秒）"
+  "zh": "Excel 生成 3D 机房，附变更清单（50 秒）"
  },
  "estate.eyebrow": {
   "en": "Estate view",
@@ -427,32 +427,32 @@
  "estate.h2": {
   "en": "The whole estate on one earth",
   "de": "Alle Ihre Standorte auf einem Globus",
-  "zh": "所有站点，尽在一个地球上"
+  "zh": "全部站点，呈现于同一地球视图"
  },
  "estate.sites": {
   "en": "<b>Sites</b> every site at its coordinates, with IT kW and PUE, from the Sites sheet or NetBox",
   "de": "<b>Standorte</b> jeder Standort an seinen Koordinaten, mit IT-kW und PUE, aus dem Blatt Sites oder aus NetBox",
-  "zh": "<b>站点</b>每个站点按坐标定位，附 IT kW 和 PUE，数据来自 Sites 工作表或 NetBox"
+  "zh": "<b>站点</b>每个站点按坐标定位，标注 IT 负载（kW）和 PUE，数据来自 Sites 工作表或 NetBox"
  },
  "estate.links": {
   "en": "<b>Links</b> WAN and cable links as arcs: type, bandwidth, latency, protected or not",
   "de": "<b>Verbindungen</b> WAN- und Kabelverbindungen als Bögen: Typ, Bandbreite, Latenz, geschützt oder nicht",
-  "zh": "<b>链路</b>WAN 链路和光缆链路以弧线显示：类型、带宽、时延、是否有保护"
+  "zh": "<b>链路</b>WAN 链路与光缆链路以弧线呈现：类型、带宽、时延、有无保护"
  },
  "estate.whatIf": {
   "en": "<b>What-ifs across sites</b> cut a link or lose a site and see which sites are isolated, then fly into any hall",
   "de": "<b>Was-wäre-wenn über Standorte hinweg</b> eine Verbindung trennen oder einen Standort ausfallen lassen und sehen, welche Standorte isoliert sind; dann in jede beliebige Halle hineinfliegen",
-  "zh": "<b>跨站点假设推演</b>切断一条链路或让一个站点失效，看哪些站点被孤立，再飞入任意机房"
+  "zh": "<b>跨站点故障推演</b>切断一条链路或使某一站点失效，查看哪些站点被孤立，并可直接进入任一机房"
  },
  "estate.famous": {
   "en": "Famous estates: open a submarine cable system or a cloud backbone from public data and try the same what-ifs. <a href=\"{u(\"world/\")}\">The famous data centers on a public earth</a>",
   "de": "Bekannte Standortverbünde: Öffnen Sie ein Seekabelsystem oder ein Cloud-Backbone aus öffentlichen Daten und spielen Sie dieselben Was-wäre-wenn-Szenarien durch. <a href=\"{u(\"world/\")}\">Die bekannten Rechenzentren auf einem öffentlichen Globus</a>",
-  "zh": "著名站点网络：基于公开数据打开一个海缆系统或云骨干网，做同样的假设推演。<a href=\"{u(\"world/\")}\">公开数据地球上的著名数据中心</a>"
+  "zh": "知名站点网络：基于公开数据打开海缆系统或云骨干网，执行同样的故障推演。<a href=\"{u(\"world/\")}\">公开数据地球上的全球知名数据中心</a>"
  },
  "estate.alt.dark": {
   "en": "DC Sim's Estate view: a dot-matrix earth with five demo sites in Ashburn, Amsterdam, Frankfurt, Shanghai and Singapore, each with IT kW and PUE, joined by animated link arcs.",
   "de": "Die Standortansicht von DC Sim: ein Globus aus Punkten mit fünf Demo-Standorten in Ashburn, Amsterdam, Frankfurt, Shanghai und Singapur, jeweils mit IT-kW und PUE, verbunden durch animierte Verbindungsbögen.",
-  "zh": "DC Sim 的全局视图：点阵地球上分布着阿什本、阿姆斯特丹、法兰克福、上海和新加坡五个演示站点，各自标出 IT kW 和 PUE，由动态链路弧线相连。"
+  "zh": "DC Sim 全局视图：点阵地球上分布阿什本、阿姆斯特丹、法兰克福、上海和新加坡五个演示站点，各站点标注 IT 负载（kW）和 PUE，并以动态链路弧线相连。"
  },
  "estate.alt.light": {
   "en": "The Estate view in the bright theme: the same five demo sites and their links on the earth.",
@@ -462,7 +462,7 @@
  "estate.caption": {
   "en": "Demo estate: five sites, their links, IT kW and PUE",
   "de": "Demo-Standortverbund: fünf Standorte, ihre Verbindungen, IT-kW und PUE",
-  "zh": "演示站点网络：五个站点及其链路、IT kW 和 PUE"
+  "zh": "演示站点网络：五个站点及其链路、IT 负载（kW）和 PUE"
  },
  "estate.sim": {
   "en": "simulated data",
@@ -477,7 +477,7 @@
  "who.h2": {
   "en": "Operators, integrators, AI rooms",
   "de": "Betreiber, Systemhäuser, KI-Räume",
-  "zh": "运营方、集成商、AI 机房"
+  "zh": "运营方、系统集成商、AI 机房"
  },
  "who.operators.kicker": {
   "en": "1–50 racks",
@@ -492,12 +492,12 @@
  "who.operators.p": {
   "en": "Server rooms, edge sites, colo cages, GPU rooms, universities, hospitals. See your room, find the single points of failure, plan the next row.",
   "de": "Serverräume, Edge-Standorte, Colocation-Cages, GPU-Räume, Hochschulen, Kliniken. Sehen Sie Ihren Raum, finden Sie die Single Points of Failure, planen Sie die nächste Rack-Reihe.",
-  "zh": "服务器机房、边缘站点、托管笼位、GPU 机房、高校、医院。看清您的机房，找出单点故障，规划下一列机柜。"
+  "zh": "服务器机房、边缘站点、托管笼位、GPU 机房、高校、医院。直观掌握机房现状，识别单点故障，规划下一列机柜。"
  },
  "who.operators.arrow": {
   "en": "The product →",
   "de": "Zum Produkt →",
-  "zh": "了解产品 →"
+  "zh": "产品介绍 →"
  },
  "who.partners.kicker": {
   "en": "Partners",
@@ -507,12 +507,12 @@
  "who.partners.title": {
   "en": "Integrators and MSPs",
   "de": "Systemhäuser und MSPs",
-  "zh": "集成商和 MSP"
+  "zh": "系统集成商与托管服务商"
  },
  "who.partners.p": {
   "en": "Walk your customer through the data center before it exists, win the project, keep them on the twin after go-live.",
   "de": "Führen Sie Ihren Kunden durch das Rechenzentrum, bevor es gebaut ist, gewinnen Sie das Projekt und betreuen Sie ihn nach der Inbetriebnahme weiter auf dem Zwilling.",
-  "zh": "数据中心还没建，就能带客户走一遍，拿下项目；上线后继续用数字孪生服务客户。"
+  "zh": "在数据中心建成之前带客户完整浏览方案，赢得项目；投入运行后继续以数字孪生服务客户。"
  },
  "who.partners.arrow": {
   "en": "Partner program →",
@@ -522,7 +522,7 @@
  "who.ai.kicker": {
   "en": "Tokens / kWh",
   "de": "Token / kWh",
-  "zh": "Token / kWh"
+  "zh": "token / kWh"
  },
  "who.ai.title": {
   "en": "AI infrastructure leads",
@@ -532,7 +532,7 @@
  "who.ai.p": {
   "en": "Tokens per second per server, tokens per kWh per rack, and the tokens a failure would cost.",
   "de": "Token pro Sekunde je Server, Token pro kWh je Rack und die Token, die ein Ausfall kosten würde.",
-  "zh": "每台服务器每秒 token 数、每个机柜每 kWh token 数，以及一次故障会损失多少 token。"
+  "zh": "单台服务器每秒 token 数、单机柜每千瓦时 token 数，以及一次故障造成的 token 损失。"
  },
  "who.ai.arrow": {
   "en": "IT layers →",
@@ -542,12 +542,12 @@
  "who.tools.kicker": {
   "en": "Works alongside your tools",
   "de": "Arbeitet mit Ihren Tools zusammen",
-  "zh": "与您现有的工具协同"
+  "zh": "与您现有的工具协同运行"
  },
  "who.tools.p": {
   "en": "● Available: connects directly. The others reach the twin today as an export through the template sheets. <a href=\"{u(\"integrations/\")}\">Integration status, tool by tool →</a>",
   "de": "● Verfügbar: direkte Anbindung. Alle anderen gelangen heute als Export über die Blätter der Vorlage in den Zwilling. <a href=\"{u(\"integrations/\")}\">Integrationsstatus, Tool für Tool →</a>",
-  "zh": "● 已可用：直接连接。其他工具目前通过模板工作表，以导出数据的形式进入数字孪生。<a href=\"{u(\"integrations/\")}\">逐个工具查看集成状态 →</a>"
+  "zh": "● 已可用：直接对接。其他工具目前以导出文件形式，经导入模板的工作表进入数字孪生。<a href=\"{u(\"integrations/\")}\">查看各工具集成状态 →</a>"
  },
  "pricing.eyebrow": {
   "en": "Pricing",
@@ -557,17 +557,17 @@
  "pricing.h2": {
   "en": "Pricing that fits a 10-rack room",
   "de": "Preise, die zu einem Raum mit 10 Racks passen",
-  "zh": "10 个机柜的机房也用得起的价格"
+  "zh": "适合 10 个机柜机房的定价"
  },
  "pricing.compare": {
   "en": "Compare with typical DCIM pricing →",
   "de": "Mit typischen DCIM-Preisen vergleichen →",
-  "zh": "与常见 DCIM 价格对比 →"
+  "zh": "与常见 DCIM 定价对比 →"
  },
  "pricing.design.kicker": {
   "en": "Design",
   "de": "Design",
-  "zh": "Design"
+  "zh": "设计版（Design）"
  },
  "pricing.design.price": {
   "en": "${PRICES.design[0].price}<span> from, per project</span>",
@@ -577,12 +577,12 @@
  "pricing.design.p": {
   "en": "Plan a room or a new row; three months per project. The AI design assistant comes at no extra cost when it ships.",
   "de": "Planen Sie einen Raum oder eine neue Rack-Reihe; drei Monate pro Projekt. Der KI-Planungsassistent kommt ohne Aufpreis dazu, sobald er verfügbar ist.",
-  "zh": "规划一个机房或新增一列机柜；每个项目三个月。AI 设计助手上线后不额外收费。"
+  "zh": "用于规划机房或新增机柜列；每个项目使用期三个月。AI 设计助手上线后包含在内，不另收费。"
  },
  "pricing.monitor.kicker": {
   "en": "Monitor",
   "de": "Monitor",
-  "zh": "Monitor"
+  "zh": "监测版（Monitor）"
  },
  "pricing.monitor.price": {
   "en": "${PRICES.monitorPerRack}<span> / rack / month · min ${PRICES.monitorMin}</span>",
@@ -592,7 +592,7 @@
  "pricing.monitor.p": {
   "en": "The twin of a running room, with what-if and reports.",
   "de": "Der Zwilling eines Raums im laufenden Betrieb, mit Was-wäre-wenn-Analysen und Berichten.",
-  "zh": "运行中机房的数字孪生，含假设推演和报表。"
+  "zh": "运行中机房的数字孪生，含故障推演与报表。"
  },
  "pricing.partner.kicker": {
   "en": "Partner",
@@ -607,7 +607,7 @@
  "pricing.partner.p": {
   "en": "For integrators, MSPs and consultants.",
   "de": "Für Systemhäuser, MSPs und Berater.",
-  "zh": "面向集成商、MSP 和咨询顾问。"
+  "zh": "面向系统集成商、托管服务商（MSP）和咨询顾问。"
  },
  "resources.eyebrow": {
   "en": "Resources",
@@ -617,22 +617,22 @@
  "template.eyebrow": {
   "en": "Excel template · v{TEMPLATE_VERSION}",
   "de": "Excel-Vorlage · v{TEMPLATE_VERSION}",
-  "zh": "Excel 模板 · v{TEMPLATE_VERSION}"
+  "zh": "Excel 导入模板 · v{TEMPLATE_VERSION}"
  },
  "template.h2": {
   "en": "One Excel file. Your room in 3D.",
   "de": "Eine Excel-Datei. Ihr Raum in 3D.",
-  "zh": "一个 Excel 文件，您的机房即成 3D。"
+  "zh": "一个 Excel 文件，即可 3D 呈现您的机房。"
  },
  "template.p": {
   "en": "Download the import template (v{TEMPLATE_VERSION}, {TEMPLATE_SHEETS}, only Devices required) and the filled example from our demo hall. No form, no email needed, no macros in the files.",
   "de": "Laden Sie die Import-Vorlage (v{TEMPLATE_VERSION}, {TEMPLATE_SHEETS}, nur das Blatt Devices ist Pflicht) und das ausgefüllte Beispiel aus unserer Demohalle herunter. Kein Formular, keine E-Mail-Adresse nötig, keine Makros in den Dateien.",
-  "zh": "下载导入模板（v{TEMPLATE_VERSION}，{TEMPLATE_SHEETS}，仅 Devices 必填）和我们演示机房的填写示例。无需填写表单，无需留邮箱，文件中不含宏。"
+  "zh": "下载导入模板（v{TEMPLATE_VERSION}，{TEMPLATE_SHEETS}，仅 Devices 为必填）及演示机房的填写示例。无需填写表单，无需提供邮箱，文件不含宏。"
  },
  "template.btnTemplate": {
   "en": "Download the template (.xlsx)",
   "de": "Vorlage herunterladen (.xlsx)",
-  "zh": "下载模板（.xlsx）"
+  "zh": "下载导入模板（.xlsx）"
  },
  "template.btnExample": {
   "en": "Download the filled example",
@@ -642,11 +642,11 @@
  "template.btnWalkthrough": {
   "en": "Request a walkthrough",
   "de": "Vorführung anfragen",
-  "zh": "预约演示讲解"
+  "zh": "预约演示"
  },
  "const.templateSheets": {
   "en": "eleven sheets",
   "de": "elf Tabellenblätter",
-  "zh": "十一个工作表"
+  "zh": "11 张工作表"
  }
 }
