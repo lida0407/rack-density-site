@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
+import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../config/brand';
 ---
 <Base title={`Privacy | ${BRAND}`} description={`No account = we store nothing. How ${PRODUCT_NAME} and this site handle your files: read in your browser, never uploaded.`} path="/privacy" ogImage="/og/hub.png" section="hub" crumbs={[{ name: 'Privacy' }]}>
   <section class="section-tight">
@@ -15,7 +15,7 @@ import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN } fr
       </ul>
       <h2>This website</h2>
       <ul>
-        <li>{CF_WEB_ANALYTICS_TOKEN ? <>We count visits with Cloudflare Web Analytics: no cookies, no browser storage, no fingerprinting. It records the page, the referring site, the country and the device type, and we only see totals. No other analytics, no ads, and no other third-party scripts except Cloudflare's bot check on the waitlist form.</> : <>No analytics, no cookies, no ads and no third-party scripts (one exception: Cloudflare's bot check on the waitlist form, below).</>} The site is hosted on Cloudflare Pages; Cloudflare receives your IP address to deliver and protect the pages, as described in Cloudflare's privacy policy.</li>
+        <li>{CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN ? <>We count visits with Cloudflare Web Analytics: no cookies, no browser storage, no fingerprinting. It records the page, the referring site, the country and the device type, and we only see totals. No other analytics, no ads, and no other third-party scripts except Cloudflare's bot check on the waitlist form.</> : <>No analytics, no cookies, no ads and no third-party scripts (one exception: Cloudflare's bot check on the waitlist form, below).</>} The site is hosted on Cloudflare Pages; Cloudflare receives your IP address to deliver and protect the pages, as described in Cloudflare's privacy policy.</li>
         <li>The calculators run in your browser. If you pick a currency, an electricity price, calculator inputs or the theme (Auto, Dark, Bright), your browser remembers it on your device. We don't receive it.</li>
         <li>If you e-mail us to hear when Account and Pro open, we use your address for that one reply and then delete it.</li>
       </ul>
@@ -32,7 +32,7 @@ import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN } fr
       </ul>
       <h2>Who we are</h2>
       <p>rack-density.com, {PRODUCT_NAME} and DC Sim are run by Mustard Seed Solutions (Malta, <a href="https://mustardseedmt.com" rel="noopener">mustardseedmt.com</a>), which is responsible for the data described here. Sensaka and {BRAND} are its brands. Questions: <a href={MAILTO}>{CONTACT_EMAIL}</a>.</p>
-      <p class="small muted">Last updated: 15 October 2026</p>
+      <p class="small muted">Last updated: 15 October 2026 (visit counting added)</p>
     </div>
   </section>
 </Base>

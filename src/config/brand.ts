@@ -25,7 +25,8 @@ const env = typeof process !== 'undefined' && process.env ? process.env : {};
 const TURNSTILE_SITEKEY = env.WAITLIST_SITEKEY ?? '0x4AAAAAAFW6HYzPounMOy66'; // Turnstile widget "rack-density waitlist" (public key)
 // Cloudflare Web Analytics (cookieless, no consent banner; planner 2026-10-15: no GA4). Paste the site token the planner
 // logs; empty = no tag anywhere and the privacy page keeps saying "no analytics".
-export const CF_WEB_ANALYTICS_TOKEN = '';
+export const CF_WEB_ANALYTICS_TOKEN = ''; // stays empty: the planner enabled Cloudflare's automatic injection for the whole zone
+export const CF_WEB_ANALYTICS_ON = true;  // counter is live (auto-injected since 2026-10-15) → privacy/waitlist wording
 
 export const WAITLIST = { live: TURNSTILE_SITEKEY !== '', siteKey: TURNSTILE_SITEKEY, api: '/api/waitlist' } as const;
 

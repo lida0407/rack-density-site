@@ -3,7 +3,7 @@
 // The form posts natively to the Pages Function (works if this script fails); with JS it posts JSON and answers inline.
 import Base from '../../layouts/Base.astro';
 import { u, mailto } from '../../lib/url';
-import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY, CF_WEB_ANALYTICS_TOKEN } from '../../config/brand';
+import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../../config/brand';
 ---
 <Base title={`Join the ${PRODUCT_NAME} Waitlist | RACKDENSITY`}
   description={`Get in first when the self-serve ${PRODUCT_NAME} Try opens: one e-mail, no spam, nothing else stored.`}
@@ -26,7 +26,7 @@ import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, NOTIFY, CF_WEB_ANALYTICS_TOKEN
           <div class="cf-turnstile" data-sitekey={WAITLIST.siteKey} data-theme="dark" data-size="flexible"></div>
           <button class="btn btn-primary" type="submit">Join the waitlist</button>
           <p class="small muted" data-msg aria-live="polite"></p>
-          <p class="small muted">We keep your e-mail, the product you picked, your note and where you came from (<code>?src</code>), plus a one-way hash of your IP address against spam. {CF_WEB_ANALYTICS_TOKEN ? 'No tracking cookies: the only scripts from elsewhere are Cloudflare’s bot check and its cookieless visit counter.' : 'No tracking, no third-party scripts besides the Cloudflare bot check.'} <a href={u('/privacy')}>Privacy</a>.</p>
+          <p class="small muted">We keep your e-mail, the product you picked, your note and where you came from (<code>?src</code>), plus a one-way hash of your IP address against spam. {CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN ? 'No tracking cookies: the only scripts from elsewhere are Cloudflare’s bot check and its cookieless visit counter.' : 'No tracking, no third-party scripts besides the Cloudflare bot check.'} <a href={u('/privacy')}>Privacy</a>.</p>
         </form>
       ) : (
         <div class="card form">
