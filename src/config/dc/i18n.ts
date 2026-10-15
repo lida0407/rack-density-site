@@ -8,7 +8,7 @@ const PHASE1 = [
   "/dc/partners", "/dc/contact", "/dc/security", "/dc/resources/excel-template",
 ];
 /** Chinese DC pages wait for Dali's read; flip to true when he says "zh ok" for /dc/. */
-export const DC_ZH_READY = false;
+export const DC_ZH_READY = true; // Dali 2026-10-15: "zh dc ok — go live" (via the planner)
 export const DC_TRANSLATED = { de: PHASE1, zh: DC_ZH_READY ? PHASE1 : [] };
 /** Held for review (planner 2026-10-15: Dali reads the Chinese before launch): built under /<locale>/dc/preview/…, readable
  *  at the URL but noindex, no hreflang, not in the switcher, llms.txt or the language redirect (that one only ever sends
