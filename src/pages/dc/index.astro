@@ -12,7 +12,7 @@ import { HERO_CLIP, isoDuration } from "../../config/dc/clips";
 import { getImage } from "astro:assets";
 import heroPoster from "../../assets/video/hero-dc-dark.jpg";
 import { SITE_URL } from "../../../site.config.mjs";
-import { u } from "../../lib/dc/url";
+import { u, root } from "../../lib/dc/url";
 import heroDark from "../../assets/dc/shots/hero-lightsoff-crop.png";
 import heroLight from "../../assets/dc/shots/hero-lit-crop.png";
 
@@ -107,7 +107,7 @@ const heroLd = videoLd({
         <div class="dch-tiles">
           <article><span class="dch-num">01</span><h3>Design → Monitor in one tool</h3><p>Lay out the room before it exists, with U, weight, breaker and cooling checks as you go. Publish a version, import the as-built, keep the same model as the running twin.</p><span class="dch-foot">AI design assistant <span class="cs-badge cs-badge--roadmap">Roadmap</span> no extra cost</span></article>
           <article><span class="dch-num">02</span><h3>On top of the monitoring you run</h3><p>{PRODUCT_NAME} does not replace your monitoring or DCIM. Zabbix and NetBox connect with a URL and a read-only token: inventory, readings and alarms become the twin. Every other tool comes in as a sheet export.</p><span class="dch-foot"><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Zabbix · Available</span><span class="cs-chip cs-chip--ok"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>NetBox · Available</span></span></article>
-          <article><span class="dch-num">03</span><h3>Device data that knows the hardware</h3><p>Type the model the way the vendor prints it, or pick it from the catalog. It fills in size, weight, power, airflow and the parts inside; a device the catalog does not know you describe once and reuse.</p><span class="dch-foot dch-mono">model → U · kg · W · airflow · parts</span></article>
+          <article><span class="dch-num">03</span><h3>Device data that knows the hardware</h3><p>Type the model the way the vendor prints it, or pick it from the catalog. It fills in size, weight, power, airflow and the parts inside; a device the catalog does not know you describe once and reuse.</p><span class="dch-foot dch-mono"><a href={root("devices/")}>Open device data →</a> model → U · kg · W · airflow</span></article>
         </div>
       </div>
     </section>

@@ -1,0 +1,33 @@
+---
+// Links from DC pages into the hub's open device data (/devices/, Dali's SEO decision §2: specs + prices, CC BY 4.0).
+// Counts come from the same catalog the /devices/ pages are built from (src/lib/devices.ts, homelab marketing's).
+import { byCategory, catLabel, catSlug } from "../../lib/devices";
+import { root } from "../../lib/dc/url";
+
+interface Props { cats: string[]; title?: string }
+const { cats, title = "Open device data behind this layer" } = Astro.props;
+const all = byCategory();
+const items = cats.filter((c) => all.has(c)).map((c) => ({ c, n: all.get(c)!.length }));
+const total = items.reduce((s, i) => s + i.n, 0);
+---
+{items.length > 0 && (
+  <section class="dd" aria-labelledby={`dd-${cats[0]}`}>
+    <span class="eyebrow">Device data</span>
+    <h2 id={`dd-${cats[0]}`}>{title}</h2>
+    <p class="dd-lede">The catalog that fills in size, weight, power and airflow when you import a model is open: {total} models in these categories, with idle, typical and maximum watts, U, weight, ports and dated list prices, sources cited.</p>
+    <ul class="dd-list">
+      {items.map((i) => <li><a class="cs-chip" href={root(`devices/${catSlug(i.c)}/`)}>{catLabel(i.c)}<span class="dd-n">{i.n}</span></a></li>)}
+    </ul>
+    <p class="dd-all"><a href={root("devices/")}>All device data (CSV and JSON, CC BY 4.0)</a></p>
+  </section>
+)}
+<style>
+  .dd { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .dd h2 { margin: 6px 0 8px; font-size: 24px; line-height: 30px; }
+  .dd-lede { margin: 0 0 14px; color: var(--ink-muted); max-width: 46em; }
+  .dd-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .dd-list .cs-chip { text-decoration: none; color: var(--ink); gap: 8px; }
+  .dd-list .cs-chip:hover { border-color: var(--accent); }
+  .dd-n { font: 500 11px/1 var(--font-mono); color: var(--ink-dim); }
+  .dd-all { margin: 14px 0 0; font-size: 15px; }
+</style>

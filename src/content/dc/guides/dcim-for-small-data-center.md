@@ -49,7 +49,7 @@ Then the question an inventory cannot answer: **if this fails, what goes dark?**
 
 ## 4. What it should cost
 
-At 5 to 50 racks, a lightweight setup should cost hundreds to a few thousand dollars a year, not tens of thousands. Published DCIM list prices run from about $1,500 a year (a per-asset plan's minimum) through $234–330 per rack per year for mid-market tools; DC Sim **Monitor** is $5 per rack per month with a $49 minimum, and **Design** is one-time per project from $490. The full ranges by pricing model and room size, with a calculator, are in [What DCIM costs in 2026](../dcim-pricing/).
+At 5 to 50 racks, a lightweight setup should cost hundreds to a few thousand dollars a year, not tens of thousands. Published DCIM list prices run from about $1,500 a year (a per-asset plan's minimum) through $234–333 per rack per year for mid-market tools; DC Sim **Monitor** is $5 per rack per month with a $49 minimum, and **Design** is one-time per project from $490. The full ranges by pricing model and room size, with a calculator, are in [What DCIM costs in 2026](../dcim-pricing/).
 
 Count the hidden costs too: hours to load the data, a server to host a self-run tool, and the time to keep any of them current.
 

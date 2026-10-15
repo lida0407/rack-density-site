@@ -10,6 +10,7 @@ import PricingStrip from "../../components/dc/PricingStrip.astro";
 import ToolChips from "../../components/dc/ToolChips.astro";
 import { mailto } from "../../config/dc/product";
 import { faqLd, softwareLd, howToLd } from "../../lib/dc/schema";
+import DeviceData from "../../components/dc/DeviceData.astro";
 import { u, root } from "../../lib/dc/url";
 
 export async function getStaticPaths() {
@@ -47,6 +48,13 @@ const panel = connect[tool];
 const badgeLabel = { available: "Available", partial: "Partial", roadmap: "Roadmap", planned: "Planned", early: "Early access", partner: "Partner" };
 // Planned connectors collect demand on the shared waitlist (edition preselected, ?src = the tool).
 const wantHref = d.badge === "planned" ? root(`homelab/waitlist/?src=${tool}&edition=dc`) : null; // = /waitlist?src=… (the 301 target)
+// Open device data per product page (Dali's SEO decision §2): which /devices/ categories each layer draws on.
+const DEVICE_CATS: Record<string, string[]> = {
+  "product/it": ["server", "gpu_server", "rack_system", "accelerator", "gpu", "cpu", "storage", "switch"],
+  "product/facility": ["ups", "rack_pdu", "crah", "inrow", "cdu", "rear_door_hx", "genset", "fire_detection", "fire_suppression", "leak_detection", "rack"],
+  "product/design": ["rack", "server", "gpu_server", "rack_system", "storage", "switch", "rack_pdu", "ups", "crah", "inrow", "cdu", "rear_door_hx"],
+};
+const deviceCats = DEVICE_CATS[page.id] ?? [];
 // Zabbix and NetBox connect directly: the three on-page steps as HowTo (SEO-GEO-PLAN §3).
 const connectSteps = panel ? [
   { name: "Connect", text: `Open ⋯ → Connect, choose ${toolName}, paste the URL and a read-only API token, press Test. The test shows the version and what it can see.` },
@@ -134,6 +142,7 @@ const jsonLd = [
         </div>
       </section>
     )}
+    {deviceCats.length > 0 && <DeviceData cats={deviceCats} />}
     <Faq items={d.faq} />
     {d.section === "product" && <PricingStrip />}
     {!d.ctaTop && <TemplateCTA compact={d.section === "company"} />}

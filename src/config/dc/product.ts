@@ -26,3 +26,6 @@ export const PRICES = {
 
 export const mailto = (subject: string, body = "") =>
   `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ""}`;
+
+/** Verbatim from ~/Sensaka/marketing/ENTITY.md (SEO-GEO-PLAN §4.3): the same words in llms.txt, schema and listings. */
+export const ENTITY_DC = "DC Sim is a browser-based data-center simulator: import an Excel/CSV inventory or connect NetBox and Zabbix, get a 3D twin with power chain, cooling, cabling and network views, and run what-ifs (UPS or feed failure, cooling loss, leaks) with estimated impact. Built for small and mid-size data centers and the partners who serve them; design license per project, monitoring subscription per rack.";

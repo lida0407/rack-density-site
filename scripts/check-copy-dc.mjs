@@ -1,5 +1,6 @@
 // Build-time copy check: fails the build if the published HTML breaks the marketing rules.
-// - no names of DCIM / twin / simulation competitors (integration partners are allowed),
+// - no names of DCIM / twin / simulation competitors (integration partners are allowed), except on the comparison
+//   pages under /dc/compare/ (Dali, 2026-10-15: factual, sourced, dated) and their lines in llms.txt,
 // - no AI model or AI company names,
 // - "CFD" only in the negative ("not CFD", "no CFD", "CFD-grade airflow: not offered"),
 // - no leftover spec placeholders.
@@ -25,9 +26,11 @@ const text = (html) => html.replace(/<script[\s\S]*?<\/script>/g, " ").replace(/
 const problems = [];
 for (const f of files) {
   const raw = readFileSync(f, "utf8");
-  const t = f.endsWith(".html") ? text(raw) : raw;
   const rel = f.slice(DIST.length);
-  for (const [name, re] of [["competitor", competitors], ["AI name", aiNames], ["placeholder", placeholders]]) {
+  const compare = /^dc\/compare\//.test(rel);
+  const t = f.endsWith(".html") ? text(raw) : raw.split("\n").filter((l) => !l.includes("/dc/compare/")).join("\n");
+  for (const [name, re] of [["competitor", compare ? null : competitors], ["AI name", aiNames], ["placeholder", placeholders]]) {
+    if (!re) continue;
     const m = t.match(re);
     if (m) problems.push(`${rel}: ${name} "${m[0]}" … ${t.slice(Math.max(0, m.index - 50), m.index + 60)}`);
   }

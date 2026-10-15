@@ -48,5 +48,24 @@ const guides = defineCollection({
   }),
 });
 
-// Imported by src/content.config.ts (the merged site). Collection names stay "pages" and "guides".
-export const dcCollections = { pages, guides };
+// Comparison pages (Dali's SEO decision 2026-10-15): factual, sourced public prices with dates, feature tables,
+// no disparagement, a "last checked" date. The only DC pages where vendor names may appear (check-copy-dc.mjs).
+const compare = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/dc/compare" }),
+  schema: z.object({
+    title: z.string().max(70),
+    description: z.string().max(170),
+    h1: z.string(),
+    directAnswer: z.string(),
+    kind: z.enum(["pricing", "alternative"]),
+    vendor: z.string().optional(),
+    order: z.number().default(0),
+    lastChecked: z.string(),
+    sources: z.array(z.object({ label: z.string(), url: z.string() })).min(1),
+    faq,
+    related: z.array(z.object({ href: z.string(), label: z.string(), kind: z.string() })).max(3).default([]),
+  }),
+});
+
+// Imported by src/content.config.ts (the merged site).
+export const dcCollections = { pages, guides, compare };

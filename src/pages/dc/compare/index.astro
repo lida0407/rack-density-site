@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../../layouts/dc/Base.astro";
+import { u } from "../../../lib/dc/url";
+const pages = (await getCollection("compare")).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="DC Sim comparisons: prices and alternatives, sourced" description="DC Sim next to the DCIM and monitoring tools people compare it with: published prices with dates and sources, feature tables, and when each tool is the better fit." path="compare/" crumbs={[{ name: "Comparisons", path: "compare/" }]}>
+  <article class="container page">
+    <span class="eyebrow">Comparisons</span>
+    <h1 style="margin:12px 0 0">DC Sim next to the tools people compare it with</h1>
+    <p class="direct-answer" style="margin-top:28px">Each page uses only public facts with a date: list prices from the vendors' own pricing pages and the features they list there. DC Sim is a data center simulator that sits on top of DCIM and monitoring, so most pages also say when the other tool is the better choice, and how the two work together.</p>
+    <div class="grid grid-2" style="margin-top:32px">
+      {pages.map((p) => (
+        <a class="cs-card" href={u(`compare/${p.id}/`)} style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px">
+          <span style="font:500 11px/14px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)">{p.data.kind === "pricing" ? "Price comparison" : "Alternative"} · checked {p.data.lastChecked}</span>
+          <span style="font:600 19px/25px 'Inter Variable',var(--font-sans)">{p.data.h1}</span>
+          <span style="color:var(--ink-muted);font-size:15px;line-height:23px">{p.data.description}</span>
+        </a>
+      ))}
+    </div>
+  </article>
+</Base>

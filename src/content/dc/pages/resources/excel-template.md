@@ -47,7 +47,7 @@ What they do: phases give a per-phase load and a phase-balance check on every th
 ## What happens at import
 
 1. Headers are matched case-insensitively, with synonyms ("U position", "Rack name", "Hostname", "Model number").
-2. Model text is matched to the device catalog (exact, aliases, model codes, then fuzzy). Unknown models become plain boxes of the height you gave, flagged "identify later".
+2. Model text is matched to the device catalog (exact, aliases, model codes, then fuzzy). Unknown models become plain boxes of the height you gave, flagged "identify later". The catalog's specs and list prices are open: browse them in the [device data](../../../devices/).
 3. Missing layers get defaults marked **assumed** (2N A/B power, aisles alternating by row, one cooling zone), listed in the report so you know what to replace.
 4. A check list with 3D locations: U overlaps, overweight racks, PDU or breaker over 80 %, single-corded or same-feed devices, heat above cooling, warranty ending within 12 months, unknown models, cable and port problems.
 5. Re-upload means update. Devices are matched by serial, then name, then rack and U; you see a change list before anything is applied.

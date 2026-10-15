@@ -1,4 +1,4 @@
-import { PRODUCT_NAME, COMPANY, PRICES } from "../../config/dc/product";
+import { PRODUCT_NAME, COMPANY, PRICES, ENTITY_DC } from "../../config/dc/product";
 import { abs } from "./url";
 
 export const faqLd = (items: { q: string; a: string }[]) =>
@@ -15,8 +15,7 @@ export const softwareLd = () => ({
   name: PRODUCT_NAME,
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web browser",
-  description:
-    "Browser-based data center simulator: one Excel file becomes a 3D twin with floor, air, water, fire, power, cabling, network, device and token layers, with fail-anything what-if.",
+  description: ENTITY_DC,
   publisher: { "@id": abs("#org") },
   offers: [
     { "@type": "Offer", name: "Monitor", price: PRICES.monitorMin, priceCurrency: "USD", description: `From $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}` },

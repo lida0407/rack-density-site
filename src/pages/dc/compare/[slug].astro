@@ -1,0 +1,62 @@
+---
+// Comparison pages (Dali's SEO decision 2026-10-15): factual, sourced public prices with dates, feature tables, no disparagement,
+// "last checked" on every page. Content in src/content/dc/compare/*.md.
+import { getCollection, render } from "astro:content";
+import Base from "../../../layouts/dc/Base.astro";
+import Faq from "../../../components/dc/Faq.astro";
+import TemplateCTA from "../../../components/dc/TemplateCTA.astro";
+import { faqLd, articleLd } from "../../../lib/dc/schema";
+import { u } from "../../../lib/dc/url";
+import { CONTACT_EMAIL } from "../../../config/dc/product";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("compare");
+  return pages.map((p) => ({ params: { slug: p.id }, props: { page: p } }));
+}
+const { page } = Astro.props;
+const d = page.data;
+const { Content } = await render(page);
+const path = `compare/${page.id}/`;
+const checked = new Date(`${d.lastChecked}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const jsonLd = [{ ...articleLd(d.h1, d.description, path), dateModified: d.lastChecked }, ...faqLd(d.faq)];
+---
+<Base title={d.title} description={d.description} path={path} crumbs={[{ name: "Comparisons", path: "compare/" }, { name: d.h1, path }]} jsonLd={jsonLd}>
+  <article class="container page cmp">
+    <div class="cmp-head">
+      <span class="eyebrow">{d.kind === "pricing" ? "Price comparison" : "Alternative"}</span>
+      <h1>{d.h1}</h1>
+      <p class="cmp-checked"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Last checked <time datetime={d.lastChecked}>{checked}</time> against the vendors' public pages · sources below</p>
+    </div>
+    <p class="direct-answer">{d.directAnswer}</p>
+    <div class="prose"><Content /></div>
+    <section class="cmp-sources" aria-labelledby="cs-h">
+      <h2 id="cs-h">Sources</h2>
+      <ol>{d.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}</ol>
+      <p class="small muted">Prices are list prices in US dollars as published on the date above, before discounts, taxes and services. Product names belong to their owners; this page compares public facts and makes no claim about anyone's product beyond them. Spotted something out of date? Write to <a href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Correction: ${d.h1}`)}`}>{CONTACT_EMAIL}</a> and we correct it.</p>
+    </section>
+    <Faq items={d.faq} />
+    {d.related.length > 0 && (
+      <nav class="section" aria-label="Related" style="margin-top:40px">
+        <span class="eyebrow">Related</span>
+        <div class="grid grid-3 cmp-rel">{d.related.map((r) => <a class="cs-card" href={u(r.href)}><span class="cmp-rel-k">{r.kind}</span><span class="cmp-rel-t">{r.label}</span></a>)}</div>
+        <p class="cmp-all"><a href={u("compare/")}>All comparisons</a></p>
+      </nav>
+    )}
+    <TemplateCTA />
+  </article>
+</Base>
+<style>
+  .cmp-head { display: flex; flex-direction: column; gap: 12px; max-width: 820px; }
+  .cmp-head h1 { margin: 0; font-size: clamp(32px, 4.2vw, 52px); line-height: 1.05; }
+  .cmp-checked { margin: 0; display: inline-flex; align-items: center; gap: 8px; font: 500 12px/16px var(--font-mono); color: var(--ink-muted); }
+  .cmp .direct-answer { margin-top: 28px; }
+  .cmp .prose { margin-top: 36px; }
+  .cmp-sources { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .cmp-sources h2 { margin: 0 0 12px; font-size: 22px; }
+  .cmp-sources ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+  .cmp-rel { margin-top: 16px; }
+  .cmp-rel .cs-card { text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 6px; }
+  .cmp-rel-k { font: 500 11px/14px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+  .cmp-rel-t { font: 600 17px/23px 'Inter Variable', var(--font-sans); }
+  .cmp-all { margin: 14px 0 0; font-size: 15px; }
+</style>
