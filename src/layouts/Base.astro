@@ -7,7 +7,7 @@ import Breadcrumbs from '../components/site/Breadcrumbs.astro';
 import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
 import { ENTITY } from '../config/entity';
 import { abs, u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, PARTNER, CONTACT_EMAIL } from '../config/brand';
+import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, PARTNER, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
 
 interface Props {
   title: string;               // full <title>
@@ -63,6 +63,7 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${SITE_URL}${u(ogImage)}`} />
     <script type="application/ld+json" set:html={JSON.stringify(org)} />
+    {CF_WEB_ANALYTICS_TOKEN && <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}></script>}
     {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body class={`theme-${section}`}>

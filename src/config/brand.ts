@@ -23,6 +23,10 @@ export const NOTIFY = { subject: 'Tell me when Homelab Twin Try opens', body: 'O
 // Live since 2026-10-15 (D1 + Turnstile created by the planner); an empty key would fall back to the mailto CTAs. WAITLIST_SITEKEY at build time overrides it (local tests with the test key).
 const env = typeof process !== 'undefined' && process.env ? process.env : {};
 const TURNSTILE_SITEKEY = env.WAITLIST_SITEKEY ?? '0x4AAAAAAFW6HYzPounMOy66'; // Turnstile widget "rack-density waitlist" (public key)
+// Cloudflare Web Analytics (cookieless, no consent banner; planner 2026-10-15: no GA4). Paste the site token the planner
+// logs; empty = no tag anywhere and the privacy page keeps saying "no analytics".
+export const CF_WEB_ANALYTICS_TOKEN = '';
+
 export const WAITLIST = { live: TURNSTILE_SITEKEY !== '', siteKey: TURNSTILE_SITEKEY, api: '/api/waitlist' } as const;
 
 export const PRICES = { account: { month: 5, year: 50 }, pro: { month: 20, year: 200 }, currency: 'USD' } as const;
