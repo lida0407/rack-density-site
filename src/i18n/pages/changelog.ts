@@ -20,9 +20,9 @@ export const de: Deep<typeof en> = {
 };
 
 export const zh: Deep<typeof en> = {
-  title: `${P} 更新日志：新功能`,
-  description: `${P} 的最新变化，按时间倒序：已发布的功能、修复，以及您的 3D homelab 机柜接下来会有什么。`,
+  title: `${P} 更新日志`,
+  description: `${P} 的最新更新，按时间倒序排列：已发布的功能、问题修复及后续计划。`,
   crumb: '更新日志', h1: '更新日志',
-  lead: `${P} 的最新变化，按时间倒序。可通过 {rss} 订阅。`,
-  entriesNote: '各条更新内容以英文显示。', dateLocale: 'zh-CN',
+  lead: `${P} 的最新更新，按时间倒序排列。可通过 {rss} 订阅。`,
+  entriesNote: '更新条目以英文发布。', dateLocale: 'zh-CN',
 };

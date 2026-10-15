@@ -4,7 +4,7 @@ import type { Deep } from '../config';
 export const de: Deep<UI> = {
   skip: 'Zum Inhalt springen',
   menu: 'Menü', products: 'Produkte', theme: 'Darstellung', language: 'Sprache', main: 'Hauptmenü', sectionMenu: 'Menü {name}',
-  allProducts: '{brand}: alle Produkte', breadcrumb: 'Pfadnavigation', by: 'von',
+  allProducts: '{brand}: alle Produkte', breadcrumb: 'Pfadnavigation', by: 'von', byAfter: '',
   themeAuto: 'Auto', themeDark: 'Dunkel', themeBright: 'Hell', themeAutoTitle: 'Automatisch (wie Ihr System)',
   themeAutoAria: 'Automatische Darstellung', themeDarkAria: 'Dunkle Darstellung', themeBrightAria: 'Helle Darstellung',
   company: 'Unternehmen', legal: '© 2026 {company} · {b} ist ein Angebot von {company} · als geschätzt markierte Werte sind Schätzungen',

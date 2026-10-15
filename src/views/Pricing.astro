@@ -74,7 +74,7 @@ const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': a
       <h2>{c.compare.h2}</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>{c.compare.feature}</th><th>Try</th><th>Account</th><th>Pro</th></tr></thead>
+          <thead><tr><th>{c.compare.feature}</th>{c.compare.plans.map((x) => <th>{x}</th>)}</tr></thead>
           <tbody>
             {rows.map((r) => (
               <tr><td>{r.f} {FEATURE_STATUS[r.key] === 'roadmap' && <span class="pill pill-roadmap">{c.roadmap}</span>}</td>

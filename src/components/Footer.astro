@@ -21,7 +21,7 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
   <div class="sf-wrap">
     <div class="sf-top">
       <a class="sf-wm" href={lp('/', locale)}>{brandA}<span>{brandB}</span></a>
-      <span class="sf-by">{t.by} <a href={COMPANY.url} rel="noopener">{COMPANY.name}</a></span>
+      <span class="sf-by">{t.by} <a href={COMPANY.url} rel="noopener">{COMPANY.name}</a>{t.byAfter && ` ${t.byAfter}`}</span>
       <div class="sf-switch" role="group" aria-label={t.products}>
         {PRODUCTS.map((p) => (
           <a class:list={['sf-pill', `sf-pill--${p.edition}`, { 'is-current': p.edition === section }]} href={lp(p.href, locale)}>

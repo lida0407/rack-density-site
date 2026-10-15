@@ -3,7 +3,7 @@
 export const en = {
   skip: 'Skip to content',
   menu: 'Menu', products: 'Products', theme: 'Theme', language: 'Language', main: 'Main', sectionMenu: '{name} menu',
-  allProducts: '{brand}: all products', breadcrumb: 'Breadcrumb', by: 'by',
+  allProducts: '{brand}: all products', breadcrumb: 'Breadcrumb', by: 'by', byAfter: '',
   themeAuto: 'Auto', themeDark: 'Dark', themeBright: 'Bright', themeAutoTitle: 'Auto (follows your system)',
   themeAutoAria: 'Auto theme', themeDarkAria: 'Dark theme', themeBrightAria: 'Bright theme',
   company: 'Company', legal: '© 2026 {company} · {b} is a brand of {company} · figures marked estimated are estimates',
