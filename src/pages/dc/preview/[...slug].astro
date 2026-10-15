@@ -1,0 +1,22 @@
+---
+// The language globe on a held preview (/<locale>/dc/preview/…) offers "English" at /dc/preview/…: send it to the English
+// page. noindex, canonical to the real page; the sitemap leaves out every /dc/preview/ path (src/config/dc/i18n.ts).
+import { DC_PREVIEW } from "../../../config/dc/i18n";
+import { u, abs } from "../../../lib/url";
+export function getStaticPaths() {
+  const paths = [...new Set(Object.values(DC_PREVIEW).flat())];
+  return paths.map((p) => ({ params: { slug: p === "/dc" ? undefined : p.replace(/^\/dc\//, "") } }));
+}
+const target = u(`/dc/${Astro.params.slug ?? ""}`);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={abs(`/dc/${Astro.params.slug ?? ""}`)} />
+    <title>DC Sim</title>
+  </head>
+  <body><p><a href={target}>DC Sim in English</a></p></body>
+</html>

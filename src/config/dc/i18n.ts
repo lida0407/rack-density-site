@@ -10,3 +10,7 @@ const PHASE1 = [
 /** Chinese DC pages wait for Dali's read; flip to true when he says "zh ok" for /dc/. */
 export const DC_ZH_READY = false;
 export const DC_TRANSLATED = { de: PHASE1, zh: DC_ZH_READY ? PHASE1 : [] };
+/** Held for review (planner 2026-10-15: Dali reads the Chinese before launch): built under /<locale>/dc/preview/…, readable
+ *  at the URL but noindex, no hreflang, not in the switcher, llms.txt or the language redirect (that one only ever sends
+ *  visitors to the mirror path /<locale>/dc/…). Linked to each other; the sitemap excludes /dc/preview/ (homelab marketing). */
+export const DC_PREVIEW: Record<"de" | "zh", string[]> = { de: [], zh: DC_ZH_READY ? [] : PHASE1 };

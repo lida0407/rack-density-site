@@ -1,0 +1,9 @@
+---
+// Held for review (src/config/dc/i18n.ts DC_PREVIEW): noindex, no hreflang, not in the switcher or the redirect.
+import Home from "../../../../views/dc/Home.astro";
+import { dcPreviewPaths } from "../../../../i18n/dc";
+import type { Locale } from "../../../../i18n";
+export const getStaticPaths = () => dcPreviewPaths("/dc");
+const locale = Astro.params.locale as Locale;
+---
+<Home locale={locale} />

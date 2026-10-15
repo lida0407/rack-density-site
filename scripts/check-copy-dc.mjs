@@ -51,8 +51,8 @@ for (const f of files) {
     const before = t.slice(Math.max(0, m.index - 12), m.index).toLowerCase();
     const after = t.slice(m.index, m.index + 40).toLowerCase();
     // Negations in English, German (/de/dc/) and Chinese (/zh/dc/): "no CFD", "keine CFD", "ohne CFD", "不是 CFD" …
-    const negated = /(not |no |non-|is this |here is |keine |kein |ohne |ist das |不是 ?|并非 ?|不做 ?|不提供 ?)$/.test(before);
-    if (!negated && !/^cfd(-grade airflow: not offered|-qualität: nicht im angebot)/.test(after)) {
+    const negated = /(not |no |non-|is this |here is |keine |kein |ohne |ist das |不是 ?|并非 ?|不做 ?|不提供 ?|这是 ?|非 ?|没有任何内容是 ?)$/.test(before);
+    if (!negated && !/^cfd(-grade airflow: not offered|-qualität: nicht im angebot| ?级气流分析：不提供| ?吗)/.test(after)) {
       problems.push(`${rel}: CFD claim? … ${t.slice(Math.max(0, m.index - 60), m.index + 40)}`);
     }
   }

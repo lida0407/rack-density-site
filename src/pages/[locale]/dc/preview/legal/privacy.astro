@@ -1,0 +1,9 @@
+---
+// Held for review (src/config/dc/i18n.ts DC_PREVIEW): noindex, no hreflang, not in the switcher or the redirect.
+import Privacy from "../../../../../views/dc/Privacy.astro";
+import { dcPreviewPaths } from "../../../../../i18n/dc";
+import type { Locale } from "../../../../../i18n";
+export const getStaticPaths = () => dcPreviewPaths("/dc/legal/privacy");
+const locale = Astro.params.locale as Locale;
+---
+<Privacy locale={locale} />

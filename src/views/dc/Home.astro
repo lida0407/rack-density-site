@@ -14,8 +14,8 @@ import { getImage } from "astro:assets";
 import heroPoster from "../../assets/video/hero-dc-dark.jpg";
 import { SITE_URL } from "../../../site.config.mjs";
 import { u } from "../../lib/dc/url";
-import { dcCopy, dcLp, rootLp, englishOnly } from "../../i18n/dc";
-import { hasPage, type Locale } from "../../i18n";
+import { dcCopy, dcLp, dcHas, rootLp, englishOnly } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
 import heroDark from "../../assets/dc/shots/hero-lightsoff-crop.png";
 import heroLight from "../../assets/dc/shots/hero-lit-crop.png";
 import estateDark from "../../assets/dc/shots/estate-dark.png";
@@ -26,7 +26,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { t, fellBack } = dcCopy("home", locale);
 const { t: tc } = dcCopy("clips", locale);
-const enOnly = (p: string) => (hasPage(p, locale) ? "" : englishOnly(locale));
+const enOnly = (p: string) => (dcHas(p, locale) ? "" : englishOnly(locale));
 
 const faq = ["whatIs", "signup", "install", "cfd", "cost", "chinese"].map((k) => ({ q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) }));
 // mailto subjects and bodies stay English: they land in our inbox (marketing/i18n/dc/README.md).

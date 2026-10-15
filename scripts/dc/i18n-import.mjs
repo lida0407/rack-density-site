@@ -30,12 +30,16 @@ for (const name of STRINGS) {
   const read = (dir) => { const f = path.join(SRC, dir, `${name}.strings.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : {}; };
   const merged = {};
   const byEn = new Map();
-  for (const [k, v] of Object.entries(read(LOCALES.de))) { merged[k] = { en: norm(v.en), ...(v.de ? { de: norm(v.de) } : {}) }; byEn.set(merged[k].en, k); }
+  for (const [k, v] of Object.entries(read(LOCALES.de))) {
+    merged[k] = { en: norm(v.en), ...(v.de ? { de: norm(v.de) } : {}) };
+    byEn.set(merged[k].en, [...(byEn.get(merged[k].en) ?? []), k]); // one English text can sit under several keys
+  }
   let orphans = 0;
   for (const [k, v] of Object.entries(read(LOCALES.zh))) {
     if (!v.zh) continue;
-    const key = byEn.get(norm(v.en)) ?? (merged[k] && merged[k].en === norm(v.en) ? k : null);
-    if (key) merged[key].zh = norm(v.zh); else orphans++;
+    const keys = byEn.get(norm(v.en)) ?? [];
+    if (!keys.length) { orphans++; continue; }
+    for (const key of keys) if (!merged[key].zh || key === k) merged[key].zh = norm(v.zh);
   }
   fs.writeFileSync(path.join(out, `${name}.json`), JSON.stringify(merged, null, 1) + "\n");
   const n = Object.keys(merged).length, zh = Object.values(merged).filter((e) => e.zh).length;

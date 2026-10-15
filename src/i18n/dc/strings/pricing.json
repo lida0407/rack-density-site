@@ -91,7 +91,8 @@
  },
  "crumb.pricing": {
   "en": "Pricing",
-  "de": "Preise"
+  "de": "Preise",
+  "zh": "价格"
  },
  "hero.eyebrow": {
   "en": "Pricing",
@@ -125,7 +126,8 @@
  },
  "plans.design.note": {
   "en": "AI design assistant <Badge kind=\"roadmap\" /> included at no extra cost when it ships",
-  "de": "KI-Planungsassistent <Badge kind=\"roadmap\" /> ohne Aufpreis enthalten, sobald er verfügbar ist"
+  "de": "KI-Planungsassistent <Badge kind=\"roadmap\" /> ohne Aufpreis enthalten, sobald er verfügbar ist",
+  "zh": "AI 设计助手 <Badge kind=\"roadmap\" /> 上线后包含在内，不额外收费"
  },
  "plans.design.mailtoSubject": {
   "en": "DC Sim Design license",
@@ -149,7 +151,8 @@
  },
  "plans.monitor.price": {
   "en": "${PRICES.monitorPerRack}<span> / rack / month</span>",
-  "de": "{PRICES.monitorPerRack} $<span> / Rack / Monat</span>"
+  "de": "{PRICES.monitorPerRack} $<span> / Rack / Monat</span>",
+  "zh": "${PRICES.monitorPerRack}<span> / 机柜 / 月</span>"
  },
  "plans.monitor.min": {
   "en": "minimum ${PRICES.monitorMin}",
@@ -168,7 +171,8 @@
  },
  "plans.monitor.mailtoSubject": {
   "en": "DC Sim Monitor",
-  "de": "DC Sim Monitor"
+  "de": "DC Sim Monitor",
+  "zh": "DC Sim Monitor 咨询"
  },
  "plans.monitor.btn": {
   "en": "Ask about Monitor",
@@ -187,7 +191,8 @@
  },
  "plans.partner.price": {
   "en": "{PRICES.partnerMargin} %<span> margin</span>",
-  "de": "{PRICES.partnerMargin} %<span> Marge</span>"
+  "de": "{PRICES.partnerMargin} %<span> Marge</span>",
+  "zh": "{PRICES.partnerMargin} %<span> 利润空间</span>"
  },
  "plans.partner.note": {
   "en": "or a fee plus a higher margin",
@@ -261,7 +266,8 @@
  },
  "calc.mon.initial": {
   "en": "$100",
-  "de": "100 $"
+  "de": "100 $",
+  "zh": "$100"
  },
  "calc.perMonth": {
   "en": " / month",
@@ -276,7 +282,7 @@
  "calc.bar.dcsim": {
   "en": "DC Sim Monitor",
   "de": "DC Sim Monitor",
-  "zh": "DC Sim Monitor"
+  "zh": "DC Sim Monitor 咨询"
  },
  "calc.bar.dcsim.initial": {
   "en": "$1,200 / yr",
@@ -325,11 +331,13 @@
  },
  "notIncluded.roadmap": {
   "en": "AI design assistant, a BOM export, live connectors beyond Zabbix and NetBox, partner multi-customer console <Badge kind=\"roadmap\" />",
-  "de": "KI-Planungsassistent, Stücklisten-Export (BOM), Live-Connectors über Zabbix und NetBox hinaus, Multi-Kunden-Konsole für Partner <Badge kind=\"roadmap\" />"
+  "de": "KI-Planungsassistent, Stücklisten-Export (BOM), Live-Connectors über Zabbix und NetBox hinaus, Multi-Kunden-Konsole für Partner <Badge kind=\"roadmap\" />",
+  "zh": "AI 设计助手、BOM 导出、Zabbix 和 NetBox 之外的实时连接器、合作伙伴多客户控制台 <Badge kind=\"roadmap\" />"
  },
  "notIncluded.selfServe": {
   "en": "Self-serve accounts and card checkout <Badge kind=\"roadmap\" />; on-prem packaging (Enterprise, later).",
-  "de": "Self-Service-Konten und Kartenzahlung <Badge kind=\"roadmap\" />; On-Prem-Paket (Enterprise, später)."
+  "de": "Self-Service-Konten und Kartenzahlung <Badge kind=\"roadmap\" />; On-Prem-Paket (Enterprise, später).",
+  "zh": "自助开户和刷卡付款 <Badge kind=\"roadmap\" />；本地部署打包（Enterprise，稍后推出）。"
  },
  "script.label": {
   "en": "Monitor · {n} rack{n === 1 ? \"\" : \"s\"}",

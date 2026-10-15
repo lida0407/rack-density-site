@@ -6,11 +6,13 @@
  },
  "meta.description": {
   "en": "No cookies; a cookieless visit counter; one form (the waitlist). Downloads are static files. Email us and we use your address only to reply.",
-  "de": "Keine Cookies, ein Besuchszähler ohne Cookies, ein Formular (die Warteliste). Downloads sind statische Dateien. Ihre Adresse nutzen wir nur für die Antwort."
+  "de": "Keine Cookies, ein Besuchszähler ohne Cookies, ein Formular (die Warteliste). Downloads sind statische Dateien. Ihre Adresse nutzen wir nur für die Antwort.",
+  "zh": "不使用 Cookie；一个不用 Cookie 的访问计数器；一个表单（候补名单）。下载内容均为静态文件。如果您给我们发邮件，我们只用您的地址回复。"
  },
  "crumb.privacy": {
   "en": "Privacy",
-  "de": "Datenschutz"
+  "de": "Datenschutz",
+  "zh": "隐私"
  },
  "h1": {
   "en": "Privacy",

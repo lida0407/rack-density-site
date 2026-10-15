@@ -6,8 +6,8 @@ import Badge from "../../components/dc/Badge.astro";
 import Faq from "../../components/dc/Faq.astro";
 import TemplateCTA from "../../components/dc/TemplateCTA.astro";
 import { faqLd, softwareLd } from "../../lib/dc/schema";
-import { dcCopy, dcLp, englishOnly } from "../../i18n/dc";
-import { hasPage, type Locale } from "../../i18n";
+import { dcCopy, dcLp, dcHas, englishOnly } from "../../i18n/dc";
+import type { Locale } from "../../i18n";
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { t, fellBack } = dcCopy("integrations", locale);
@@ -19,7 +19,7 @@ const l10n = locale === "en" ? [] : await getCollection("pagesL10n", (p) => p.id
 const { t: tp } = dcCopy("page", locale);
 const rows = pages.map((p) => {
   const id = p.id.replace(/^integrations\//, "");
-  const tr = hasPage(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
+  const tr = dcHas(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
   if (locale === "en" || tr) { const d = (tr ?? p).data; return { id: p.id, name: d.navLabel ?? d.h1, badge: p.data.badge, note: d.badgeNote, en: "" }; }
   return { id: p.id, name: tp(`tool.${id}.name`), badge: p.data.badge, note: tp(`tool.${id}.note`), en: englishOnly(locale) };
 });

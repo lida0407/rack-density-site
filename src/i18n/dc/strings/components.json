@@ -86,7 +86,8 @@
  },
  "pricingStrip.partner.h3": {
   "en": "Partner",
-  "de": "Partner"
+  "de": "Partner",
+  "zh": "合作伙伴"
  },
  "pricingStrip.partner.price": {
   "en": "{PRICES.partnerMargin} % <small>margin</small>",
@@ -110,15 +111,18 @@
  },
  "toolChips.roadmap": {
   "en": "Roadmap",
-  "de": "Roadmap"
+  "de": "Roadmap",
+  "zh": "路线图"
  },
  "toolChips.planned": {
   "en": "Planned",
-  "de": "Geplant"
+  "de": "Geplant",
+  "zh": "计划中"
  },
  "toolChips.partner": {
   "en": "Partner",
-  "de": "Partner"
+  "de": "Partner",
+  "zh": "合作伙伴"
  },
  "deviceData.titleDefault": {
   "en": "Open device data behind this layer",

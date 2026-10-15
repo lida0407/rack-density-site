@@ -4,6 +4,7 @@
 import { getCollection } from "astro:content";
 import ContentPage from "../../../views/dc/ContentPage.astro";
 import { OTHER_LOCALES, hasPage } from "../../../i18n";
+import { dcHas } from "../../../i18n/dc";
 
 export async function getStaticPaths() {
   const en = await getCollection("pages");
@@ -17,7 +18,7 @@ export async function getStaticPaths() {
         .filter((p) => p.data.section === base.data.section && p.id !== slug && base.data.section !== "company")
         .sort((a, b) => a.data.order - b.data.order)
         .map((p) => {
-          const tr = hasPage(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
+          const tr = dcHas(`/dc/${p.id}`, locale) ? l10n.find((x) => x.id === `${locale}/${p.id}`) : undefined;
           return { slug: p.id, label: (tr ?? p).data.navLabel ?? (tr ?? p).data.h1, badge: p.data.badge };
         });
       return [{ params: { locale, slug }, props: { page, slug, siblings, locale } }];

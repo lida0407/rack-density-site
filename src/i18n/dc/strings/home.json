@@ -161,7 +161,8 @@
  },
  "hero.ctaWalkthrough": {
   "en": "Request a walkthrough",
-  "de": "Vorführung anfragen"
+  "de": "Vorführung anfragen",
+  "zh": "预约演示讲解"
  },
  "hero.note": {
   "en": "Built by data-center people. Estimated where we estimate, labelled every time.",
@@ -245,7 +246,8 @@
  },
  "proof.body": {
   "en": "Single-corded devices go dark and the other feed overloads. Every number comes from the demo hall's own spreadsheet, every projection is labelled <span class=\"cs-badge cs-badge--estimated\">estimated</span>",
-  "de": "Geräte mit nur einem Netzkabel werden dunkel, die andere Einspeisung wird überlastet. Jede Zahl stammt aus der Tabelle der Demohalle selbst, jede Hochrechnung ist als <span class=\"cs-badge cs-badge--estimated\">geschätzt</span> gekennzeichnet"
+  "de": "Geräte mit nur einem Netzkabel werden dunkel, die andere Einspeisung wird überlastet. Jede Zahl stammt aus der Tabelle der Demohalle selbst, jede Hochrechnung ist als <span class=\"cs-badge cs-badge--estimated\">geschätzt</span> gekennzeichnet",
+  "zh": "单电源设备掉电，另一路供电过载。每个数字都来自演示机房自己的表格，每个预测值都标注为<span class=\"cs-badge cs-badge--estimated\">估算</span>"
  },
  "what.eyebrow": {
   "en": "What it is",
@@ -284,7 +286,8 @@
  },
  "adv.design.foot": {
   "en": "AI design assistant <span class=\"cs-badge cs-badge--roadmap\">Roadmap</span> no extra cost",
-  "de": "KI-Planungsassistent <span class=\"cs-badge cs-badge--roadmap\">Roadmap</span> ohne Aufpreis"
+  "de": "KI-Planungsassistent <span class=\"cs-badge cs-badge--roadmap\">Roadmap</span> ohne Aufpreis",
+  "zh": "AI 设计助手 <span class=\"cs-badge cs-badge--roadmap\">路线图</span> 不额外收费"
  },
  "adv.monitoring.h3": {
   "en": "On top of the monitoring you run",
@@ -413,7 +416,8 @@
  },
  "clips.excel.caption": {
   "en": "Excel to 3D, with a change list (50 s)",
-  "de": "Von Excel zu 3D, mit Änderungsliste (50 s)"
+  "de": "Von Excel zu 3D, mit Änderungsliste (50 s)",
+  "zh": "Excel 变 3D，附变更清单（50 秒）"
  },
  "estate.eyebrow": {
   "en": "Estate view",
@@ -442,7 +446,8 @@
  },
  "estate.famous": {
   "en": "Famous estates: open a submarine cable system or a cloud backbone from public data and try the same what-ifs. <a href=\"{u(\"world/\")}\">The famous data centers on a public earth</a>",
-  "de": "Bekannte Standortverbünde: Öffnen Sie ein Seekabelsystem oder ein Cloud-Backbone aus öffentlichen Daten und spielen Sie dieselben Was-wäre-wenn-Szenarien durch. <a href=\"{u(\"world/\")}\">Die bekannten Rechenzentren auf einem öffentlichen Globus</a>"
+  "de": "Bekannte Standortverbünde: Öffnen Sie ein Seekabelsystem oder ein Cloud-Backbone aus öffentlichen Daten und spielen Sie dieselben Was-wäre-wenn-Szenarien durch. <a href=\"{u(\"world/\")}\">Die bekannten Rechenzentren auf einem öffentlichen Globus</a>",
+  "zh": "著名站点网络：基于公开数据打开一个海缆系统或云骨干网，做同样的假设推演。<a href=\"{u(\"world/\")}\">公开数据地球上的著名数据中心</a>"
  },
  "estate.alt.dark": {
   "en": "DC Sim's Estate view: a dot-matrix earth with five demo sites in Ashburn, Amsterdam, Frankfurt, Shanghai and Singapore, each with IT kW and PUE, joined by animated link arcs.",
@@ -541,7 +546,8 @@
  },
  "who.tools.p": {
   "en": "● Available: connects directly. The others reach the twin today as an export through the template sheets. <a href=\"{u(\"integrations/\")}\">Integration status, tool by tool →</a>",
-  "de": "● Verfügbar: direkte Anbindung. Alle anderen gelangen heute als Export über die Blätter der Vorlage in den Zwilling. <a href=\"{u(\"integrations/\")}\">Integrationsstatus, Tool für Tool →</a>"
+  "de": "● Verfügbar: direkte Anbindung. Alle anderen gelangen heute als Export über die Blätter der Vorlage in den Zwilling. <a href=\"{u(\"integrations/\")}\">Integrationsstatus, Tool für Tool →</a>",
+  "zh": "● 已可用：直接连接。其他工具目前通过模板工作表，以导出数据的形式进入数字孪生。<a href=\"{u(\"integrations/\")}\">逐个工具查看集成状态 →</a>"
  },
  "pricing.eyebrow": {
   "en": "Pricing",
@@ -565,7 +571,8 @@
  },
  "pricing.design.price": {
   "en": "${PRICES.design[0].price}<span> from, per project</span>",
-  "de": "ab {PRICES.design[0].price} $<span> pro Projekt</span>"
+  "de": "ab {PRICES.design[0].price} $<span> pro Projekt</span>",
+  "zh": "${PRICES.design[0].price}<span> 起，按项目</span>"
  },
  "pricing.design.p": {
   "en": "Plan a room or a new row; three months per project. The AI design assistant comes at no extra cost when it ships.",
@@ -579,7 +586,8 @@
  },
  "pricing.monitor.price": {
   "en": "${PRICES.monitorPerRack}<span> / rack / month · min ${PRICES.monitorMin}</span>",
-  "de": "{PRICES.monitorPerRack} $<span> / Rack / Monat · mind. {PRICES.monitorMin} $</span>"
+  "de": "{PRICES.monitorPerRack} $<span> / Rack / Monat · mind. {PRICES.monitorMin} $</span>",
+  "zh": "${PRICES.monitorPerRack}<span> / 机柜 / 月 · 最低 ${PRICES.monitorMin}</span>"
  },
  "pricing.monitor.p": {
   "en": "The twin of a running room, with what-if and reports.",
@@ -593,7 +601,8 @@
  },
  "pricing.partner.price": {
   "en": "{PRICES.partnerMargin} %<span> margin</span>",
-  "de": "{PRICES.partnerMargin} %<span> Marge</span>"
+  "de": "{PRICES.partnerMargin} %<span> Marge</span>",
+  "zh": "{PRICES.partnerMargin} %<span> 利润空间</span>"
  },
  "pricing.partner.p": {
   "en": "For integrators, MSPs and consultants.",
