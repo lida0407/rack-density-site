@@ -7,7 +7,7 @@ import Footer from "../../components/Footer.astro";
 import ThemeScript from "../../components/site/ThemeScript.astro";
 import Breadcrumbs from "../../components/site/Breadcrumbs.astro";
 import { trail, crumbsSchema } from "../../lib/crumbs";
-import { PRODUCT_NAME, COMPANY, COMPANY_URL, CONTACT_EMAIL, LEGAL_NAME, LEGAL_URL } from "../../config/dc/product";
+import { PRODUCT_NAME, BRAND, CONTACT_EMAIL, LEGAL_NAME, LEGAL_URL } from "../../config/dc/product";
 import { SITE_URL } from "../../../site.config.mjs";
 import { abs, u, root } from "../../lib/dc/url";
 import ogSrc from "../../assets/dc/shots/hero-lightsoff.png";
@@ -33,7 +33,7 @@ const org = {
   url: LEGAL_URL,
   email: CONTACT_EMAIL,
   address: { "@type": "PostalAddress", addressCountry: "MT" },
-  brand: { "@type": "Brand", name: COMPANY, url: COMPANY_URL },
+  brand: { "@type": "Brand", name: BRAND, url: SITE_URL.replace(/\/$/, "") + root() },
 };
 const graph: Record<string, unknown>[] = [org, ...jsonLd];
 // RACKDENSITY › DC Sim › … (crumb paths are relative to /dc/)

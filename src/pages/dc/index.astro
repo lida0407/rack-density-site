@@ -6,7 +6,7 @@ import Base from "../../layouts/dc/Base.astro";
 import Clip from "../../components/dc/Clip.astro";
 import Faq from "../../components/dc/Faq.astro";
 import ToolChips from "../../components/dc/ToolChips.astro";
-import { PRODUCT_NAME, COMPANY, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, TEMPLATE_VERSION, TEMPLATE_SHEETS, PRICES, mailto } from "../../config/dc/product";
+import { PRODUCT_NAME, LEGAL_NAME, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, TEMPLATE_VERSION, TEMPLATE_SHEETS, PRICES, mailto } from "../../config/dc/product";
 import { faqLd, softwareLd, videoLd } from "../../lib/dc/schema";
 import { HERO_CLIP, isoDuration } from "../../config/dc/clips";
 import { getImage } from "astro:assets";
@@ -20,7 +20,7 @@ import estateLight from "../../assets/dc/shots/estate-bright.png";
 import { Image } from "astro:assets";
 
 const faq = [
-  { q: `What is ${PRODUCT_NAME}?`, a: `A browser-based data center simulator by ${COMPANY}: one Excel import becomes a 3D twin with floor, air, water, fire, power, cabling, network, device and token layers, and any power, cooling or network node can be failed to see what goes dark.` },
+  { q: `What is ${PRODUCT_NAME}?`, a: `A browser-based data center simulator by ${LEGAL_NAME}: one Excel import becomes a 3D twin with floor, air, water, fire, power, cabling, network, device and token layers, and any power, cooling or network node can be failed to see what goes dark.` },
   { q: "Can I sign up today?", a: "Not yet. The product runs today on demo data and on files you send us; we walk you through your own room on a call. Self-serve accounts and checkout are on the roadmap." },
   { q: "Do I have to install anything?", a: "No. The twin runs in the browser. Zabbix and NetBox connect with a URL and a read-only token; inside your own network the same connectors run in a small agent that only dials out. Any other tool's export comes in as a sheet." },
   { q: "Is this CFD?", a: "No. Air and water layers use a zonal model and every projected number is labelled estimated. It is built for questions like \"what happens if this cooling unit stops\", not for detailed airflow engineering." },
@@ -67,7 +67,7 @@ const heroLd = videoLd({
     <section class="dch-hero">
       <div class="dch-wrap dch-hero-grid">
       <div class="dch-hero-copy">
-        <span class="eyebrow">{PRODUCT_NAME} · by {COMPANY}</span>
+        <span class="eyebrow">{PRODUCT_NAME} · data center simulator</span>
         <h1>Your data center, simulated.</h1>
         <p class="lede">From a spreadsheet to a living 3D twin in minutes. Fail anything. See what goes dark.</p>
         <div class="btn-row">

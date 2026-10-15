@@ -38,6 +38,13 @@ for (const f of files) {
     const m = t.match(re);
     if (m) problems.push(`${rel}: ${name} "${m[0]}" … ${t.slice(Math.max(0, m.index - 50), m.index + 60)}`);
   }
+  // Dali 2026-10-15 evening: no "Sensaka" anywhere on rack-density.com; only Mustard Seed Solutions. Checked on the raw
+  // file (JSON-LD included) minus the shared header/footer, which homelab marketing owns; the site-wide llms.txt is theirs.
+  if (rel !== "llms.txt") {
+    const own = raw.replace(/<header[\s\S]*?<\/header>/g, " ").replace(/<footer[\s\S]*?<\/footer>/g, " ");
+    const s = own.match(/sensaka/i);
+    if (s) problems.push(`${rel}: brand "Sensaka" … ${own.slice(Math.max(0, s.index - 60), s.index + 40).replace(/\s+/g, " ")}`);
+  }
   for (const m of world ? [] : t.matchAll(/CFD/g)) { // world records describe other sites' workloads, not our product
     const before = t.slice(Math.max(0, m.index - 12), m.index).toLowerCase();
     const after = t.slice(m.index, m.index + 40).toLowerCase();

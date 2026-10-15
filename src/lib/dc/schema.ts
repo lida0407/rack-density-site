@@ -1,4 +1,4 @@
-import { PRODUCT_NAME, COMPANY, PRICES, ENTITY_DC } from "../../config/dc/product";
+import { PRODUCT_NAME, BRAND, PRICES, ENTITY_DC } from "../../config/dc/product";
 import { abs } from "./url";
 
 export const faqLd = (items: { q: string; a: string }[]) =>
@@ -61,7 +61,7 @@ export const howToLd = (name: string, description: string, steps: { name: string
 export const productLd = () => ({
   "@type": "Product",
   name: PRODUCT_NAME,
-  brand: { "@type": "Brand", name: COMPANY },
+  brand: { "@type": "Brand", name: BRAND },
   description: "Browser-based data center simulator: Design licenses per project, Monitor per rack per month.",
   offers: [
     ...PRICES.design.map((d) => ({ "@type": "Offer", name: `Design, ${d.label}`, price: d.price, priceCurrency: "USD", description: "One-time per project, three months of use", url: abs("pricing/") })),

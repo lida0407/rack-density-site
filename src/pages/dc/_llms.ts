@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import { PRODUCT_NAME, COMPANY, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } from "../../config/dc/product";
+import { PRODUCT_NAME, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } from "../../config/dc/product";
 import { abs } from "../../lib/dc/url";
 import { ENTITY_DC, LEGAL_NAME } from "../../config/dc/product";
 
@@ -18,7 +18,7 @@ export const dcLlms = async (): Promise<string> => {
 
 > ${ENTITY_DC}
 
-DC Sim is a Sensaka product; Sensaka is a brand of ${LEGAL_NAME} (Malta).
+DC Sim is a product of ${LEGAL_NAME} (Malta), part of RACKDENSITY (rack-density.com).
 
 Status: the product runs today on demo data and on imported files, shown in walkthroughs. Zabbix and NetBox connect directly with a read-only token (tested against live demo instances); other live connectors, self-serve accounts, checkout and the AI design assistant are on the roadmap. Pricing: Design from $${PRICES.design[0].price} one-time per project; Monitor $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}; partners earn a ${PRICES.partnerMargin} % margin. Contact: ${CONTACT_EMAIL}.
 

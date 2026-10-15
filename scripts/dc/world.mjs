@@ -37,7 +37,9 @@ const imagined = fs.existsSync(IMG) ? fs.readdirSync(IMG).filter((d) => fs.exist
   .map((d) => JSON.parse(fs.readFileSync(path.join(IMG, d, "giant.json"), "utf8"))).sort((a, b) => a.id.localeCompare(b.id)) : [];
 fs.writeFileSync(path.join(OUT, "imagined.json"), JSON.stringify(imagined));
 const refs = path.join(SRC, "reports", "giants-references.md");
-if (fs.existsSync(refs)) fs.copyFileSync(refs, path.join(OUT, "giants-references.md"));
+// Published at /dc/world/imagined/references/: drop pointers into the plan repo (no "Sensaka" on the site, Dali 2026-10-15).
+if (fs.existsSync(refs)) fs.writeFileSync(path.join(OUT, "giants-references.md"),
+  fs.readFileSync(refs, "utf8").replace(/\s*\(see `~\/Sensaka\/[^`]*`\)/g, "").replace(/`~\/Sensaka\/([^`]*)`/g, "`$1`"));
 const ASSET = "src/assets/dc/world/imagined", MEDIA = "public/dc/world/media";
 fs.mkdirSync(ASSET, { recursive: true }); fs.mkdirSync(MEDIA, { recursive: true });
 const shots = fs.existsSync(SHOTS) ? fs.readdirSync(SHOTS).sort() : [];

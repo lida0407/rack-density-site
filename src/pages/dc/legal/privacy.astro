@@ -1,6 +1,6 @@
 ---
 import Base from "../../../layouts/dc/Base.astro";
-import { COMPANY, CONTACT_EMAIL, LEGAL_NAME, LEGAL_URL } from "../../../config/dc/product";
+import { CONTACT_EMAIL, LEGAL_NAME, LEGAL_URL } from "../../../config/dc/product";
 import { root } from "../../../lib/dc/url";
 import { CF_WEB_ANALYTICS_ON, CF_WEB_ANALYTICS_TOKEN } from "../../../config/brand";
 const counting = CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN !== "";
@@ -16,7 +16,7 @@ import { u } from "../../../lib/dc/url";
     <h1>Privacy</h1>
     <p class="direct-answer">The DC Sim pages set no cookies. {counting ? "We count visits with a cookieless counter (below); there are no ads and no tracking scripts." : "They run no analytics or tracking scripts."} The template and example files are plain downloads that do not ask for your e-mail. The one form on the site is the waitlist, described in the <a href={root("privacy/")}>site-wide privacy notice</a>.</p>
     <h2>Who we are</h2>
-    <p>DC Sim is a {COMPANY} product. {COMPANY} is a brand of <a href={LEGAL_URL}>{LEGAL_NAME}</a> (Malta), which is responsible for this site and for the data described here.</p>
+    <p>DC Sim is a product of <a href={LEGAL_URL}>{LEGAL_NAME}</a> (Malta), which is responsible for this site and for the data described here.</p>
     <h2>Hosting</h2>
     <p>The site is served as static files by Cloudflare Pages. Cloudflare receives your IP address to deliver and protect the pages, under its own privacy policy. We do not receive or use those logs.</p>
     {counting && <><h2>Visit counts</h2>

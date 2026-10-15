@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-15  
 **Document:** `reports/giants-references.md`  
-**Purpose:** Grounding parameters, public numbers, and regional tariffs/carbon metrics for the "Imagined Giants" design series (see `~/Sensaka/IMAGINED-GIANTS.md`). Every number cited derives from official filings, operator announcements, utility submissions, or established industry trade publications, with $\ge 2$ sources per campus.
+**Purpose:** Grounding parameters, public numbers, and regional tariffs/carbon metrics for the "Imagined Giants" design series. Every number cited derives from official filings, operator announcements, utility submissions, or established industry trade publications, with $\ge 2$ sources per campus.
 
 ---
 

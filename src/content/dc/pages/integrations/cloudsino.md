@@ -1,14 +1,14 @@
 ---
 title: "CloudSino DCIM and DC Sim"
-description: "CloudSino distributes the Chinese-language edition and is a data source for the Sensaka edition via CSV today."
+description: "CloudSino distributes the Chinese-language edition and is a data source for the English edition via CSV today."
 h1: "CloudSino partnership"
-directAnswer: "CloudSino is DC Sim's channel partner: it distributes the Chinese-language edition of the product — same engine, same importer, interface in 中文 or English. For the Sensaka edition, a CloudSino DCIM export (device assets, cabinets, power and cooling equipment, monitoring history) imports through the Excel/CSV template today. A live, read-only connector to CloudSino monitoring is on the roadmap."
+directAnswer: "CloudSino is DC Sim's channel partner: it distributes the Chinese-language edition of the product — same engine, same importer, interface in 中文 or English. For the English edition, a CloudSino DCIM export (device assets, cabinets, power and cooling equipment, monitoring history) imports through the Excel/CSV template today. A live, read-only connector to CloudSino monitoring is on the roadmap."
 navLabel: "CloudSino"
 section: "integrations"
 order: 8
-faq: [{"q": "Is the CloudSino integration live today?", "a": "The Chinese-language edition of DC Sim is available through CloudSino. For the Sensaka edition, CloudSino exports import through the Excel/CSV template today; the live connector is on the roadmap."}, {"q": "What credentials does it need?", "a": "None today — you export the files yourself. The roadmap connector will use a CloudSino account with read-only rights."}, {"q": "Does it change anything in CloudSino?", "a": "No. Nothing is written to CloudSino. Pushing designs back into its asset inventory is on the roadmap and will be opt-in; until then you download the filled Excel/CSV and import it yourself."}, {"q": "My metrics have different names — will it still work?", "a": "Yes. The Readings sheet takes any item and metric name, in English or Chinese headers; known names (`inlet_c`, `power_w`, `ups_runtime_min` …) drive the simulation directly and anything else can be bound by hand after import."}]
+faq: [{"q": "Is the CloudSino integration live today?", "a": "The Chinese-language edition of DC Sim is available through CloudSino. For the English edition, CloudSino exports import through the Excel/CSV template today; the live connector is on the roadmap."}, {"q": "What credentials does it need?", "a": "None today — you export the files yourself. The roadmap connector will use a CloudSino account with read-only rights."}, {"q": "Does it change anything in CloudSino?", "a": "No. Nothing is written to CloudSino. Pushing designs back into its asset inventory is on the roadmap and will be opt-in; until then you download the filled Excel/CSV and import it yourself."}, {"q": "My metrics have different names — will it still work?", "a": "Yes. The Readings sheet takes any item and metric name, in English or Chinese headers; known names (`inlet_c`, `power_w`, `ups_runtime_min` …) drive the simulation directly and anything else can be bound by hand after import."}]
 badge: "partner"
-badgeNote: "CloudSino distributes the Chinese-language edition of DC Sim; CloudSino DCIM exports are a CSV data source for the Sensaka edition today; live connector on the roadmap"
+badgeNote: "CloudSino distributes the Chinese-language edition of DC Sim; CloudSino DCIM exports are a CSV data source for the English edition today; live connector on the roadmap"
 ---
 
 ## What you get
