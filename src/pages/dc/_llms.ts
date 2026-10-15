@@ -45,7 +45,6 @@ ${line("The earth", "world/", `${SITES.length} famous data centers and ${ESTATES
 ${line("Open dataset", "world/data/", "GeoJSON, CSV and DC Sim workbooks with sources for every record.")}
 ${line("Estates", "world/estates/", "Submarine cables, cloud backbones, national compute networks, exchanges and financial routes.")}
 ${ESTATES.map((e) => line(e.name, `world/estates/${e.id}/`, e.famous_for ?? "")).join("\n")}
-${SITES.map((s) => line(s.name, `world/${s.id}/`, s.famous_for ?? "")).join("\n")}
 
 ## Comparisons (public prices with dates and sources)
 ${line("All comparisons", "compare/", "DC Sim next to the DCIM and monitoring tools people compare it with.")}
