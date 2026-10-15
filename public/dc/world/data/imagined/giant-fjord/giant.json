@@ -1,0 +1,396 @@
+{
+ "estate_schema_version": "1.0",
+ "id": "giant-fjord",
+ "name": "Imagined 1 GW fjord campus — Vestland",
+ "names": {
+  "zh": "想象中的 1 GW 峡湾园区——挪威韦斯特兰"
+ },
+ "operator": "Imagined (fictional design)",
+ "kind": "imagined",
+ "year": null,
+ "imagined": true,
+ "label": "Imagined — a fictional design built from public numbers",
+ "label_zh": "想象设计——依据公开数据构建的虚构方案",
+ "concept": "Hydro + seawater AI/HPC campus",
+ "famous_for": "Hydro + seawater AI/HPC campus: 1,000 MW IT, 539,136 GPUs, PUE 1.08 — designed by us, checked by the engine",
+ "story": "An imagined 1 GW campus cut into a Norwegian fjord side: 4 halls, 104 pods of 72 GB200 NVL72 rack systems with a rear-door heat exchanger on every rack and fjord seawater as the heat sink. Hydropower feeds it at about 20 g CO₂/kWh. The engine reports PUE 1.08 on a July afternoon, and the warm return water is enough to heat a town. A DR site in Stavanger and a North Sea cable to Amsterdam close the estate — cut that cable and see who is left alone.",
+ "notable": [
+  "104 pods × 72 GB200 NVL72 rack systems (120 kW each from the catalog) = 539,136 GPUs.",
+  "Per pod the engine sees 9,610.6 kW IT, 10,404.3 kW facility, PUE 1.08 and 21,390,926 tokens/s at the design afternoon.",
+  "18 CoolIT CHx750 CDUs per pod carry 70 % of the heat as liquid; a Motivair ChilledDoor on every rack take the rest.",
+  "A year at 0.04 USD/kWh: $379 M for 9,478,320 MWh; 190 kt CO₂ at 20 g/kWh.",
+  "Catalog list prices cover 5 of 8 part types per pod; the GB200 NVL72 has no list price in the catalog, so the BOM leaves it out."
+ ],
+ "assumptions": [
+  "Scale: 1,000 MW IT target from the brief (IMAGINED-GIANTS.md §1); the pod count is that target ÷ the engine's pod IT load.",
+  "Rack system: catalog record rack_system/nvidia/gb200-nvl72, 120 kW IT, 72 GPUs, 70 % liquid-cooled (catalog thermal data).",
+  "Cooling: cdu/coolit/chx750 CDUs (750 kW, catalog) in loops of 3 per row, N+1; heat rejected to fjord seawater; rear_door_hx/motivair/chilleddoor rear doors (75 kW) for the air share.",
+  "Power: 2N from a 400 kV substation through ATS (grid / genset bank), transformers, switchboards and MW-class UPS banks (generic nodes: no MW-class UPS in the catalog), busway taps per rack; standby genset banks of Cat 3516C (2 MW standby, catalog); hydro grid feed; diesel standby.",
+  "Climate: a July day at 15 °C mean with a 6 °C daily swing and 78 % RH (typical July climate for the region); the numbers are read at 15:00 local, the warmest hour.",
+  "Grid factor 20 g CO₂/kWh and tariff 0.04 USD/kWh: dc-world/reports/giants-references.md §2 / §3.",
+  "Tokens: every rack serves a 70B chat model at 70–95 % load (engine estimate from GPU memory bandwidth and FLOPS; labelled estimated, not a benchmark).",
+  "Water: seawater heat exchange, no fresh-water consumption (evaporative trim not modelled).",
+  "Estate: the DR and peer sites, link capacities and carriers are part of the imagined design, not real contracts; latency is estimated from distance.",
+  "References for scale, cooling and power patterns: §2.3 Norway NO2/NO3: ~20 g/kWh, €0.032–0.050/kWh; dc-world sites: Green Mountain SVG-Rennesøy (fjord water), Lefdal Mine (fjord water) for the cooling pattern (dc-world/reports/giants-references.md)."
+ ],
+ "derived": {
+  "basis": "engine on the representative hall (hall.json) at 15:00 local, mid-July, scaled by the pod count; rounded",
+  "pod": {
+   "racks": 72,
+   "gpus": 5184,
+   "itKw": 9610.6,
+   "facilityKw": 10404.3,
+   "pue": 1.08,
+   "tokensPerS": 21390926,
+   "tokensPerKwh": 8012786,
+   "maxInletC": 27.4,
+   "cdus": 18,
+   "devicesOff": 0
+  },
+  "pods": 104,
+  "halls": 4,
+  "podsPerHall": 26,
+  "itMw": 1000,
+  "totalMw": 1082,
+  "pue": 1.08,
+  "racks": 7488,
+  "gpus": 539136,
+  "tokensPerS": 2224656304,
+  "tokensPerKwh": 8012786,
+  "waterM3PerDay": {
+   "value": 0,
+   "note": "seawater heat exchange: no consumptive fresh water (seawater returned warmer)"
+  },
+  "energyMwhPerYear": 9478320,
+  "energyCostPerYear": {
+   "value": 379132800,
+   "currency": "USD",
+   "tariff": 0.04,
+   "source": "dc-world/reports/giants-references.md"
+  },
+  "co2TonnesPerYear": {
+   "value": 189566,
+   "gco2PerKwh": 20,
+   "source": "dc-world/reports/giants-references.md"
+  },
+  "bomPerPod": {
+   "lines": [
+    {
+     "id": "rack_system/nvidia/gb200-nvl72",
+     "name": "NVIDIA GB200 NVL72",
+     "qty": 72,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "switch/arista/7060x5-64d",
+     "name": "Arista 7060X5-64D",
+     "qty": 6,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "switch/arista/7800r3-chassis",
+     "name": "Arista 7800R3 Modular Chassis",
+     "qty": 2,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "cdu/coolit/chx750",
+     "name": "CoolIT CHx750 Liquid-to-Liquid CDU",
+     "qty": 18,
+     "unitUsd": 62000,
+     "date": "2022-09-15",
+     "source": "https://www.coolitsystems.com/products/cdu/chx750/"
+    },
+    {
+     "id": "rear_door_hx/motivair/chilleddoor",
+     "name": "Motivair ChilledDoor Active Rear Door Heat Exchanger",
+     "qty": 79,
+     "unitUsd": 12500,
+     "date": "2020-01-15",
+     "source": "https://www.motivaircorp.com/products/chilleddoor-rack-cooling-system"
+    },
+    {
+     "id": "genset/cat/3516c",
+     "name": "Caterpillar Cat 3516C HD Diesel Generator",
+     "qty": 12,
+     "unitUsd": 315000,
+     "date": "2020-01-15",
+     "source": "https://www.cat.com/en_US/products/new/power-systems/electric-power/diesel-generator-sets/1000000858.html"
+    },
+    {
+     "id": "fire_detection/xtralis/vesda-vep",
+     "name": "Xtralis VESDA-E VEP (VEP-A00-P)",
+     "qty": 4,
+     "unitUsd": 3800,
+     "date": "2020-01-15",
+     "source": "https://xtralis.com/p/vesda-e-vep"
+    },
+    {
+     "id": "leak_detection/rle/seahawk-ld2100",
+     "name": "RLE Technologies SeaHawk LD2100 Distance-Read Controller",
+     "qty": 1,
+     "unitUsd": 1650,
+     "date": "2020-01-15",
+     "source": "https://www.rletech.com/product/seahawk-ld2100/"
+    }
+   ],
+   "pricedUsd": 5900350,
+   "unpriced": [
+    "NVIDIA GB200 NVL72 × 72",
+    "Arista 7060X5-64D × 6",
+    "Arista 7800R3 Modular Chassis × 2"
+   ]
+  },
+  "powerChecks": {
+   "dark": 0,
+   "singleFeed": 0,
+   "overloaded": []
+  },
+  "designChecks": []
+ },
+ "halls": [
+  {
+   "name": "Hall 1",
+   "pods": 26,
+   "itMw": 250
+  },
+  {
+   "name": "Hall 2",
+   "pods": 26,
+   "itMw": 250
+  },
+  {
+   "name": "Hall 3",
+   "pods": 26,
+   "itMw": 250
+  },
+  {
+   "name": "Hall 4",
+   "pods": 26,
+   "itMw": 250
+  }
+ ],
+ "what_ifs": [
+  {
+   "name": "Substation trip (utility lost for 15 minutes)",
+   "verdict": "Rides through. inlets pass 27 °C after 0:02 (peak 27.8 °C); lowest UPS runtime 9 min.",
+   "findings": [
+    "Substation (400 kV, imagined) lost power (+6 more)",
+    "UPS bank A on battery · 10 min left (+3 more)"
+   ]
+  },
+  {
+   "name": "CDU loop leak at a rack manifold (6 L/min)",
+   "verdict": "Outage. 1 devices lose power or trip (72 GPUs); inlets pass 27 °C after 0:01 (peak 27.6 °C); 1.4 L released before isolation; 248.4 M tokens lost.",
+   "findings": [
+    "Leak at Manifold R001 · 0 L released",
+    "Manifold R001 isolated after leak",
+    "nvl72-r001 throttled to 20 %",
+    "nvl72-r001 thermal shutdown"
+   ]
+  },
+  {
+   "name": "Trunk cable cut (BGO-IX ↔ AMS-IX)",
+   "verdict": "BGO-IX ↔ AMS-IX cut, not protected — 8000 Gb/s rerouted via FJD-DR–AMS-IX, FJD-1–FJD-DR, FJD-1–BGO-IX (16 ms instead of 13.4) · FJD-1 ↔ FJD-DR would need 160 % — congested",
+   "findings": []
+  }
+ ],
+ "sites": [
+  {
+   "site": "FJD-1",
+   "city": "Vestland fjord campus (imagined)",
+   "country": "NO",
+   "lat": 61.15,
+   "lon": 5.88,
+   "timezone": "Europe/Oslo",
+   "role": "primary",
+   "provider": "own",
+   "it_kw": 1000000,
+   "pue": 1.08,
+   "site_ref": null
+  },
+  {
+   "site": "FJD-DR",
+   "city": "Stavanger",
+   "country": "NO",
+   "lat": 58.97,
+   "lon": 5.73,
+   "timezone": "Europe/Oslo",
+   "role": "dr",
+   "provider": "colo",
+   "it_kw": 150000,
+   "pue": 1.15,
+   "site_ref": null
+  },
+  {
+   "site": "BGO-IX",
+   "city": "Bergen",
+   "country": "NO",
+   "lat": 60.39,
+   "lon": 5.32,
+   "timezone": "Europe/Oslo",
+   "role": "pop",
+   "provider": "colo",
+   "it_kw": 1000,
+   "pue": 1.3,
+   "site_ref": null
+  },
+  {
+   "site": "OSL-IX",
+   "city": "Oslo",
+   "country": "NO",
+   "lat": 59.91,
+   "lon": 10.75,
+   "timezone": "Europe/Oslo",
+   "role": "pop",
+   "provider": "colo",
+   "it_kw": 2000,
+   "pue": 1.3,
+   "site_ref": null
+  },
+  {
+   "site": "AMS-IX",
+   "city": "Amsterdam",
+   "country": "NL",
+   "lat": 52.37,
+   "lon": 4.9,
+   "timezone": "Europe/Amsterdam",
+   "role": "pop",
+   "provider": "colo",
+   "it_kw": 2000,
+   "pue": 1.3,
+   "site_ref": null
+  }
+ ],
+ "links": [
+  {
+   "site_a": "FJD-1",
+   "site_b": "BGO-IX",
+   "type": "dark fibre",
+   "bandwidth_gbps": 12800,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "Fjord fibre (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "FJD-1",
+   "site_b": "FJD-DR",
+   "type": "dark fibre",
+   "bandwidth_gbps": 6400,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "Coastal fibre (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "BGO-IX",
+   "site_b": "OSL-IX",
+   "type": "terrestrial",
+   "bandwidth_gbps": 6400,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "National backbone (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "BGO-IX",
+   "site_b": "AMS-IX",
+   "type": "submarine",
+   "bandwidth_gbps": 20000,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": false,
+   "carrier": "North Sea cable (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "FJD-DR",
+   "site_b": "AMS-IX",
+   "type": "submarine",
+   "bandwidth_gbps": 10000,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": false,
+   "carrier": "North Sea cable (imagined)",
+   "sources": []
+  }
+ ],
+ "sources": [
+  {
+   "url": "https://github.com/lida0407/dcsim-plan/blob/main/dc-world/reports/giants-references.md",
+   "title": "Mega-campus public references (giants-references.md)",
+   "publisher": "dc-world",
+   "date": "2026-10-15",
+   "kind": "academic"
+  }
+ ],
+ "confidence": "low",
+ "updated": "2026-10-15",
+ "hall": "hall.json",
+ "zh": {
+  "operator": "想象设计（虚构）",
+  "concept": "水电 + 海水冷却的 AI/HPC 园区",
+  "famous_for": "水电 + 海水冷却的 AI/HPC 园区：IT 1,000 MW、539,136 块 GPU、PUE 1.08——由我们设计，经引擎校验",
+  "story": "想象中的 1 GW 园区，依挪威峡湾山体而建：4 个机房、104 个单元，每个单元 72 台 GB200 NVL72 整机柜，每台机柜配背板换热器，以峡湾海水作为冷源。水电供电，约 20 g CO₂/kWh。引擎给出七月午后 PUE 1.08，温热的回水可为附近小镇供暖。斯塔万格的灾备站点和一条通往阿姆斯特丹的北海海缆构成整个网络——切断这条海缆，看看谁会被孤立。",
+  "water": "海水换热：不消耗淡水（海水升温后排回）",
+  "assumptions": [
+   "规模：IT 目标 1,000 MW（来自 IMAGINED-GIANTS.md §1）；单元数 = 该目标 ÷ 引擎算出的单元 IT 负载。",
+   "整机柜：目录记录 rack_system/nvidia/gb200-nvl72，IT 120 kW、72 块 GPU，70% 液冷（目录热参数）。",
+   "冷却：cdu/coolit/chx750 CDU（750 kW，目录），每列 3 台组成环路，N+1；热量排向峡湾海水；风冷部分由 rear_door_hx/motivair/chilleddoor 背板换热器（75 kW）承担。",
+   "供电：400 kV 变电站 2N 接入，经 ATS（市电 / 柴发组）、变压器、配电柜和兆瓦级 UPS（通用节点：目录中没有兆瓦级 UPS），每台机柜由母线槽插接箱供电；备用电源为 Cat 3516C 柴发组（2 MW 备用，目录）；水电电网供电；柴油备用。",
+   "气候：七月典型日，平均 15 °C、昼夜温差 6 °C、相对湿度 78%；数值取当地 15:00，即最热的时段。",
+   "电网排放因子 20 g CO₂/kWh，电价 0.04 USD/kWh：dc-world/reports/giants-references.md §2 / §3。",
+   "Token：每台机柜以 70–95% 负载运行一个 70B 对话模型（引擎根据 GPU 显存带宽和算力估算，标注为估算，并非基准测试）。",
+   "用水：海水换热，不消耗淡水（未模拟蒸发辅助冷却）。",
+   "网络：灾备与对等站点、链路容量和运营商都是想象设计的一部分，并非真实合同；时延按距离估算。",
+   "规模、冷却和供电方式的参考：§2.3 Norway NO2/NO3: ~20 g/kWh, €0.032–0.050/kWh；dc-world sites: Green Mountain SVG-Rennesøy (fjord water), Lefdal Mine (fjord water) for the cooling pattern（dc-world/reports/giants-references.md）。"
+  ],
+  "what_ifs": [
+   {
+    "name": "变电站跳闸（市电中断 15 分钟）",
+    "verdict": "可平稳度过。 0:02 后进风超过 27℃（峰值 27.8℃）；UPS 最低剩余后备 9 分钟。",
+    "findings": [
+     "Substation (400 kV, imagined) 失电 （另 6 项）",
+     "UPS bank A 电池供电 · 剩余 10 分钟 （另 3 项）"
+    ]
+   },
+   {
+    "name": "CDU 环路在机柜分水器处泄漏（6 L/min）",
+    "verdict": "业务中断。 1 台设备断电或保护停机（72 张 GPU）；0:01 后进风超过 27℃（峰值 27.6℃）；关阀前漏出 1.4 L；损失 248.4 M Token。",
+    "findings": [
+     "Manifold R001 漏液 · 已漏出 0 L",
+     "Manifold R001 漏液后已关阀隔离",
+     "nvl72-r001 降频至 20%",
+     "nvl72-r001 过热保护停机"
+    ]
+   },
+   {
+    "name": "骨干光缆中断（BGO-IX ↔ AMS-IX）",
+    "verdict": "BGO-IX ↔ AMS-IX 中断且无保护——流量绕行 FJD-DR–AMS-IX、FJD-1–FJD-DR、FJD-1–BGO-IX（16 ms，原 13.4 ms） · FJD-1 ↔ FJD-DR 需要 160 %——拥塞",
+    "findings": []
+   }
+  ],
+  "notable": [
+   "104 个单元 × 72 台 GB200 NVL72 整机柜（目录：每台 120 kW）= 539,136 块 GPU。",
+   "引擎在设计午后看到的单个单元：IT 9,611 kW、设施 10,404 kW、PUE 1.08、每秒 21,390,926 Token。",
+   "每个单元 18 台 CoolIT CHx750 CDU 以液冷带走 70% 的热量；其余由每台机柜上的 Motivair ChilledDoor 背板承担。",
+   "按 0.04 USD/kWh 计一年：9,478,320 MWh、$379 M；按 20 g/kWh 计 189,566 吨 CO₂。",
+   "每个单元 8 类部件中有 5 类有目录价；GB200 NVL72 在目录中无报价，物料清单未计入。"
+  ]
+ }
+}

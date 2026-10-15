@@ -42,3 +42,16 @@ export const fmt = (n?: number | null, unit = "") => (n == null ? "—" : `${n.t
 
 /** Estates that reference a famous site. */
 export const estatesFor = (s: Site) => ESTATES.filter((e) => e.sites.some((x) => x.site_ref === s.id));
+
+// Imagined giants (IMAGINED-GIANTS.md): fictional campuses built from public numbers. Always shown with IMAGINED_LABEL.
+import imaginedJson from "../../data/dc/world/imagined.json";
+export const IMAGINED_LABEL = "Imagined — a fictional design built from public numbers";
+export interface Giant extends Estate {
+  imagined: true; label?: string; concept?: string; names?: Record<string, string>; assumptions?: string[];
+  derived: Record<string, any>; halls?: { name: string; pods?: number; itMw?: number }[];
+  what_ifs?: { name: string; verdict: string; findings?: string[] }[]; zh?: Record<string, any>;
+}
+export const IMAGINED = imaginedJson as unknown as Giant[];
+export const giantPath = (g: Giant) => `world/imagined/${g.id}/`;
+/** The giant's own campus site (role primary, else the biggest). */
+export const giantMain = (g: Giant) => g.sites.find((s) => s.role === "primary") ?? [...g.sites].sort((a, b) => (b.it_kw ?? 0) - (a.it_kw ?? 0))[0];

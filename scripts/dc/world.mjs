@@ -30,6 +30,25 @@ fs.writeFileSync(path.join(OUT, "estates.json"), JSON.stringify(estates));
 // Downloads (CC BY 4.0): GeoJSON, CSV, estate workbooks.
 for (const f of ["dc-world.geojson", "dc-world.csv"]) if (fs.existsSync(path.join(SRC, "dist", f))) fs.copyFileSync(path.join(SRC, "dist", f), path.join(PUB, f));
 for (const f of fs.readdirSync(path.join(SRC, "dist", "estates"))) if (f.endsWith(".xlsx")) fs.copyFileSync(path.join(SRC, "dist", "estates", f), path.join(PUB, "estates", f));
+// Imagined giants (IMAGINED-GIANTS.md): fictional designs built from public numbers — always shown with their label.
+const IMG = path.join(SRC, "imagined");
+const SHOTS = process.env.SHOTS ?? path.join(os.homedir(), "Sensaka/share/shots/dc");
+const imagined = fs.existsSync(IMG) ? fs.readdirSync(IMG).filter((d) => fs.existsSync(path.join(IMG, d, "giant.json")))
+  .map((d) => JSON.parse(fs.readFileSync(path.join(IMG, d, "giant.json"), "utf8"))).sort((a, b) => a.id.localeCompare(b.id)) : [];
+fs.writeFileSync(path.join(OUT, "imagined.json"), JSON.stringify(imagined));
+const refs = path.join(SRC, "reports", "giants-references.md");
+if (fs.existsSync(refs)) fs.copyFileSync(refs, path.join(OUT, "giants-references.md"));
+const ASSET = "src/assets/dc/world/imagined", MEDIA = "public/dc/world/media";
+fs.mkdirSync(ASSET, { recursive: true }); fs.mkdirSync(MEDIA, { recursive: true });
+const shots = fs.existsSync(SHOTS) ? fs.readdirSync(SHOTS).sort() : [];
+for (const g of imagined) {
+  const dir = path.join(PUB, "imagined", g.id); fs.mkdirSync(dir, { recursive: true });
+  for (const f of ["estate.xlsx", "hall.xlsx", "giant.json"]) if (fs.existsSync(path.join(IMG, g.id, f))) fs.copyFileSync(path.join(IMG, g.id, f), path.join(dir, f));
+  const short = g.id.replace(/^giant-/, "");
+  const pick = (kind, ext) => shots.filter((f) => f.endsWith(`-imagined-${short}-${kind}.${ext}`)).pop(); // newest English take (zh/phone variants excluded by the exact suffix)
+  for (const kind of ["card", "estate", "hall"]) { const f = pick(kind, "png"); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(ASSET, `${g.id}-${kind}.png`)); }
+  for (const ext of ["mp4", "jpg"]) { const f = pick("flight", ext); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(MEDIA, `${g.id}-flight.${ext}`)); }
+}
 fs.writeFileSync(path.join(OUT, "meta.json"), JSON.stringify({ synced: new Date().toISOString().slice(0, 10), sites: sites.length, estates: estates.length,
-  withImage: sites.filter((s) => s.image).length }));
-console.log(`world: ${sites.length} sites, ${estates.length} estates → ${OUT}; downloads → ${PUB}`);
+  withImage: sites.filter((s) => s.image).length, imagined: imagined.length }));
+console.log(`world: ${sites.length} sites, ${estates.length} estates, ${imagined.length} imagined → ${OUT}; downloads → ${PUB}`);

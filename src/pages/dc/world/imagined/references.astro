@@ -1,0 +1,14 @@
+---
+// The public numbers behind the imagined giants (dc-world/reports/giants-references.md, synced by scripts/dc/world.mjs).
+import Base from "../../../../layouts/dc/Base.astro";
+import { Content } from "../../../../data/dc/world/giants-references.md";
+import { IMAGINED_LABEL } from "../../../../lib/dc/world";
+import { u } from "../../../../lib/dc/url";
+---
+<Base title="Mega-campus public references — DC Sim imagined giants" description="Public numbers behind the imagined giants: announced AI and hyperscale mega-campuses, grid carbon factors and tariffs, each with its sources."
+  path="world/imagined/references/" crumbs={[{ name: "World", path: "world/" }, { name: "Imagined", path: "world/imagined/" }, { name: "References", path: "world/imagined/references/" }]}>
+  <article class="container page prose">
+    <p class="small muted">These are the public reference numbers we used to size the <a href={u("world/imagined/")}>imagined giants</a> ({IMAGINED_LABEL.toLowerCase()}). Figures about real campuses are as published by the sources cited under each entry; they are not our estimates and not a statement about any operator's plans.</p>
+    <Content />
+  </article>
+</Base>

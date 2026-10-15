@@ -1,0 +1,391 @@
+{
+ "estate_schema_version": "1.0",
+ "id": "giant-hyperion-class",
+ "name": "Imagined 5 GW AI factory — Gulf Coast",
+ "names": {
+  "zh": "想象中的 5 GW AI 工厂——美国墨西哥湾沿岸"
+ },
+ "operator": "Imagined (fictional design)",
+ "kind": "imagined",
+ "year": null,
+ "imagined": true,
+ "label": "Imagined — a fictional design built from public numbers",
+ "label_zh": "想象设计——依据公开数据构建的虚构方案",
+ "concept": "AI factory campus",
+ "famous_for": "AI factory campus: 5,001 MW IT, 2,681,856 GPUs, PUE 1.17 — designed by us, checked by the engine",
+ "story": "An imagined AI factory on empty land on the US Gulf Coast: 8 halls, 388 identical pods of 96 GB200 NVL72 rack systems, 2,681,856 GPUs. The grid arrives at 400 kV; gas turbines and batteries carry it through outages. Each pod's racks are cooled 70 % by liquid (CDUs to dry coolers) and 30 % by air. At a summer afternoon the engine finds 5,001 MW of IT, PUE 1.17 and 11,146 million tokens a second from a 70B model — and 21.6 million tonnes of CO₂ a year on today's grid mix.",
+ "notable": [
+  "388 pods × 96 GB200 NVL72 rack systems (120 kW each from the catalog) = 2,681,856 GPUs.",
+  "Per pod the engine sees 12,888.4 kW IT, 15,100.5 kW facility, PUE 1.17 and 28,726,819 tokens/s at the design afternoon.",
+  "24 CoolIT CHx750 CDUs per pod carry 70 % of the heat as liquid; Vertiv Liebert CW CRAHs take the rest.",
+  "A year at 0.065 USD/kWh: $3336 M for 51,324,840 MWh; 21,556 kt CO₂ at 420 g/kWh.",
+  "Catalog list prices cover 5 of 8 part types per pod; the GB200 NVL72 has no list price in the catalog, so the BOM leaves it out."
+ ],
+ "assumptions": [
+  "Scale: 5,000 MW IT target from the brief (IMAGINED-GIANTS.md §1); the pod count is that target ÷ the engine's pod IT load.",
+  "Rack system: catalog record rack_system/nvidia/gb200-nvl72, 120 kW IT, 72 GPUs, 70 % liquid-cooled (catalog thermal data).",
+  "Cooling: cdu/coolit/chx750 CDUs (750 kW, catalog) in loops of 3 per row, N+1; heat rejected to dry coolers; crah/vertiv/liebert-cw CRAHs (120 kW) on a chilled-water plant for the air share.",
+  "Power: 2N from a 400 kV substation through ATS (grid / genset bank), transformers, switchboards and MW-class UPS banks (generic nodes: no MW-class UPS in the catalog), busway taps per rack; standby genset banks of Cat 3516C (2 MW standby, catalog); on-site gas turbines + batteries (sized as the genset bank in the model).",
+  "Climate: a July day at 29 °C mean with a 9 °C daily swing and 70 % RH (typical July climate for the region); the numbers are read at 15:00 local, the warmest hour.",
+  "Grid factor 420 g CO₂/kWh and tariff 0.065 USD/kWh: dc-world/reports/giants-references.md §2 / §3.",
+  "Tokens: every rack serves a 70B chat model at 70–95 % load (engine estimate from GPU memory bandwidth and FLOPS; labelled estimated, not a benchmark).",
+  "Water: closed-loop dry coolers, no consumptive water (evaporative trim not modelled).",
+  "Estate: the DR and peer sites, link capacities and carriers are part of the imagined design, not real contracts; latency is estimated from distance.",
+  "References for scale, cooling and power patterns: §1.1 Stargate Abilene (scale, DLC + CDUs, PUE 1.12–1.15); §1.2 Hyperion & Prometheus (GW campus, 500 kV, gas backstop); §1.3 Colossus (on-site turbines + BESS, 100k GPUs in one fabric); §2.1 ERCOT grid factor ~400 g/kWh and ~$0.065/kWh (dc-world/reports/giants-references.md)."
+ ],
+ "derived": {
+  "basis": "engine on the representative hall (hall.json) at 15:00 local, mid-July, scaled by the pod count; rounded",
+  "pod": {
+   "racks": 96,
+   "gpus": 6912,
+   "itKw": 12888.4,
+   "facilityKw": 15100.5,
+   "pue": 1.17,
+   "tokensPerS": 28726819,
+   "tokensPerKwh": 8023978,
+   "maxInletC": 21.5,
+   "cdus": 24,
+   "devicesOff": 0
+  },
+  "pods": 388,
+  "halls": 8,
+  "podsPerHall": 49,
+  "itMw": 5001,
+  "totalMw": 5859,
+  "pue": 1.17,
+  "racks": 37248,
+  "gpus": 2681856,
+  "tokensPerS": 11146005772,
+  "tokensPerKwh": 8023978,
+  "waterM3PerDay": {
+   "value": 0,
+   "note": "closed-loop dry coolers: no consumptive water; evaporative trim on the hottest days is not modelled"
+  },
+  "energyMwhPerYear": 51324840,
+  "energyCostPerYear": {
+   "value": 3336114600,
+   "currency": "USD",
+   "tariff": 0.065,
+   "source": "dc-world/reports/giants-references.md"
+  },
+  "co2TonnesPerYear": {
+   "value": 21556433,
+   "gco2PerKwh": 420,
+   "source": "dc-world/reports/giants-references.md"
+  },
+  "bomPerPod": {
+   "lines": [
+    {
+     "id": "rack_system/nvidia/gb200-nvl72",
+     "name": "NVIDIA GB200 NVL72",
+     "qty": 96,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "switch/arista/7060x5-64d",
+     "name": "Arista 7060X5-64D",
+     "qty": 8,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "switch/arista/7800r3-chassis",
+     "name": "Arista 7800R3 Modular Chassis",
+     "qty": 2,
+     "unitUsd": null,
+     "date": null,
+     "source": "no public list price"
+    },
+    {
+     "id": "cdu/coolit/chx750",
+     "name": "CoolIT CHx750 Liquid-to-Liquid CDU",
+     "qty": 24,
+     "unitUsd": 62000,
+     "date": "2022-09-15",
+     "source": "https://www.coolitsystems.com/products/cdu/chx750/"
+    },
+    {
+     "id": "crah/vertiv/liebert-cw",
+     "name": "Vertiv Liebert CW Chilled Water CRAH",
+     "qty": 41,
+     "unitUsd": 32000,
+     "date": "2020-01-15",
+     "source": "https://www.vertiv.com/en-us/products-catalog/thermal-management/room-cooling/liebert-cw-chilled-water-cooling-system/"
+    },
+    {
+     "id": "genset/cat/3516c",
+     "name": "Caterpillar Cat 3516C HD Diesel Generator",
+     "qty": 16,
+     "unitUsd": 315000,
+     "date": "2020-01-15",
+     "source": "https://www.cat.com/en_US/products/new/power-systems/electric-power/diesel-generator-sets/1000000858.html"
+    },
+    {
+     "id": "fire_detection/xtralis/vesda-vep",
+     "name": "Xtralis VESDA-E VEP (VEP-A00-P)",
+     "qty": 5,
+     "unitUsd": 3800,
+     "date": "2020-01-15",
+     "source": "https://xtralis.com/p/vesda-e-vep"
+    },
+    {
+     "id": "leak_detection/rle/seahawk-ld2100",
+     "name": "RLE Technologies SeaHawk LD2100 Distance-Read Controller",
+     "qty": 1,
+     "unitUsd": 1650,
+     "date": "2020-01-15",
+     "source": "https://www.rletech.com/product/seahawk-ld2100/"
+    }
+   ],
+   "pricedUsd": 7860650,
+   "unpriced": [
+    "NVIDIA GB200 NVL72 × 96",
+    "Arista 7060X5-64D × 8",
+    "Arista 7800R3 Modular Chassis × 2"
+   ]
+  },
+  "powerChecks": {
+   "dark": 0,
+   "singleFeed": 0,
+   "overloaded": []
+  },
+  "designChecks": []
+ },
+ "halls": [
+  {
+   "name": "Hall 1",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 2",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 3",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 4",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 5",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 6",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 7",
+   "pods": 49,
+   "itMw": 625
+  },
+  {
+   "name": "Hall 8",
+   "pods": 49,
+   "itMw": 625
+  }
+ ],
+ "what_ifs": [
+  {
+   "name": "Substation trip (utility lost for 15 minutes)",
+   "verdict": "Rides through. lowest UPS runtime 9 min.",
+   "findings": [
+    "Substation (400 kV, imagined) lost power (+6 more)",
+    "UPS bank A on battery · 10 min left (+3 more)"
+   ]
+  },
+  {
+   "name": "CDU loop leak at a rack manifold (6 L/min)",
+   "verdict": "Outage. 1 devices lose power or trip (72 GPUs); 1.4 L released before isolation; 254.9 M tokens lost.",
+   "findings": [
+    "Leak at Manifold R001 · 0 L released",
+    "Manifold R001 isolated after leak",
+    "nvl72-r001 throttled to 20 %",
+    "nvl72-r001 thermal shutdown"
+   ]
+  },
+  {
+   "name": "Trunk cable cut (GCX-1 ↔ HOU-IX)",
+   "verdict": "GCX-1 ↔ HOU-IX cut — traffic on the protection path, +0.6 ms",
+   "findings": []
+  }
+ ],
+ "sites": [
+  {
+   "site": "GCX-1",
+   "city": "Gulf Coast campus (imagined)",
+   "country": "US",
+   "lat": 28.85,
+   "lon": -96.15,
+   "timezone": "America/Chicago",
+   "role": "primary",
+   "provider": "own",
+   "it_kw": 5001000,
+   "pue": 1.17,
+   "site_ref": null
+  },
+  {
+   "site": "GCX-DR",
+   "city": "San Antonio",
+   "country": "US",
+   "lat": 29.42,
+   "lon": -98.49,
+   "timezone": "America/Chicago",
+   "role": "dr",
+   "provider": "colo",
+   "it_kw": 300000,
+   "pue": 1.25,
+   "site_ref": null
+  },
+  {
+   "site": "HOU-IX",
+   "city": "Houston",
+   "country": "US",
+   "lat": 29.76,
+   "lon": -95.37,
+   "timezone": "America/Chicago",
+   "role": "pop",
+   "provider": "colo",
+   "it_kw": 2000,
+   "pue": 1.4,
+   "site_ref": null
+  },
+  {
+   "site": "ASH-IX",
+   "city": "Ashburn",
+   "country": "US",
+   "lat": 39.04,
+   "lon": -77.49,
+   "timezone": "America/New_York",
+   "role": "pop",
+   "provider": "colo",
+   "it_kw": 2000,
+   "pue": 1.35,
+   "site_ref": null
+  }
+ ],
+ "links": [
+  {
+   "site_a": "GCX-1",
+   "site_b": "HOU-IX",
+   "type": "dark fibre",
+   "bandwidth_gbps": 25600,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "Gulf fibre (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "GCX-1",
+   "site_b": "GCX-DR",
+   "type": "dark fibre",
+   "bandwidth_gbps": 12800,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "Texas fibre (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "HOU-IX",
+   "site_b": "ASH-IX",
+   "type": "wavelength",
+   "bandwidth_gbps": 10000,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": true,
+   "carrier": "Long-haul (imagined)",
+   "sources": []
+  },
+  {
+   "site_a": "GCX-DR",
+   "site_b": "HOU-IX",
+   "type": "wavelength",
+   "bandwidth_gbps": 3200,
+   "latency_ms": null,
+   "length_km": null,
+   "year": null,
+   "protected": false,
+   "carrier": "Long-haul (imagined)",
+   "sources": []
+  }
+ ],
+ "sources": [
+  {
+   "url": "https://github.com/lida0407/dcsim-plan/blob/main/dc-world/reports/giants-references.md",
+   "title": "Mega-campus public references (giants-references.md)",
+   "publisher": "dc-world",
+   "date": "2026-10-15",
+   "kind": "academic"
+  }
+ ],
+ "confidence": "low",
+ "updated": "2026-10-15",
+ "hall": "hall.json",
+ "zh": {
+  "operator": "想象设计（虚构）",
+  "concept": "AI 工厂园区",
+  "famous_for": "AI 工厂园区：IT 5,001 MW、2,681,856 块 GPU、PUE 1.17——由我们设计，经引擎校验",
+  "story": "想象中的 AI 工厂，建在美国墨西哥湾沿岸的一片空地上：8 个机房、388 个相同的单元，每个单元 96 台 GB200 NVL72 整机柜，共 2,681,856 块 GPU。电网以 400 kV 接入，燃气轮机和电池在停电时顶上。每台机柜 70% 的热量走液冷（CDU 到干冷器），30% 走风冷。夏季午后，引擎算出 IT 负载 5,001 MW、PUE 1.17，70B 模型每秒约 11,146 百万 Token；按当前电网结构，每年排放约 2,156 万吨 CO₂。",
+  "water": "闭式干冷器：不消耗水；最热天的蒸发辅助冷却未模拟",
+  "assumptions": [
+   "规模：IT 目标 5,000 MW（来自 IMAGINED-GIANTS.md §1）；单元数 = 该目标 ÷ 引擎算出的单元 IT 负载。",
+   "整机柜：目录记录 rack_system/nvidia/gb200-nvl72，IT 120 kW、72 块 GPU，70% 液冷（目录热参数）。",
+   "冷却：cdu/coolit/chx750 CDU（750 kW，目录），每列 3 台组成环路，N+1；热量排向干冷器；风冷部分由 crah/vertiv/liebert-cw 精密空调（120 kW，冷冻水）承担。",
+   "供电：400 kV 变电站 2N 接入，经 ATS（市电 / 柴发组）、变压器、配电柜和兆瓦级 UPS（通用节点：目录中没有兆瓦级 UPS），每台机柜由母线槽插接箱供电；备用电源为 Cat 3516C 柴发组（2 MW 备用，目录）；现场燃气轮机 + 电池（模型中按柴发组容量计）。",
+   "气候：七月典型日，平均 29 °C、昼夜温差 9 °C、相对湿度 70%；数值取当地 15:00，即最热的时段。",
+   "电网排放因子 420 g CO₂/kWh，电价 0.065 USD/kWh：dc-world/reports/giants-references.md §2 / §3。",
+   "Token：每台机柜以 70–95% 负载运行一个 70B 对话模型（引擎根据 GPU 显存带宽和算力估算，标注为估算，并非基准测试）。",
+   "用水：闭式干冷器，不消耗水（未模拟蒸发辅助冷却）。",
+   "网络：灾备与对等站点、链路容量和运营商都是想象设计的一部分，并非真实合同；时延按距离估算。",
+   "规模、冷却和供电方式的参考：§1.1 Stargate Abilene (scale, DLC + CDUs, PUE 1.12–1.15)；§1.2 Hyperion & Prometheus (GW campus, 500 kV, gas backstop)；§1.3 Colossus (on-site turbines + BESS, 100k GPUs in one fabric)；§2.1 ERCOT grid factor ~400 g/kWh and ~$0.065/kWh（dc-world/reports/giants-references.md）。"
+  ],
+  "what_ifs": [
+   {
+    "name": "变电站跳闸（市电中断 15 分钟）",
+    "verdict": "可平稳度过。 UPS 最低剩余后备 9 分钟。",
+    "findings": [
+     "Substation (400 kV, imagined) 失电 （另 6 项）",
+     "UPS bank A 电池供电 · 剩余 10 分钟 （另 3 项）"
+    ]
+   },
+   {
+    "name": "CDU 环路在机柜分水器处泄漏（6 L/min）",
+    "verdict": "业务中断。 1 台设备断电或保护停机（72 张 GPU）；关阀前漏出 1.4 L；损失 254.9 M Token。",
+    "findings": [
+     "Manifold R001 漏液 · 已漏出 0 L",
+     "Manifold R001 漏液后已关阀隔离",
+     "nvl72-r001 降频至 20%",
+     "nvl72-r001 过热保护停机"
+    ]
+   },
+   {
+    "name": "骨干光缆中断（GCX-1 ↔ HOU-IX）",
+    "verdict": "GCX-1 ↔ HOU-IX 中断——流量切到保护路径，时延 +0.6 ms",
+    "findings": []
+   }
+  ],
+  "notable": [
+   "388 个单元 × 96 台 GB200 NVL72 整机柜（目录：每台 120 kW）= 2,681,856 块 GPU。",
+   "引擎在设计午后看到的单个单元：IT 12,888 kW、设施 15,101 kW、PUE 1.17、每秒 28,726,819 Token。",
+   "每个单元 24 台 CoolIT CHx750 CDU 以液冷带走 70% 的热量；其余由 Vertiv Liebert CW 精密空调承担。",
+   "按 0.065 USD/kWh 计一年：51,324,840 MWh、$3,336 M；按 420 g/kWh 计 21,556,433 吨 CO₂。",
+   "每个单元 8 类部件中有 5 类有目录价；GB200 NVL72 在目录中无报价，物料清单未计入。"
+  ]
+ }
+}

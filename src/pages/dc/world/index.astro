@@ -3,7 +3,7 @@
 // Site-only code: globe.gl (MIT) from jsdelivr, loaded after the page; no code from the product. State lives in the URL hash.
 import Base from "../../../layouts/dc/Base.astro";
 import Faq from "../../../components/dc/Faq.astro";
-import { SITES, ESTATES, REGIONS, TYPE_LABEL, KIND_LABEL, countryName, fmt } from "../../../lib/dc/world";
+import { SITES, ESTATES, IMAGINED, IMAGINED_LABEL, REGIONS, TYPE_LABEL, KIND_LABEL, countryName, fmt } from "../../../lib/dc/world";
 import { u, abs, root } from "../../../lib/dc/url";
 import { faqLd } from "../../../lib/dc/schema";
 import { Image } from "astro:assets";
@@ -43,7 +43,7 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
         <datalist id="wg-names">{SITES.map((s) => <option value={s.name} />)}</datalist>
         <label class="wg-f"><span>Type</span><select id="wg-type"><option value="">All</option>{types.map((t) => <option value={t}>{TYPE_LABEL[t] ?? t}</option>)}</select></label>
         <label class="wg-f"><span>Region</span><select id="wg-region"><option value="">All</option>{REGIONS.map((r) => <option value={r}>{r}</option>)}</select></label>
-        <label class="wg-f"><span>Estate</span><select id="wg-estate"><option value="">None</option>{kinds.map((k) => <optgroup label={KIND_LABEL[k] ?? k}>{ESTATES.filter((e) => e.kind === k).map((e) => <option value={e.id}>{e.name}</option>)}</optgroup>)}</select></label>
+        <label class="wg-f"><span>Estate</span><select id="wg-estate"><option value="">None</option>{kinds.map((k) => <optgroup label={KIND_LABEL[k] ?? k}>{ESTATES.filter((e) => e.kind === k).map((e) => <option value={e.id}>{e.name}</option>)}</optgroup>)}{IMAGINED.length > 0 && <optgroup label="Imagined (fictional)">{IMAGINED.map((g) => <option value={g.id}>{g.name}</option>)}</optgroup>}</select></label>
         <div class="wg-btns">
           <button type="button" id="wg-next">Next famous site</button>
           <button type="button" id="wg-look" aria-pressed="false">Photo earth</button>
@@ -71,6 +71,11 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
         <h2 id="we-h">{ESTATES.length} estates</h2>
         <ul>{ESTATES.map((e) => <li><a href={u(`world/estates/${e.id}/`)}>{e.name}</a> <span class="wl-meta">{KIND_LABEL[e.kind ?? ""] ?? ""} · {e.sites.length} sites · {e.links.length} links</span> <button type="button" class="wl-est" data-estate={e.id}>Open on earth</button></li>)}</ul>
       </section>
+      {IMAGINED.length > 0 && <section class="wg-estates" aria-labelledby="wi-h">
+        <h2 id="wi-h">Imagined giants</h2>
+        <p class="small muted">{IMAGINED_LABEL}. Shown on the earth as violet pins.</p>
+        <ul>{IMAGINED.map((g) => <li><a href={u(`world/imagined/${g.id}/`)}>{g.name}</a> <span class="wl-meta">{g.concept}</span> <button type="button" class="wl-est" data-estate={g.id}>Open on earth</button></li>)}</ul>
+      </section>}
       <p class="wg-data"><a class="cs-btn cs-btn--secondary" href={u("world/data/")}>The open dataset (CC BY 4.0)</a> <a class="cs-btn cs-btn--primary" href={u("product/")}>Your own estate on this earth: DC Sim</a></p>
       <Faq items={faq} />
     </div>
@@ -104,6 +109,7 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
   .wg-panel :global(th) { text-align: left; font: 500 11px/16px var(--font-mono); color: var(--ink-dim); padding: 4px 8px 4px 0; vertical-align: top; }
   .wg-panel :global(td) { padding: 4px 0; }
   .wg-panel :global(.wp-bad) { color: var(--crit); font-weight: 600; }
+  .wg-panel :global(.wp-imag) { margin: 0 0 8px; padding: 6px 10px; border: 1px dashed var(--line-strong); font: 600 12px/18px var(--font-mono); color: var(--ink); }
   .wg-panel :global(.wp-cta) { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
   .wg-panel :global(button) { min-height: 30px; margin: 2px 4px 2px 0; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 600 11px/1 var(--font-mono); cursor: pointer; }
   .wg-panel :global(ul) { margin: 6px 0; padding-left: 18px; }
@@ -132,7 +138,8 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
   type S = { id: string; n: string; op: string; t: string; tl: string; r: string; p: string; lat: number; lng: number; mw: number | null; pue: number | null; pk: string; y: number | null; f: string; st: string; nt: string[]; url: string };
   type ES = { c: string; lat: number; lng: number; p: string; ref: string | null };
   type EL = { a: string; b: string; t: string; pr: string; km: number | null };
-  type E = { id: string; n: string; k: string; kl: string; f: string; url: string; s: ES[]; l: EL[] };
+  type E = { id: string; n: string; k: string; kl: string; f: string; url: string; s: ES[]; l: EL[]; im?: boolean };
+  type IG = { id: string; n: string; lat: number; lng: number; mw: number | null; pue: number | null; gpus: number | null; f: string; c: string; url: string; label: string };
   const GLOBE_URL = "https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js";
   const box = document.querySelector<HTMLElement>("[data-world]")!;
   const el = document.getElementById("wg-globe")!, panel = document.getElementById("wg-panel")!;
@@ -144,7 +151,7 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
   const ms = (d: number) => d * 1.5 * 0.005; // one way, estimated
   const f0 = (n: number) => Math.round(n).toLocaleString("en-US");
 
-  let SITES: S[] = [], ESTATES: E[] = [], G: any = null, land: any = null;
+  let SITES: S[] = [], ESTATES: E[] = [], IMAG: IG[] = [], G: any = null, land: any = null;
   const st = { site: "", estate: "", cut: new Set<string>(), lose: new Set<string>(), cmp: [] as string[], me: null as null | { lat: number; lng: number; label: string }, photo: false, type: "", region: "", q: "" };
 
   // ---------- URL state ----------
@@ -199,6 +206,11 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
       ${s.st ? `<p>${esc(s.st)}</p>` : ""}${s.nt.length ? `<ul>${s.nt.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
       <p><a href="${s.url}">Open the page: facts and sources</a></p>${st.me ? mePanelLine(s) : ""}`;
   };
+  const imagPanel = (g: IG) => {
+    panel.innerHTML = `<p class="wp-imag">◇ ${esc(g.label)}. No operator plans this.</p><span class="wp-k">Imagined giant · ${esc(g.c)}</span><h2>${esc(g.n)}</h2><p>${esc(g.f)}</p>
+      <table><tbody>${g.mw != null ? `<tr><th>IT</th><td>${g.mw.toLocaleString("en-US")} MW</td></tr>` : ""}${g.pue != null ? `<tr><th>PUE</th><td>${g.pue} (engine)</td></tr>` : ""}${g.gpus != null ? `<tr><th>GPUs</th><td>${g.gpus.toLocaleString("en-US")}</td></tr>` : ""}</tbody></table>
+      <button type="button" data-estate="${esc(g.id)}">Open its estate</button><p><a href="${g.url}">Numbers, assumptions and what breaks</a></p>`;
+  };
   const mePanelLine = (s: S) => { const d = km(st.me!, s); return `<p class="wp-k">From your pin: ${f0(d)} km · ≈ ${(ms(d) * 2).toFixed(1)} ms round trip (estimated)</p>`; };
   const cmpPanel = () => {
     const [a, b] = st.cmp.map((id) => SITES.find((s) => s.id === id)!).filter(Boolean); if (!a || !b) return;
@@ -215,11 +227,11 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
     const cutL = e.l.filter((l) => st.cut.has(linkKey(l)));
     const detours = cutL.map((l) => { const a = g.pos.get(l.a), b = g.pos.get(l.b); if (!a || !b) return ""; const direct = l.km ?? km(a, b) * 1.5; const r = g.path(l.a, l.b);
       return `<li>${esc(l.a)} ↔ ${esc(l.b)} cut: ${r == null ? `<span class="wp-bad">no other path</span>` : `detour ${f0(r)} km, ≈ ${(r * 0.005).toFixed(1)} ms one way instead of ≈ ${(direct * 0.005).toFixed(1)} ms`}</li>`; }).join("");
-    panel.innerHTML = `<span class="wp-k">${esc(e.kl || "Estate")} · ${e.s.length} sites · ${e.l.length} links</span><h2>${esc(e.n)}</h2><p>${esc(e.f)}</p>
+    panel.innerHTML = `${e.im ? `<p class="wp-imag">◇ Imagined — a fictional design built from public numbers. No operator plans this.</p>` : ""}<span class="wp-k">${esc(e.kl || "Estate")} · ${e.s.length} sites · ${e.l.length} links</span><h2>${esc(e.n)}</h2><p>${esc(e.f)}</p>
       ${st.cut.size || st.lose.size ? `<p><strong>What-if:</strong> ${st.cut.size} link(s) cut, ${st.lose.size} site(s) lost.${g.isolated.length ? ` <span class="wp-bad">Isolated: ${g.isolated.map(esc).join(", ")}</span>` : " Every remaining site still has a path."}</p>${detours ? `<ul>${detours}</ul>` : ""}<button type="button" data-act="reset-wi">Reset what-ifs</button>${cta()}` : `<p class="wg-hint">Click a link on the earth to cut it, right-click (or long-press) a site to lose it. Or use the buttons:</p>`}
       <p class="wp-k">Links</p>${e.l.map((l) => `<button type="button" data-cut="${esc(linkKey(l))}" aria-pressed="${st.cut.has(linkKey(l))}">${st.cut.has(linkKey(l)) ? "Restore" : "Cut"} ${esc(l.a)}–${esc(l.b)}${l.pr === "no" ? " ·unprotected" : ""}</button>`).join("")}
       <p class="wp-k">Sites</p>${e.s.map((s) => `<button type="button" data-lose="${esc(s.c)}" aria-pressed="${st.lose.has(s.c)}">${st.lose.has(s.c) ? "Restore" : "Lose"} ${esc(s.c)}</button>`).join("")}
-      <p><a href="${e.url}">Open the estate page: links table and sources</a></p>`;
+      <p><a href="${e.url}">${e.im ? "Open the imagined giant: numbers, assumptions, what breaks" : "Open the estate page: links table and sources"}</a></p>`;
   };
   const mePanel = () => {
     if (!st.me) return; const near = SITES.map((s) => ({ s, d: km(st.me!, s) })).sort((a, b) => a.d - b.d).slice(0, 6);
@@ -229,20 +241,21 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
       <p class="wp-k">Nearest estates</p><ul>${ne.map(({ e, d }) => `<li><button type="button" data-estate="${esc(e.id)}">${esc(e.n)}</button> ${f0(d)} km</li>`).join("")}</ul>
       <button type="button" data-act="copy">Copy link</button>${cta()}`;
   };
-  const renderPanel = () => { if (st.cmp.length === 2) cmpPanel(); else if (st.estate) estatePanel(); else if (st.site) { const s = SITES.find((x) => x.id === st.site); if (s) sitePanel(s); } else if (st.me) mePanel(); };
+  const renderPanel = () => { if (st.cmp.length === 2) cmpPanel(); else if (st.estate) estatePanel(); else if (st.site) { const s = SITES.find((x) => x.id === st.site); if (s) sitePanel(s); else { const g = IMAG.find((x) => x.id === st.site); if (g) imagPanel(g); } } else if (st.me) mePanel(); };
 
   // ---------- globe layers ----------
   const visible = () => SITES.filter((s) => (!st.type || s.t === st.type) && (!st.region || s.r === st.region) && (!st.q || `${s.n} ${s.op} ${s.p}`.toLowerCase().includes(st.q.toLowerCase())));
   const draw = () => {
     if (!G) return; const c = pal(); const e = est(); const g = e ? graph(e) : null;
     const pts: any[] = visible().map((s) => ({ ...s, kind: "site" }));
+    if (!st.type && !st.q) IMAG.forEach((g) => pts.push({ ...g, kind: "imag" }));
     if (e) e.s.forEach((s) => pts.push({ kind: "est", id: `est:${s.c}`, c: s.c, n: `${s.c} · ${s.p}`, lat: s.lat, lng: s.lng, lost: st.lose.has(s.c), iso: g!.isolated.includes(s.c) }));
     if (st.me) pts.push({ kind: "me", id: "me", n: st.me.label, lat: st.me.lat, lng: st.me.lng });
     G.pointsData(pts)
-      .pointColor((p: any) => p.kind === "me" ? c.ink : p.kind === "est" ? (p.lost || p.iso ? c.crit : c.ink) : (st.cmp.includes(p.id) || p.id === st.site ? c.ink : (c as any)[TYPE_COL[p.t] ?? "acc"]))
-      .pointAltitude((p: any) => p.kind === "site" ? Math.min(0.12, 0.012 + (p.mw ?? 10) / 4000) : 0.02)
-      .pointRadius((p: any) => p.kind === "me" ? 0.9 : p.kind === "est" ? 0.55 : (p.id === st.site ? 0.7 : 0.42))
-      .pointLabel((p: any) => p.kind === "site" ? `<div class="wg-tip"><b>${esc(p.n)}</b><br>${esc(p.op)}${p.op ? " · " : ""}${esc(p.p)}<br>${esc(p.f)}${p.mw != null ? `<br>${p.mw} MW` : ""}${p.pue != null ? ` · PUE ${p.pue}` : ""}</div>` : `<div class="wg-tip"><b>${esc(p.n)}</b>${p.lost ? " · lost" : p.iso ? " · isolated" : ""}</div>`);
+      .pointColor((p: any) => p.kind === "imag" ? (document.documentElement.dataset.theme === "light" ? "#7c3aed" : "#a78bfa") : p.kind === "me" ? c.ink : p.kind === "est" ? (p.lost || p.iso ? c.crit : c.ink) : (st.cmp.includes(p.id) || p.id === st.site ? c.ink : (c as any)[TYPE_COL[p.t] ?? "acc"]))
+      .pointAltitude((p: any) => p.kind === "site" ? Math.min(0.12, 0.012 + (p.mw ?? 10) / 4000) : p.kind === "imag" ? 0.16 : 0.02)
+      .pointRadius((p: any) => p.kind === "me" ? 0.9 : p.kind === "imag" ? 0.75 : p.kind === "est" ? 0.55 : (p.id === st.site ? 0.7 : 0.42))
+      .pointLabel((p: any) => p.kind === "imag" ? `<div class="wg-tip"><b>◇ ${esc(p.n)}</b><br>Imagined — fictional design from public numbers<br>${p.mw != null ? `${p.mw.toLocaleString("en-US")} MW IT` : ""}${p.pue != null ? ` · PUE ${p.pue}` : ""}</div>` : p.kind === "site" ? `<div class="wg-tip"><b>${esc(p.n)}</b><br>${esc(p.op)}${p.op ? " · " : ""}${esc(p.p)}<br>${esc(p.f)}${p.mw != null ? `<br>${p.mw} MW` : ""}${p.pue != null ? ` · PUE ${p.pue}` : ""}</div>` : `<div class="wg-tip"><b>${esc(p.n)}</b>${p.lost ? " · lost" : p.iso ? " · isolated" : ""}</div>`);
     const arcs = e ? e.l.filter((l) => g!.pos.has(l.a) && g!.pos.has(l.b)).map((l) => ({ l, key: linkKey(l), a: g!.pos.get(l.a)!, b: g!.pos.get(l.b)!, dead: st.cut.has(linkKey(l)) || st.lose.has(l.a) || st.lose.has(l.b) })) : [];
     G.arcsData(arcs).arcStartLat((x: any) => x.a.lat).arcStartLng((x: any) => x.a.lng).arcEndLat((x: any) => x.b.lat).arcEndLng((x: any) => x.b.lng)
       .arcColor((x: any) => x.dead ? [c.crit, c.crit] : x.l.pr === "no" ? [c.warn, c.acc] : [c.acc, c.data])
@@ -297,14 +310,14 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
   readHash();
   const boot = async () => {
     const [data, landJson] = await Promise.all([fetch(box.dataset.src!).then((r) => r.json()), fetch(box.dataset.land!).then((r) => r.json())]);
-    SITES = data.sites; ESTATES = data.estates; land = landJson;
+    SITES = data.sites; ESTATES = data.estates; IMAG = data.imagined ?? []; land = landJson;
     await new Promise<void>((ok, fail) => { const s = document.createElement("script"); s.src = GLOBE_URL; s.async = true; s.crossOrigin = "anonymous"; s.onload = () => ok(); s.onerror = () => fail(); document.head.appendChild(s); });
     const GlobeCtor = (window as any).Globe;
     el.querySelector(".wg-poster")?.remove();
     G = (() => { try { return new GlobeCtor(el, { animateIn: !reduce }); } catch { return GlobeCtor()(el); } })();
     G.width(el.clientWidth).height(el.clientHeight).backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereAltitude(0.14)
       .hexPolygonResolution(3).hexPolygonMargin(0.4).hexPolygonAltitude(0.012);
-    G.onPointClick((p: any, ev: MouseEvent) => { if (p.kind === "site") { if (ev?.shiftKey) { st.cmp = [...st.cmp.filter((x) => x !== p.id), p.id].slice(-2); st.site = ""; update(); } else openSite(p.id); } else if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } else if (p.kind === "me") mePanel(); })
+    G.onPointClick((p: any, ev: MouseEvent) => { if (p.kind === "imag") { st.site = p.id; st.estate = ""; st.cmp = []; update({ lat: p.lat, lng: p.lng, alt: 1.6 }); } else if (p.kind === "site") { if (ev?.shiftKey) { st.cmp = [...st.cmp.filter((x) => x !== p.id), p.id].slice(-2); st.site = ""; update(); } else openSite(p.id); } else if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } else if (p.kind === "me") mePanel(); })
       .onPointRightClick((p: any) => { if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } })
       .onArcClick((x: any) => { st.cut.has(x.key) ? st.cut.delete(x.key) : st.cut.add(x.key); update(); });
     const ctl = G.controls(); ctl.autoRotate = !reduce; ctl.autoRotateSpeed = 0.35; ctl.enableDamping = true;

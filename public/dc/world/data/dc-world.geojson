@@ -763,7 +763,12 @@
           "Cooled by cold water pumped from a depth of 45 meters in Lake Lugano through a 2.8-kilometer pipeline.",
           "Serves as the computing backbone for MeteoSwiss weather forecasts and Switzerland's national AI initiative."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Outside_View_of_the_Swiss_National_Supercomputing_Centre.JPG",
+          "license": "CC BY-SA 3.0",
+          "author": "CSCS",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Outside_View_of_the_Swiss_National_Supercomputing_Centre.JPG"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -2019,7 +2024,12 @@
           "Features an innovative modular datacenter (MDC) container architecture installed on campus.",
           "Cooled by 100% warm-water liquid cooling without mechanical chillers, exporting waste heat to campus buildings."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/01/Juelich_FZJ_JSC_b.jpg",
+          "license": "CC BY-SA 3.0",
+          "author": "JiriMatejicek",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Juelich_FZJ_JSC_b.jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -2088,7 +2098,12 @@
           "Powered by 100% certified hydroelectric power certificates from Scandinavian and regional sources.",
           "Operates an in-house hardware repair and automated deployment facility on site in Saxony."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Hetzner_DCP_Luftbild.jpg",
+          "license": "CC BY-SA 4.0",
+          "author": "Hetzner Online GmbH",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Hetzner_DCP_Luftbild.jpg"
+        },
         "confidence": "high",
         "estimated": [],
         "updated": "2026-10-15"
@@ -2290,7 +2305,12 @@
           "Operates 100% warm-water cooling with no chillers, producing a world-leading PUE below 1.05.",
           "Exports all server waste heat to Kajaani's municipal district heating network, heating 20% of the entire city."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Visit_of_Henna_Virkkunen%2C_Executive_Vice-president_of_the_EC%2C_to_Finland_%28P-069409-00-19%29.jpg",
+          "license": "CC BY 4.0",
+          "author": "European Commission Audiovisual Service / Alessandro Rampazzo",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Visit_of_Henna_Virkkunen,_Executive_Vice-president_of_the_EC,_to_Finland_(P-069409-00-19).jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -2994,7 +3014,12 @@
           "Handles an estimated majority of all UK-routed Internet peering traffic across its Docklands campus.",
           "Houses over 900 carriers, cloud operators, financial services networks, and content delivery providers."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/TelehouseDocklands.jpg",
+          "license": "CC BY-SA 3.0",
+          "author": "John Arundel",
+          "source_page": "https://commons.wikimedia.org/wiki/File:TelehouseDocklands.jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -3200,7 +3225,12 @@
           "Employs outdoor air cooling filtered through custom membrane air handlers to prevent marine salt corrosion.",
           "Hosts Open Compute Project (OCP) server hardware delivering Instagram and WhatsApp workloads."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/48/Facebook_Clonee_data_centre_from_the_air_-_geograph.org.uk_-_6023097.jpg",
+          "license": "CC BY-SA 2.0",
+          "author": "Thomas Nugent",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Facebook_Clonee_data_centre_from_the_air_-_geograph.org.uk_-_6023097.jpg"
+        },
         "confidence": "high",
         "estimated": [],
         "updated": "2026-10-15"
@@ -3539,7 +3569,12 @@
           "Built on Eviden BullSequana XH2000 hardware with 14,000 custom-water-cooled NVIDIA Ampere GPUs.",
           "Supplies computing capacity to over 4,000 European scientific researchers across medicine and climate modeling."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Leonardo_supercomputer.png",
+          "license": "CC BY 4.0",
+          "author": "National Institute of Geophysics and Volcanology",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Leonardo_supercomputer.png"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -3742,7 +3777,12 @@
           "Provides redundant 66 kV high-voltage dual-substation power feeds in downtown Tokyo.",
           "Hosts mission-critical trading infrastructure for the Tokyo Stock Exchange (TSE) and financial brokerages."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/NTT_DATA_Shinagawa.JPG",
+          "license": "Public domain",
+          "author": "Famifamifami",
+          "source_page": "https://commons.wikimedia.org/wiki/File:NTT_DATA_Shinagawa.JPG"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -4297,7 +4337,12 @@
           "Cooled using non-potable surface water drawn from the regional industrial canal system.",
           "Anchors Google Cloud's europe-west4 cloud region supporting core YouTube and search infrastructure."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Google_in_the_Eemshaven_-_1.JPG",
+          "license": "CC BY-SA 4.0",
+          "author": "Ymnes",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Google_in_the_Eemshaven_-_1.JPG"
+        },
         "confidence": "high",
         "estimated": [],
         "updated": "2026-10-15"
@@ -5424,7 +5469,12 @@
           "Pioneered extensive agricultural water reuse: data center cooling discharge is piped to irrigate local crops.",
           "Hosts large-scale AWS Trainium, Inferentia, and NVIDIA GPU clusters for enterprise generative AI."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Amazon_Datacenter.jpg",
+          "license": "CC BY-SA 3.0",
+          "author": "Visitor7",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Amazon_Datacenter.jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -5776,7 +5826,12 @@
           "Operates with a trailing-twelve-month PUE of approximately 1.10 across multiple interconnected campuses.",
           "Matched by hundreds of megawatts of long-term wind power purchase agreements on the MidAmerican Energy grid."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Google_Data_Center%2C_Council_Bluffs_Iowa_%2849062863796%29.jpg",
+          "license": "CC BY 2.0",
+          "author": "Chad Davis",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Google_Data_Center,_Council_Bluffs_Iowa_(49062863796).jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"
@@ -5846,7 +5901,12 @@
           "Pioneered Google's early modular container-based server architectures disclosed in 2009.",
           "Established the Pacific Northwest hydroelectric corridor as a global destination for hyperscale cloud."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Google_Data_Center%2C_The_Dalles.jpg",
+          "license": "CC BY-SA 3.0",
+          "author": "Visitor7",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Google_Data_Center,_The_Dalles.jpg"
+        },
         "confidence": "high",
         "estimated": [],
         "updated": "2026-10-15"
@@ -6061,7 +6121,12 @@
           "Achieved an early design PUE under 1.08 using high-desert outside evaporative air cooling without chillers.",
           "Powered 100% by renewable energy contracted through local PacifiCorp wind and solar projects."
         ],
-        "image": null,
+        "image": {
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/Outside_Facebook_Data_Center.jpg",
+          "license": "CC BY 2.0",
+          "author": "Intel Free Press",
+          "source_page": "https://commons.wikimedia.org/wiki/File:Outside_Facebook_Data_Center.jpg"
+        },
         "confidence": "medium",
         "estimated": [],
         "updated": "2026-10-15"

@@ -9,7 +9,7 @@ export const dcLlms = async (): Promise<string> => {
   const pages = (await getCollection("pages")).sort((a, b) => a.data.section.localeCompare(b.data.section) || a.data.order - b.data.order);
   const guides = (await getCollection("guides")).sort((a, b) => a.data.order - b.data.order);
   const compare = (await getCollection("compare")).sort((a, b) => a.data.order - b.data.order);
-  const { SITES, ESTATES } = await import("../../lib/dc/world");
+  const { SITES, ESTATES, IMAGINED, IMAGINED_LABEL } = await import("../../lib/dc/world");
   const line = (title: string, path: string, desc: string) => `- [${title}](${abs(path)}): ${desc}`;
   const section = (name: string) =>
     pages.filter((p) => p.data.section === name).map((p) => line(p.data.h1, `${p.id}/`, p.data.description)).join("\n");
@@ -45,6 +45,8 @@ ${line("The earth", "world/", `${SITES.length} famous data centers and ${ESTATES
 ${line("Open dataset", "world/data/", "GeoJSON, CSV and DC Sim workbooks with sources for every record.")}
 ${line("Estates", "world/estates/", "Submarine cables, cloud backbones, national compute networks, exchanges and financial routes.")}
 ${ESTATES.map((e) => line(e.name, `world/estates/${e.id}/`, e.famous_for ?? "")).join("\n")}
+${line("Imagined giants", "world/imagined/", `${IMAGINED_LABEL}: gigawatt campuses designed in DC Sim from catalog devices and public numbers.`)}
+${IMAGINED.map((g) => line(`${g.name} (imagined)`, `world/imagined/${g.id}/`, `${IMAGINED_LABEL}. ${g.famous_for ?? ""}`)).join("\n")}
 
 ## Comparisons (public prices with dates and sources)
 ${line("All comparisons", "compare/", "DC Sim next to the DCIM and monitoring tools people compare it with.")}

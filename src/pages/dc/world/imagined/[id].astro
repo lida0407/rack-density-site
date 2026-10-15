@@ -1,0 +1,102 @@
+---
+// /dc/world/imagined/<id>/ — an imagined giant (IMAGINED-GIANTS.md §3): fictional, from public numbers, labelled everywhere.
+import fs from "node:fs";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Base from "../../../../layouts/dc/Base.astro";
+import Faq from "../../../../components/dc/Faq.astro";
+import WorldMap from "../../../../components/dc/world/WorldMap.astro";
+import { IMAGINED, IMAGINED_LABEL, giantMain, countryName, fmt, km, latencyMs, type Giant } from "../../../../lib/dc/world";
+import { u, abs, root } from "../../../../lib/dc/url";
+import { faqLd } from "../../../../lib/dc/schema";
+
+export function getStaticPaths() {
+  return IMAGINED.map((g) => ({ params: { id: g.id }, props: { g } }));
+}
+const { g } = Astro.props as { g: Giant };
+const path = `world/imagined/${g.id}/`;
+const d = g.derived ?? {};
+const stills = import.meta.glob<{ default: ImageMetadata }>("../../../../assets/dc/world/imagined/*.png", { eager: true });
+const still = (k: string) => stills[`../../../../assets/dc/world/imagined/${g.id}-${k}.png`]?.default;
+const hasFlight = fs.existsSync(`public/dc/world/media/${g.id}-flight.mp4`);
+const main = giantMain(g);
+const byCode = new Map(g.sites.map((s) => [s.site, s]));
+const n = (v: unknown, unit = "") => (typeof v === "number" ? `${v.toLocaleString("en-US")}${unit}` : "—");
+const rows: [string, string][] = [
+  ["IT", n(d.itMw, " MW")], ["Total facility", n(d.totalMw, " MW")], ["PUE", n(d.pue)],
+  ["Halls / pods", `${n(d.halls)} / ${n(d.pods)}`], ["Racks / GPUs", `${n(d.racks)} / ${n(d.gpus)}`],
+  ["Tokens per second (estimated)", n(d.tokensPerS)], ["Tokens per kWh (IT, estimated)", n(d.tokensPerKwh)],
+  ["Energy per year", d.energyMwhPerYear != null ? `${n(d.energyMwhPerYear)} MWh${d.energyCostPerYear?.value != null ? ` · about $${Math.round(d.energyCostPerYear.value / 1e6).toLocaleString("en-US")} M at ${d.energyCostPerYear.tariff} USD/kWh` : ""}` : "—"],
+  ["CO₂ per year", d.co2TonnesPerYear?.value != null ? `${n(Math.round(d.co2TonnesPerYear.value))} t at ${d.co2TonnesPerYear.gco2PerKwh} g/kWh` : "—"],
+  ["Water (consumptive)", d.waterM3PerDay ? `${n(d.waterM3PerDay.value)} m³/day${d.waterM3PerDay.note ? ` — ${d.waterM3PerDay.note}` : ""}` : "—"],
+  ["Catalog BOM per pod", d.bomPerPod?.pricedUsd != null ? `$${n(d.bomPerPod.pricedUsd)} at list prices${d.bomPerPod.unpriced?.length ? `; not included (no public list price): ${d.bomPerPod.unpriced.join(", ")}` : ""}` : "—"],
+];
+const faq = [
+  { q: `Is ${g.name} a real data center?`, a: `No. ${IMAGINED_LABEL}. No operator plans it; it shows what such a campus would need, using catalog devices and public reference numbers.` },
+  { q: "Where do the numbers come from?", a: `${d.basis ?? "The engine, run on the representative hall and scaled"}. Assumptions and the public references are listed on this page.` },
+  ...(g.what_ifs?.[0] ? [{ q: `What happens if ${g.what_ifs[0].name.toLowerCase()}?`, a: g.what_ifs[0].verdict }] : []),
+];
+const ld = { "@type": "Dataset", name: `${g.name} (imagined)`, description: `${IMAGINED_LABEL}. ${g.famous_for ?? ""}`, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, creator: { "@id": abs("#org") }, dateModified: g.updated };
+const title = [`${g.name} (imagined) — DC Sim world`, `${g.name} (imagined)`].find((t) => t.length <= 60) ?? g.name.slice(0, 58);
+const hero = still("estate") ?? still("card");
+---
+<Base title={title} description={`${IMAGINED_LABEL}. ${g.famous_for ?? ""}`.slice(0, 165)} path={path}
+  crumbs={[{ name: "World", path: "world/" }, { name: "Imagined", path: "world/imagined/" }, { name: g.name, path }]} jsonLd={[ld, ...faqLd(faq)]}>
+  <article class="container page wimg">
+    <p class="wimg-label" role="note"><span aria-hidden="true">◇</span> {IMAGINED_LABEL}. No operator plans this.</p>
+    <span class="eyebrow">Imagined giant · {g.concept}</span>
+    <h1>{g.name}</h1>
+    {g.famous_for && <p class="direct-answer">{g.famous_for}</p>}
+    <div class="wimg-media">
+      {hasFlight ? (
+        <figure class="shot"><video controls muted playsinline preload="none" poster={root(`dc/world/media/${g.id}-flight.jpg`)} width="1920" height="1080" aria-label={`Flight over ${g.name}, recorded in DC Sim`}>
+          <source src={root(`dc/world/media/${g.id}-flight.mp4`)} type="video/mp4" /></video>
+          <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>15 s flight, recorded in DC Sim</span><span class="sim">imagined · simulated</span></figcaption></figure>
+      ) : hero && <figure class="shot"><Image src={hero} alt={`${g.name} in DC Sim's Estate view`} widths={[640, 1100]} sizes="(min-width: 1000px) 1100px, 100vw" format="webp" quality={74} /></figure>}
+    </div>
+    <section><h2>The story</h2><p>{g.story}</p></section>
+    <section><h2>The numbers</h2>
+      <div class="wimg-table"><table><tbody>{rows.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody></table></div>
+      <p class="small muted">{d.basis}. Token figures are engine estimates, not benchmarks. Energy and CO₂ use the tariff and grid factor in the references below.</p>
+    </section>
+    {still("hall") && <section><h2>The representative hall</h2><figure class="shot"><Image src={still("hall")!} alt={`The representative hall of ${g.name}, modelled with catalog devices in DC Sim`} widths={[640, 1100]} sizes="(min-width: 1000px) 1100px, 100vw" format="webp" quality={74} loading="lazy" />
+      <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>One hall modelled device by device; the other halls are scaled from it</span><span class="sim">imagined · simulated</span></figcaption></figure></section>}
+    {g.notable?.length ? <section><h2>Notable</h2><ul>{g.notable.map((x) => <li>{x}</li>)}</ul></section> : null}
+    {g.what_ifs?.length ? <section><h2>What would break (engine)</h2><ul class="wimg-wi">{g.what_ifs.map((w) => <li><strong>{w.name}:</strong> {w.verdict}{w.findings?.length ? <span class="wimg-f"> ({w.findings.join("; ")})</span> : null}</li>)}</ul></section> : null}
+    {g.assumptions?.length ? <section id="assumptions"><h2>What we assumed and why</h2><ul>{g.assumptions.map((x) => <li>{x}</li>)}</ul></section> : null}
+    <section><h2>The estate</h2>
+      <WorldMap title={`${g.name}: ${g.sites.length} sites, ${g.links.length} links (imagined)`} points={g.sites.map((s) => ({ lat: s.lat, lon: s.lon, label: s.site, hot: s === main }))}
+        links={g.links.filter((l) => byCode.has(l.site_a) && byCode.has(l.site_b)).map((l) => ({ a: byCode.get(l.site_a)!, b: byCode.get(l.site_b)!, dashed: !(l.protected === true || l.protected === "yes") }))} />
+      <div class="wimg-table" style="margin-top:16px"><table><thead><tr><th>From</th><th>To</th><th>Type</th><th>Bandwidth</th><th>Protected</th><th>Est. one-way latency</th></tr></thead>
+        <tbody>{g.links.map((l) => { const a = byCode.get(l.site_a), b = byCode.get(l.site_b); return <tr><td>{l.site_a}</td><td>{l.site_b}</td><td>{l.type ?? "—"}</td><td>{l.bandwidth_gbps != null ? `${fmt(l.bandwidth_gbps)} Gbps` : "—"}</td><td>{String(l.protected ?? "—")}</td><td>{a && b ? `≈ ${latencyMs(km(a, b)).toFixed(1)} ms` : "—"}</td></tr>; })}</tbody></table></div>
+      <p class="wimg-actions"><a class="cs-btn cs-btn--primary" href={`${u("world/")}#estate=${encodeURIComponent(g.id)}`}>Open it on the earth: cut a link, lose a site</a></p>
+    </section>
+    <section><h2>Files</h2><ul>
+      <li><a href={root(`dc/world/data/imagined/${g.id}/estate.xlsx`)} download>estate.xlsx</a> — Sites and Links (DC Sim template v1.4)</li>
+      <li><a href={root(`dc/world/data/imagined/${g.id}/hall.xlsx`)} download>hall.xlsx</a> — the representative hall, device by device</li>
+      <li><a href={root(`dc/world/data/imagined/${g.id}/giant.json`)} download>giant.json</a> — the record with derived numbers and assumptions</li>
+    </ul><p class="small muted">Public reference numbers: <a href={u("world/imagined/references/")}>mega-campus references</a>. CC BY 4.0. {IMAGINED_LABEL}.</p></section>
+    <Faq items={faq} />
+    <aside class="wimg-cta"><p>Design your own hall from catalog devices and fail it before it exists: <a href={u("product/design/")}>DC Sim Design</a>.</p></aside>
+  </article>
+</Base>
+<style>
+  .wimg-label { display: inline-flex; gap: 8px; align-items: center; margin: 0 0 14px; padding: 6px 12px; border: 1px dashed var(--line-strong); font: 600 12px/18px var(--font-mono); letter-spacing: .04em; color: var(--ink); background: var(--bg-100); }
+  .wimg h1 { margin: 8px 0 0; font-size: clamp(30px, 4.2vw, 50px); line-height: 1.06; }
+  .wimg .direct-answer { margin-top: 22px; }
+  .wimg-media { margin-top: 28px; }
+  .wimg-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+  .wimg section { margin-top: 36px; }
+  .wimg h2 { margin: 0 0 10px; font-size: 22px; }
+  .wimg section > p { margin: 0; line-height: 1.65; }
+  .wimg ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .wimg-f { color: var(--ink-dim); }
+  .wimg-table { overflow-x: auto; border: 1px solid var(--line); }
+  .wimg-table table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .wimg-table th { text-align: left; font: 500 11px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-dim); padding: 8px 10px; background: var(--bg-100); vertical-align: top; }
+  .wimg-table td { padding: 8px 10px; border-top: 1px solid var(--line); }
+  .wimg-actions { margin: 16px 0 0; }
+  .wimg-cta { margin-top: 40px; padding: 18px 20px; border: 1px solid var(--line-strong); background: var(--bg-100); }
+  .wimg-cta p { margin: 0; }
+</style>
