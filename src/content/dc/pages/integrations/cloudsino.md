@@ -1,6 +1,6 @@
 ---
 title: "CloudSino DCIM and DC Sim"
-description: "CloudSino distributes the Chinese-language edition and is a data source for the English edition via CSV today."
+description: "CloudSino distributes the CloudSino build, the Chinese-language edition of DC Sim; CloudSino DCIM exports import into DC Sim via CSV today."
 h1: "CloudSino partnership"
 directAnswer: "CloudSino is DC Sim's channel partner: it distributes the Chinese-language edition of the product — same engine, same importer, interface in 中文 or English. For the English edition, a CloudSino DCIM export (device assets, cabinets, power and cooling equipment, monitoring history) imports through the Excel/CSV template today. A live, read-only connector to CloudSino monitoring is on the roadmap."
 navLabel: "CloudSino"
