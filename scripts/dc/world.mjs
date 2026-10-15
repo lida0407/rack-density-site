@@ -47,7 +47,8 @@ for (const g of imagined) {
   const short = g.id.replace(/^giant-/, "");
   const pick = (kind, ext) => shots.filter((f) => f.endsWith(`-imagined-${short}-${kind}.${ext}`)).pop(); // newest English take (zh/phone variants excluded by the exact suffix)
   for (const kind of ["card", "estate", "hall"]) { const f = pick(kind, "png"); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(ASSET, `${g.id}-${kind}.png`)); }
-  for (const ext of ["mp4", "jpg"]) { const f = pick("flight", ext); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(MEDIA, `${g.id}-flight.${ext}`)); }
+  { const f = pick("flight", "mp4"); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(MEDIA, `${g.id}-flight.mp4`)); }
+  { const f = pick("flight", "jpg"); if (f) fs.copyFileSync(path.join(SHOTS, f), path.join(ASSET, `${g.id}-flight.jpg`)); } // poster, optimised by Astro
 }
 fs.writeFileSync(path.join(OUT, "meta.json"), JSON.stringify({ synced: new Date().toISOString().slice(0, 10), sites: sites.length, estates: estates.length,
   withImage: sites.filter((s) => s.image).length, imagined: imagined.length }));

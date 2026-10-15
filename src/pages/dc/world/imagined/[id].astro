@@ -1,7 +1,7 @@
 ---
 // /dc/world/imagined/<id>/ — an imagined giant (IMAGINED-GIANTS.md §3): fictional, from public numbers, labelled everywhere.
 import fs from "node:fs";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Base from "../../../../layouts/dc/Base.astro";
 import Faq from "../../../../components/dc/Faq.astro";
@@ -19,6 +19,9 @@ const d = g.derived ?? {};
 const stills = import.meta.glob<{ default: ImageMetadata }>("../../../../assets/dc/world/imagined/*.png", { eager: true });
 const still = (k: string) => stills[`../../../../assets/dc/world/imagined/${g.id}-${k}.png`]?.default;
 const hasFlight = fs.existsSync(`public/dc/world/media/${g.id}-flight.mp4`);
+const posters = import.meta.glob<{ default: ImageMetadata }>("../../../../assets/dc/world/imagined/*.jpg", { eager: true });
+const posterSrc = posters[`../../../../assets/dc/world/imagined/${g.id}-flight.jpg`]?.default;
+const poster = posterSrc ? (await getImage({ src: posterSrc, width: 1280, format: "webp", quality: 70 })).src : undefined;
 const main = giantMain(g);
 const byCode = new Map(g.sites.map((s) => [s.site, s]));
 const n = (v: unknown, unit = "") => (typeof v === "number" ? `${v.toLocaleString("en-US")}${unit}` : "—");
@@ -50,7 +53,7 @@ const hero = still("estate") ?? still("card");
     {g.famous_for && <p class="direct-answer">{g.famous_for}</p>}
     <div class="wimg-media">
       {hasFlight ? (
-        <figure class="shot"><video controls muted playsinline preload="none" poster={root(`dc/world/media/${g.id}-flight.jpg`)} width="1920" height="1080" aria-label={`Flight over ${g.name}, recorded in DC Sim`}>
+        <figure class="shot"><video controls muted playsinline preload="none" poster={poster} width="1920" height="1080" aria-label={`Flight over ${g.name}, recorded in DC Sim`}>
           <source src={root(`dc/world/media/${g.id}-flight.mp4`)} type="video/mp4" /></video>
           <figcaption><span class="cs-shape cs-shape--live" aria-hidden="true"></span><span>15 s flight, recorded in DC Sim</span><span class="sim">imagined · simulated</span></figcaption></figure>
       ) : hero && <figure class="shot"><Image src={hero} alt={`${g.name} in DC Sim's Estate view`} widths={[640, 1100]} sizes="(min-width: 1000px) 1100px, 100vw" format="webp" quality={74} /></figure>}
