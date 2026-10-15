@@ -15,7 +15,7 @@ shots:
   - { name: "air-topdown", alt: "Top-down Air view of the demo hall with an inlet temperature heat map, labelled estimated.", caption: "Air: inlet temperatures from the zonal model, labelled estimated." }
   - { name: "phone", alt: "DC Sim on a phone: the demo hall in 3D with the View menu, import button and time slider.", caption: "The same twin on a phone." }
 clips:
-  - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (48 s)." }
+  - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (50 s)." }
 ---
 
 ## What a walkthrough shows
