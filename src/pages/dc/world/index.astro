@@ -6,6 +6,9 @@ import Faq from "../../../components/dc/Faq.astro";
 import { SITES, ESTATES, REGIONS, TYPE_LABEL, KIND_LABEL, countryName, fmt } from "../../../lib/dc/world";
 import { u, abs, root } from "../../../lib/dc/url";
 import { faqLd } from "../../../lib/dc/schema";
+import { Image } from "astro:assets";
+import posterDark from "../../../assets/dc/world/poster-dark.png";
+import posterLight from "../../../assets/dc/world/poster-light.png";
 
 const types = [...new Set(SITES.map((s) => s.tenant_type).filter(Boolean))] as string[];
 const kinds = [...new Set(ESTATES.map((e) => e.kind).filter(Boolean))] as string[];
@@ -28,7 +31,13 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
     </div>
     <div class="wg-stage" data-world data-src={u("world/globe-data.json")} data-land={root("dc/world/countries-110m.json")} data-cities={root("dc/world/cities.json")}
       data-tex-day={root("dc/world/tex/earth-blue-marble.jpg")} data-tex-night={root("dc/world/tex/earth-night.jpg")} data-product={u("product/")}>
-      <div class="wg-globe" id="wg-globe" aria-hidden="true"><div class="wg-poster"><span>Loading the earth…</span></div></div>
+      <div class="wg-globe" id="wg-globe">
+        <div class="wg-poster">
+          <Image class="only-dark" src={posterDark} alt="The earth with the famous data centers as pins, Europe and Africa facing" widths={[360, 560, 700]} sizes="(max-width: 860px) 90vw, 700px" format="webp" quality={72} loading="eager" fetchpriority="high" />
+          <Image class="only-light" src={posterLight} alt="The earth with the famous data centers as pins, Europe and Africa facing" widths={[360, 560, 700]} sizes="(max-width: 860px) 90vw, 700px" format="webp" quality={72} loading="lazy" />
+          <button type="button" class="wg-start" id="wg-start">Spin the earth</button>
+        </div>
+      </div>
       <div class="wg-tools" role="toolbar" aria-label="Earth controls">
         <label class="wg-f"><span>Search</span><input id="wg-q" type="search" list="wg-names" placeholder="Name, operator, city" autocomplete="off" /></label>
         <datalist id="wg-names">{SITES.map((s) => <option value={s.name} />)}</datalist>
@@ -75,8 +84,9 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
   .wg-globe { position: absolute; inset: 0; }
   .wg-globe canvas { display: block; outline: none; }
   .wg-poster { position: absolute; inset: 0; display: grid; place-items: center; }
-  .wg-poster span { font: 500 12px/1 var(--font-mono); color: var(--ink-dim); letter-spacing: .08em; text-transform: uppercase; }
-  .wg-poster::before { content: ""; position: absolute; width: min(64vh, 640px); aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--line-strong); background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%); }
+  .wg-poster :global(img) { grid-area: 1 / 1; height: 100%; max-height: 100%; width: auto; max-width: 100%; aspect-ratio: 1; object-fit: contain; }
+  .wg-start { grid-area: 1 / 1; align-self: end; margin-bottom: 24px; min-height: 40px; padding: 0 18px; border: 1px solid var(--accent); border-radius: 999px; background: var(--bg-000); color: var(--ink); font: 600 13px/1 var(--font-mono); letter-spacing: .06em; cursor: pointer; z-index: 1; }
+  .wg-start:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .wg-tools { position: absolute; left: 16px; top: 16px; width: min(300px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 8px; padding: 12px; background: color-mix(in srgb, var(--bg-100) 88%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(8px); z-index: 2; }
   .wg-f { display: flex; flex-direction: column; gap: 4px; }
   .wg-f span { font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
@@ -290,7 +300,7 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
     SITES = data.sites; ESTATES = data.estates; land = landJson;
     await new Promise<void>((ok, fail) => { const s = document.createElement("script"); s.src = GLOBE_URL; s.async = true; s.crossOrigin = "anonymous"; s.onload = () => ok(); s.onerror = () => fail(); document.head.appendChild(s); });
     const GlobeCtor = (window as any).Globe;
-    el.innerHTML = "";
+    el.querySelector(".wg-poster")?.remove();
     G = (() => { try { return new GlobeCtor(el, { animateIn: !reduce }); } catch { return GlobeCtor()(el); } })();
     G.width(el.clientWidth).height(el.clientHeight).backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereAltitude(0.14)
       .hexPolygonResolution(3).hexPolygonMargin(0.4).hexPolygonAltitude(0.012);
@@ -306,9 +316,16 @@ const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region ===
     const s = SITES.find((x) => x.id === st.site), e = est();
     if (s) fly(s.lat, s.lng, 1.4); else if (e) { const c0 = e.s[0]; fly(c0.lat, c0.lng, 2.3); } else if (st.me) fly(st.me.lat, st.me.lng, 2); else G.pointOfView({ lat: 30, lng: 10, altitude: 2.4 });
   };
-  const start = () => boot().catch(() => { el.querySelector(".wg-poster span")!.textContent = "The earth could not load. The list below has every site."; });
-  const idle = () => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(start, { timeout: 2000 }) : setTimeout(start, 400));
-  if (document.readyState === "complete") idle(); else addEventListener("load", idle, { once: true });
+  // The 3D earth (globe.gl ≈ 600 KB gzip + the land cells) starts on the first interaction, so the page itself stays fast;
+  // a URL with a state (a shared link) starts it right after load. Until then the poster is a real render of the earth.
+  let started = false;
+  const start = () => { if (started) return; started = true; const b = document.getElementById("wg-start"); if (b) b.textContent = "Loading the earth…";
+    boot().catch(() => { started = false; if (b) b.textContent = "The earth could not load. Try again"; }); };
+  const EVENTS = ["pointermove", "pointerdown", "wheel", "touchstart", "keydown", "scroll"];
+  const onFirst = () => { EVENTS.forEach((e) => removeEventListener(e, onFirst)); start(); };
+  document.getElementById("wg-start")!.addEventListener("click", start);
+  if (location.hash.length > 1) { const go = () => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300)); document.readyState === "complete" ? go() : addEventListener("load", go, { once: true }); }
+  else EVENTS.forEach((e) => addEventListener(e, onFirst, { passive: true }));
 </script>
 <style is:global>
   .wg-tip { padding: 8px 10px; max-width: 280px; background: var(--bg-100); color: var(--ink); border: 1px solid var(--line-strong); font: 13px/19px var(--font-sans); }
