@@ -24,7 +24,7 @@ import report from '../../assets/shots/import-report.png';
 
 const app = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', '@id': abs('/homelab/') + '#app', name: PRODUCT_NAME,
   applicationCategory: 'UtilitiesApplication', operatingSystem: 'Web browser', url: abs('/homelab/'),
-  description: ENTITY.homelabTwin };
+  description: ENTITY.homelabTwin, publisher: { '@id': `${abs('/')}#org` } };
 const views = [
   { id: 'overview', label: 'Overview', img: overview, alt: 'The demo lab in 3D: two racks with labelled devices, a power and cost readout at the top and the timeline at the bottom', text: 'The whole lab at a glance: racks, devices, and the gear outside the rack. One readout on top: watts, cost per month, UPS runtime.' },
   { id: 'views', label: 'Views', img: viewMenu, alt: 'The View menu open over the demo lab, listing Overview, Power, Heat, Network, Cables, Compute and AI', text: 'Overview, Power, Heat, Network, Cables, Compute and AI sit in one View menu (keys 1–7). Power and Network switch between 3D and a diagram.' },
@@ -179,7 +179,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
 
   <section class="section-tight">
     <div class="wrap narrow">
-      <p class="lead"><strong>Built by data-center people.</strong> {PRODUCT_NAME} comes from a team that builds 3D models of full data centers, scaled down to the rack in your basement. In partnership with <a href="https://sensaka.com" rel="noopener">Sensaka</a>.</p>
+      <p class="lead"><strong>Built by data-center people.</strong> {PRODUCT_NAME} comes from a team that builds 3D models of full data centers, scaled down to the rack in your basement. A <a href="https://sensaka.com" rel="noopener">Sensaka</a> product, made by Mustard Seed Solutions.</p>
     </div>
   </section>
 

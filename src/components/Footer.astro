@@ -2,7 +2,7 @@
 // Shared footer (marketing/SITE-NAV.md): RACKDENSITY · Homelab Twin · DC Sim · Company, plus the product switcher.
 // Self-contained styles (hub/homelab and DC stylesheets).
 import { u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER } from '../config/brand';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, COMPANY } from '../config/brand';
 import { FOOTER, PRODUCTS, type Section } from '../config/nav';
 
 interface Props { section?: Section }
@@ -39,7 +39,7 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
         </div>
       ))}
     </div>
-    <p class="sf-legal">© 2026 {PARTNER.name} · {PRODUCT_NAME} and {DC_PRODUCT_NAME} are {BRAND} products · figures marked estimated are estimates</p>
+    <p class="sf-legal">© 2026 {COMPANY.name} · {PARTNER.name} and {BRAND} are brands of {COMPANY.name} · figures marked estimated are estimates</p>
   </div>
 </footer>
 <style>

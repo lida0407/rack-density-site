@@ -1,6 +1,6 @@
 // Shared site navigation (marketing/SITE-NAV.md): one header and one footer for the hub, Homelab Twin and DC Sim.
 // Paths are site-root paths; components run them through u(). The DC menu lives in config/dc/nav.ts (DC marketing owns it).
-import { PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, CONTACT_EMAIL } from './brand';
+import { PRODUCT_NAME, DC_PRODUCT_NAME, PARTNER, COMPANY, CONTACT_EMAIL } from './brand';
 import { TEMPLATE_FILE } from './dc/product';
 
 // DC marketing owns the DC menu (config/dc/nav.ts). Loaded through a glob so the shared header still builds before that file
@@ -63,7 +63,8 @@ export const FOOTER = {
   ],
   dc: DC_FOOTER,
   company: [
-    { href: PARTNER.url, label: PARTNER.name },
+    { href: COMPANY.url, label: COMPANY.name },
+    { href: PARTNER.url, label: `${PARTNER.name} (brand)` },
     { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
     { href: '/privacy', label: 'Privacy' },
   ],

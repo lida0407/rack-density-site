@@ -11,6 +11,8 @@ export async function GET() {
 
 > ${ENTITY.rackdensity} Contact: ${CONTACT_EMAIL}.
 
+${ENTITY.company}
+
 ## Free calculators
 - [Rack Density Calculator](${abs('/calculator')}): devices per rack by space, power and cooling; kW per rack; monthly cost
 

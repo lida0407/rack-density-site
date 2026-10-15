@@ -4,7 +4,9 @@ export { SITE_URL, BASE } from '../../site.config.mjs';
 
 export const PRODUCT_NAME = 'Homelab Twin';     // renamed from Homelab Sim 2026-10-15 — change here only
 export const BRAND = 'RACKDENSITY';
-export const PARTNER = { name: 'Sensaka', url: 'https://sensaka.com' } as const;
+// Entity rule (Dali 2026-10-15): Mustard Seed Solutions is the company; Sensaka and RACKDENSITY are its brands.
+export const COMPANY = { name: 'Mustard Seed Solutions', url: 'https://mustardseedmt.com', country: 'MT' } as const;
+export const PARTNER = { name: 'Sensaka', url: 'https://sensaka.com' } as const; // the Sensaka brand shown on products, not a company
 export const CONTACT_EMAIL = 'da@mustardseedmt.com';
 
 /** The app. Dali 2026-10-15: no public demo — both apps stay behind the password page. `live` stays false until he opens a
