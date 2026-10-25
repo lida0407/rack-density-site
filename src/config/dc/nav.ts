@@ -20,6 +20,7 @@ export const DC_FOOTER = [
   { href: "/dc/resources/guides/", label: "Guides" },
   { href: "/dc/compare/", label: "Comparisons" },
   { href: "/dc/world/", label: "Famous data centers" },
+  { href: "/dc/watch/", label: "Videos" },
   { href: "/dc/resources/changelog/", label: "Changelog" },
   { href: "/dc/security/", label: "Security & data" },
 ];

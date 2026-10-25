@@ -1,0 +1,173 @@
+---
+// /dc/watch/ — DC Sim on video: the token factory tower (three.js) plays the overview and the five deep dives; two more explainers below.
+// Site-only code. The scene is built outside this repo and published here minified + obfuscated (public/dc/watch/js, see watch-build.json).
+import Base from "../../../layouts/dc/Base.astro";
+import { abs, u, root } from "../../../lib/dc/url";
+import build from "../../../data/dc/watch-build.json";
+
+const M = (f: string) => root(`dc/watch/media/${f}`);
+type Vid = { id: string; title: string; short: string; floor?: number; dur: number; desc: string; date: string; chapters: [number, string][] };
+const VIDEOS: Vid[] = [
+  { id: "token-factory", title: "What is a token factory? Five floors, from electricity to tokens", short: "Overview", dur: 229, date: "2026-10-24",
+    desc: "A token factory is the whole chain that turns electricity and chips into tokens. Taken apart floor by floor on DC Sim's largest model, an imagined 5 GW AI factory.",
+    chapters: [[0, "What is a token factory?"], [28, "Floor 1: power and silicon"], [69, "Floor 2: build and delivery"], [93, "Floor 3: the GPU cloud"], [119, "Floor 4: the token line"], [164, "Floor 5: routing and context"], [208, "One number: tokens per kWh"]] },
+  { id: "floor-1", floor: 1, title: "Deep dive 1: power and cooling, the ceiling on every token", short: "Power & cooling", dur: 110, date: "2026-10-25",
+    desc: "A grid outage, the worst case with no generator, and a chiller trip, played out on one hall of the imagined 5 GW AI factory and counted in tokens.",
+    chapters: [[0, "Every token starts as electricity"], [19, "≈ 12 MW per hall, PUE 1.17, feeds A and B"], [38, "Grid outage: the hall rides through"], [54, "No generator: 61.1 B tokens lost"], [72, "Air and liquid cooling, and a chiller trip"], [90, "Why it matters"]] },
+  { id: "floor-2", floor: 2, title: "Deep dive 2: build and delivery, from drawings to the first token", short: "Build & delivery", dur: 105, date: "2026-10-25",
+    desc: "The floor plan as the design, live design checks, Excel import, cable checks and the failure tests to run before handover.",
+    chapters: [[0, "A GPU on a pallet makes no tokens"], [20, "The floor plan is the design"], [37, "From spreadsheets to a model"], [50, "Thousands of cables, every one checked"], [64, "Before handover: is 2N really 2N? A fire test"], [87, "Why it matters"]] },
+  { id: "floor-3", floor: 3, title: "Deep dive 3: the GPU cloud, selling hours not tokens", short: "GPU cloud", dur: 89, date: "2026-10-25",
+    desc: "Utilisation is the product: Monitor KPIs, the top token producers, the network from edge to leaf, and a spine switch failure.",
+    chapters: [[0, "Selling time on GPUs"], [16, "Utilisation is the product"], [33, "Top token producers"], [44, "The fabric: edge, spine, leaf, server"], [55, "Fail a spine switch"], [71, "Why it matters"]] },
+  { id: "floor-4", floor: 4, title: "Deep dive 4: the token line, paid per token", short: "Token line", dur: 91, date: "2026-10-25",
+    desc: "Tokens per second and per kWh, rack by rack; +25 % peak load; and a leak priced in lost tokens.",
+    chapters: [[0, "Customers now pay per token"], [19, "Tokens per second, tokens per kWh"], [31, "27.2 M tokens/s, 8.0 M tokens/kWh"], [44, "+25 % peak load"], [58, "A leak, priced in tokens"], [72, "Why tokens per kWh ties every floor together"]] },
+  { id: "floor-5", floor: 5, title: "Deep dive 5: routing and context — which model, which site, which question", short: "Routing & context", dur: 95, date: "2026-10-25",
+    desc: "Routing across providers and sites, sites chosen by energy, a trunk cut and the loss of a whole 5 GW campus.",
+    chapters: [[0, "Where users touch the factory"], [17, "Routing: the best place right now"], [31, "Sites differ by energy"], [46, "A trunk cut, and losing the whole campus"], [66, "Context: a better question"], [77, "Five floors, one number"]] },
+  { id: "cloud-estates", title: "The 5 biggest cloud estates, mapped across continents", short: "Cloud estates", dur: 229, date: "2026-10-22",
+    desc: "Five cloud networks ranked by each provider's own region count, flown on DC Sim's earth, with one ocean or continental link cut in each.",
+    chapters: [[0, "Five clouds, every ocean"], [20, "#5"], [56, "#4"], [90, "#3"], [123, "#2"], [160, "#1"], [196, "Regions vs zones"], [219, "Sources"]] },
+  { id: "craziest-dcs", title: "The 5 craziest data centers: inside mountains, under the sea, on the Moon and in orbit", short: "Craziest data centers", dur: 256, date: "2026-10-22",
+    desc: "Mountains, seabeds, the Moon and orbit, and how each compares with DC Sim's imagined 5 GW AI factory.",
+    chapters: [[0, "From grey boxes to orbit"], [19, "#5 Inside a mountain"], [60, "#4 Five gigawatts"], [105, "#3 Under the sea"], [151, "#2 On the Moon"], [184, "#1 In orbit"], [235, "Power in, heat out"], [249, "Sources"]] },
+];
+const data = { ui: { floor: "Floor" }, videos: VIDEOS.map((v) => ({ ...v, src: M(`${v.id}.mp4`), poster: M(`${v.id}.jpg`), preview: M(`${v.id}-preview.mp4`) })) };
+const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+const iso = (s: number) => `PT${Math.floor(s / 60)}M${s % 60}S`;
+const ld = VIDEOS.map((v) => ({ "@type": "VideoObject", name: v.title, description: v.desc, thumbnailUrl: new URL(M(`${v.id}.jpg`), abs("")).href,
+  uploadDate: v.date, duration: iso(v.dur), contentUrl: new URL(M(`${v.id}.mp4`), abs("")).href, publisher: { "@id": abs("#org") } }));
+const floors = VIDEOS.filter((v) => v.floor);
+const more = VIDEOS.filter((v) => !v.floor && v.id !== "token-factory");
+---
+<Base title="Watch DC Sim: the token factory, floor by floor — DC Sim" description="DC Sim on video: an interactive token factory you can turn and click, five deep dives from power and cooling to routing, and explainers on cloud estates and the world's craziest data centers."
+  path="watch/" crumbs={[{ name: "Watch", path: "watch/" }]} jsonLd={ld}>
+  <section class="wt">
+    <div class="container wt-head">
+      <span class="eyebrow">Watch · DC Sim on video</span>
+      <h1>The token factory, floor by floor</h1>
+      <p class="lede">Turn the tower, pick a floor, watch DC Sim run it: power and cooling, build and delivery, the GPU cloud, the token line, routing and context. Every number on screen comes from the engine, on an imagined 5 GW AI factory.</p>
+    </div>
+    <div class="container">
+      <div class="wt-stage" id="wt-stage">
+        <img class="wt-poster" src={M("token-factory.jpg")} alt="The token factory: a tower of five floors, from power at the bottom to routing at the top" width="1280" height="720" fetchpriority="high" />
+        <div class="wt-canvas" data-canvas></div>
+        <div class="wt-labels" data-labels></div>
+        <div class="wt-ui">
+          <button type="button" class="btn btn-primary" data-play="token-factory">▶ Play the overview <span class="mono">{fmt(229)}</span></button>
+          <button type="button" class="btn btn-ghost wt-start" id="wt-start">Turn the tower in 3D</button>
+          <p class="small wt-hint">Drag to turn · click a floor to play it</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Five deep dives</span>
+      <h2>One floor each, about 90 seconds</h2>
+      <div class="grid wt-grid">
+        {floors.map((v) => (
+          <a class="wt-card" href={`#${v.id}`} data-play={v.id} data-preview={M(`${v.id}-preview.mp4`)}>
+            <div class="wt-media"><img src={M(`${v.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" /><video muted loop playsinline preload="none" aria-hidden="true"></video><span class="wt-dur mono">{fmt(v.dur)}</span></div>
+            <span class="eyebrow">Floor {v.floor}</span>
+            <h3>{v.short}</h3>
+            <p class="small muted">{v.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">More from DC Sim</span>
+      <h2>Explainers</h2>
+      <div class="grid grid-2">
+        {more.map((v) => (
+          <a class="wt-card" href={`#${v.id}`} data-play={v.id} data-preview={M(`${v.id}-preview.mp4`)}>
+            <div class="wt-media"><img src={M(`${v.id}.jpg`)} alt="" width="1280" height="720" loading="lazy" /><video muted loop playsinline preload="none" aria-hidden="true"></video><span class="wt-dur mono">{fmt(v.dur)}</span></div>
+            <h3>{v.title}</h3>
+            <p class="small muted">{v.desc}</p>
+          </a>
+        ))}
+      </div>
+      <p class="small muted wt-note">DC Sim figures in these videos come from imagined designs and the engine's estimates, not from any real site. 3D factory scenes are concept illustrations; earth imagery: NASA.</p>
+      <div class="btn-row"><a class="btn btn-ghost" href={u("product/")}>See the product</a><a class="btn btn-ghost" href={u("world/")}>Explore the famous data centers</a></div>
+    </div>
+  </section>
+
+  <dialog class="wt-player" id="wt-player" aria-label="Video player">
+    <div class="wt-pbox">
+      <div class="wt-phead"><div><h2 data-title></h2><p class="small muted mono" data-sub></p></div><button type="button" class="btn btn-ghost" data-close aria-label="Close">✕</button></div>
+      <video controls playsinline preload="metadata"></video>
+      <div class="wt-pfoot"><ol class="wt-chapters" data-chapters></ol><div class="btn-row"><button type="button" class="btn btn-ghost" data-prev></button><button type="button" class="btn btn-primary" data-next></button></div></div>
+    </div>
+  </dialog>
+  <script type="application/json" id="wt-data" set:html={JSON.stringify(data)} />
+  <script is:inline type="module" data-app={root(build.app)}>
+    // Load the 3D scene + player on the first interaction (keeps the first paint light); a click that triggered it is replayed.
+    const s = document.currentScript || document.querySelector("script[data-app]");
+    const url = s.dataset.app; let p = null;
+    const go = () => (p ||= import(url));
+    const stage = document.getElementById("wt-stage");
+    for (const ev of ["pointermove", "pointerdown", "keydown", "touchstart", "scroll"]) addEventListener(ev, go, { once: true, passive: true });
+    document.getElementById("wt-start").addEventListener("click", go);
+    document.addEventListener("click", (e) => { const b = e.target.closest("[data-play]"); if (!b || window.__wtReady) return; e.preventDefault(); window.__wtPending = b.dataset.play; go(); }, true);
+    if (location.hash) go();
+  </script>
+</Base>
+
+<style>
+  .wt { padding: 40px 0 56px; }
+  .wt-head { margin-bottom: 20px; }
+  .wt-stage { position: relative; aspect-ratio: 16 / 9; background: radial-gradient(120% 90% at 50% 35%, #16201b 0%, #070908 70%); border: 1px solid var(--line); overflow: hidden; color-scheme: dark;
+    --rd-wt-accent: #45d483; --rd-wt-hi: var(--warn); --rd-wt-slab: #d9dcdf; --rd-wt-dark: #14171a; }
+  .wt-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s; }
+  .wt-stage.ready .wt-poster { opacity: 0; pointer-events: none; }
+  .wt-stage.ready .wt-start { display: none; }
+  .wt-stage .btn-ghost { color: #f2f1ee; border-color: #6b6f6c; background: rgba(8,10,9,0.6); }
+  .wt-canvas { position: absolute; inset: 0; }
+  .wt-canvas :global(canvas) { width: 100% !important; height: 100% !important; display: block; cursor: grab; touch-action: none; }
+  .wt-labels { position: absolute; inset: 0; pointer-events: none; }
+  .wt-labels :global(.wt-flabel) { position: absolute; left: 0; top: 0; pointer-events: auto; white-space: nowrap; padding: 6px 10px; font: 600 13px/1.2 var(--font-sans, inherit);
+    background: rgba(8,10,9,0.78); color: #f2f1ee; border: 1px solid #4a4f4b; cursor: pointer; transition: border-color .2s, color .2s; }
+  .wt-labels :global(.wt-flabel .mono) { color: #45d483; margin-right: 4px; }
+  .wt-labels :global(.wt-flabel .dim) { color: #9aa09c; font-weight: 400; margin-left: 4px; }
+  .wt-labels :global(.wt-flabel.on), .wt-labels :global(.wt-flabel:hover), .wt-labels :global(.wt-flabel:focus-visible) { border-color: var(--warn); color: var(--warn); }
+  .wt-ui { position: absolute; left: 20px; bottom: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .wt-hint { margin: 0; color: #c9ccca; background: rgba(8,10,9,0.78); padding: 4px 8px; }
+  .wt-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); margin-top: 20px; }
+  .wt-card { display: block; text-decoration: none; color: var(--ink); background: var(--bg-100); border: 1px solid var(--line); padding: 0 0 16px; transition: transform .15s, border-color .2s, box-shadow .2s; will-change: transform; }
+  .wt-card:hover, .wt-card:focus-visible { border-color: var(--accent); box-shadow: var(--glow-accent); }
+  .wt-card > :not(.wt-media) { margin-left: 16px; margin-right: 16px; }
+  .wt-card h3 { margin: 6px 16px 6px; font-size: 18px; }
+  .wt-card .eyebrow { margin-top: 14px; }
+  .wt-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-200); margin-bottom: 4px; }
+  .wt-media img, .wt-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .wt-media video { opacity: 0; transition: opacity .3s; }
+  .wt-card:global(.live) .wt-media video { opacity: 1; }
+  .wt-dur { position: absolute; right: 8px; bottom: 8px; background: var(--glass); color: var(--ink); padding: 2px 6px; font-size: 12px; }
+  .wt-note { margin: 24px 0 16px; }
+  .wt-player { width: min(1100px, 96vw); max-height: 94vh; padding: 0; border: 1px solid var(--line-strong); background: var(--bg-000); color: var(--ink); }
+  .wt-player::backdrop { background: rgba(0, 0, 0, 0.78); }
+  .wt-pbox { display: flex; flex-direction: column; }
+  .wt-phead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 14px 16px 10px; }
+  .wt-phead h2 { font-size: 20px; margin: 0 0 4px; }
+  .wt-phead p { margin: 0; }
+  .wt-player video { width: 100%; aspect-ratio: 16 / 9; background: #000; display: block; }
+  .wt-pfoot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 12px 16px 16px; }
+  .wt-chapters { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; flex: 1 1 520px; }
+  .wt-chapters :global(button) { font: inherit; font-size: 13px; padding: 5px 9px; background: var(--bg-100); color: var(--ink-muted); border: 1px solid var(--line); cursor: pointer; }
+  .wt-chapters :global(button .mono) { color: var(--accent); margin-right: 4px; }
+  .wt-chapters :global(button.on), .wt-chapters :global(button:hover) { color: var(--ink); border-color: var(--accent); }
+  .wt-pfoot [hidden] { display: none; }
+  @media (max-width: 640px) {
+    .wt-stage { aspect-ratio: 4 / 5; }
+    .wt-poster { object-position: 50% 50%; }
+    .wt-ui { left: 12px; right: 12px; bottom: 12px; }
+    .wt-labels :global(.wt-flabel) { font-size: 12px; padding: 5px 8px; }
+    .wt-labels :global(.wt-flabel .dim) { display: none; }
+  }
+</style>
