@@ -136,7 +136,7 @@ const more = VIDEOS.filter((v) => !v.floor && v.id !== "token-factory");
   .wt-stage { position: relative; aspect-ratio: 16 / 9; background: radial-gradient(120% 90% at 50% 35%, #16201b 0%, #070908 70%); border: 1px solid var(--line); overflow: hidden; color-scheme: dark;
     --rd-wt-accent: #45d483; --rd-wt-hi: var(--warn); --rd-wt-slab: #d9dcdf; --rd-wt-dark: #14171a; }
   .wt-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s; }
-  .wt-stage.ready .wt-poster { opacity: 0; pointer-events: none; }
+  .wt-stage.ready .wt-poster { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .6s, visibility 0s .6s; }
   .wt-stage.ready .wt-start { display: none; }
   .wt-stage .btn-ghost { color: #f2f1ee; border-color: #6b6f6c; background: rgba(8,10,9,0.6); }
   .wt-canvas { position: absolute; inset: 0; }
