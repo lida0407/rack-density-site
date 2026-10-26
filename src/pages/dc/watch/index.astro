@@ -33,7 +33,18 @@ const VIDEOS: Vid[] = [
     desc: "Mountains, seabeds, the Moon and orbit, and how each compares with DC Sim's imagined 5 GW AI factory.",
     chapters: [[0, "From grey boxes to orbit"], [19, "#5 Inside a mountain"], [60, "#4 Five gigawatts"], [105, "#3 Under the sea"], [151, "#2 On the Moon"], [184, "#1 In orbit"], [235, "Power in, heat out"], [249, "Sources"]] },
 ];
-const data = { ui: { floor: "Floor" }, videos: VIDEOS.map((v) => ({ ...v, src: M(`${v.id}.mp4`), poster: M(`${v.id}.jpg`), preview: M(`${v.id}-preview.mp4`) })) };
+const UI = {
+  floor: "Floor", try: "Try it", back: "← Tower", watch: "Watch the deep dive",
+  lab_eyebrow: "Floor 1 · Power & cooling · try it",
+  lab_note: "Pick a failure and watch one hall of the imagined 5 GW AI factory ride it out, or not. A simplified replay: the outcomes are the DC Sim engine's.",
+  b_utility: "Grid outage", b_genfail: "…and no generator", b_chiller: "Chiller trip", b_reset: "Reset",
+  r_clock: "Simulated time", r_grid: "Grid", r_gen: "Generators", r_ups: "UPS battery (lowest)", r_inlet: "Hottest inlet", r_it: "IT load", r_tps: "Tokens / s", r_lost: "Tokens lost",
+  s_on: "on", s_off: "down", g_standby: "standby", g_starting: "starting", g_running: "running", g_failed: "failed to start",
+  v_utility: "Engine verdict: rides through. Generators carry the hall; the thinnest UPS has about 12 minutes of runtime.",
+  v_genfail: "Engine verdict: outage. 106 devices dark (≈ 6,900 GPUs), 61.1 B tokens lost in the simulated hour.",
+  v_chiller: "Engine verdict: degraded. A rack inlet passes 32 °C after 9:45; 4.7 B tokens lost in 30 minutes.",
+};
+const data = { ui: UI, videos: VIDEOS.map((v) => ({ ...v, src: M(`${v.id}.mp4`), poster: M(`${v.id}.jpg`), preview: M(`${v.id}-preview.mp4`) })) };
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 const iso = (s: number) => `PT${Math.floor(s / 60)}M${s % 60}S`;
 const ld = VIDEOS.map((v) => ({ "@type": "VideoObject", name: v.title, description: v.desc, thumbnailUrl: new URL(M(`${v.id}.jpg`), abs("")).href,
@@ -163,11 +174,34 @@ const more = VIDEOS.filter((v) => !v.floor && v.id !== "token-factory");
   .wt-chapters :global(button .mono) { color: var(--accent); margin-right: 4px; }
   .wt-chapters :global(button.on), .wt-chapters :global(button:hover) { color: var(--ink); border-color: var(--accent); }
   .wt-pfoot [hidden] { display: none; }
+  .wt-labels :global(.wt-flabel .try) { margin-left: 6px; padding: 1px 6px; background: #ffc83d; color: #0b0a09; font: 700 10px/1.4 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+  .wt-stage.lab .wt-ui { display: none; }
+  .wt-stage :global(.wt-lab) { position: absolute; top: 14px; right: 14px; bottom: 14px; width: min(330px, 42%); overflow: auto; padding: 14px 16px; background: rgba(8,10,9,0.86);
+    border: 1px solid #3d433f; color: #f2f1ee; font-size: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .wt-stage :global(.wt-lab[hidden]) { display: none; }
+  .wt-stage :global(.wt-lab .eyebrow) { color: #45d483; }
+  .wt-stage :global(.wt-lab-h) { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .wt-stage :global(.wt-lab-p) { margin: 0; color: #b9bdba; font-size: 13px; line-height: 1.45; }
+  .wt-stage :global(.wt-lab button) { font: inherit; cursor: pointer; }
+  .wt-stage :global(.wt-lab-x) { background: transparent; color: #f2f1ee; border: 1px solid #5a605c; padding: 4px 10px; font-size: 13px; }
+  .wt-stage :global(.wt-lab-b) { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .wt-stage :global(.wt-lab-b button) { min-height: 40px; padding: 6px 8px; background: #161c18; color: #f2f1ee; border: 1px solid #3d433f; font-weight: 600; font-size: 13px; }
+  .wt-stage :global(.wt-lab-b button:hover), .wt-stage :global(.wt-lab-b button.on) { border-color: #ffc83d; color: #ffc83d; }
+  .wt-stage :global(.wt-lab-r) { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin: 0; }
+  .wt-stage :global(.wt-lab-r div) { background: #101412; padding: 6px 8px; }
+  .wt-stage :global(.wt-lab-r dt) { font: 600 10px/1.3 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #9aa09c; }
+  .wt-stage :global(.wt-lab-r dd) { margin: 2px 0 0; font: 600 16px/1.2 var(--font-mono); font-variant-numeric: tabular-nums; color: #f2f1ee; }
+  .wt-stage :global(.wt-lab-r dd.warn) { color: #ffc83d; }
+  .wt-stage :global(.wt-lab-r dd.crit) { color: #ff5c4d; }
+  .wt-stage :global(.wt-lab-v) { margin: 0; min-height: 3em; font-size: 13px; line-height: 1.45; color: #ffc83d; }
+  .wt-stage :global(.wt-lab-w) { margin-top: auto; min-height: 40px; background: #45d483; color: #0b0a09; border: 0; font-weight: 700; }
   @media (max-width: 640px) {
     .wt-stage { aspect-ratio: 4 / 5; }
     .wt-poster { object-position: 50% 50%; }
     .wt-ui { left: 12px; right: 12px; bottom: 12px; }
     .wt-labels :global(.wt-flabel) { font-size: 12px; padding: 5px 8px; }
     .wt-labels :global(.wt-flabel .dim) { display: none; }
+    .wt-stage.lab { aspect-ratio: auto; height: 720px; }
+    .wt-stage :global(.wt-lab) { top: auto; left: 8px; right: 8px; bottom: 8px; width: auto; max-height: 58%; }
   }
 </style>
