@@ -35,7 +35,7 @@ const VIDEOS: Vid[] = [
 ];
 const UI = {
   floor: "Floor", try: "Try it", back: "← Tower", watch: "Watch the deep dive",
-  lab_eyebrow: "Floor 1 · Power & cooling · try it",
+  
   lab_note: "Pick a failure and watch one hall of the imagined 5 GW AI factory ride it out, or not. A simplified replay: the outcomes are the DC Sim engine's.",
   b_utility: "Grid outage", b_genfail: "…and no generator", b_chiller: "Chiller trip", b_reset: "Reset",
   r_clock: "Simulated time", r_grid: "Grid", r_gen: "Generators", r_ups: "UPS battery (lowest)", r_inlet: "Hottest inlet", r_it: "IT load", r_tps: "Tokens / s", r_lost: "Tokens lost",
@@ -193,6 +193,9 @@ const more = VIDEOS.filter((v) => !v.floor && v.id !== "token-factory");
   .wt-stage :global(.wt-lab-r dd) { margin: 2px 0 0; font: 600 16px/1.2 var(--font-mono); font-variant-numeric: tabular-nums; color: #f2f1ee; }
   .wt-stage :global(.wt-lab-r dd.warn) { color: #ffc83d; }
   .wt-stage :global(.wt-lab-r dd.crit) { color: #ff5c4d; }
+  .wt-stage :global(.wt-lab-s) { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #c9ccca; }
+  .wt-stage :global(.wt-lab-s b) { color: #ffc83d; font-family: var(--font-mono); }
+  .wt-stage :global(.wt-lab-s input) { width: 100%; accent-color: #45d483; }
   .wt-stage :global(.wt-lab-v) { margin: 0; min-height: 3em; font-size: 13px; line-height: 1.45; color: #ffc83d; }
   .wt-stage :global(.wt-lab-w) { margin-top: auto; min-height: 40px; background: #45d483; color: #0b0a09; border: 0; font-weight: 700; }
   @media (max-width: 640px) {
