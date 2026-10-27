@@ -33,7 +33,7 @@ for (const f of files) {
   const raw = readFileSync(f, "utf8");
   const rel = f.slice(DIST.length);
   const compare = /^(de\/|zh\/)?dc\/compare\//.test(rel);
-  const world = /^(de\/|zh\/)?dc\/world\//.test(rel);
+  const world = /^(de\/|zh\/)?dc\/(preview\/)?world\//.test(rel); // held translations live under /<locale>/dc/preview/
   const t = f.endsWith(".html") ? text(raw) : raw.split("\n").filter((l) => !l.includes("/dc/compare/") && !l.includes("/dc/world/")).join("\n");
   for (const [name, re] of [["competitor", compare ? null : world ? worldCompetitors : competitors], ["AI name", world ? null : aiNames], ["placeholder", placeholders]]) {
     if (!re) continue;

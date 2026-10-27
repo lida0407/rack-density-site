@@ -1,0 +1,8 @@
+---
+// Launched when /dc/world/imagined is listed in src/config/dc/i18n.ts DC_TRANSLATED (until then it is held: /<locale>/dc/preview/…).
+import Imagined from "../../../../../views/dc/world/Imagined.astro";
+import { localePaths, type Locale } from "../../../../../i18n";
+export const getStaticPaths = () => localePaths("/dc/world/imagined");
+const locale = Astro.params.locale as Locale;
+---
+<Imagined locale={locale} />

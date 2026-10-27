@@ -20,7 +20,7 @@ clips:
 | Cables | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | Cabling view with trace, Power and Network diagrams, port checks |
 | Sites | site, lat, lon | city, country, timezone, role, provider, it_kw, pue | the Estate view: every site on the earth (template v1.4) |
 | Rooms | room | site, length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | one hall per room, room size and lighting load (template v1.3; `site` in v1.4) |
-| Racks | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets (`depth_mm` = usable depth, template v1.5) |
+| Racks | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets; `depth_mm` (usable depth, template v1.5) flags devices deeper than the rack |
 | Power | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | "what if feed A, a UPS or a breaker fails", overload checks |
 | Networks | vlan, name | purpose, subnet | VLAN colours in the Network view |
 | Links | site_a, site_b, type | bandwidth_gbps, latency_ms, utilization_pct, protected, carrier | WAN and cable links between sites; cut a link or lose a site (template v1.4) |
@@ -33,7 +33,7 @@ clips:
 
 Additions only, so older files still import.
 
-**Version 1.5:** an optional **Liquid** sheet: each row adds a CDU, a manifold or both to a loop of type `dlc` (direct-to-chip), `rdhx` (rear-door heat exchanger) or `immersion`, with the racks it serves (names, rows or ranges such as `R01-R08`), capacity, supply and return temperatures, flow, coolant and the secondary loop. A leak what-if then runs per manifold: the leaking manifold's valve closes (noted as assumed) and only its racks lose cooling. Also `Cooling.chilled_from` (the chiller that feeds a CRAH; empty means a DX unit) and `Racks.depth_mm` (the usable depth of the rack).
+**Version 1.5:** an optional **Liquid** sheet: each row adds a CDU, a manifold or both to a loop of type `dlc` (direct-to-chip), `rdhx` (rear-door heat exchanger) or `immersion`, with the racks it serves (names, rows or ranges such as `R01-R08`), capacity, supply and return temperatures, flow, coolant and the secondary loop. A leak what-if then runs per manifold: the leaking manifold's valve closes (noted as assumed) and only its racks lose cooling. Also `Cooling.chilled_from` (the chiller that feeds a CRAH; empty means a DX unit) and `Racks.depth_mm`: add the usable rack depth and the import flags any device deeper than the rack, using catalog depths; left empty, depth is unknown and not checked.
 
 **Version 1.4:** optional **Sites** (coordinates, role, provider, IT kW, PUE) and **Links** (between sites: type, bandwidth, latency, utilisation, protected, carrier) sheets, and `Rooms.site`. They draw the Estate view: every site on one earth, the links as arcs, and what-ifs across sites (cut a link, lose a site). The import report flags a site without coordinates, a link to an unknown site, a latency below the physical minimum, an unprotected link carrying replication, and utilisation over 80 %.
 
@@ -56,7 +56,7 @@ What they do: phases give a per-phase load and a phase-balance check on every th
 1. Headers are matched case-insensitively, with synonyms ("U position", "Rack name", "Hostname", "Model number").
 2. Model text is matched to the device catalog (exact, aliases, model codes, then fuzzy). Unknown models become plain boxes of the height you gave, flagged "identify later". The catalog's specs and list prices are open: browse them in the [device data](../../../devices/).
 3. Missing layers get defaults marked **assumed** (2N A/B power, aisles alternating by row, one cooling zone), listed in the report so you know what to replace.
-4. A check list with 3D locations: U overlaps, overweight racks, PDU or breaker over 80 %, single-corded or same-feed devices, heat above cooling, warranty ending within 12 months, unknown models, cable and port problems.
+4. A check list with 3D locations: U overlaps, overweight racks, PDU or breaker over 80 %, single-corded or same-feed devices, heat above cooling, warranty ending within 12 months, devices deeper than the rack (when `depth_mm` is filled), unknown models, cable and port problems.
 5. Re-upload means update. Devices are matched by serial, then name, then rack and U; you see a change list before anything is applied.
 
 **Limits and safety:** XLSX or CSV/TSV (comma, semicolon, tab; UTF-8, UTF-16, GBK). Values only: formulas are never evaluated; macro-enabled, encrypted and zip-bomb files are refused. 10 MB per file, 50,000 rows per sheet. Bad rows never block an import; each one is listed with its sheet, row and reason.

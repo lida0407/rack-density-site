@@ -1,0 +1,87 @@
+{
+ "imagined.meta.title": {
+  "en": "Imagined giants: gigawatt data centers by design — DC Sim",
+  "de": "Erdachte Giganten: Gigawatt-Rechenzentren im Entwurf — DC Sim",
+  "zh": "设想中的超大型数据中心：吉瓦级园区设计 — DC Sim"
+ },
+ "imagined.meta.description": {
+  "en": "{IMAGINED_LABEL}. Gigawatt campuses designed in DC Sim from catalog devices and public numbers, checked by the engine.",
+  "de": "{IMAGINED_LABEL}. Gigawatt-Campusse, in DC Sim aus Geräten des Katalogs und öffentlichen Zahlen entworfen und von der Engine geprüft.",
+  "zh": "{IMAGINED_LABEL}。在 DC Sim 中以设备库中的设备和公开数据设计的吉瓦级园区，由仿真引擎校核。"
+ },
+ "imagined.crumb": {
+  "en": "Imagined",
+  "de": "Erdacht",
+  "zh": "设想中的数据中心"
+ },
+ "imagined.banner": {
+  "en": "{IMAGINED_LABEL}. No operator plans these.",
+  "de": "{IMAGINED_LABEL}. Kein Betreiber plant diese Campusse.",
+  "zh": "{IMAGINED_LABEL}。没有任何运营方在规划这些园区。"
+ },
+ "imagined.eyebrow": {
+  "en": "World · imagined giants",
+  "de": "Welt · Erdachte Giganten",
+  "zh": "世界 · 设想中的超大型数据中心"
+ },
+ "imagined.h1": {
+  "en": "Imagined giants: what a gigawatt campus would need",
+  "de": "Erdachte Giganten: was ein Gigawatt-Campus bräuchte",
+  "zh": "设想中的超大型数据中心：吉瓦级园区需要什么"
+ },
+ "imagined.lede": {
+  "en": "Three fictional campuses designed in DC Sim the way any room is designed: devices from the catalog, site patterns from the famous data centers, scale and tariffs from the announced mega-campuses. The engine computes the power, cooling, tokens, energy and what breaks. Every number is traceable to the model or to a public reference.",
+  "de": "Drei fiktive Campusse, in DC Sim entworfen wie jeder andere Raum: Geräte aus dem Katalog, Standortmuster aus den bekannten Rechenzentren, Größenordnung und Strompreise aus den angekündigten Mega-Campussen. Die Engine berechnet Leistung, Kühlung, Tokens, Energie und was ausfällt. Jede Zahl lässt sich auf das Modell oder eine öffentliche Quelle zurückführen.",
+  "zh": "三个虚构园区，按 DC Sim 中设计任何机房的方式完成：设备取自设备库，站点模式参考全球知名数据中心，规模和电价参考已公布的超大型园区。仿真引擎计算功率、制冷、token 产出、能耗以及哪些环节会失效。每个数字都可追溯到模型或公开参考资料。"
+ },
+ "imagined.cardAlt": {
+  "en": "{g.name} in DC Sim (imagined)",
+  "de": "{g.name} in DC Sim (erdacht)",
+  "zh": "{g.name}，DC Sim 中的设想设计"
+ },
+ "imagined.cardKicker": {
+  "en": "Imagined · {g.concept}",
+  "de": "Erdacht · {g.concept}",
+  "zh": "设想 · {g.concept}"
+ },
+ "imagined.references": {
+  "en": "The public references behind them",
+  "de": "Die öffentlichen Quellen dahinter",
+  "zh": "所依据的公开参考资料"
+ },
+ "imagined.seeOnEarth": {
+  "en": "See them on the earth",
+  "de": "Auf dem Globus ansehen",
+  "zh": "在地球上查看"
+ },
+ "script.imag.gpus": {
+  "en": "GPUs",
+  "de": "GPUs",
+  "zh": "GPU 数量"
+ },
+ "script.pueWithKind": {
+  "en": "{v} ({k})",
+  "de": "{v} ({k})",
+  "zh": "{v}（{k}）"
+ },
+ "labels.pue.design": {
+  "en": "design",
+  "de": "Auslegungswert",
+  "zh": "设计值"
+ },
+ "labels.pue.reported": {
+  "en": "reported",
+  "de": "gemeldet",
+  "zh": "公布值"
+ },
+ "labels.pue.trailing-12-month": {
+  "en": "trailing-12-month",
+  "de": "gleitendes 12-Monats-Mittel",
+  "zh": "近 12 个月"
+ },
+ "data.schema.keyword.hyperscale": {
+  "en": "hyperscale",
+  "de": "Hyperscale",
+  "zh": "超大规模"
+ }
+}

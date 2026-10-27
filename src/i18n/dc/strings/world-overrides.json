@@ -1,0 +1,11 @@
+{
+ "_": "Site-side corrections to the staged world-ui strings (~/Sensaka/marketing/i18n/dc/*/world-ui.strings.json), merged into world-ui.json by scripts/dc/i18n-import.mjs. en: the English as the page has it now where the staged en drifted (that key's de/zh are dropped until the staged files are refreshed). zh: Chinese for German keys that the Chinese file splits into smaller keys, composed from staged Chinese keys as [[zh:key]].",
+ "en": {},
+ "zh": {
+  "script.imag.kicker": "[[zh:imagined.panel_kicker]] · {esc(g.c)}",
+  "script.imag.pueEngine": "{g.pue}[[zh:imagined.pue_engine]]",
+  "script.estate.whatIf": "<strong>[[zh:panel.whatif_label]]</strong>[[zh:panel.whatif_counts]]",
+  "script.me.yourPin": "[[zh:panel.your_pin]] · {esc(st.me.label)}",
+  "script.me.rtt": " · [[zh:panel.rtt]]"
+ }
+}

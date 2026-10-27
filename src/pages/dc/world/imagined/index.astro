@@ -1,26 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-import Base from "../../../../layouts/dc/Base.astro";
-import { IMAGINED, IMAGINED_LABEL, giantPath } from "../../../../lib/dc/world";
-import { u } from "../../../../lib/dc/url";
-const stills = import.meta.glob<{ default: ImageMetadata }>("../../../../assets/dc/world/imagined/*.png", { eager: true });
-const card = (id: string) => stills[`../../../../assets/dc/world/imagined/${id}-card.png`]?.default ?? stills[`../../../../assets/dc/world/imagined/${id}-estate.png`]?.default;
+import Imagined from "../../../../views/dc/world/Imagined.astro";
 ---
-<Base title="Imagined giants: gigawatt data centers by design — DC Sim" description={`${IMAGINED_LABEL}. Gigawatt campuses designed in DC Sim from catalog devices and public numbers, checked by the engine.`}
-  path="world/imagined/" crumbs={[{ name: "World", path: "world/" }, { name: "Imagined", path: "world/imagined/" }]}>
-  <article class="container page">
-    <p style="display:inline-flex;gap:8px;margin:0 0 14px;padding:6px 12px;border:1px dashed var(--line-strong);font:600 12px/18px var(--font-mono);background:var(--bg-100)" role="note"><span aria-hidden="true">◇</span> {IMAGINED_LABEL}. No operator plans these.</p>
-    <span class="eyebrow">World · imagined giants</span>
-    <h1 style="margin:10px 0 0">Imagined giants: what a gigawatt campus would need</h1>
-    <p class="direct-answer" style="margin-top:24px">Three fictional campuses designed in DC Sim the way any room is designed: devices from the catalog, site patterns from the famous data centers, scale and tariffs from the announced mega-campuses. The engine computes the power, cooling, tokens, energy and what breaks. Every number is traceable to the model or to a public reference.</p>
-    <div class="grid grid-3" style="margin-top:32px">{IMAGINED.map((g) => { const c = card(g.id); return (
-      <a class="cs-card" href={u(giantPath(g))} style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;padding:0;overflow:hidden">
-        {c && <Image src={c} alt={`${g.name} in DC Sim (imagined)`} widths={[480, 800]} sizes="(min-width: 1000px) 360px, 100vw" format="webp" quality={72} loading="lazy" style="width:100%;height:auto;display:block" />}
-        <span style="padding:0 16px;font:500 11px/14px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)">Imagined · {g.concept}</span>
-        <span style="padding:0 16px;font:600 18px/24px 'Inter Variable',var(--font-sans)">{g.name}</span>
-        <span style="padding:0 16px 16px;color:var(--ink-muted);font-size:15px;line-height:22px">{g.famous_for}</span>
-      </a>); })}</div>
-    <p style="margin-top:28px"><a href={u("world/imagined/references/")}>The public references behind them</a> · <a href={u("world/")}>See them on the earth</a></p>
-  </article>
-</Base>
+<Imagined locale="en" />

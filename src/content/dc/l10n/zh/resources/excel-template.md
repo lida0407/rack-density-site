@@ -20,7 +20,7 @@ clips:
 | Cables（线缆） | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | 支持链路追踪的布线视图，供配电图与网络图，端口检查 |
 | Sites（站点） | site, lat, lon | city, country, timezone, role, provider, it_kw, pue | 全局视图（地球视图）：所有站点呈现在地球上（模板 v1.4） |
 | Rooms（机房） | room | site, length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | 每个机房生成独立的数据大厅，机房尺寸与照明负荷（模板 v1.3；`site` 列于 v1.4 加入） |
-| Racks（机柜） | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | 真实机房布局，冷热通道，机柜功率预算（`depth_mm` 为机柜可用深度，模板 v1.5） |
+| Racks（机柜） | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | 真实机房布局，冷热通道，机柜功率预算；`depth_mm`（机柜可用深度，模板 v1.5）用于标记深度超出机柜的设备 |
 | Power（供配电） | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | “A 路供电、某台 UPS 或某个断路器故障时会怎样”，过载检查 |
 | Networks（网络） | vlan, name | purpose, subnet | 网络视图中的 VLAN 着色 |
 | Links（链路） | site_a, site_b, type | bandwidth_gbps, latency_ms, utilization_pct, protected, carrier | 站点之间的广域网与线缆链路；可推演链路中断或站点失效（模板 v1.4） |
@@ -33,7 +33,7 @@ clips:
 
 仅有新增内容，旧版文件仍可正常导入。
 
-**版本 1.5：** 新增可选的 **Liquid** 工作表：每行为一个回路添加 CDU、分集水器或两者，回路类型为 `dlc`（冷板式液冷）、`rdhx`（背板热交换器）或 `immersion`（浸没式液冷），并填写所服务的机柜（机柜名、列或 `R01-R08` 这样的范围）、制冷量、供回水温度、流量、冷却液与二次侧回路。泄漏推演按分集水器执行：泄漏分集水器的阀门关闭（标注为假定条件），仅其所服务的机柜失去冷却。另新增 `Cooling.chilled_from`（为精密空调供冷的冷水机组；留空表示直膨式机组）与 `Racks.depth_mm`（机柜可用深度）。
+**版本 1.5：** 新增可选的 **Liquid** 工作表：每行为一个回路添加 CDU、分集水器或两者，回路类型为 `dlc`（冷板式液冷）、`rdhx`（背板热交换器）或 `immersion`（浸没式液冷），并填写所服务的机柜（机柜名、列或 `R01-R08` 这样的范围）、制冷量、供回水温度、流量、冷却液与二次侧回路。泄漏推演按分集水器执行：泄漏分集水器的阀门关闭（标注为假定条件），仅其所服务的机柜失去冷却。另新增 `Cooling.chilled_from`（为精密空调供冷的冷水机组；留空表示直膨式机组）与 `Racks.depth_mm`：填写机柜可用深度后，导入时将依据设备库中的设备深度，标记所有深度超出机柜的设备；留空表示深度未知，不做检查。
 
 **版本 1.4：** 新增可选的 **Sites**（坐标、角色、服务商、IT kW、PUE）与 **Links**（站点间链路：类型、带宽、时延、利用率、是否有保护、运营商）工作表，以及 `Rooms.site` 列。二者用于绘制全局视图：所有站点呈现在同一地球上，链路以弧线表示，并支持跨站点场景推演（链路中断、站点失效）。导入报告将标出：缺少坐标的站点、指向未知站点的链路、低于物理下限的时延、承载复制流量但无保护的链路，以及超过 80 % 的利用率。
 
@@ -56,7 +56,7 @@ clips:
 1. 表头匹配不区分大小写，并支持同义词（“U position”“Rack name”“Hostname”“Model number”）。
 2. 型号文本与设备库依次进行精确匹配、别名匹配、型号代码匹配与模糊匹配。未知型号按您填写的高度显示为普通方块，并标记为“identify later”（待识别）。设备库的规格参数与目录价格公开可查，可在[设备数据](../../../devices/)中浏览。
 3. 缺失的图层使用标记为 **assumed**（假定）的默认值（2N A/B 双路供电、按列交替的冷热通道、单一制冷区），并在报告中逐项列出，便于您确定需要替换的内容。
-4. 带 3D 定位的检查清单：U 位重叠、机柜超重、PDU 或断路器负载超过 80 %、单电源或同路供电设备、发热量超过制冷能力、12 个月内保修到期、未知型号、线缆与端口问题。
+4. 带 3D 定位的检查清单：U 位重叠、机柜超重、PDU 或断路器负载超过 80 %、单电源或同路供电设备、发热量超过制冷能力、12 个月内保修到期、深度超出机柜的设备（已填写 `depth_mm` 时）、未知型号、线缆与端口问题。
 5. 再次导入即执行更新。设备依次按序列号、名称、机柜与 U 位匹配；任何变更生效前均先列出变更清单。
 
 **限制与安全：** 支持 XLSX 或 CSV/TSV（逗号、分号、制表符分隔；UTF-8、UTF-16、GBK 编码）。仅读取数值：不执行任何公式；拒绝启用宏的文件、加密文件与 ZIP 炸弹文件。单个文件上限 10 MB，每个工作表上限 50,000 行。错误行不会阻断导入，每条错误行均列出所在工作表、行号与原因。

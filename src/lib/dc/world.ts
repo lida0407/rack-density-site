@@ -26,9 +26,18 @@ export const estatePath = (e: Estate) => `world/estates/${e.id}/`;
 export const TYPE_LABEL: Record<string, string> = { hyperscale: "Hyperscale", colocation: "Colocation", ai: "AI", hpc: "HPC", research: "Research", enterprise: "Enterprise" };
 export const KIND_LABEL: Record<string, string> = { cable: "Submarine cable", hyperscaler: "Cloud backbone", national: "National compute network", ix: "Internet exchange", financial: "Financial route", cdn: "CDN", enterprise: "Enterprise" };
 export const REGIONS = ["Europe", "North America", "Asia-Pacific", "Latin America", "Middle East", "Africa"];
+/** Dictionary key of a region (labels.region.<key> in src/i18n/dc/strings/world-ui.json); the record value stays English. */
+export const REGION_KEY: Record<string, string> = { Europe: "europe", "North America": "northAmerica", "Asia-Pacific": "asiaPacific", "Latin America": "latinAmerica", "Middle East": "middleEast", Africa: "africa" };
 
-const COUNTRY = new Intl.DisplayNames(["en"], { type: "region" });
-export const countryName = (cc?: string) => { try { return cc ? COUNTRY.of(cc.toUpperCase()) ?? cc : ""; } catch { return cc ?? ""; } };
+const COUNTRY = new Map<string, Intl.DisplayNames>();
+/** Country name from the ISO code in a display language (Intl locale, e.g. "de-DE"); English by default. */
+export const countryName = (cc?: string, lang = "en") => {
+  try {
+    if (!cc) return "";
+    if (!COUNTRY.has(lang)) COUNTRY.set(lang, new Intl.DisplayNames([lang], { type: "region" }));
+    return COUNTRY.get(lang)!.of(cc.toUpperCase()) ?? cc;
+  } catch { return cc ?? ""; }
+};
 
 /** Great-circle distance in km. */
 export const km = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => {
@@ -38,7 +47,7 @@ export const km = (a: { lat: number; lon: number }, b: { lat: number; lon: numbe
 };
 /** Estimated one-way fibre latency (ms): route = great circle × 1.5, light in fibre ≈ 5 µs per km. */
 export const latencyMs = (distKm: number) => distKm * 1.5 * 0.005;
-export const fmt = (n?: number | null, unit = "") => (n == null ? "—" : `${n.toLocaleString("en-US")}${unit}`);
+export const fmt = (n?: number | null, unit = "", intl = "en-US") => (n == null ? "—" : `${n.toLocaleString(intl)}${unit}`);
 
 /** Estates that reference a famous site. */
 export const estatesFor = (s: Site) => ESTATES.filter((e) => e.sites.some((x) => x.site_ref === s.id));

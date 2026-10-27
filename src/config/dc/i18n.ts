@@ -7,10 +7,14 @@ const PHASE1 = [
   "/dc/integrations", "/dc/integrations/zabbix", "/dc/integrations/netbox", "/dc/integrations/librenms",
   "/dc/partners", "/dc/contact", "/dc/security", "/dc/resources/excel-template",
 ];
+/** /dc/world/ phase A (the earth, estates index, imagined index, open dataset; the 100 site, 25 estate and 3 imagined
+ *  pages stay English). Held in both locales: German goes live after its review, Chinese after Dali's read — then move
+ *  these paths from DC_PREVIEW to DC_TRANSLATED (the routes under src/pages/[locale]/dc/world/ exist already). */
+export const WORLD = ["/dc/world", "/dc/world/estates", "/dc/world/imagined", "/dc/world/data"];
 /** Chinese DC pages wait for Dali's read; flip to true when he says "zh ok" for /dc/. */
 export const DC_ZH_READY = true; // Dali 2026-10-15: "zh dc ok — go live" (via the planner)
-export const DC_TRANSLATED = { de: PHASE1, zh: DC_ZH_READY ? PHASE1 : [] };
+export const DC_TRANSLATED = { de: [...PHASE1, ...WORLD], zh: DC_ZH_READY ? PHASE1 : [] }; // German world pages live 2026-10-27 after the review (REVIEW-world-2026-10-27.md)
 /** Held for review (planner 2026-10-15: Dali reads the Chinese before launch): built under /<locale>/dc/preview/…, readable
  *  at the URL but noindex, no hreflang, not in the switcher, llms.txt or the language redirect (that one only ever sends
  *  visitors to the mirror path /<locale>/dc/…). Linked to each other; the sitemap excludes /dc/preview/ (homelab marketing). */
-export const DC_PREVIEW: Record<"de" | "zh", string[]> = { de: [], zh: DC_ZH_READY ? [] : PHASE1 };
+export const DC_PREVIEW: Record<"de" | "zh", string[]> = { de: [], zh: DC_ZH_READY ? [...WORLD] : [...PHASE1, ...WORLD] };

@@ -1,0 +1,401 @@
+---
+// /dc/world/ in one locale (marketing/WORLD-PAGE.md, I18N.md): the famous data centers of the world on an interactive earth.
+// Copy: the "world" dictionary (src/i18n/dc/world.ts); record content (names, operators, stories, facts) stays English.
+// Site-only code: globe.gl (MIT) from jsdelivr, loaded after the page; no code from the product. State lives in the URL hash.
+// The earth script is one bundle for every locale: its templates, labels, country names and number format come from data-i18n.
+import Base from "../../../layouts/dc/Base.astro";
+import Faq from "../../../components/dc/Faq.astro";
+import { SITES, ESTATES, IMAGINED, REGIONS, TYPE_LABEL, KIND_LABEL, countryName } from "../../../lib/dc/world";
+import { u, abs, root } from "../../../lib/dc/url";
+import { faqLd } from "../../../lib/dc/schema";
+import { englishOnly } from "../../../i18n/dc";
+import { worldCopy } from "../../../i18n/dc/world";
+import type { Locale } from "../../../i18n";
+import { Image } from "astro:assets";
+import posterDark from "../../../assets/dc/world/poster-dark.png";
+import posterLight from "../../../assets/dc/world/poster-light.png";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const w = worldCopy(locale, "/dc/world");
+const { t } = w;
+const N = { "SITES.length": SITES.length, "ESTATES.length": ESTATES.length };
+
+const types = [...new Set(SITES.map((s) => s.tenant_type).filter(Boolean))] as string[];
+const kinds = [...new Set(ESTATES.map((e) => e.kind).filter(Boolean))] as string[];
+const faq = ["famous", "latency", "cut", "data"].map((k) => ({ q: t(`index.faq.${k}.q`, N), a: t(`index.faq.${k}.a`, N) }));
+const ld = { "@type": "Dataset", name: t("common.schema.datasetName"), url: abs("world/"), description: t("index.schema.description", N), license: "https://creativecommons.org/licenses/by/4.0/", creator: { "@id": abs("#org") } };
+const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region === r) })).filter((x) => x.list.length);
+
+// The earth script's copy: { name in the script: dictionary key }. Placeholders are the expressions of the English code.
+const SCRIPT: Record<string, string> = {
+  cta: "script.cta", dataCenter: "common.dataCenter", estate: "common.estate", operator: "common.operator", opened: "common.opened",
+  itPower: "common.itPower", type: "common.type", sites: "common.sites", links: "common.links", myDc: "common.myDataCenter",
+  siteOpenPage: "script.site.openPage", fromPin: "script.site.fromPin", pueWithKind: "script.pueWithKind",
+  cmpTitle: "script.cmp.title", cmpDistance: "script.cmp.distance", cmpDistanceValue: "script.cmp.distanceValue",
+  cmpRoundTrip: "script.cmp.roundTrip", cmpRoundTripValue: "script.cmp.roundTripValue",
+  imagBanner: "script.imag.banner", imagKicker: "script.imag.kicker", imagPueEngine: "script.imag.pueEngine", imagGpus: "script.imag.gpus",
+  imagOpenEstate: "script.imag.openEstate", imagDetails: "script.imag.details",
+  linkCut: "script.estate.linkCut", noPath: "script.estate.noPath", detour: "script.estate.detour", estCounts: "script.estate.counts",
+  whatIf: "script.estate.whatIf", isolated: "script.estate.isolated", allConnected: "script.estate.allConnected",
+  resetWhatIfs: "script.estate.resetWhatIfs", estHint: "script.estate.hint", restore: "script.estate.restore", cut: "script.estate.cut",
+  unprotected: "script.estate.unprotected", lose: "script.estate.lose", estImaginedBanner: "script.estate.imaginedBanner",
+  estOpenImagined: "script.estate.openImagined", estOpenPage: "script.estate.openPage",
+  yourPin: "script.me.yourPin", nearest: "script.me.nearest", rtt: "script.me.rtt", nearestEstates: "script.me.nearestEstates", copyLink: "script.me.copyLink",
+  tipImagined: "script.tip.imagined", tipImaginedMw: "script.tip.imaginedMw", tipLost: "script.tip.lost", tipIsolated: "script.tip.isolated",
+  tipNotProtected: "script.tip.notProtected", tipCut: "script.tip.cut", tipClickToCut: "script.tip.clickToCut",
+  resetHint: "script.resetHint", cityNotFound: "script.cityNotFound", copied: "script.copied", loading: "script.loading", loadFailed: "script.loadFailed",
+};
+const countries = [...new Set([...SITES.map((s) => s.country), ...ESTATES.flatMap((e) => e.sites.map((x) => x.country)), ...IMAGINED.flatMap((g) => g.sites.map((x) => x.country))].filter(Boolean))] as string[];
+const pueKinds = [...new Set(SITES.map((s) => s.pue?.kind).filter(Boolean))] as string[];
+// "<" and ">" escaped so the attribute holds no markup characters (copy checks and snapshots strip tags with a regex).
+const worldI18n = JSON.stringify({
+  intl: w.en ? "en-US" : w.intl, en: w.en, sp: locale === "zh" ? "" : " ", stop: locale === "zh" ? "。" : ". ", eo: englishOnly(locale), imaginedLabel: w.imaginedLabel,
+  types: Object.fromEntries(Object.keys(TYPE_LABEL).map((k) => [k, w.typeLabel(k)])),
+  kinds: { ...Object.fromEntries(Object.keys(KIND_LABEL).map((k) => [k, w.kindLabel(k)])), imagined: t("index.tools.imaginedGroup") },
+  pue: Object.fromEntries(pueKinds.map((k) => [k, w.pueLabel(k)])),
+  // English country name (as globe-data.json has it in "p", the place) → the name in this locale; none for English.
+  countries: w.en ? {} : Object.fromEntries(countries.map((c) => [countryName(c), w.country(c)])),
+  t: Object.fromEntries(Object.entries(SCRIPT).map(([k, key]) => [k, t(key)])),
+}).replace(/</g, "\\u003c").replace(/>/g, "\\u003e");
+---
+<Base title={t("index.meta.title")} description={t("index.meta.description", N)}
+  path="world/" crumbs={[{ name: t("common.crumb.world"), path: "world/" }]} jsonLd={[ld, ...faqLd(faq)]} locale={locale}
+  fallback={w.missing(["index.", "labels.", "common.eyebrow.openData", "common.sitesLinksCount"])}>
+  <section class="wg">
+    <div class="container wg-head">
+      <span class="eyebrow">{t("common.eyebrow.openData")}</span>
+      <h1>{t("index.h1")}</h1>
+      <p class="wg-lede">{t("index.lede", N)}</p>
+    </div>
+    <div class="wg-stage" data-world data-src={u("world/globe-data.json")} data-land={root("dc/world/countries-110m.json")} data-cities={root("dc/world/cities.json")}
+      data-tex-day={root("dc/world/tex/earth-blue-marble.jpg")} data-tex-night={root("dc/world/tex/earth-night.jpg")} data-product={w.href("product/")} data-i18n={worldI18n}>
+      <div class="wg-globe" id="wg-globe">
+        <div class="wg-poster">
+          <Image class="only-dark" src={posterDark} alt={t("index.poster.alt")} widths={[360, 560, 700]} sizes="(max-width: 860px) 90vw, 700px" format="webp" quality={72} loading="eager" fetchpriority="high" />
+          <Image class="only-light" src={posterLight} alt={t("index.poster.alt")} widths={[360, 560, 700]} sizes="(max-width: 860px) 90vw, 700px" format="webp" quality={72} loading="lazy" />
+          <button type="button" class="wg-start" id="wg-start">{t("index.start")}</button>
+        </div>
+      </div>
+      <div class="wg-tools" role="toolbar" aria-label={t("index.tools.aria")}>
+        <label class="wg-f"><span>{t("index.tools.search")}</span><input id="wg-q" type="search" list="wg-names" placeholder={t("index.tools.searchPlaceholder")} autocomplete="off" /></label>
+        <datalist id="wg-names">{SITES.map((s) => <option value={s.name} />)}</datalist>
+        <label class="wg-f"><span>{t("common.type")}</span><select id="wg-type"><option value="">{t("index.tools.all")}</option>{types.map((ty) => <option value={ty}>{w.typeLabel(ty)}</option>)}</select></label>
+        <label class="wg-f"><span>{t("index.tools.region")}</span><select id="wg-region"><option value="">{t("index.tools.all")}</option>{REGIONS.map((r) => <option value={r}>{w.regionLabel(r)}</option>)}</select></label>
+        <label class="wg-f"><span>{t("common.estate")}</span><select id="wg-estate"><option value="">{t("index.tools.none")}</option>{kinds.map((k) => <optgroup label={w.kindLabel(k)}>{ESTATES.filter((e) => e.kind === k).map((e) => <option value={e.id}>{e.name}</option>)}</optgroup>)}{IMAGINED.length > 0 && <optgroup label={t("index.tools.imaginedGroup")}>{IMAGINED.map((g) => <option value={g.id}>{g.name}</option>)}</optgroup>}</select></label>
+        <div class="wg-btns">
+          <button type="button" id="wg-next">{t("index.tools.next")}</button>
+          <button type="button" id="wg-look" aria-pressed="false">{t("index.tools.photo")}</button>
+          <button type="button" id="wg-reset">{t("index.tools.reset")}</button>
+        </div>
+        <form class="wg-me" id="wg-me-form"><label class="wg-f"><span>{t("index.tools.where")}</span><input id="wg-me" list="wg-cities" placeholder={t("index.tools.wherePlaceholder")} autocomplete="off" /></label><datalist id="wg-cities"></datalist><button type="submit">{t("index.tools.pin")}</button></form>
+      </div>
+      <aside class="wg-panel" id="wg-panel" aria-live="polite">
+        <p class="wg-hint">{t("index.hint")}</p>
+      </aside>
+    </div>
+    <div class="container wg-below">
+      <p class="small muted wg-note">{t("index.note")}</p>
+      <section class="wg-list" aria-labelledby="wl-h">
+        <h2 id="wl-h">{t("index.list.h2", N)}</h2>
+        {byRegion.map(({ r, list }) => (
+          <details open={r === "Europe"}><summary>{w.regionLabel(r)} <span>{list.length}</span></summary>
+            <ul>{list.map((s) => (
+              <li><a href={w.href(`world/${s.id}/`)}>{s.name}</a>{w.enOnly(`world/${s.id}/`)}<span class="wl-meta">{w.place(s.city, s.country)}{s.it_mw != null ? ` · ${w.fmt(s.it_mw)} MW` : ""}{s.pue?.value != null ? ` · PUE ${w.num(s.pue.value)}` : ""}</span>
+                <button type="button" class="wl-show" data-site={s.id}>{t("index.list.show")}</button></li>))}</ul>
+          </details>
+        ))}
+      </section>
+      <section class="wg-estates" aria-labelledby="we-h">
+        <h2 id="we-h">{t("index.estates.h2", N)}</h2>
+        <ul>{ESTATES.map((e) => <li><a href={w.href(`world/estates/${e.id}/`)}>{e.name}</a>{w.enOnly(`world/estates/${e.id}/`)} <span class="wl-meta">{w.kindLabel(e.kind)} · {t("common.sitesLinksCount", { "e.sites.length": e.sites.length, "e.links.length": e.links.length })}</span> <button type="button" class="wl-est" data-estate={e.id}>{t("index.estates.open")}</button></li>)}</ul>
+      </section>
+      {IMAGINED.length > 0 && <section class="wg-estates" aria-labelledby="wi-h">
+        <h2 id="wi-h">{t("index.imagined.h2")}</h2>
+        <p class="small muted">{t("index.imagined.note", { IMAGINED_LABEL: w.imaginedLabel })}</p>
+        <ul>{IMAGINED.map((g) => <li><a href={w.href(`world/imagined/${g.id}/`)}>{g.name}</a>{w.enOnly(`world/imagined/${g.id}/`)} <span class="wl-meta">{g.concept}</span> <button type="button" class="wl-est" data-estate={g.id}>{t("index.estates.open")}</button></li>)}</ul>
+      </section>}
+      <p class="wg-data"><a class="cs-btn cs-btn--secondary" href={w.href("world/data/")}>{t("index.btn.dataset")}</a> <a class="cs-btn cs-btn--primary" href={w.href("product/")}>{t("index.btn.product")}</a></p>
+      <Faq items={faq} locale={locale} />
+    </div>
+  </section>
+</Base>
+<style>
+  .wg-head { padding-top: clamp(28px, 4vw, 48px); }
+  .wg-head h1 { margin: 10px 0 0; font-size: clamp(32px, 4.6vw, 56px); line-height: 1.04; max-width: 18em; }
+  .wg-lede { margin: 16px 0 0; max-width: 48em; color: var(--ink-muted); font-size: 18px; line-height: 28px; }
+  .wg-stage { position: relative; margin-top: 24px; height: min(78vh, 820px); min-height: 520px; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 7%, var(--bg-000)) 0%, var(--bg-000) 70%); border-block: 1px solid var(--line); overflow: hidden; }
+  .wg-globe { position: absolute; inset: 0; }
+  .wg-globe canvas { display: block; outline: none; }
+  .wg-poster { position: absolute; inset: 0; display: grid; place-items: center; }
+  .wg-poster :global(img) { grid-area: 1 / 1; height: 100%; max-height: 100%; width: auto; max-width: 100%; aspect-ratio: 1; object-fit: contain; }
+  .wg-start { grid-area: 1 / 1; align-self: end; margin-bottom: 24px; min-height: 40px; padding: 0 18px; border: 1px solid var(--accent); border-radius: 999px; background: var(--bg-000); color: var(--ink); font: 600 13px/1 var(--font-mono); letter-spacing: .06em; cursor: pointer; z-index: 1; }
+  .wg-start:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .wg-tools { position: absolute; left: 16px; top: 16px; width: min(300px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 8px; padding: 12px; background: color-mix(in srgb, var(--bg-100) 88%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(8px); z-index: 2; }
+  .wg-f { display: flex; flex-direction: column; gap: 4px; }
+  .wg-f span { font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
+  .wg-f input, .wg-f select { min-height: 34px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 14px/1.2 var(--font-sans); }
+  .wg-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wg-tools button { min-height: 32px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 600 12px/1 var(--font-mono); cursor: pointer; }
+  .wg-tools button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .wg-tools button:focus-visible, .wg-f input:focus-visible, .wg-f select:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .wg-me { display: flex; gap: 6px; align-items: end; }
+  .wg-me .wg-f { flex: 1; }
+  .wg-panel { position: absolute; right: 16px; top: 16px; bottom: 16px; width: min(360px, calc(100% - 32px)); overflow: auto; padding: 16px; background: color-mix(in srgb, var(--bg-100) 92%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(8px); z-index: 2; font-size: 14px; line-height: 21px; }
+  .wg-panel :global(h2) { margin: 4px 0 6px; font-size: 20px; line-height: 26px; }
+  .wg-panel :global(.wp-k) { font: 500 11px/14px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-dim); }
+  .wg-panel :global(table) { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  .wg-panel :global(th) { text-align: left; font: 500 11px/16px var(--font-mono); color: var(--ink-dim); padding: 4px 8px 4px 0; vertical-align: top; }
+  .wg-panel :global(td) { padding: 4px 0; }
+  .wg-panel :global(.wp-bad) { color: var(--crit); font-weight: 600; }
+  .wg-panel :global(.wp-imag) { margin: 0 0 8px; padding: 6px 10px; border: 1px dashed var(--line-strong); font: 600 12px/18px var(--font-mono); color: var(--ink); }
+  .wg-panel :global(.wp-cta) { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .wg-panel :global(button) { min-height: 30px; margin: 2px 4px 2px 0; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: var(--bg-000); color: var(--ink); font: 600 11px/1 var(--font-mono); cursor: pointer; }
+  .wg-panel :global(ul) { margin: 6px 0; padding-left: 18px; }
+  .wg-hint { margin: 0; color: var(--ink-muted); }
+  .wg-below { padding-bottom: 48px; }
+  .wg-note { margin: 12px 0 0; }
+  .wg-list, .wg-estates { margin-top: 36px; }
+  .wg-list h2, .wg-estates h2 { margin: 0 0 12px; font-size: 24px; }
+  .wg-list details { border-top: 1px solid var(--line); }
+  .wg-list summary { cursor: pointer; padding: 12px 0; font-weight: 600; }
+  .wg-list summary span { font: 500 12px/1 var(--font-mono); color: var(--ink-dim); margin-left: 6px; }
+  .wg-list ul, .wg-estates ul { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 2px; }
+  .wg-list li, .wg-estates li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .wl-meta { color: var(--ink-dim); font: 500 12px/18px var(--font-mono); }
+  .wl-show, .wl-est { margin-left: auto; min-height: 30px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-1); background: transparent; color: var(--ink-muted); font: 600 11px/1 var(--font-mono); cursor: pointer; }
+  .wg-data { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; }
+  @media (max-width: 860px) {
+    .wg-stage { height: auto; min-height: 0; display: flex; flex-direction: column; }
+    .wg-globe { position: relative; height: 62vh; min-height: 380px; }
+    .wg-tools, .wg-panel { position: static; width: auto; margin: 0; border-inline: 0; backdrop-filter: none; }
+    .wg-panel { max-height: none; }
+  }
+</style>
+<script>
+  // The earth: globe.gl (MIT, three.js) loaded from jsdelivr after the page; all play features are this file's own logic.
+  type S = { id: string; n: string; op: string; t: string; tl: string; r: string; p: string; lat: number; lng: number; mw: number | null; pue: number | null; pk: string; y: number | null; f: string; st: string; nt: string[]; url: string };
+  type ES = { c: string; lat: number; lng: number; p: string; ref: string | null };
+  type EL = { a: string; b: string; t: string; pr: string; km: number | null };
+  type E = { id: string; n: string; k: string; kl: string; f: string; url: string; s: ES[]; l: EL[]; im?: boolean };
+  type IG = { id: string; n: string; lat: number; lng: number; mw: number | null; pue: number | null; gpus: number | null; f: string; c: string; url: string; label: string };
+  const GLOBE_URL = "https://cdn.jsdelivr.net/npm/globe.gl@2.46.2/dist/globe.gl.min.js";
+  const box = document.querySelector<HTMLElement>("[data-world]")!;
+  const el = document.getElementById("wg-globe")!, panel = document.getElementById("wg-panel")!;
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]!));
+  const R = 6371, rad = Math.PI / 180;
+  const km = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => { const dLa = (b.lat - a.lat) * rad, dLo = (b.lng - a.lng) * rad; const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLo / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+  const ms = (d: number) => d * 1.5 * 0.005; // one way, estimated
+
+  // ---------- the page's language (data-i18n from the "world" dictionary) ----------
+  // Templates keep the English code's expressions as placeholders, e.g. "{f0(d)} km (great circle)"; fill() puts the values in.
+  // Labels map the English record values (type, kind, PUE kind, country name in the place) to the page's language.
+  const L = JSON.parse(box.dataset.i18n!) as { intl: string; en: boolean; sp: string; stop: string; eo: string; imaginedLabel: string; types: Record<string, string>; kinds: Record<string, string>; pue: Record<string, string>; countries: Record<string, string>; t: Record<string, string> };
+  const T = L.t;
+  const fill = (s: string, v: Record<string, string | number>) => s.replace(/\{([^{}]+)\}/g, (m, k) => (k in v ? String(v[k]) : m));
+  const f0 = (n: number) => Math.round(n).toLocaleString(L.intl);
+  const f1 = (n: number) => (L.en ? n.toFixed(1) : n.toLocaleString(L.intl, { minimumFractionDigits: 1, maximumFractionDigits: 1 }));
+  const num = (n: number | null | undefined) => (n == null ? "—" : L.en ? String(n) : n.toLocaleString(L.intl, { maximumFractionDigits: 3 }));
+  const big = (n: number) => n.toLocaleString(L.intl);
+  const place = (p: string) => { const i = p.lastIndexOf(", "), c = i < 0 ? p : p.slice(i + 2), x = L.countries[c]; return x ? (i < 0 ? x : p.slice(0, i + 2) + x) : p; };
+  const tl = (s: S) => L.types[s.t] ?? s.tl;
+  const kl = (e: E) => L.kinds[e.k] ?? e.kl;
+  const rtt = (d: number) => ({ "(ms(d) * 2).toFixed(1)": f1(ms(d) * 2) });
+
+  let SITES: S[] = [], ESTATES: E[] = [], IMAG: IG[] = [], G: any = null, land: any = null;
+  const st = { site: "", estate: "", cut: new Set<string>(), lose: new Set<string>(), cmp: [] as string[], me: null as null | { lat: number; lng: number; label: string }, photo: false, type: "", region: "", q: "" };
+  // An imagined estate's line starts with the English label and ". " (globe-data.json): show the label in the page's language.
+  const estF = (e: E) => (e.im && IMAG[0] ? e.f.replace(`${IMAG[0].label}. `, L.imaginedLabel + L.stop) : e.f);
+
+  // ---------- URL state ----------
+  const readHash = () => {
+    const h = new URLSearchParams(location.hash.slice(1));
+    st.site = h.get("site") ?? ""; st.estate = h.get("estate") ?? "";
+    st.cut = new Set((h.get("cut") ?? "").split(",").filter(Boolean)); st.lose = new Set((h.get("lose") ?? "").split(",").filter(Boolean));
+    st.cmp = (h.get("cmp") ?? "").split(",").filter(Boolean).slice(0, 2); st.photo = h.get("look") === "photo";
+    const me = h.get("me"); if (me) { const [a, b, ...l] = me.split(","); if (isFinite(+a) && isFinite(+b)) st.me = { lat: +a, lng: +b, label: l.join(",").trim() || T.myDc }; }
+  };
+  const writeHash = () => {
+    const h = new URLSearchParams();
+    if (st.site) h.set("site", st.site); if (st.estate) h.set("estate", st.estate);
+    if (st.cut.size) h.set("cut", [...st.cut].join(",")); if (st.lose.size) h.set("lose", [...st.lose].join(","));
+    if (st.cmp.length) h.set("cmp", st.cmp.join(",")); if (st.photo) h.set("look", "photo");
+    if (st.me) h.set("me", `${st.me.lat.toFixed(3)},${st.me.lng.toFixed(3)},${st.me.label}`);
+    const s = h.toString().replace(/%2F/g, "/").replace(/%2C/g, ",").replace(/\+/g, "%20");
+    history.replaceState(null, "", s ? `#${s}` : location.pathname);
+  };
+
+  // ---------- colours from the theme tokens ----------
+  const css = (v: string) => getComputedStyle(document.documentElement).getPropertyValue(v).trim() || "#22c55e";
+  const pal = () => ({ acc: css("--accent"), ink: css("--ink"), dim: css("--ink-dim"), crit: css("--crit") || "#ef4444", warn: css("--warn") || "#f59e0b", data: css("--data") || "#38bdf8", bg: css("--bg-000"), line: css("--line-strong") });
+  const TYPE_COL: Record<string, string> = { hyperscale: "acc", colocation: "data", ai: "warn", hpc: "ink", research: "ink", enterprise: "dim" };
+
+  // ---------- estate graph ----------
+  const est = () => ESTATES.find((e) => e.id === st.estate);
+  const linkKey = (l: EL) => `${l.a}-${l.b}`;
+  const graph = (e: E) => {
+    const pos = new Map(e.s.map((s) => [s.c, s]));
+    const alive = e.l.filter((l) => !st.cut.has(linkKey(l)) && !st.lose.has(l.a) && !st.lose.has(l.b) && pos.has(l.a) && pos.has(l.b));
+    const adj = new Map<string, { to: string; w: number }[]>(); e.s.forEach((s) => adj.set(s.c, []));
+    alive.forEach((l) => { const w = (l.km ?? km(pos.get(l.a)!, pos.get(l.b)!) * 1.5); adj.get(l.a)!.push({ to: l.b, w }); adj.get(l.b)!.push({ to: l.a, w }); });
+    const comp = new Map<string, number>(); let n = 0;
+    for (const s of e.s) { if (st.lose.has(s.c) || comp.has(s.c)) continue; const q = [s.c]; comp.set(s.c, n); while (q.length) { const x = q.pop()!; for (const y of adj.get(x)!) if (!comp.has(y.to)) { comp.set(y.to, n); q.push(y.to); } } n++; }
+    const sizes = new Map<number, number>(); comp.forEach((c) => sizes.set(c, (sizes.get(c) ?? 0) + 1));
+    const main = [...sizes.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+    const isolated = e.s.filter((s) => !st.lose.has(s.c) && comp.get(s.c) !== main).map((s) => s.c);
+    const path = (a: string, b: string) => { // Dijkstra, route km
+      const d = new Map<string, number>([[a, 0]]), done = new Set<string>();
+      while (true) { let u = "", best = Infinity; d.forEach((v, k) => { if (!done.has(k) && v < best) { best = v; u = k; } }); if (!u) return null; if (u === b) return best; done.add(u);
+        for (const y of adj.get(u) ?? []) { const nd = best + y.w; if (nd < (d.get(y.to) ?? Infinity)) d.set(y.to, nd); } }
+    };
+    return { pos, alive, isolated, path };
+  };
+
+  // ---------- panel ----------
+  const cta = () => `<p class="wp-cta">${fill(T.cta, { "box.dataset.product": box.dataset.product! })}</p>`;
+  const pueTd = (v: number, k: string) => (k ? fill(T.pueWithKind, { v: num(v), k: esc(L.pue[k] ?? k) }) : num(v));
+  const sitePanel = (s: S) => {
+    panel.innerHTML = `<span class="wp-k">${esc(tl(s) || T.dataCenter)} · ${esc(place(s.p))}</span><h2>${esc(s.n)}</h2>${s.f ? `<p><strong>${esc(s.f)}</strong></p>` : ""}
+      <table><tbody>${s.op ? `<tr><th>${T.operator}</th><td>${esc(s.op)}</td></tr>` : ""}${s.y ? `<tr><th>${T.opened}</th><td>${s.y}</td></tr>` : ""}${s.mw != null ? `<tr><th>${T.itPower}</th><td>${num(s.mw)} MW</td></tr>` : ""}${s.pue != null ? `<tr><th>PUE</th><td>${pueTd(s.pue, s.pk)}</td></tr>` : ""}</tbody></table>
+      ${s.st ? `<p>${esc(s.st)}</p>` : ""}${s.nt.length ? `<ul>${s.nt.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+      <p><a href="${s.url}">${T.siteOpenPage}</a>${L.eo}</p>${st.me ? mePanelLine(s) : ""}`;
+  };
+  const imagPanel = (g: IG) => {
+    panel.innerHTML = `<p class="wp-imag">${fill(T.imagBanner, { "esc(g.label)": esc(L.imaginedLabel) })}</p><span class="wp-k">${fill(T.imagKicker, { "esc(g.c)": esc(g.c) })}</span><h2>${esc(g.n)}</h2><p>${esc(g.f)}</p>
+      <table><tbody>${g.mw != null ? `<tr><th>IT</th><td>${big(g.mw)} MW</td></tr>` : ""}${g.pue != null ? `<tr><th>PUE</th><td>${fill(T.imagPueEngine, { "g.pue": num(g.pue) })}</td></tr>` : ""}${g.gpus != null ? `<tr><th>${T.imagGpus}</th><td>${big(g.gpus)}</td></tr>` : ""}</tbody></table>
+      <button type="button" data-estate="${esc(g.id)}">${T.imagOpenEstate}</button><p><a href="${g.url}">${T.imagDetails}</a>${L.eo}</p>`;
+  };
+  const mePanelLine = (s: S) => { const d = km(st.me!, s); return `<p class="wp-k">${fill(T.fromPin, { "f0(d)": f0(d), ...rtt(d) })}</p>`; };
+  const cmpPanel = () => {
+    const [a, b] = st.cmp.map((id) => SITES.find((s) => s.id === id)!).filter(Boolean); if (!a || !b) return;
+    const d = km(a, b);
+    panel.innerHTML = `<span class="wp-k">${T.cmpTitle}</span><h2>${esc(a.n)} ↔ ${esc(b.n)}</h2>
+      <table><tbody><tr><th>${T.cmpDistance}</th><td>${fill(T.cmpDistanceValue, { "f0(d)": f0(d) })}</td></tr><tr><th>${T.cmpRoundTrip}</th><td>${fill(T.cmpRoundTripValue, rtt(d))}</td></tr>
+      <tr><th></th><td><strong>${esc(a.n)}</strong> · <strong>${esc(b.n)}</strong></td></tr>
+      <tr><th>${T.itPower}</th><td>${num(a.mw)} MW · ${num(b.mw)} MW</td></tr><tr><th>PUE</th><td>${num(a.pue)} · ${num(b.pue)}</td></tr>
+      <tr><th>${T.opened}</th><td>${a.y ?? "—"} · ${b.y ?? "—"}</td></tr><tr><th>${T.type}</th><td>${esc(tl(a))} · ${esc(tl(b))}</td></tr></tbody></table>
+      <p><a href="${a.url}">${esc(a.n)}</a>${L.eo} · <a href="${b.url}">${esc(b.n)}</a>${L.eo}</p>${cta()}`;
+  };
+  const estatePanel = () => {
+    const e = est(); if (!e) return; const g = graph(e);
+    const cutL = e.l.filter((l) => st.cut.has(linkKey(l)));
+    const detours = cutL.map((l) => { const a = g.pos.get(l.a), b = g.pos.get(l.b); if (!a || !b) return ""; const direct = l.km ?? km(a, b) * 1.5; const r = g.path(l.a, l.b);
+      return `<li>${fill(T.linkCut, { "esc(l.a)": esc(l.a), "esc(l.b)": esc(l.b) })}${r == null ? `<span class="wp-bad">${T.noPath}</span>` : fill(T.detour, { "f0(r)": f0(r), "(r * 0.005).toFixed(1)": f1(r * 0.005), "(direct * 0.005).toFixed(1)": f1(direct * 0.005) })}</li>`; }).join("");
+    panel.innerHTML = `${e.im ? `<p class="wp-imag">${T.estImaginedBanner}</p>` : ""}<span class="wp-k">${esc(kl(e) || T.estate)}${fill(T.estCounts, { "e.s.length": e.s.length, "e.l.length": e.l.length })}</span><h2>${esc(e.n)}</h2><p>${esc(estF(e))}</p>
+      ${st.cut.size || st.lose.size ? `<p>${fill(T.whatIf, { "st.cut.size": st.cut.size, "st.lose.size": st.lose.size })}${g.isolated.length ? `${L.sp}<span class="wp-bad">${fill(T.isolated, { 'g.isolated.map(esc).join(", ")': g.isolated.map(esc).join(", ") })}</span>` : T.allConnected}</p>${detours ? `<ul>${detours}</ul>` : ""}<button type="button" data-act="reset-wi">${T.resetWhatIfs}</button>${cta()}` : `<p class="wg-hint">${T.estHint}</p>`}
+      <p class="wp-k">${T.links}</p>${e.l.map((l) => `<button type="button" data-cut="${esc(linkKey(l))}" aria-pressed="${st.cut.has(linkKey(l))}">${st.cut.has(linkKey(l)) ? T.restore : T.cut} ${esc(l.a)}–${esc(l.b)}${l.pr === "no" ? T.unprotected : ""}</button>`).join("")}
+      <p class="wp-k">${T.sites}</p>${e.s.map((s) => `<button type="button" data-lose="${esc(s.c)}" aria-pressed="${st.lose.has(s.c)}">${st.lose.has(s.c) ? T.restore : T.lose} ${esc(s.c)}</button>`).join("")}
+      <p><a href="${e.url}">${e.im ? T.estOpenImagined : T.estOpenPage}</a>${L.eo}</p>`;
+  };
+  const mePanel = () => {
+    if (!st.me) return; const near = SITES.map((s) => ({ s, d: km(st.me!, s) })).sort((a, b) => a.d - b.d).slice(0, 6);
+    const ne = ESTATES.map((e) => ({ e, d: Math.min(...e.s.map((x) => km(st.me!, x))) })).sort((a, b) => a.d - b.d).slice(0, 3);
+    panel.innerHTML = `<span class="wp-k">${fill(T.yourPin, { "esc(st.me.label)": esc(st.me.label) })}</span><h2>${T.nearest}</h2>
+      <table><tbody>${near.map(({ s, d }) => `<tr><th>${f0(d)} km</th><td><a href="${s.url}">${esc(s.n)}</a>${L.eo}${fill(T.rtt, rtt(d))}</td></tr>`).join("")}</tbody></table>
+      <p class="wp-k">${T.nearestEstates}</p><ul>${ne.map(({ e, d }) => `<li><button type="button" data-estate="${esc(e.id)}">${esc(e.n)}</button> ${f0(d)} km</li>`).join("")}</ul>
+      <button type="button" data-act="copy">${T.copyLink}</button>${cta()}`;
+  };
+  const renderPanel = () => { if (st.cmp.length === 2) cmpPanel(); else if (st.estate) estatePanel(); else if (st.site) { const s = SITES.find((x) => x.id === st.site); if (s) sitePanel(s); else { const g = IMAG.find((x) => x.id === st.site); if (g) imagPanel(g); } } else if (st.me) mePanel(); };
+
+  // ---------- globe layers ----------
+  const visible = () => SITES.filter((s) => (!st.type || s.t === st.type) && (!st.region || s.r === st.region) && (!st.q || `${s.n} ${s.op} ${s.p} ${place(s.p)}`.toLowerCase().includes(st.q.toLowerCase())));
+  const draw = () => {
+    if (!G) return; const c = pal(); const e = est(); const g = e ? graph(e) : null;
+    const pts: any[] = visible().map((s) => ({ ...s, kind: "site" }));
+    if (!st.type && !st.q) IMAG.forEach((g) => pts.push({ ...g, kind: "imag" }));
+    if (e) e.s.forEach((s) => pts.push({ kind: "est", id: `est:${s.c}`, c: s.c, n: `${s.c} · ${place(s.p)}`, lat: s.lat, lng: s.lng, lost: st.lose.has(s.c), iso: g!.isolated.includes(s.c) }));
+    if (st.me) pts.push({ kind: "me", id: "me", n: st.me.label, lat: st.me.lat, lng: st.me.lng });
+    G.pointsData(pts)
+      .pointColor((p: any) => p.kind === "imag" ? (document.documentElement.dataset.theme === "light" ? "#7c3aed" : "#a78bfa") : p.kind === "me" ? c.ink : p.kind === "est" ? (p.lost || p.iso ? c.crit : c.ink) : (st.cmp.includes(p.id) || p.id === st.site ? c.ink : (c as any)[TYPE_COL[p.t] ?? "acc"]))
+      .pointAltitude((p: any) => p.kind === "site" ? Math.min(0.12, 0.012 + (p.mw ?? 10) / 4000) : p.kind === "imag" ? 0.16 : 0.02)
+      .pointRadius((p: any) => p.kind === "me" ? 0.9 : p.kind === "imag" ? 0.75 : p.kind === "est" ? 0.55 : (p.id === st.site ? 0.7 : 0.42))
+      .pointLabel((p: any) => p.kind === "imag" ? `<div class="wg-tip"><b>◇ ${esc(p.n)}</b><br>${T.tipImagined}<br>${p.mw != null ? fill(T.tipImaginedMw, { 'p.mw.toLocaleString("en-US")': big(p.mw) }) : ""}${p.pue != null ? ` · PUE ${num(p.pue)}` : ""}</div>` : p.kind === "site" ? `<div class="wg-tip"><b>${esc(p.n)}</b><br>${esc(p.op)}${p.op ? " · " : ""}${esc(place(p.p))}<br>${esc(p.f)}${p.mw != null ? `<br>${num(p.mw)} MW` : ""}${p.pue != null ? ` · PUE ${num(p.pue)}` : ""}</div>` : `<div class="wg-tip"><b>${esc(p.n)}</b>${p.lost ? T.tipLost : p.iso ? T.tipIsolated : ""}</div>`);
+    const arcs = e ? e.l.filter((l) => g!.pos.has(l.a) && g!.pos.has(l.b)).map((l) => ({ l, key: linkKey(l), a: g!.pos.get(l.a)!, b: g!.pos.get(l.b)!, dead: st.cut.has(linkKey(l)) || st.lose.has(l.a) || st.lose.has(l.b) })) : [];
+    G.arcsData(arcs).arcStartLat((x: any) => x.a.lat).arcStartLng((x: any) => x.a.lng).arcEndLat((x: any) => x.b.lat).arcEndLng((x: any) => x.b.lng)
+      .arcColor((x: any) => x.dead ? [c.crit, c.crit] : x.l.pr === "no" ? [c.warn, c.acc] : [c.acc, c.data])
+      .arcDashLength((x: any) => x.dead ? 0.08 : 0.5).arcDashGap((x: any) => x.dead ? 0.08 : 0.2).arcDashAnimateTime((x: any) => x.dead || reduce ? 0 : 2400)
+      .arcStroke((x: any) => x.dead ? 0.35 : 0.6).arcLabel((x: any) => `<div class="wg-tip"><b>${esc(x.l.a)} ↔ ${esc(x.l.b)}</b> ${esc(x.l.t)}${x.l.pr === "no" ? T.tipNotProtected : ""}<br>${x.dead ? T.tipCut : T.tipClickToCut}</div>`);
+    applyLook();
+  };
+  const applyLook = () => {
+    if (!G) return; const c = pal(); const dark = document.documentElement.dataset.theme !== "light";
+    $("wg-look").setAttribute("aria-pressed", String(st.photo));
+    if (st.photo) { G.globeImageUrl(dark ? box.dataset.texNight : box.dataset.texDay).hexPolygonsData([]); }
+    else { G.globeImageUrl(null); try { G.globeMaterial().color.set(dark ? "#06110b" : "#e9efeb"); } catch {} G.hexPolygonsData((land?.features ?? []).filter((f: any) => f.properties?.n !== "Antarctica")).hexPolygonColor(() => dark ? "rgba(34,197,94,0.7)" : "rgba(19,122,52,0.6)"); }
+    G.polygonsData(land?.features ?? []).polygonCapColor(() => "rgba(0,0,0,0)").polygonSideColor(() => "rgba(0,0,0,0)").polygonStrokeColor(() => dark ? "rgba(140,170,150,0.35)" : "rgba(40,60,50,0.35)").polygonAltitude(0.005);
+    G.atmosphereColor(c.acc);
+  };
+  const fly = (lat: number, lng: number, alt = 1.7) => G?.pointOfView({ lat, lng, altitude: alt }, reduce ? 0 : 1100);
+  const update = (flyTo?: { lat: number; lng: number; alt?: number }) => { writeHash(); draw(); renderPanel(); if (flyTo) fly(flyTo.lat, flyTo.lng, flyTo.alt); };
+
+  // ---------- actions ----------
+  const openSite = (id: string) => { const s = SITES.find((x) => x.id === id); if (!s) return; st.site = id; st.cmp = []; update({ lat: s.lat, lng: s.lng, alt: 1.4 }); };
+  const openEstate = (id: string) => { st.estate = id; st.cut.clear(); st.lose.clear(); st.cmp = []; $<HTMLSelectElement>("wg-estate").value = id; const e = est(); if (!e) { update(); return; }
+    const lat = e.s.reduce((a, s) => a + s.lat, 0) / e.s.length, lng = Math.atan2(e.s.reduce((a, s) => a + Math.sin(s.lng * rad), 0), e.s.reduce((a, s) => a + Math.cos(s.lng * rad), 0)) / rad; update({ lat, lng, alt: 2.3 }); };
+  let tour = -1;
+  $("wg-next").addEventListener("click", () => { const v = visible(); if (!v.length) return; tour = (tour + 1) % v.length; openSite(v[tour].id); });
+  $("wg-look").addEventListener("click", () => { st.photo = !st.photo; writeHash(); applyLook(); });
+  $("wg-reset").addEventListener("click", () => { Object.assign(st, { site: "", estate: "", cmp: [], me: null, photo: false }); st.cut.clear(); st.lose.clear(); $<HTMLSelectElement>("wg-estate").value = ""; panel.innerHTML = `<p class="wg-hint">${T.resetHint}</p>`; update({ lat: 30, lng: 10, alt: 2.4 }); });
+  $<HTMLSelectElement>("wg-type").addEventListener("change", (ev) => { st.type = (ev.target as HTMLSelectElement).value; draw(); });
+  $<HTMLSelectElement>("wg-region").addEventListener("change", (ev) => { st.region = (ev.target as HTMLSelectElement).value; draw(); });
+  $<HTMLSelectElement>("wg-estate").addEventListener("change", (ev) => { const v = (ev.target as HTMLSelectElement).value; if (v) openEstate(v); else { st.estate = ""; st.cut.clear(); st.lose.clear(); update(); } });
+  $<HTMLInputElement>("wg-q").addEventListener("input", (ev) => { st.q = (ev.target as HTMLInputElement).value.trim(); draw(); const m = SITES.find((s) => s.n === st.q); if (m) openSite(m.id); });
+  let cities: [string, string, number, number][] | null = null;
+  $<HTMLInputElement>("wg-me").addEventListener("focus", async () => { if (cities) return; cities = await fetch(box.dataset.cities!).then((r) => r.json()).catch(() => []);
+    $("wg-cities").innerHTML = cities!.map((c) => `<option value="${esc(`${c[0]}, ${c[1]}`)}">`).join(""); }, { once: true });
+  $("wg-me-form").addEventListener("submit", (ev) => { ev.preventDefault(); const v = $<HTMLInputElement>("wg-me").value.trim(); if (!v) return;
+    const m = v.match(/^\s*(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)\s*$/);
+    let pin: typeof st.me = null;
+    if (m && Math.abs(+m[1]) <= 90 && Math.abs(+m[2]) <= 180) pin = { lat: +m[1], lng: +m[2], label: T.myDc };
+    else { const c = (cities ?? []).find((c) => `${c[0]}, ${c[1]}`.toLowerCase() === v.toLowerCase()) ?? (cities ?? []).find((c) => c[0].toLowerCase() === v.split(",")[0].trim().toLowerCase()); if (c) pin = { lat: c[2], lng: c[3], label: `${c[0]}, ${c[1]}` }; }
+    if (!pin) { panel.innerHTML = `<p class="wg-hint">${esc(T.cityNotFound)}</p>`; return; }
+    st.me = pin; st.site = ""; st.estate = ""; st.cmp = []; update({ lat: pin.lat, lng: pin.lng, alt: 2 }); });
+  panel.addEventListener("click", (ev) => { const b = (ev.target as HTMLElement).closest("button"); if (!b) return;
+    if (b.dataset.cut) { st.cut.has(b.dataset.cut) ? st.cut.delete(b.dataset.cut) : st.cut.add(b.dataset.cut); update(); }
+    else if (b.dataset.lose) { st.lose.has(b.dataset.lose) ? st.lose.delete(b.dataset.lose) : st.lose.add(b.dataset.lose); update(); }
+    else if (b.dataset.estate) openEstate(b.dataset.estate);
+    else if (b.dataset.act === "reset-wi") { st.cut.clear(); st.lose.clear(); update(); }
+    else if (b.dataset.act === "copy") { navigator.clipboard?.writeText(location.href).then(() => (b.textContent = T.copied)); } });
+  document.querySelectorAll<HTMLButtonElement>(".wl-show").forEach((b) => b.addEventListener("click", () => { box.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); openSite(b.dataset.site!); }));
+  document.querySelectorAll<HTMLButtonElement>(".wl-est").forEach((b) => b.addEventListener("click", () => { box.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); openEstate(b.dataset.estate!); }));
+  addEventListener("hashchange", () => { readHash(); draw(); renderPanel(); });
+
+  // ---------- boot ----------
+  readHash();
+  const boot = async () => {
+    const [data, landJson] = await Promise.all([fetch(box.dataset.src!).then((r) => r.json()), fetch(box.dataset.land!).then((r) => r.json())]);
+    SITES = data.sites; ESTATES = data.estates; IMAG = data.imagined ?? []; land = landJson;
+    await new Promise<void>((ok, fail) => { const s = document.createElement("script"); s.src = GLOBE_URL; s.async = true; s.crossOrigin = "anonymous"; s.onload = () => ok(); s.onerror = () => fail(); document.head.appendChild(s); });
+    const GlobeCtor = (window as any).Globe;
+    el.querySelector(".wg-poster")?.remove();
+    G = (() => { try { return new GlobeCtor(el, { animateIn: !reduce }); } catch { return GlobeCtor()(el); } })();
+    G.width(el.clientWidth).height(el.clientHeight).backgroundColor("rgba(0,0,0,0)").showAtmosphere(true).atmosphereAltitude(0.14)
+      .hexPolygonResolution(3).hexPolygonMargin(0.4).hexPolygonAltitude(0.012);
+    G.onPointClick((p: any, ev: MouseEvent) => { if (p.kind === "imag") { st.site = p.id; st.estate = ""; st.cmp = []; update({ lat: p.lat, lng: p.lng, alt: 1.6 }); } else if (p.kind === "site") { if (ev?.shiftKey) { st.cmp = [...st.cmp.filter((x) => x !== p.id), p.id].slice(-2); st.site = ""; update(); } else openSite(p.id); } else if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } else if (p.kind === "me") mePanel(); })
+      .onPointRightClick((p: any) => { if (p.kind === "est") { st.lose.has(p.c) ? st.lose.delete(p.c) : st.lose.add(p.c); update(); } })
+      .onArcClick((x: any) => { st.cut.has(x.key) ? st.cut.delete(x.key) : st.cut.add(x.key); update(); });
+    const ctl = G.controls(); ctl.autoRotate = !reduce; ctl.autoRotateSpeed = 0.35; ctl.enableDamping = true;
+    el.addEventListener("pointerdown", () => { ctl.autoRotate = false; }, { once: true });
+    addEventListener("resize", () => G.width(el.clientWidth).height(el.clientHeight));
+    new MutationObserver(() => draw()).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    if (st.estate) $<HTMLSelectElement>("wg-estate").value = st.estate;
+    draw(); renderPanel();
+    const s = SITES.find((x) => x.id === st.site), e = est();
+    if (s) fly(s.lat, s.lng, 1.4); else if (e) { const c0 = e.s[0]; fly(c0.lat, c0.lng, 2.3); } else if (st.me) fly(st.me.lat, st.me.lng, 2); else G.pointOfView({ lat: 30, lng: 10, altitude: 2.4 });
+  };
+  // The 3D earth (globe.gl ≈ 600 KB gzip + the land cells) starts on the first interaction, so the page itself stays fast;
+  // a URL with a state (a shared link) starts it right after load. Until then the poster is a real render of the earth.
+  let started = false;
+  const start = () => { if (started) return; started = true; const b = document.getElementById("wg-start"); if (b) b.textContent = T.loading;
+    boot().catch(() => { started = false; if (b) b.textContent = T.loadFailed; }); };
+  const EVENTS = ["pointermove", "pointerdown", "wheel", "touchstart", "keydown", "scroll"];
+  const onFirst = () => { EVENTS.forEach((e) => removeEventListener(e, onFirst)); start(); };
+  document.getElementById("wg-start")!.addEventListener("click", start);
+  if (location.hash.length > 1) { const go = () => ("requestIdleCallback" in window ? (window as any).requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 300)); document.readyState === "complete" ? go() : addEventListener("load", go, { once: true }); }
+  else EVENTS.forEach((e) => addEventListener(e, onFirst, { passive: true }));
+</script>
+<style is:global>
+  .wg-tip { padding: 8px 10px; max-width: 280px; background: var(--bg-100); color: var(--ink); border: 1px solid var(--line-strong); font: 13px/19px var(--font-sans); }
+</style>

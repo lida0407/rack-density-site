@@ -78,6 +78,15 @@ export const dcLlmsLocale = async (locale: Locale): Promise<string> => {
     ...pages.map((p) => `- [${p.d.h1}](${url(`/dc/${p.slug}`)}): ${p.d.description}`),
     `- [${priv("meta.title")}](${url("/dc/legal/privacy")}): ${priv("meta.description")}`,
   ];
+  if (hasPage("/dc/world", locale)) {
+    const { SITES, ESTATES } = await import("../../lib/dc/world");
+    const w = dcCopy("world", locale).t, n = { "SITES.length": SITES.length, "ESTATES.length": ESTATES.length };
+    lines.push(
+      `- [${w("index.meta.title", n)}](${url("/dc/world")}): ${w("index.meta.description", n)}`,
+      `- [${w("estates.meta.title", n)}](${url("/dc/world/estates")}): ${w("estates.meta.description", n)}`,
+      `- [${w("data.meta.title", n)}](${url("/dc/world/data")}): ${w("data.meta.description", n)}`,
+    );
+  }
   return `## ${PRODUCT_NAME}\n\n> ${home("what.body")}\n\n${lines.join("\n")}\n`;
 };
 

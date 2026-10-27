@@ -1,24 +1,4 @@
 ---
-import Base from "../../../../layouts/dc/Base.astro";
-import { ESTATES, KIND_LABEL, estatePath } from "../../../../lib/dc/world";
-import { u } from "../../../../lib/dc/url";
-const kinds = [...new Set(ESTATES.map((e) => e.kind ?? "other"))];
+import Estates from "../../../../views/dc/world/Estates.astro";
 ---
-<Base title="Famous data center estates: cables and backbones — DC Sim" description={`${ESTATES.length} famous estates from public sources: submarine cable systems, cloud backbones, national compute networks, exchanges and financial routes, each with its sites and links.`}
-  path="world/estates/" crumbs={[{ name: "World", path: "world/" }, { name: "Estates", path: "world/estates/" }]}>
-  <article class="container page">
-    <span class="eyebrow">World · estates</span>
-    <h1 style="margin:10px 0 0">Famous estates: the networks between data centers</h1>
-    <p class="direct-answer" style="margin-top:24px">{ESTATES.length} estates from public sources, each with its sites, links, capacities and whether a link is protected. Open one on the earth to cut a link or lose a site and see what gets isolated (our estimate from public numbers), or download it as a DC Sim workbook.</p>
-    {kinds.map((k) => (
-      <section style="margin-top:32px"><h2 style="margin:0 0 12px;font-size:22px">{KIND_LABEL[k] ?? k}</h2>
-        <div class="grid grid-2">{ESTATES.filter((e) => (e.kind ?? "other") === k).map((e) => (
-          <a class="cs-card" href={u(estatePath(e))} style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:6px">
-            <span style="font:600 18px/24px 'Inter Variable',var(--font-sans)">{e.name}</span>
-            <span style="color:var(--ink-muted);font-size:15px;line-height:22px">{e.famous_for}</span>
-            <span style="font:500 11px/14px var(--font-mono);color:var(--ink-dim)">{e.sites.length} sites · {e.links.length} links{e.year ? ` · ${e.year}` : ""}</span>
-          </a>))}</div>
-      </section>
-    ))}
-  </article>
-</Base>
+<Estates locale="en" />

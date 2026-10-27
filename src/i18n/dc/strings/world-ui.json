@@ -1,0 +1,1035 @@
+{
+ "common.crumb.world": {
+  "en": "World",
+  "de": "Welt",
+  "zh": "全球"
+ },
+ "common.crumb.estates": {
+  "en": "Estates",
+  "de": "Standortverbünde",
+  "zh": "站点网络"
+ },
+ "common.schema.datasetName": {
+  "en": "Famous data centers of the world",
+  "de": "Bekannte Rechenzentren der Welt",
+  "zh": "全球知名数据中心"
+ },
+ "common.dataCenter": {
+  "en": "Data center",
+  "de": "Rechenzentrum",
+  "zh": "数据中心"
+ },
+ "common.estate": {
+  "en": "Estate",
+  "de": "Standortverbund",
+  "zh": "站点网络"
+ },
+ "common.sitesLinksCount": {
+  "en": "{e.sites.length} sites · {e.links.length} links",
+  "de": "{e.sites.length} Standorte · {e.links.length} Verbindungen",
+  "zh": "{e.sites.length} 个站点 · {e.links.length} 条链路"
+ },
+ "common.eyebrow.openData": {
+  "en": "World · open data",
+  "de": "Welt · offene Daten",
+  "zh": "全球 · 开放数据"
+ },
+ "common.story": {
+  "en": "The story",
+  "de": "Die Geschichte",
+  "zh": "背景介绍"
+ },
+ "common.notable": {
+  "en": "Notable",
+  "de": "Bemerkenswertes",
+  "zh": "主要特点"
+ },
+ "common.sources": {
+  "en": "Sources",
+  "de": "Quellen",
+  "zh": "资料来源"
+ },
+ "common.sites": {
+  "en": "Sites",
+  "de": "Standorte",
+  "zh": "站点"
+ },
+ "common.links": {
+  "en": "Links",
+  "de": "Verbindungen",
+  "zh": "链路"
+ },
+ "common.type": {
+  "en": "Type",
+  "de": "Typ",
+  "zh": "类型"
+ },
+ "common.operator": {
+  "en": "Operator",
+  "de": "Betreiber",
+  "zh": "运营方"
+ },
+ "common.opened": {
+  "en": "Opened",
+  "de": "Eröffnet",
+  "zh": "投运年份"
+ },
+ "common.itPower": {
+  "en": "IT power",
+  "de": "IT-Leistung",
+  "zh": "IT 功率"
+ },
+ "common.myDataCenter": {
+  "en": "My data center",
+  "de": "Mein Rechenzentrum",
+  "zh": "您的数据中心"
+ },
+ "index.faq.famous.q": {
+  "en": "Which are the most famous data centers in the world?",
+  "de": "Welche sind die bekanntesten Rechenzentren der Welt?",
+  "zh": "全球最知名的数据中心有哪些？"
+ },
+ "index.faq.famous.a": {
+  "en": "This earth shows {SITES.length} of them, chosen for what they are known for: the largest hyperscale and AI campuses, record-efficient sites, supercomputers, internet exchanges and unusual locations such as mines and bunkers. Each has a page with its facts and sources.",
+  "de": "Dieser Globus zeigt {SITES.length} davon, ausgewählt danach, wofür sie bekannt sind: die größten Hyperscale- und KI-Campus, Standorte mit Rekordeffizienz, Supercomputer, Internetknoten und ungewöhnliche Orte wie Bergwerke und Bunker. Zu jedem gibt es eine eigene Seite mit Fakten und Quellen.",
+  "zh": "本地球视图收录其中 {SITES.length} 个，均按其知名之处入选：规模最大的超大规模与 AI 园区、能效创纪录的站点、超级计算机、互联网交换中心，以及矿井、地堡等特殊选址。每个站点均设有独立页面，列出基本信息与资料来源。"
+ },
+ "index.faq.latency.q": {
+  "en": "How is the latency between two data centers estimated?",
+  "de": "Wie wird die Latenz zwischen zwei Rechenzentren geschätzt?",
+  "zh": "两个数据中心之间的时延如何估算？"
+ },
+ "index.faq.latency.a": {
+  "en": "From the great-circle distance, multiplied by 1.5 for the real route of the fibre, at about 5 microseconds per kilometre one way. It is an estimate from public numbers, not a measured or operator figure.",
+  "de": "Aus der Großkreisentfernung, multipliziert mit 1,5 für den tatsächlichen Verlauf der Glasfaser, bei etwa 5 Mikrosekunden pro Kilometer in einer Richtung. Das ist eine Schätzung aus öffentlichen Zahlen, weder gemessen noch vom Betreiber angegeben.",
+  "zh": "以两地之间的大圆距离乘以 1.5，近似光纤的实际路由长度，再按单程每公里约 5 µs 计算。该结果为基于公开数据的估算值，既非实测值，也非运营商公布的数值。"
+ },
+ "index.faq.cut.q": {
+  "en": "What happens when you cut a link?",
+  "de": "Was passiert, wenn Sie eine Verbindung trennen?",
+  "zh": "切断一条链路会产生什么结果？"
+ },
+ "index.faq.cut.a": {
+  "en": "On an estate, cutting a link removes it from the network; sites with no other path are shown as isolated, and when a detour exists its estimated latency is shown. It shows the shape of the network as published, not the operator's real routing or protection.",
+  "de": "In einem Standortverbund entfernt das Trennen einer Verbindung diese aus dem Netz. Standorte ohne anderen Weg werden als isoliert angezeigt; gibt es einen Umweg, sehen Sie dessen geschätzte Latenz. Gezeigt wird die veröffentlichte Netzstruktur, nicht das tatsächliche Routing und Schutzkonzept des Betreibers.",
+  "zh": "在站点网络中切断一条链路，即将其从网络中移除。无其他路径可达的站点显示为孤立；存在绕行路径时，显示该路径的估算时延。结果反映的是公开资料中的网络结构，并非运营商的实际路由或保护机制。"
+ },
+ "index.faq.data.q": {
+  "en": "Can I use the data?",
+  "de": "Darf ich die Daten verwenden?",
+  "zh": "是否可以使用这些数据？"
+ },
+ "index.faq.data.a": {
+  "en": "Yes. The dataset is open under CC BY 4.0, as GeoJSON, CSV and DC Sim workbooks, with sources for every record.",
+  "de": "Ja. Der Datensatz ist offen (CC BY 4.0) und liegt als GeoJSON, CSV und Arbeitsmappen für DC Sim vor, mit Quellen zu jedem Eintrag.",
+  "zh": "可以。数据集以 CC BY 4.0 许可开放，提供 GeoJSON、CSV 和 DC Sim 工作簿格式，每条记录均附资料来源。"
+ },
+ "index.schema.description": {
+  "en": "{SITES.length} famous data centers and {ESTATES.length} estates on an interactive earth.",
+  "de": "{SITES.length} bekannte Rechenzentren und {ESTATES.length} Standortverbünde auf einem interaktiven Globus.",
+  "zh": "交互式地球上的 {SITES.length} 个全球知名数据中心及 {ESTATES.length} 个站点网络。"
+ },
+ "index.meta.title": {
+  "en": "Famous data centers of the world on a 3D earth — DC Sim",
+  "de": "Bekannte Rechenzentren der Welt auf einem 3D-Globus — DC Sim",
+  "zh": "3D 地球上的全球知名数据中心 — DC Sim"
+ },
+ "index.meta.description": {
+  "en": "{SITES.length} famous data centers and {ESTATES.length} cable and cloud estates on an interactive earth: facts, PUE and power, cut a link, compare two sites, find yours.",
+  "de": "Interaktiver Globus: {SITES.length} bekannte Rechenzentren, {ESTATES.length} Seekabel- und Cloud-Standortverbünde. Fakten, PUE, Leistung, Verbindung trennen, Standorte vergleichen, Ihres finden.",
+  "zh": "在交互式地球上查看 {SITES.length} 个全球知名数据中心及 {ESTATES.length} 个海缆与云站点网络：基本信息、PUE 与功率；可切断链路、对比两个站点，并定位您自己的数据中心。"
+ },
+ "index.h1": {
+  "en": "The world's famous data centers, on one earth",
+  "de": "Die bekannten Rechenzentren der Welt auf einem Globus",
+  "zh": "全球知名数据中心，呈现于同一地球视图"
+ },
+ "index.lede": {
+  "en": "{SITES.length} famous sites and {ESTATES.length} estates (submarine cables, cloud backbones, national compute networks) from public sources. Spin the earth, open a site, pick an estate and cut a link, compare two sites, or drop a pin on your own data center.",
+  "de": "{SITES.length} bekannte Standorte und {ESTATES.length} Standortverbünde (Seekabel, Cloud-Backbones, nationale Compute-Netze) aus öffentlichen Quellen. Drehen Sie den Globus, öffnen Sie einen Standort, wählen Sie einen Standortverbund und trennen Sie eine Verbindung, vergleichen Sie zwei Standorte oder markieren Sie Ihr eigenes Rechenzentrum.",
+  "zh": "基于公开来源，收录 {SITES.length} 个知名站点和 {ESTATES.length} 个站点网络（海缆、云骨干网、国家算力网络）。您可以旋转地球、查看站点详情、选择站点网络并切断链路、对比两个站点，或在您自己的数据中心位置添加标记。"
+ },
+ "index.poster.alt": {
+  "en": "The earth with the famous data centers as pins, Europe and Africa facing",
+  "de": "Der Globus mit den bekannten Rechenzentren als Markierungen, Blick auf Europa und Afrika",
+  "zh": "以标记点标出全球知名数据中心的地球，视角朝向欧洲与非洲"
+ },
+ "index.start": {
+  "en": "Spin the earth",
+  "de": "Globus drehen",
+  "zh": "旋转地球"
+ },
+ "index.tools.aria": {
+  "en": "Earth controls",
+  "de": "Globus-Steuerung",
+  "zh": "地球视图控件"
+ },
+ "index.tools.search": {
+  "en": "Search",
+  "de": "Suche",
+  "zh": "搜索"
+ },
+ "index.tools.searchPlaceholder": {
+  "en": "Name, operator, city",
+  "de": "Name, Betreiber, Stadt",
+  "zh": "名称、运营方、城市"
+ },
+ "index.tools.all": {
+  "en": "All",
+  "de": "Alle",
+  "zh": "全部"
+ },
+ "index.tools.region": {
+  "en": "Region",
+  "de": "Region",
+  "zh": "区域"
+ },
+ "index.tools.none": {
+  "en": "None",
+  "de": "Keine",
+  "zh": "无"
+ },
+ "index.tools.imaginedGroup": {
+  "en": "Imagined (fictional)",
+  "de": "Erdacht (fiktiv)",
+  "zh": "设想方案（虚构）"
+ },
+ "index.tools.next": {
+  "en": "Next famous site",
+  "de": "Nächster bekannter Standort",
+  "zh": "下一个知名站点"
+ },
+ "index.tools.photo": {
+  "en": "Photo earth",
+  "de": "Satellitenbild",
+  "zh": "卫星影像"
+ },
+ "index.tools.reset": {
+  "en": "Reset",
+  "de": "Zurücksetzen",
+  "zh": "重置"
+ },
+ "index.tools.where": {
+  "en": "Where's my data center?",
+  "de": "Wo liegt mein Rechenzentrum?",
+  "zh": "定位您的数据中心"
+ },
+ "index.tools.wherePlaceholder": {
+  "en": "City, or lat, lon",
+  "de": "Stadt oder Breite, Länge",
+  "zh": "城市，或“纬度, 经度”"
+ },
+ "index.tools.pin": {
+  "en": "Pin it",
+  "de": "Markieren",
+  "zh": "添加标记"
+ },
+ "index.hint": {
+  "en": "Click a pin to open a site. Shift-click two pins to compare. With an estate open, click a link to cut it or right-click a site to lose it. Every what-if is estimated from public numbers.",
+  "de": "Klicken Sie auf eine Markierung, um einen Standort zu öffnen. Mit Umschalt-Klick auf zwei Markierungen vergleichen Sie die beiden Standorte. Bei geöffnetem Standortverbund trennen Sie per Klick eine Verbindung oder lassen per Rechtsklick einen Standort ausfallen. Jedes Was-wäre-wenn wird aus öffentlichen Zahlen geschätzt.",
+  "zh": "点击标记点即可查看站点详情。按住 Shift 依次点击两个标记点即可对比。打开站点网络后，点击链路即可将其切断，右键点击站点即可使其失效。所有推演结果均为基于公开数据的估算值。"
+ },
+ "index.note": {
+  "en": "Latency and what-ifs are estimates from public numbers (route = great circle × 1.5, 5 µs per km), not operators' routing. Base map: Natural Earth; photo earth: NASA Blue and Black Marble; cities: GeoNames.",
+  "de": "Latenz und Was-wäre-wenn-Ergebnisse sind Schätzungen aus öffentlichen Zahlen (Route = Großkreis × 1,5, 5 µs pro km), nicht das Routing der Betreiber. Basiskarte: Natural Earth; Satellitenbild: NASA Blue Marble und Black Marble; Städte: GeoNames.",
+  "zh": "时延与故障推演结果均为基于公开数据的估算值（路由长度 = 大圆距离 × 1.5，每公里 5 µs），并非运营商的实际路由。底图：Natural Earth；卫星影像：NASA Blue Marble 与 Black Marble；城市数据：GeoNames。"
+ },
+ "index.list.h2": {
+  "en": "All {SITES.length} sites",
+  "de": "Alle {SITES.length} Standorte",
+  "zh": "全部 {SITES.length} 个站点"
+ },
+ "index.list.show": {
+  "en": "Show on earth",
+  "de": "Auf dem Globus zeigen",
+  "zh": "在地球视图中显示"
+ },
+ "index.estates.h2": {
+  "en": "{ESTATES.length} estates",
+  "de": "{ESTATES.length} Standortverbünde",
+  "zh": "{ESTATES.length} 个站点网络"
+ },
+ "index.estates.open": {
+  "en": "Open on earth",
+  "de": "Auf dem Globus öffnen",
+  "zh": "在地球视图中打开"
+ },
+ "index.imagined.h2": {
+  "en": "Imagined giants",
+  "de": "Erdachte Giganten",
+  "zh": "设想中的超大型数据中心"
+ },
+ "index.imagined.note": {
+  "en": "{IMAGINED_LABEL}. Shown on the earth as violet pins.",
+  "de": "{IMAGINED_LABEL}. Auf dem Globus als violette Markierungen dargestellt.",
+  "zh": "{IMAGINED_LABEL}。在地球视图中以紫色标记点显示。"
+ },
+ "index.btn.dataset": {
+  "en": "The open dataset (CC BY 4.0)",
+  "de": "Der offene Datensatz (CC BY 4.0)",
+  "zh": "开放数据集（CC BY 4.0）"
+ },
+ "index.btn.product": {
+  "en": "Your own estate on this earth: DC Sim",
+  "de": "Ihr eigener Standortverbund auf diesem Globus: DC Sim",
+  "zh": "将您自己的站点网络呈现在地球视图中：DC Sim"
+ },
+ "script.cta": {
+  "en": "Do this with your own racks, power chain and cables: <a href=\"{box.dataset.product}\">DC Sim</a>. Estimated from public numbers.",
+  "de": "Spielen Sie das mit Ihren eigenen Racks, Ihrer Stromversorgungskette und Ihren Kabeln durch: <a href=\"{box.dataset.product}\">DC Sim</a>. Aus öffentlichen Zahlen geschätzt.",
+  "zh": "以您自己的机柜、供配电链路和线缆开展同样的分析：<a href=\"{box.dataset.product}\">DC Sim</a>。以上结果基于公开数据估算。"
+ },
+ "script.site.openPage": {
+  "en": "Open the page: facts and sources",
+  "de": "Seite öffnen: Fakten und Quellen",
+  "zh": "查看站点页面：基本信息与资料来源"
+ },
+ "script.site.fromPin": {
+  "en": "From your pin: {f0(d)} km · ≈ {(ms(d) * 2).toFixed(1)} ms round trip (estimated)",
+  "de": "Von Ihrer Markierung: {f0(d)} km · ≈ {(ms(d) * 2).toFixed(1)} ms Umlaufzeit (geschätzt)",
+  "zh": "距您的标记点：{f0(d)} km · 往返时延 ≈ {(ms(d) * 2).toFixed(1)} ms（估算）"
+ },
+ "script.cmp.title": {
+  "en": "Compare two sites",
+  "de": "Zwei Standorte vergleichen",
+  "zh": "两站点对比"
+ },
+ "script.cmp.distance": {
+  "en": "Distance",
+  "de": "Entfernung",
+  "zh": "距离"
+ },
+ "script.cmp.distanceValue": {
+  "en": "{f0(d)} km (great circle)",
+  "de": "{f0(d)} km (Großkreis)",
+  "zh": "{f0(d)} km（大圆距离）"
+ },
+ "script.cmp.roundTrip": {
+  "en": "Round trip",
+  "de": "Umlaufzeit (RTT)",
+  "zh": "往返时延"
+ },
+ "script.cmp.roundTripValue": {
+  "en": "≈ {(ms(d) * 2).toFixed(1)} ms (estimated)",
+  "de": "≈ {(ms(d) * 2).toFixed(1)} ms (geschätzt)",
+  "zh": "≈ {(ms(d) * 2).toFixed(1)} ms（估算）"
+ },
+ "script.imag.banner": {
+  "en": "◇ {esc(g.label)}. No operator plans this.",
+  "de": "◇ {esc(g.label)}. Kein Betreiber plant das.",
+  "zh": "◇ {esc(g.label)}。没有任何运营方规划建设此项目。"
+ },
+ "script.imag.kicker": {
+  "en": "Imagined giant · {esc(g.c)}",
+  "de": "Erdachter Gigant · {esc(g.c)}",
+  "zh": "设想中的超大型数据中心 · {esc(g.c)}"
+ },
+ "script.imag.pueEngine": {
+  "en": "{g.pue} (engine)",
+  "de": "{g.pue} (Engine-Wert)",
+  "zh": "{g.pue}（仿真引擎计算值）"
+ },
+ "script.imag.openEstate": {
+  "en": "Open its estate",
+  "de": "Zugehörigen Standortverbund öffnen",
+  "zh": "查看其站点网络"
+ },
+ "script.imag.details": {
+  "en": "Numbers, assumptions and what breaks",
+  "de": "Zahlen, Annahmen und was ausfällt",
+  "zh": "关键数据、假设条件与失效环节"
+ },
+ "script.estate.linkCut": {
+  "en": "{esc(l.a)} ↔ {esc(l.b)} cut: ",
+  "de": "{esc(l.a)} ↔ {esc(l.b)} getrennt: ",
+  "zh": "{esc(l.a)} ↔ {esc(l.b)} 切断后："
+ },
+ "script.estate.noPath": {
+  "en": "no other path",
+  "de": "kein anderer Weg",
+  "zh": "无其他可用路径"
+ },
+ "script.estate.detour": {
+  "en": "detour {f0(r)} km, ≈ {(r * 0.005).toFixed(1)} ms one way instead of ≈ {(direct * 0.005).toFixed(1)} ms",
+  "de": "Umweg {f0(r)} km, ≈ {(r * 0.005).toFixed(1)} ms in eine Richtung statt ≈ {(direct * 0.005).toFixed(1)} ms",
+  "zh": "绕行路径 {f0(r)} km，单程时延 ≈ {(r * 0.005).toFixed(1)} ms，直连时为 ≈ {(direct * 0.005).toFixed(1)} ms"
+ },
+ "script.estate.counts": {
+  "en": " · {e.s.length} sites · {e.l.length} links",
+  "de": " · {e.s.length} Standorte · {e.l.length} Verbindungen",
+  "zh": " · {e.s.length} 个站点 · {e.l.length} 条链路"
+ },
+ "script.estate.whatIf": {
+  "en": "<strong>What-if:</strong> {st.cut.size} link(s) cut, {st.lose.size} site(s) lost.",
+  "de": "<strong>Was-wäre-wenn:</strong> {st.cut.size} Verbindung(en) getrennt, {st.lose.size} Standort(e) ausgefallen.",
+  "zh": "<strong>故障推演：</strong>已切断 {st.cut.size} 条链路，{st.lose.size} 个站点失效。"
+ },
+ "script.estate.isolated": {
+  "en": "Isolated: {g.isolated.map(esc).join(\", \")}",
+  "de": "Isoliert: {g.isolated.map(esc).join(\", \")}",
+  "zh": "被孤立站点：{g.isolated.map(esc).join(\", \")}"
+ },
+ "script.estate.allConnected": {
+  "en": " Every remaining site still has a path.",
+  "de": " Alle verbleibenden Standorte sind weiterhin erreichbar.",
+  "zh": "其余站点均仍有可达路径。"
+ },
+ "script.estate.resetWhatIfs": {
+  "en": "Reset what-ifs",
+  "de": "Was-wäre-wenn zurücksetzen",
+  "zh": "重置故障推演"
+ },
+ "script.estate.hint": {
+  "en": "Click a link on the earth to cut it, right-click (or long-press) a site to lose it. Or use the buttons:",
+  "de": "Klicken Sie auf dem Globus eine Verbindung an, um sie zu trennen. Mit Rechtsklick (oder langem Drücken) lassen Sie einen Standort ausfallen. Oder nutzen Sie die Schaltflächen:",
+  "zh": "在地球视图中点击链路即可将其切断，右键点击（或长按）站点即可使其失效。也可使用以下按钮："
+ },
+ "script.estate.restore": {
+  "en": "Restore",
+  "de": "Wiederherstellen:",
+  "zh": "恢复"
+ },
+ "script.estate.cut": {
+  "en": "Cut",
+  "de": "Trennen:",
+  "zh": "切断"
+ },
+ "script.estate.unprotected": {
+  "en": " ·unprotected",
+  "de": " · ungeschützt",
+  "zh": " ·无保护"
+ },
+ "script.estate.lose": {
+  "en": "Lose",
+  "de": "Ausfallen lassen:",
+  "zh": "模拟失效"
+ },
+ "script.estate.imaginedBanner": {
+  "en": "◇ Imagined — a fictional design built from public numbers. No operator plans this.",
+  "de": "◇ Erdacht – ein fiktiver Entwurf auf Basis öffentlicher Zahlen. Kein Betreiber plant das.",
+  "zh": "◇ 设想方案：基于公开数据构建的虚构设计。没有任何运营方规划建设此项目。"
+ },
+ "script.estate.openImagined": {
+  "en": "Open the imagined giant: numbers, assumptions, what breaks",
+  "de": "Erdachten Giganten öffnen: Zahlen, Annahmen, was ausfällt",
+  "zh": "查看设想中的超大型数据中心：关键数据、假设条件与失效环节"
+ },
+ "script.estate.openPage": {
+  "en": "Open the estate page: links table and sources",
+  "de": "Seite des Standortverbunds öffnen: Verbindungstabelle und Quellen",
+  "zh": "查看站点网络页面：链路表与资料来源"
+ },
+ "script.me.yourPin": {
+  "en": "Your pin · {esc(st.me.label)}",
+  "de": "Ihre Markierung · {esc(st.me.label)}",
+  "zh": "您的标记点 · {esc(st.me.label)}"
+ },
+ "script.me.nearest": {
+  "en": "Nearest famous data centers",
+  "de": "Nächstgelegene bekannte Rechenzentren",
+  "zh": "距离最近的知名数据中心"
+ },
+ "script.me.rtt": {
+  "en": " · ≈ {(ms(d) * 2).toFixed(1)} ms RTT",
+  "de": " · ≈ {(ms(d) * 2).toFixed(1)} ms RTT",
+  "zh": " · 往返时延 ≈ {(ms(d) * 2).toFixed(1)} ms"
+ },
+ "script.me.nearestEstates": {
+  "en": "Nearest estates",
+  "de": "Nächstgelegene Standortverbünde",
+  "zh": "距离最近的站点网络"
+ },
+ "script.me.copyLink": {
+  "en": "Copy link",
+  "de": "Link kopieren",
+  "zh": "复制链接"
+ },
+ "script.tip.imagined": {
+  "en": "Imagined — fictional design from public numbers",
+  "de": "Erdacht – fiktiver Entwurf aus öffentlichen Zahlen",
+  "zh": "设想方案：基于公开数据的虚构设计"
+ },
+ "script.tip.imaginedMw": {
+  "en": "{p.mw.toLocaleString(\"en-US\")} MW IT",
+  "de": "{p.mw.toLocaleString(\"en-US\")} MW IT-Last",
+  "zh": "IT {p.mw.toLocaleString(\"en-US\")} MW"
+ },
+ "script.tip.lost": {
+  "en": " · lost",
+  "de": " · ausgefallen",
+  "zh": " · 已失效"
+ },
+ "script.tip.isolated": {
+  "en": " · isolated",
+  "de": " · isoliert",
+  "zh": " · 已孤立"
+ },
+ "script.tip.notProtected": {
+  "en": " · not protected",
+  "de": " · nicht geschützt",
+  "zh": " · 无保护"
+ },
+ "script.tip.cut": {
+  "en": "cut",
+  "de": "getrennt",
+  "zh": "已切断"
+ },
+ "script.tip.clickToCut": {
+  "en": "click to cut",
+  "de": "zum Trennen klicken",
+  "zh": "点击切断"
+ },
+ "script.resetHint": {
+  "en": "Click a pin to open a site. Shift-click two pins to compare.",
+  "de": "Klicken Sie auf eine Markierung, um einen Standort zu öffnen. Mit Umschalt-Klick auf zwei Markierungen vergleichen Sie die beiden Standorte.",
+  "zh": "点击标记点即可查看站点详情。按住 Shift 依次点击两个标记点即可对比。"
+ },
+ "script.cityNotFound": {
+  "en": "City not found in the bundled list of the 1,000 largest cities. Try \"lat, lon\", for example 52.37, 4.90.",
+  "de": "Stadt nicht in der mitgelieferten Liste der 1.000 größten Städte gefunden. Geben Sie „Breite, Länge“ ein, zum Beispiel 52.37, 4.90.",
+  "zh": "内置的 1,000 个最大城市列表中未找到该城市。请改为输入“纬度, 经度”，例如 52.37, 4.90。"
+ },
+ "script.copied": {
+  "en": "Copied",
+  "de": "Kopiert",
+  "zh": "已复制"
+ },
+ "script.loading": {
+  "en": "Loading the earth…",
+  "de": "Globus wird geladen …",
+  "zh": "正在加载地球视图…"
+ },
+ "script.loadFailed": {
+  "en": "The earth could not load. Try again",
+  "de": "Der Globus konnte nicht geladen werden. Erneut versuchen",
+  "zh": "地球视图加载失败，请重试"
+ },
+ "map.credit": {
+  "en": "map: Natural Earth (public domain)",
+  "de": "Karte: Natural Earth (gemeinfrei)",
+  "zh": "地图：Natural Earth（公有领域）"
+ },
+ "site.estimatedTag": {
+  "en": " (estimated)",
+  "de": " (geschätzt)",
+  "zh": "（估算）"
+ },
+ "site.facts.owner": {
+  "en": "Owner",
+  "de": "Eigentümer",
+  "zh": "业主"
+ },
+ "site.facts.location": {
+  "en": "Location",
+  "de": "Standort",
+  "zh": "位置"
+ },
+ "site.facts.status": {
+  "en": "Status",
+  "de": "Status",
+  "zh": "状态"
+ },
+ "site.facts.totalPower": {
+  "en": "Total power",
+  "de": "Gesamtleistung",
+  "zh": "总功率"
+ },
+ "site.facts.siteArea": {
+  "en": "Site area",
+  "de": "Grundstücksfläche",
+  "zh": "占地面积"
+ },
+ "site.facts.buildingArea": {
+  "en": "Building area",
+  "de": "Gebäudefläche",
+  "zh": "建筑面积"
+ },
+ "site.facts.cooling": {
+  "en": "Cooling",
+  "de": "Kühlung",
+  "zh": "制冷方式"
+ },
+ "site.facts.power": {
+  "en": "Power",
+  "de": "Stromversorgung",
+  "zh": "供电"
+ },
+ "site.facts.certifications": {
+  "en": "Certifications",
+  "de": "Zertifizierungen",
+  "zh": "认证"
+ },
+ "site.faq.famous.q": {
+  "en": "What is {s.name} famous for?",
+  "de": "Wofür ist {s.name} bekannt?",
+  "zh": "{s.name} 因何知名？"
+ },
+ "site.faq.where.q": {
+  "en": "Where is {s.name}?",
+  "de": "Wo liegt {s.name}?",
+  "zh": "{s.name} 位于何处？"
+ },
+ "site.faq.where.a": {
+  "en": "{s.name} is in {where} ({s.lat.toFixed(3)}, {s.lon.toFixed(3)}).",
+  "de": "{s.name} liegt in {where} ({s.lat.toFixed(3)}, {s.lon.toFixed(3)}).",
+  "zh": "{s.name} 位于 {where}（{s.lat.toFixed(3)}, {s.lon.toFixed(3)}）。"
+ },
+ "site.faq.where.aOperator": {
+  "en": " It is operated by {s.operator}.",
+  "de": " Betreiber ist {s.operator}.",
+  "zh": "运营方为 {s.operator}。"
+ },
+ "site.faq.power.q": {
+  "en": "How much power does {s.name} use?",
+  "de": "Wie viel Strom verbraucht {s.name}?",
+  "zh": "{s.name} 的用电规模是多少？"
+ },
+ "site.faq.power.a": {
+  "en": "About {fmt(s.it_mw)} MW of IT load",
+  "de": "Etwa {fmt(s.it_mw)} MW IT-Last",
+  "zh": "IT 负载约 {fmt(s.it_mw)} MW"
+ },
+ "site.faq.power.aTotal": {
+  "en": " and {fmt(s.total_mw)} MW in total",
+  "de": " und {fmt(s.total_mw)} MW insgesamt",
+  "zh": "，总功率 {fmt(s.total_mw)} MW"
+ },
+ "site.faq.power.aSources": {
+  "en": ", according to the sources listed on this page",
+  "de": ", laut den auf dieser Seite genannten Quellen",
+  "zh": "，依据本页所列资料来源"
+ },
+ "site.faq.pue.q": {
+  "en": "What is the PUE of {s.name}?",
+  "de": "Welchen PUE-Wert hat {s.name}?",
+  "zh": "{s.name} 的 PUE 是多少？"
+ },
+ "site.schema.datasetName": {
+  "en": "{s.name}: public facts",
+  "de": "{s.name}: öffentliche Fakten",
+  "zh": "{s.name}：公开资料"
+ },
+ "site.meta.titleLong": {
+  "en": "{s.name}: facts, power, PUE — DC Sim world",
+  "de": "{s.name}: Fakten, Leistung, PUE — DC Sim Welt",
+  "zh": "{s.name}：基本信息、功率与 PUE — DC Sim 全球数据中心"
+ },
+ "site.meta.titleShort": {
+  "en": "{s.name}: facts and power",
+  "de": "{s.name}: Fakten und Leistung",
+  "zh": "{s.name}：基本信息与功率"
+ },
+ "site.meta.descriptionFallback": {
+  "en": "{s.name} in {where}.",
+  "de": "{s.name} in {where}.",
+  "zh": "{s.name}，位于 {where}。"
+ },
+ "site.photoCredit": {
+  "en": "Photo: {s.image!.author}, {s.image!.license}, via <a href=\"{s.image!.source_page}\" rel=\"noopener\">Wikimedia Commons</a>",
+  "de": "Foto: {s.image!.author}, {s.image!.license}, über <a href=\"{s.image!.source_page}\" rel=\"noopener\">Wikimedia Commons</a>",
+  "zh": "照片：{s.image!.author}，{s.image!.license}，来源：<a href=\"{s.image!.source_page}\" rel=\"noopener\">Wikimedia Commons</a>"
+ },
+ "site.mapTitle": {
+  "en": "{s.name} on the map",
+  "de": "{s.name} auf der Karte",
+  "zh": "{s.name} 位置图"
+ },
+ "site.expansions": {
+  "en": "Expansions",
+  "de": "Erweiterungen",
+  "zh": "扩建情况"
+ },
+ "site.seeOnEarth": {
+  "en": "See it on the earth",
+  "de": "Auf dem Globus ansehen",
+  "zh": "在地球视图中查看"
+ },
+ "site.confidence": {
+  "en": "Record confidence: {s.confidence}. Values marked \"estimated\" are estimates in the source data.",
+  "de": "Verlässlichkeit des Eintrags: {s.confidence}. Als „geschätzt“ markierte Werte sind in den Quelldaten selbst Schätzungen.",
+  "zh": "记录可信度：{s.confidence}。标注为“估算”的数值，在源数据中即为估算值。"
+ },
+ "site.estatesH2": {
+  "en": "Estates that include it",
+  "de": "Standortverbünde mit diesem Standort",
+  "zh": "所属站点网络"
+ },
+ "site.partOf": {
+  "en": "Part of the open <a href=\"{u(\"world/data/\")}\">famous data centers dataset</a> (CC BY 4.0). Updated {s.updated}.",
+  "de": "Teil des offenen <a href=\"{u(\"world/data/\")}\">Datensatzes bekannter Rechenzentren</a> (CC BY 4.0). Aktualisiert: {s.updated}."
+ },
+ "site.correctionPrompt": {
+  "en": "A correction?",
+  "de": "Eine Korrektur?"
+ },
+ "site.correctionSubject": {
+  "en": "Correction: {s.name}",
+  "de": "Correction: {s.name}",
+  "zh": "更正：{s.name}"
+ },
+ "site.cta": {
+  "en": "Your own sites, power chain and links on this earth, and what fails with what: <a href=\"{u(\"product/\")}\">DC Sim</a>.",
+  "de": "Ihre eigenen Standorte, Stromversorgungsketten und Verbindungen auf diesem Globus, inklusive der Ausfallabhängigkeiten: <a href=\"{u(\"product/\")}\">DC Sim</a>.",
+  "zh": "将您自己的站点、供配电链路和网络链路呈现在地球视图中，并查看哪些环节会随之失效：<a href=\"{u(\"product/\")}\">DC Sim</a>。"
+ },
+ "estate.faq.famous.q": {
+  "en": "What is {e.name} famous for?",
+  "de": "Wofür ist {e.name} bekannt?",
+  "zh": "{e.name} 因何知名？"
+ },
+ "estate.faq.count.q": {
+  "en": "How many sites and links does {e.name} have in this dataset?",
+  "de": "Wie viele Standorte und Verbindungen hat {e.name} in diesem Datensatz?",
+  "zh": "{e.name} 在本数据集中包含多少站点和链路？"
+ },
+ "estate.faq.count.a": {
+  "en": "{e.sites.length} sites and {e.links.length} links, of which {unprotected} are recorded as not protected. Figures are from the public sources listed on the page.",
+  "de": "{e.sites.length} Standorte und {e.links.length} Verbindungen, davon {unprotected} als nicht geschützt erfasst. Die Zahlen stammen aus den öffentlichen Quellen, die auf dieser Seite genannt sind.",
+  "zh": "共 {e.sites.length} 个站点、{e.links.length} 条链路，其中 {unprotected} 条记录为无保护。数据来自本页所列公开来源。"
+ },
+ "estate.faq.operator.q": {
+  "en": "Who operates {e.name}?",
+  "de": "Wer betreibt {e.name}?",
+  "zh": "{e.name} 的运营方是谁？"
+ },
+ "estate.sitesAndLinks": {
+  "en": "{e.name}: sites and links",
+  "de": "{e.name}: Standorte und Verbindungen",
+  "zh": "{e.name}：站点与链路"
+ },
+ "estate.meta.titleLong": {
+  "en": "{e.name}: sites, links and map — DC Sim world",
+  "de": "{e.name}: Standorte, Verbindungen, Karte — DC Sim Welt",
+  "zh": "{e.name}：站点、链路与地图 — DC Sim 全球数据中心"
+ },
+ "estate.mapTitle": {
+  "en": "{e.name}: {e.sites.length} sites, {e.links.length} links (dashed = not protected)",
+  "de": "{e.name}: {e.sites.length} Standorte, {e.links.length} Verbindungen (gestrichelt = nicht geschützt)",
+  "zh": "{e.name}：{e.sites.length} 个站点，{e.links.length} 条链路（虚线表示无保护）"
+ },
+ "estate.openOnEarth": {
+  "en": "Open it on the earth: cut a link, lose a site",
+  "de": "Auf dem Globus öffnen: Verbindung trennen, Standort ausfallen lassen",
+  "zh": "在地球视图中打开：切断链路、使站点失效"
+ },
+ "estate.workbook": {
+  "en": "Workbook (DC Sim template v1.4)",
+  "de": "Arbeitsmappe (DC-Sim-Vorlage v1.4)",
+  "zh": "工作簿（DC Sim 导入模板 v1.4）"
+ },
+ "estate.th.code": {
+  "en": "Code",
+  "de": "Kürzel",
+  "zh": "代码"
+ },
+ "estate.th.place": {
+  "en": "Place",
+  "de": "Ort",
+  "zh": "所在地"
+ },
+ "estate.th.role": {
+  "en": "Role",
+  "de": "Rolle",
+  "zh": "站点角色"
+ },
+ "estate.th.provider": {
+  "en": "Provider",
+  "de": "Anbieter",
+  "zh": "服务商"
+ },
+ "estate.th.from": {
+  "en": "From",
+  "de": "Von",
+  "zh": "起点"
+ },
+ "estate.th.to": {
+  "en": "To",
+  "de": "Nach",
+  "zh": "终点"
+ },
+ "estate.th.capacity": {
+  "en": "Capacity",
+  "de": "Kapazität",
+  "zh": "容量"
+ },
+ "estate.th.length": {
+  "en": "Length",
+  "de": "Länge",
+  "zh": "长度"
+ },
+ "estate.th.year": {
+  "en": "Year",
+  "de": "Jahr",
+  "zh": "年份"
+ },
+ "estate.th.protected": {
+  "en": "Protected",
+  "de": "Geschützt",
+  "zh": "有无保护"
+ },
+ "estate.th.latency": {
+  "en": "Est. one-way latency",
+  "de": "Geschätzte Latenz (einfache Strecke)",
+  "zh": "单程时延（估算）"
+ },
+ "estate.greatCircle": {
+  "en": "≈ {fmt(Math.round(l.d))} km (great circle)",
+  "de": "≈ {fmt(Math.round(l.d))} km (Großkreis)",
+  "zh": "≈ {fmt(Math.round(l.d))} km（大圆距离）"
+ },
+ "estate.latencyNote": {
+  "en": "Latency marked ≈ is our estimate from the great-circle distance × 1.5 at 5 µs per km, not the operator's figure.",
+  "de": "Mit ≈ markierte Latenzen sind unsere Schätzung aus der Großkreisentfernung × 1,5 bei 5 µs pro km, keine Angabe des Betreibers.",
+  "zh": "标注 ≈ 的时延为我们的估算值：按大圆距离 × 1.5、每公里 5 µs 计算，并非运营商公布的数值。"
+ },
+ "estate.partOf": {
+  "en": "Part of the open <a href=\"{u(\"world/data/\")}\">famous data centers dataset</a> (CC BY 4.0). Updated {e.updated}.",
+  "de": "Teil des offenen <a href=\"{u(\"world/data/\")}\">Datensatzes bekannter Rechenzentren</a> (CC BY 4.0). Aktualisiert: {e.updated}.",
+  "zh": "本记录属于开放的<a href=\"{u(\"world/data/\")}\">全球知名数据中心数据集</a>（CC BY 4.0）。更新于 {e.updated}。"
+ },
+ "estate.cta": {
+  "en": "Your own estate on this earth, with the halls, power chains and links behind it: <a href=\"{u(\"product/\")}\">DC Sim</a>.",
+  "de": "Ihr eigener Standortverbund auf diesem Globus, mit den Hallen, Stromversorgungsketten und Verbindungen dahinter: <a href=\"{u(\"product/\")}\">DC Sim</a>.",
+  "zh": "将您自己的站点网络呈现在地球视图中，并深入其背后的机房、供配电链路与网络链路：<a href=\"{u(\"product/\")}\">DC Sim</a>。"
+ },
+ "estates.meta.title": {
+  "en": "Famous data center estates: cables and backbones — DC Sim",
+  "de": "Bekannte Standortverbünde: Seekabel und Backbones — DC Sim",
+  "zh": "全球知名数据中心站点网络：海缆与骨干网 — DC Sim"
+ },
+ "estates.meta.description": {
+  "en": "{ESTATES.length} famous estates from public sources: submarine cable systems, cloud backbones, national compute networks, exchanges and financial routes, each with its sites and links.",
+  "de": "{ESTATES.length} bekannte Standortverbünde aus öffentlichen Quellen: Seekabel, Cloud-Backbones, nationale Compute-Netze, Internetknoten und Finanzrouten, je mit Standorten und Links.",
+  "zh": "基于公开来源的 {ESTATES.length} 个知名站点网络：海缆系统、云骨干网、国家算力网络、交换中心和金融专线，均列出站点与链路。"
+ },
+ "estates.eyebrow": {
+  "en": "World · estates",
+  "de": "Welt · Standortverbünde",
+  "zh": "全球 · 站点网络"
+ },
+ "estates.h1": {
+  "en": "Famous estates: the networks between data centers",
+  "de": "Bekannte Standortverbünde: die Netze zwischen Rechenzentren",
+  "zh": "知名站点网络：数据中心之间的互联网络"
+ },
+ "estates.lede": {
+  "en": "{ESTATES.length} estates from public sources, each with its sites, links, capacities and whether a link is protected. Open one on the earth to cut a link or lose a site and see what gets isolated (our estimate from public numbers), or download it as a DC Sim workbook.",
+  "de": "{ESTATES.length} Standortverbünde aus öffentlichen Quellen, jeweils mit Standorten, Verbindungen, Kapazitäten und der Angabe, ob eine Verbindung geschützt ist. Öffnen Sie einen Standortverbund auf dem Globus, trennen Sie eine Verbindung oder lassen Sie einen Standort ausfallen und sehen Sie, was isoliert wird (unsere Schätzung aus öffentlichen Zahlen). Oder laden Sie ihn als Arbeitsmappe für DC Sim herunter.",
+  "zh": "基于公开来源，收录 {ESTATES.length} 个站点网络，均列出站点、链路、容量及各链路有无保护。在地球视图中打开任一站点网络，切断链路或使站点失效，即可查看哪些站点被孤立（基于公开数据估算）；也可下载为 DC Sim 工作簿。"
+ },
+ "data.schema.description": {
+  "en": "{SITES.length} famous data center sites and {ESTATES.length} estates (cable systems, cloud backbones, national compute networks, exchanges, financial routes) with coordinates, operator, opening year, power, PUE, cooling, a short story and sources.",
+  "de": "{SITES.length} bekannte Rechenzentrumsstandorte und {ESTATES.length} Standortverbünde (Seekabelsysteme, Cloud-Backbones, nationale Compute-Netze, Internetknoten, Finanzmarkt-Routen) mit Koordinaten, Betreiber, Eröffnungsjahr, Leistung, PUE, Kühlung, einer kurzen Geschichte und Quellen.",
+  "zh": "{SITES.length} 个全球知名数据中心站点及 {ESTATES.length} 个站点网络（海缆系统、云骨干网、国家算力网络、交换中心、金融专线），包含坐标、运营方、投运年份、功率、PUE、制冷方式、简要背景介绍及资料来源。"
+ },
+ "data.schema.keyword.dataCenters": {
+  "en": "data centers",
+  "de": "Rechenzentren",
+  "zh": "数据中心"
+ },
+ "data.schema.keyword.submarineCables": {
+  "en": "submarine cables",
+  "de": "Seekabel",
+  "zh": "海缆"
+ },
+ "data.schema.keyword.aiDataCenters": {
+  "en": "AI data centers",
+  "de": "KI-Rechenzentren",
+  "zh": "AI 数据中心"
+ },
+ "data.meta.title": {
+  "en": "Open dataset: famous data centers of the world (CC BY)",
+  "de": "Offener Datensatz: bekannte Rechenzentren der Welt (CC BY)",
+  "zh": "开放数据集：全球知名数据中心（CC BY）"
+ },
+ "data.meta.description": {
+  "en": "{SITES.length} famous data centers and {ESTATES.length} estates as GeoJSON, CSV and DC Sim workbooks, with sources for every record. Free under CC BY 4.0.",
+  "de": "{SITES.length} bekannte Rechenzentren und {ESTATES.length} Standortverbünde als GeoJSON, CSV und Arbeitsmappen für DC Sim, mit Quellen für jeden Eintrag. Frei nutzbar unter CC BY 4.0.",
+  "zh": "{SITES.length} 个全球知名数据中心及 {ESTATES.length} 个站点网络，提供 GeoJSON、CSV 和 DC Sim 工作簿格式，每条记录均附资料来源。依据 CC BY 4.0 许可免费使用。"
+ },
+ "data.crumb": {
+  "en": "Open dataset",
+  "de": "Offener Datensatz",
+  "zh": "开放数据集"
+ },
+ "data.h1": {
+  "en": "Famous data centers of the world: the open dataset",
+  "de": "Bekannte Rechenzentren der Welt: der offene Datensatz",
+  "zh": "全球知名数据中心：开放数据集"
+ },
+ "data.lede": {
+  "en": "{SITES.length} famous data center sites and {ESTATES.length} estates, each record with coordinates, operator, opening year, power, PUE, cooling, a short story, notable facts and at least two public sources. Free to use under <a href=\"https://creativecommons.org/licenses/by/4.0/\" rel=\"noopener\">CC BY 4.0</a> with a link to this page.",
+  "de": "{SITES.length} bekannte Rechenzentrumsstandorte und {ESTATES.length} Standortverbünde, jeder Eintrag mit Koordinaten, Betreiber, Eröffnungsjahr, Leistung, PUE, Kühlung, einer kurzen Geschichte, bemerkenswerten Fakten und mindestens zwei öffentlichen Quellen. Frei nutzbar unter <a href=\"https://creativecommons.org/licenses/by/4.0/\" rel=\"noopener\">CC BY 4.0</a> mit einem Link auf diese Seite.",
+  "zh": "收录 {SITES.length} 个全球知名数据中心站点和 {ESTATES.length} 个站点网络。每条记录均包含坐标、运营方、投运年份、功率、PUE、制冷方式、简要背景介绍、主要特点，以及至少两个公开来源。依据 <a href=\"https://creativecommons.org/licenses/by/4.0/\" rel=\"noopener\">CC BY 4.0</a> 许可免费使用，使用时须附本页链接。"
+ },
+ "data.downloads.h2": {
+  "en": "Downloads",
+  "de": "Downloads",
+  "zh": "下载"
+ },
+ "data.downloads.geojson": {
+  "en": ": every site as a GeoJSON point with its properties",
+  "de": ": jeder Standort als GeoJSON-Punkt mit seinen Eigenschaften",
+  "zh": "：每个站点为一个 GeoJSON 点要素，附带其属性字段"
+ },
+ "data.downloads.csv": {
+  "en": ": the same sites as a flat table",
+  "de": ": dieselben Standorte als flache Tabelle",
+  "zh": "：同一批站点，以二维表格形式提供"
+ },
+ "data.downloads.workbooks": {
+  "en": "Estate workbooks (DC Sim template v1.4, Sites and Links sheets): ",
+  "de": "Arbeitsmappen der Standortverbünde (DC-Sim-Vorlage v1.4, Tabellenblätter Sites und Links): ",
+  "zh": "站点网络工作簿（DC Sim 导入模板 v1.4，含 Sites 与 Links 工作表）："
+ },
+ "data.siteRecord.h2": {
+  "en": "What a site record holds",
+  "de": "Was ein Eintrag zu einem Standort enthält",
+  "zh": "站点记录包含的字段"
+ },
+ "data.siteRecord.p": {
+  "en": "<code>id, name, operator, owner, tenant_type</code> (hyperscale, colocation, AI, HPC, research, enterprise), <code>city, country, region, lat, lon</code> with the coordinate source, <code>year_opened, status, expansions, site_area_m2, building_area_m2, it_mw, total_mw, pue</code> (value and whether reported or estimated), <code>cooling, power, certifications, famous_for, notable, story, image</code> (only CC-licensed, with author and licence), <code>sources</code> (URL, title, publisher, date), <code>confidence</code> and the list of fields that are <code>estimated</code>.",
+  "de": "<code>id, name, operator, owner, tenant_type</code> (hyperscale, colocation, AI, HPC, research, enterprise), <code>city, country, region, lat, lon</code> mit der Quelle der Koordinaten, <code>year_opened, status, expansions, site_area_m2, building_area_m2, it_mw, total_mw, pue</code> (Wert und ob angegeben oder geschätzt), <code>cooling, power, certifications, famous_for, notable, story, image</code> (nur CC-lizenziert, mit Urheber und Lizenz), <code>sources</code> (URL, Titel, Herausgeber, Datum), <code>confidence</code> und die Liste der Felder, die geschätzt sind (<code>estimated</code>).",
+  "zh": "<code>id, name, operator, owner, tenant_type</code>（超大规模、托管、AI、HPC、科研、企业），<code>city, country, region, lat, lon</code> 及坐标来源，<code>year_opened, status, expansions, site_area_m2, building_area_m2, it_mw, total_mw, pue</code>（数值，以及该值为公布值还是估算值），<code>cooling, power, certifications, famous_for, notable, story, image</code>（仅限 CC 许可图片，附作者与许可协议），<code>sources</code>（URL、标题、发布方、日期），<code>confidence</code>，以及标记为 <code>estimated</code> 的字段列表。"
+ },
+ "data.estateRecord.h2": {
+  "en": "What an estate record holds",
+  "de": "Was ein Eintrag zu einem Standortverbund enthält",
+  "zh": "站点网络记录包含的字段"
+ },
+ "data.estateRecord.p": {
+  "en": "The estate's name, operator, kind and year, its <strong>sites</strong> (code, place, coordinates, role, provider) and <strong>links</strong> (type, capacity, length, year, protected or not, carrier, sources), plus a story and notable facts.",
+  "de": "Name, Betreiber, Art und Jahr des Standortverbunds, seine <strong>Standorte</strong> (Kürzel, Ort, Koordinaten, Rolle, Anbieter) und <strong>Verbindungen</strong> (Typ, Kapazität, Länge, Jahr, geschützt oder nicht, Carrier, Quellen), dazu eine Geschichte und bemerkenswerte Fakten.",
+  "zh": "站点网络的名称、运营方、类别和年份；其<strong>站点</strong>（代码、所在地、坐标、站点角色、服务商）与<strong>链路</strong>（类型、容量、长度、年份、有无保护、承载运营商、来源）；以及背景介绍和主要特点。"
+ },
+ "data.method.h2": {
+  "en": "How it is made",
+  "de": "Wie der Datensatz entsteht",
+  "zh": "数据整理方法"
+ },
+ "data.method.p": {
+  "en": "Every record is compiled from public sources (operators' own pages, filings, press, Wikidata, OpenStreetMap for coordinates) and checked before publication. Values the sources do not state directly are marked estimated. Latencies and what-ifs shown on the earth are our estimates from public numbers, not the operators' routing. Base map: Natural Earth (public domain); city list for \"where's my data center\": GeoNames (CC BY 4.0).",
+  "de": "Jeder Eintrag wird aus öffentlichen Quellen zusammengestellt (eigene Seiten der Betreiber, behördliche Unterlagen, Presse, Wikidata, OpenStreetMap für Koordinaten) und vor der Veröffentlichung geprüft. Werte, die die Quellen nicht direkt nennen, sind als geschätzt markiert. Latenzen und Was-wäre-wenn-Ergebnisse auf dem Globus sind unsere Schätzungen aus öffentlichen Zahlen, nicht das Routing der Betreiber. Basiskarte: Natural Earth (gemeinfrei); Städteliste für „Wo liegt mein Rechenzentrum?“: GeoNames (CC BY 4.0).",
+  "zh": "每条记录均整理自公开来源（运营方官网、公开披露文件、媒体报道、Wikidata，坐标取自 OpenStreetMap），发布前经过核对。来源未直接给出的数值均标注为估算。地球视图中显示的时延与故障推演结果为我们基于公开数据的估算，并非运营商的实际路由。底图：Natural Earth（公有领域）；“定位您的数据中心”功能所用城市列表：GeoNames（CC BY 4.0）。"
+ },
+ "data.corrections.h2": {
+  "en": "Corrections",
+  "de": "Korrekturen",
+  "zh": "数据更正"
+ },
+ "data.corrections.p": {
+  "en": "Found a wrong number or a better source? Write to <a href=\"mailto:da@mustardseedmt.com?subject=dc-world%20correction\">da@mustardseedmt.com</a> with the record id and the source; corrections are dated in the record's <code>updated</code> field. Last sync: {WORLD_META.synced}.",
+  "de": "Eine falsche Zahl oder eine bessere Quelle gefunden? Schreiben Sie an <a href=\"mailto:da@mustardseedmt.com?subject=dc-world%20correction\">da@mustardseedmt.com</a> mit der ID des Eintrags und der Quelle; Korrekturen werden im Feld <code>updated</code> des Eintrags datiert. Letzte Synchronisierung: {WORLD_META.synced}.",
+  "zh": "如发现数值有误，或有更可靠的来源，请发送邮件至 <a href=\"mailto:da@mustardseedmt.com?subject=dc-world%20correction\">da@mustardseedmt.com</a>，注明记录 id 与来源。更正日期记录在该记录的 <code>updated</code> 字段中。最近同步：{WORLD_META.synced}。"
+ },
+ "data.back": {
+  "en": "Back to the earth",
+  "de": "Zurück zum Globus",
+  "zh": "返回地球视图"
+ },
+ "data.allEstates": {
+  "en": "All estates",
+  "de": "Alle Standortverbünde",
+  "zh": "全部站点网络"
+ },
+ "labels.type.hyperscale": {
+  "en": "Hyperscale",
+  "de": "Hyperscale",
+  "zh": "超大规模"
+ },
+ "labels.type.colocation": {
+  "en": "Colocation",
+  "de": "Colocation",
+  "zh": "托管"
+ },
+ "labels.type.ai": {
+  "en": "AI",
+  "de": "KI",
+  "zh": "AI"
+ },
+ "labels.type.hpc": {
+  "en": "HPC",
+  "de": "HPC",
+  "zh": "HPC"
+ },
+ "labels.type.research": {
+  "en": "Research",
+  "de": "Forschung",
+  "zh": "科研"
+ },
+ "labels.type.enterprise": {
+  "en": "Enterprise",
+  "de": "Enterprise",
+  "zh": "企业"
+ },
+ "labels.kind.cable": {
+  "en": "Submarine cable",
+  "de": "Seekabel",
+  "zh": "海缆"
+ },
+ "labels.kind.hyperscaler": {
+  "en": "Cloud backbone",
+  "de": "Cloud-Backbone",
+  "zh": "云骨干网"
+ },
+ "labels.kind.national": {
+  "en": "National compute network",
+  "de": "Nationales Compute-Netz",
+  "zh": "国家算力网络"
+ },
+ "labels.kind.ix": {
+  "en": "Internet exchange",
+  "de": "Internetknoten (IX)",
+  "zh": "互联网交换中心"
+ },
+ "labels.kind.financial": {
+  "en": "Financial route",
+  "de": "Finanzmarkt-Route",
+  "zh": "金融专线"
+ },
+ "labels.kind.cdn": {
+  "en": "CDN",
+  "de": "CDN",
+  "zh": "CDN"
+ },
+ "labels.kind.enterprise": {
+  "en": "Enterprise",
+  "de": "Unternehmensnetz",
+  "zh": "企业"
+ },
+ "labels.region.europe": {
+  "en": "Europe",
+  "de": "Europa",
+  "zh": "欧洲"
+ },
+ "labels.region.northAmerica": {
+  "en": "North America",
+  "de": "Nordamerika",
+  "zh": "北美"
+ },
+ "labels.region.asiaPacific": {
+  "en": "Asia-Pacific",
+  "de": "Asien-Pazifik",
+  "zh": "亚太"
+ },
+ "labels.region.latinAmerica": {
+  "en": "Latin America",
+  "de": "Lateinamerika",
+  "zh": "拉丁美洲"
+ },
+ "labels.region.middleEast": {
+  "en": "Middle East",
+  "de": "Naher Osten",
+  "zh": "中东"
+ },
+ "labels.region.africa": {
+  "en": "Africa",
+  "de": "Afrika",
+  "zh": "非洲"
+ },
+ "labels.imaginedLabel": {
+  "en": "Imagined — a fictional design built from public numbers",
+  "de": "Erdacht – ein fiktiver Entwurf auf Basis öffentlicher Zahlen",
+  "zh": "设想方案：基于公开数据构建的虚构设计"
+ }
+}

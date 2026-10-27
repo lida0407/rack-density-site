@@ -1,0 +1,37 @@
+---
+// /dc/world/imagined/ in one locale (I18N.md): the imagined giants. Copy in the "world" dictionary (imagined.*, written on
+// the site: world-extra.json); giant names, concepts and lines stay English, and the giant pages and the references page
+// they link to are English-only (marked "(English)").
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Base from "../../../layouts/dc/Base.astro";
+import { IMAGINED, giantPath } from "../../../lib/dc/world";
+import { worldCopy } from "../../../i18n/dc/world";
+import type { Locale } from "../../../i18n";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const w = worldCopy(locale, "/dc/world/imagined");
+const { t } = w;
+const L = { IMAGINED_LABEL: w.imaginedLabel };
+const stills = import.meta.glob<{ default: ImageMetadata }>("../../../assets/dc/world/imagined/*.png", { eager: true });
+const card = (id: string) => stills[`../../../assets/dc/world/imagined/${id}-card.png`]?.default ?? stills[`../../../assets/dc/world/imagined/${id}-estate.png`]?.default;
+---
+<Base title={t("imagined.meta.title")} description={t("imagined.meta.description", L)}
+  path="world/imagined/" crumbs={[{ name: t("common.crumb.world"), path: "world/" }, { name: t("imagined.crumb"), path: "world/imagined/" }]} locale={locale}
+  fallback={w.missing(["imagined.", "labels.imaginedLabel"])}>
+  <article class="container page">
+    <p style="display:inline-flex;gap:8px;margin:0 0 14px;padding:6px 12px;border:1px dashed var(--line-strong);font:600 12px/18px var(--font-mono);background:var(--bg-100)" role="note"><span aria-hidden="true">◇</span> {t("imagined.banner", L)}</p>
+    <span class="eyebrow">{t("imagined.eyebrow")}</span>
+    <h1 style="margin:10px 0 0">{t("imagined.h1")}</h1>
+    <p class="direct-answer" style="margin-top:24px">{t("imagined.lede")}</p>
+    <div class="grid grid-3" style="margin-top:32px">{IMAGINED.map((g) => { const c = card(g.id); return (
+      <a class="cs-card" href={w.href(giantPath(g))} style="text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:8px;padding:0;overflow:hidden">
+        {c && <Image src={c} alt={t("imagined.cardAlt", { "g.name": g.name })} widths={[480, 800]} sizes="(min-width: 1000px) 360px, 100vw" format="webp" quality={72} loading="lazy" style="width:100%;height:auto;display:block" />}
+        <span style="padding:0 16px;font:500 11px/14px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)">{t("imagined.cardKicker", { "g.concept": g.concept ?? "" })}</span>
+        <span style="padding:0 16px;font:600 18px/24px 'Inter Variable',var(--font-sans)">{g.name}{w.enOnly(giantPath(g))}</span>
+        <span style="padding:0 16px 16px;color:var(--ink-muted);font-size:15px;line-height:22px">{g.famous_for}</span>
+      </a>); })}</div>
+    <p style="margin-top:28px"><a href={w.href("world/imagined/references/")}>{t("imagined.references")}</a>{w.enOnly("world/imagined/references/")} · <a href={w.href("world/")}>{t("imagined.seeOnEarth")}</a>{w.enOnly("world/")}</p>
+  </article>
+</Base>

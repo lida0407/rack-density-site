@@ -1,0 +1,47 @@
+---
+// /dc/world/data/ in one locale (WORLD-PAGE.md §1, I18N.md): the open dataset page — licence, downloads, schema summary,
+// corrections. Copy in the "world" dictionary (data.*); field names, file names and the correction mail stay English.
+import Base from "../../../layouts/dc/Base.astro";
+import { SITES, ESTATES, WORLD_META } from "../../../lib/dc/world";
+import { abs, root } from "../../../lib/dc/url";
+import { worldCopy } from "../../../i18n/dc/world";
+import type { Locale } from "../../../i18n";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const w = worldCopy(locale, "/dc/world/data");
+const { t } = w;
+const N = { "SITES.length": SITES.length, "ESTATES.length": ESTATES.length };
+const dl = (p: string) => new URL(root(p), "https://rack-density.com").href;
+const ld = { "@type": "Dataset", "@id": `${abs("world/data/")}#dataset`, name: t("common.schema.datasetName"), description: t("data.schema.description", N),
+  url: abs("world/data/"), license: "https://creativecommons.org/licenses/by/4.0/", isAccessibleForFree: true, creator: { "@id": abs("#org") }, dateModified: WORLD_META.synced,
+  spatialCoverage: "Worldwide", keywords: [t("data.schema.keyword.dataCenters"), t("data.schema.keyword.hyperscale"), t("data.schema.keyword.submarineCables"), "PUE", t("data.schema.keyword.aiDataCenters")],
+  distribution: [
+    { "@type": "DataDownload", encodingFormat: "application/geo+json", contentUrl: dl("dc/world/data/dc-world.geojson") },
+    { "@type": "DataDownload", encodingFormat: "text/csv", contentUrl: dl("dc/world/data/dc-world.csv") },
+  ] };
+---
+<Base title={t("data.meta.title")} description={t("data.meta.description", N)}
+  path="world/data/" crumbs={[{ name: t("common.crumb.world"), path: "world/" }, { name: t("data.crumb"), path: "world/data/" }]} jsonLd={[ld]} locale={locale}
+  fallback={w.missing(["data.", "common.eyebrow.openData"])}>
+  <article class="container page prose">
+    <span class="eyebrow">{t("common.eyebrow.openData")}</span>
+    <h1>{t("data.h1")}</h1>
+    <p class="direct-answer" set:html={t("data.lede", N)} />
+    <h2>{t("data.downloads.h2")}</h2>
+    <ul>
+      <li><a href={root("dc/world/data/dc-world.geojson")} download>dc-world.geojson</a>{t("data.downloads.geojson")}</li>
+      <li><a href={root("dc/world/data/dc-world.csv")} download>dc-world.csv</a>{t("data.downloads.csv")}</li>
+      <li>{t("data.downloads.workbooks")}{ESTATES.map((e, i) => <>{i ? ", " : ""}<a href={root(`dc/world/data/estates/${e.id}.xlsx`)} download>{e.id}</a></>)}</li>
+    </ul>
+    <h2>{t("data.siteRecord.h2")}</h2>
+    <p set:html={t("data.siteRecord.p")} />
+    <h2>{t("data.estateRecord.h2")}</h2>
+    <p set:html={t("data.estateRecord.p")} />
+    <h2>{t("data.method.h2")}</h2>
+    <p>{t("data.method.p")}</p>
+    <h2>{t("data.corrections.h2")}</h2>
+    <p set:html={t("data.corrections.p", { "WORLD_META.synced": w.date(WORLD_META.synced) })} />
+    <p><a href={w.href("world/")}>{t("data.back")}</a>{w.enOnly("world/")} · <a href={w.href("world/estates/")}>{t("data.allEstates")}</a>{w.enOnly("world/estates/")}</p>
+  </article>
+</Base>
