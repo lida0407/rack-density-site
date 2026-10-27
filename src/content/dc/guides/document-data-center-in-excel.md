@@ -16,7 +16,7 @@ steps:
 clips:
   - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (50 s)." }
 related:
-  - { href: "resources/excel-template/", label: "The free Excel template (v1.3): every sheet and column", kind: "Template" }
+  - { href: "resources/excel-template/", label: "The free Excel template (v1.5): every sheet and column", kind: "Template" }
   - { href: "resources/calculators/rack-power/", label: "Rack power calculator: A/B feeds and the 80 % rule", kind: "Calculator" }
   - { href: "resources/guides/ups-failure-impact-analysis/", label: "UPS failure impact analysis in 20 minutes", kind: "Guide" }
 faq: [{"q": "What should a data center inventory spreadsheet include?", "a": "At minimum, one row per device with rack, U position and model. Add name, role, serial, owner, warranty end, which feed each power supply uses (A, B or AB) and what runs on the device. A second sheet for the power chain and a third for cables answer the failure and patching questions."}, {"q": "Is Excel good enough, or do I need DCIM?", "a": "For a server room or a small data center, a well-kept workbook covers inventory, the power chain and patching. What it cannot do on its own is show the room, check it, or answer what fails with what; importing it into a tool such as DC Sim adds that without retyping."}, {"q": "How long does it take to document a server room?", "a": "The Devices sheet takes roughly as long as walking the racks once; most of the time goes on racks nobody is sure about. Power cords and the power chain take a second pass. Exporting from an existing inventory or NetBox cuts it to minutes."}, {"q": "Can I use Google Sheets instead of Excel?", "a": "Yes. Export as XLSX or CSV. DC Sim imports XLSX and CSV or TSV files, reads values only, and refuses formulas, macros and encrypted files."}, {"q": "How do I keep the spreadsheet up to date?", "a": "Change the sheet with every move, add or change, and re-check it. If you import it into DC Sim, a re-upload is an update: devices are matched by serial, then name, then rack and U, and you see a change list before anything is applied."}]
@@ -53,7 +53,7 @@ One row per node: utility, generator, ATS, UPS, panel, breaker, PDU. The columns
 
 ## 4. Racks and rooms
 
-`rack`, `row` and `position` give the real layout; `height_u`, `width_in` (10 for mini racks) and `max_kw` give the budgets. Template v1.3 adds an optional Rooms sheet and a `room` column for halls with more than one room; v1.4 adds Sites and Links for more than one site.
+`rack`, `row` and `position` give the real layout; `height_u`, `width_in` (10 for mini racks) and `max_kw` give the budgets. Template v1.3 adds an optional Rooms sheet and a `room` column for halls with more than one room; v1.4 adds Sites and Links for more than one site; v1.5 adds a Liquid sheet for liquid-cooled racks and `depth_mm` for the usable rack depth.
 
 ## 5. Cables: start with what fails
 

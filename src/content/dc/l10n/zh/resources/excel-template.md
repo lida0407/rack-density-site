@@ -1,13 +1,13 @@
 ---
 title: "免费数据中心 Excel 导入模板：机柜、供配电、布线"
-description: "一个文件、十一个工作表，仅 Devices 为必填。导入后生成 3D 数字孪生，并执行供配电、相位、制冷、布线与网络检查。版本 1.4。"
+description: "一个文件、十二个工作表，仅 Devices 为必填。导入后生成 3D 数字孪生，并执行供配电、相位、制冷、液冷、布线与网络检查。版本 1.5。"
 h1: "可直接生成 3D 数字孪生的 Excel 导入模板"
 navLabel: "Excel 导入模板"
-directAnswer: "DC Sim 导入模板为一个 Excel 工作簿，包含十一个工作表：Devices（设备）、Cables（线缆）、Sites（站点）、Rooms（机房）、Racks（机柜）、Power（供配电）、Networks（网络）、Links（链路）、Cooling（制冷）、CustomDevices（自定义设备）与 Readings（监测数据）。仅 Devices 为必填，每行填写机柜、U 位与型号。每增加一个工作表，即可启用数字孪生的一个新图层。导入后即可得到机房 3D 视图，以及列出重叠、过载与单点故障的检查清单。"
+directAnswer: "DC Sim 导入模板为一个 Excel 工作簿，包含十二个工作表：Devices（设备）、Cables（线缆）、Sites（站点）、Rooms（机房）、Racks（机柜）、Power（供配电）、Networks（网络）、Links（链路）、Cooling（制冷）、Liquid（液冷）、CustomDevices（自定义设备）与 Readings（监测数据）。仅 Devices 为必填，每行填写机柜、U 位与型号。每增加一个工作表，即可启用数字孪生的一个新图层。导入后即可得到机房 3D 视图，以及列出重叠、过载与单点故障的检查清单。"
 section: "resources"
 order: 1
 ctaTop: true
-faq: [{"q": "能否改用 CSV？", "a": "可以。每个工作表对应一个 CSV 文件，列与模板一致；导入程序支持逗号、分号与制表符分隔。"}, {"q": "表格列名与模板不一致时如何处理？", "a": "常见同义列名可自动识别；其他列名可在表头行中修改。列的顺序不影响导入。"}, {"q": "是否需要填写全部十一个工作表？", "a": "不需要。仅填写 Devices 即可生成 3D 机房与机柜功率；其他工作表可随数据完备逐步补充。"}, {"q": "我的文件是否会被保存？", "a": "导入在服务器端执行，仅读取数值并构建您的模型。如需删除模型与文件，请通知我们，我们将在 30 天内确认。详见“安全与数据”。"}, {"q": "模板是否会变更？", "a": "工作表名称与列名为固定约定，与 Homelab 版共用。后续可能新增可选列（如 1.1 版）；现有列名不会更改。"}]
+faq: [{"q": "能否改用 CSV？", "a": "可以。每个工作表对应一个 CSV 文件，列与模板一致；导入程序支持逗号、分号与制表符分隔。"}, {"q": "表格列名与模板不一致时如何处理？", "a": "常见同义列名可自动识别；其他列名可在表头行中修改。列的顺序不影响导入。"}, {"q": "是否需要填写全部十二个工作表？", "a": "不需要。仅填写 Devices 即可生成 3D 机房与机柜功率；其他工作表可随数据完备逐步补充。"}, {"q": "我的文件是否会被保存？", "a": "导入在服务器端执行，仅读取数值并构建您的模型。如需删除模型与文件，请通知我们，我们将在 30 天内确认。详见“安全与数据”。"}, {"q": "模板是否会变更？", "a": "工作表名称与列名为固定约定，与 Homelab 版共用。后续可能新增可选列（如 1.1 版）；现有列名不会更改。"}]
 clips:
   - { name: "excel-to-3d", title: "从 Excel 文件到 3D 数字孪生", caption: "Devices 与 Cables 工作表、导入、检查项在 3D 中定位标注，随后再次导入并查看变更清单（50 秒）。" }
 ---
@@ -20,17 +20,20 @@ clips:
 | Cables（线缆） | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | 支持链路追踪的布线视图，供配电图与网络图，端口检查 |
 | Sites（站点） | site, lat, lon | city, country, timezone, role, provider, it_kw, pue | 全局视图（地球视图）：所有站点呈现在地球上（模板 v1.4） |
 | Rooms（机房） | room | site, length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | 每个机房生成独立的数据大厅，机房尺寸与照明负荷（模板 v1.3；`site` 列于 v1.4 加入） |
-| Racks（机柜） | rack, row, position | room, height_u, width_in, front_faces (A/B), max_kw | 真实机房布局，冷热通道，机柜功率预算 |
+| Racks（机柜） | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | 真实机房布局，冷热通道，机柜功率预算（`depth_mm` 为机柜可用深度，模板 v1.5） |
 | Power（供配电） | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | “A 路供电、某台 UPS 或某个断路器故障时会怎样”，过载检查 |
 | Networks（网络） | vlan, name | purpose, subnet | 网络视图中的 VLAN 着色 |
 | Links（链路） | site_a, site_b, type | bandwidth_gbps, latency_ms, utilization_pct, protected, carrier | 站点之间的广域网与线缆链路；可推演链路中断或站点失效（模板 v1.4） |
-| Cooling（制冷） | name, type | capacity_kw, serves, model | 制冷量与发热量对比，“AC-1 停机时会怎样” |
+| Cooling（制冷） | name, type | capacity_kw, serves, model, chilled_from | 制冷量与发热量对比，“AC-1 停机时会怎样”；`chilled_from` 填写为精密空调供冷的冷水机组，留空表示直膨式（DX）机组（模板 v1.5） |
+| Liquid（液冷） | loop, type (dlc, rdhx, immersion), serves | cdu, capacity_kw, supply_c, return_c, flow_lpm, coolant, secondary, manifold | 冷板式液冷、背板热交换器与浸没式液冷回路及其 CDU（冷量分配单元）和分集水器；“分集水器泄漏时会怎样”（模板 v1.5） |
 | CustomDevices（自定义设备） | name, category | brand, model, height_u, width_in, depth_mm, weight_kg, psu_count, psu_w, idle_w, typical_w, max_w, airflow, inlet_max_c, ports | 设备库中没有的设备，可按名称复用（模板 v1.2） |
 | Readings（监测数据） | time, item, metric, value | | 按真实机房数据校准模型；任何监控工具导出的 CSV 均可填入此表 |
 
 ## 1.0 版以来的变更
 
 仅有新增内容，旧版文件仍可正常导入。
+
+**版本 1.5：** 新增可选的 **Liquid** 工作表：每行为一个回路添加 CDU、分集水器或两者，回路类型为 `dlc`（冷板式液冷）、`rdhx`（背板热交换器）或 `immersion`（浸没式液冷），并填写所服务的机柜（机柜名、列或 `R01-R08` 这样的范围）、制冷量、供回水温度、流量、冷却液与二次侧回路。泄漏推演按分集水器执行：泄漏分集水器的阀门关闭（标注为假定条件），仅其所服务的机柜失去冷却。另新增 `Cooling.chilled_from`（为精密空调供冷的冷水机组；留空表示直膨式机组）与 `Racks.depth_mm`（机柜可用深度）。
 
 **版本 1.4：** 新增可选的 **Sites**（坐标、角色、服务商、IT kW、PUE）与 **Links**（站点间链路：类型、带宽、时延、利用率、是否有保护、运营商）工作表，以及 `Rooms.site` 列。二者用于绘制全局视图：所有站点呈现在同一地球上，链路以弧线表示，并支持跨站点场景推演（链路中断、站点失效）。导入报告将标出：缺少坐标的站点、指向未知站点的链路、低于物理下限的时延、承载复制流量但无保护的链路，以及超过 80 % 的利用率。
 

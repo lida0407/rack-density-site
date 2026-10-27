@@ -10,8 +10,8 @@ export const LEGAL_URL = "https://mustardseedmt.com";
 export const CONTACT_EMAIL = "da@mustardseedmt.com";
 /** Public demo of the English build. null = not public yet; the site shows stills and offers a walkthrough. */
 export const DEMO_URL: string | null = null;
-export const TEMPLATE_VERSION = "1.4";
-export const TEMPLATE_SHEETS = "eleven sheets";
+export const TEMPLATE_VERSION = "1.5";
+export const TEMPLATE_SHEETS = "twelve sheets";
 export const TEMPLATE_FILE = "downloads/dc-import-template.xlsx";
 export const EXAMPLE_FILE = "downloads/demo-hall.xlsx";
 

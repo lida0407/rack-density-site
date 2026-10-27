@@ -1,13 +1,13 @@
 ---
 title: "Free data center Excel template: racks, power, cables"
-description: "One file, eleven sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, cabling and network checks. Version 1.4."
+description: "One file, twelve sheets, only Devices required. Import it for a 3D twin with power, phase, cooling, liquid, cabling and network checks. Version 1.5."
 h1: "The Excel template that becomes a 3D twin"
 navLabel: "Excel template"
-directAnswer: "The DC Sim template is one Excel workbook with eleven sheets: Devices, Cables, Sites, Rooms, Racks, Power, Networks, Links, Cooling, CustomDevices and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
+directAnswer: "The DC Sim template is one Excel workbook with twelve sheets: Devices, Cables, Sites, Rooms, Racks, Power, Networks, Links, Cooling, Liquid, CustomDevices and Readings. Only Devices is required: rack, U position and model per row. Each extra sheet unlocks another layer of the twin. Import it and you get the room in 3D plus a check list of overlaps, overloads and single points of failure."
 section: "resources"
 order: 1
 ctaTop: true
-faq: [{"q": "Can I use CSV instead?", "a": "Yes: one CSV per sheet with the same columns; the importer reads comma, semicolon and tab separators."}, {"q": "What if my spreadsheet uses different column names?", "a": "Common synonyms are recognised; anything else can be renamed in the header row. The order of the columns does not matter."}, {"q": "Do I need all eleven sheets?", "a": "No. Devices alone gives you the 3D room and rack power; add sheets as you have the data."}, {"q": "Is my file stored?", "a": "The import runs on the server, reads values only and builds your model. Ask us to delete the model and the file and we confirm within 30 days. See Security & data."}, {"q": "Does the template change?", "a": "Sheet and column names are a fixed contract shared with the homelab edition. New optional columns may be added, as in version 1.1; existing ones are never renamed."}]
+faq: [{"q": "Can I use CSV instead?", "a": "Yes: one CSV per sheet with the same columns; the importer reads comma, semicolon and tab separators."}, {"q": "What if my spreadsheet uses different column names?", "a": "Common synonyms are recognised; anything else can be renamed in the header row. The order of the columns does not matter."}, {"q": "Do I need all twelve sheets?", "a": "No. Devices alone gives you the 3D room and rack power; add sheets as you have the data."}, {"q": "Is my file stored?", "a": "The import runs on the server, reads values only and builds your model. Ask us to delete the model and the file and we confirm within 30 days. See Security & data."}, {"q": "Does the template change?", "a": "Sheet and column names are a fixed contract shared with the homelab edition. New optional columns may be added, as in version 1.1; existing ones are never renamed."}]
 clips:
   - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (50 s)." }
 ---
@@ -20,17 +20,20 @@ clips:
 | Cables | from_device, to_device, type | from_port, to_port, phase, media, speed, length_m, color, label, vlan, route | Cabling view with trace, Power and Network diagrams, port checks |
 | Sites | site, lat, lon | city, country, timezone, role, provider, it_kw, pue | the Estate view: every site on the earth (template v1.4) |
 | Rooms | room | site, length_m, width_m, height_m, raised_floor_mm, lighting_w, timezone | one hall per room, room size and lighting load (template v1.3; `site` in v1.4) |
-| Racks | rack, row, position | room, height_u, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets |
+| Racks | rack, row, position | room, height_u, depth_mm, width_in, front_faces (A/B), max_kw | the real room layout, hot and cold aisles, rack budgets (`depth_mm` = usable depth, template v1.5) |
 | Power | name, type, rating | fed_from, feed, rack, voltage, phases, phase, runtime_min, battery_kwh, model | "what if feed A, a UPS or a breaker fails", overload checks |
 | Networks | vlan, name | purpose, subnet | VLAN colours in the Network view |
 | Links | site_a, site_b, type | bandwidth_gbps, latency_ms, utilization_pct, protected, carrier | WAN and cable links between sites; cut a link or lose a site (template v1.4) |
-| Cooling | name, type | capacity_kw, serves, model | cooling against heat, "what if AC-1 stops" |
+| Cooling | name, type | capacity_kw, serves, model, chilled_from | cooling against heat, "what if AC-1 stops"; `chilled_from` names the chiller feeding a CRAH, empty = DX (template v1.5) |
+| Liquid | loop, type (dlc, rdhx, immersion), serves | cdu, capacity_kw, supply_c, return_c, flow_lpm, coolant, secondary, manifold | direct-to-chip, rear-door and immersion loops with their CDUs and manifolds; "what if a manifold leaks" (template v1.5) |
 | CustomDevices | name, category | brand, model, height_u, width_in, depth_mm, weight_kg, psu_count, psu_w, idle_w, typical_w, max_w, airflow, inlet_max_c, ports | devices the catalog does not know, reusable by name (template v1.2) |
 | Readings | time, item, metric, value | | the model fitted to your real room; any monitoring tool's CSV export fits here |
 
 ## What changed since version 1.0
 
 Additions only, so older files still import.
+
+**Version 1.5:** an optional **Liquid** sheet: each row adds a CDU, a manifold or both to a loop of type `dlc` (direct-to-chip), `rdhx` (rear-door heat exchanger) or `immersion`, with the racks it serves (names, rows or ranges such as `R01-R08`), capacity, supply and return temperatures, flow, coolant and the secondary loop. A leak what-if then runs per manifold: the leaking manifold's valve closes (noted as assumed) and only its racks lose cooling. Also `Cooling.chilled_from` (the chiller that feeds a CRAH; empty means a DX unit) and `Racks.depth_mm` (the usable depth of the rack).
 
 **Version 1.4:** optional **Sites** (coordinates, role, provider, IT kW, PUE) and **Links** (between sites: type, bandwidth, latency, utilisation, protected, carrier) sheets, and `Rooms.site`. They draw the Estate view: every site on one earth, the links as arcs, and what-ifs across sites (cut a link, lose a site). The import report flags a site without coordinates, a link to an unknown site, a latency below the physical minimum, an unprotected link carrying replication, and utilisation over 80 %.
 

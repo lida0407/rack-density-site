@@ -27,7 +27,7 @@ Status: the product runs today on demo data and on imported files, shown in walk
 ## Main pages
 ${line("Home", "", "What DC Sim is, the three advantages, how it works.")}
 ${line("Pricing", "pricing/", "Design per project, Monitor per rack, Partner margin, comparison with typical DCIM pricing.")}
-${line("Excel template v" + TEMPLATE_VERSION, TEMPLATE_FILE, "The import workbook: Devices required; Cables, Racks, Power, Networks, Cooling, Readings optional.")}
+${line("Excel template v" + TEMPLATE_VERSION, TEMPLATE_FILE, "The import workbook: Devices required; Cables, Sites, Rooms, Racks, Power, Networks, Links, Cooling, Liquid, CustomDevices and Readings optional.")}
 
 ## Product
 ${section("product")}
