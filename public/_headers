@@ -4,3 +4,10 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+# Feeds: RSS media type (Pages would serve .xml as application/xml)
+/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8
+/homelab/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8
+/dc/rss.xml
+  Content-Type: application/rss+xml; charset=utf-8
