@@ -80,3 +80,59 @@ export const dcLlmsLocale = async (locale: Locale): Promise<string> => {
   ];
   return `## ${PRODUCT_NAME}\n\n> ${home("what.body")}\n\n${lines.join("\n")}\n`;
 };
+
+/** The DC Sim part of the site-wide /llms-full.txt (README "Feeds and llms-full"): the full English text of the DC pages,
+ *  guides and comparisons with absolute links, plus pricing and the changelog. Headings start at "##" so the root file
+ *  can put it under its own "#" title. */
+export const dcLlmsFull = async (): Promise<string> => {
+  const { dcCopy } = await import("../../i18n/dc");
+  const { CHANGELOG, IN_PROGRESS } = await import("../../data/dc/changelog");
+  const pricing = dcCopy("pricing", "en").t;
+  const order = ["product", "integrations", "resources", "company"];
+  const pages = (await getCollection("pages")).sort((a, b) => order.indexOf(a.data.section) - order.indexOf(b.data.section) || a.data.order - b.data.order);
+  const guides = (await getCollection("guides")).sort((a, b) => a.data.order - b.data.order);
+  const compare = (await getCollection("compare")).sort((a, b) => a.data.order - b.data.order);
+  // Markdown bodies use links relative to the page: make them absolute; demote headings below the page's "###".
+  const body = (md: string, path: string) =>
+    md.replace(/\]\((?!https?:|mailto:|#)([^)\s]+)\)/g, (_, href: string) => `](${new URL(href, abs(path)).href})`)
+      .replace(/^(#{1,4}) /gm, "###$1 ").trim();
+  const faq = (items: { q: string; a: string }[]) => (items.length ? `\n\n**FAQ**\n\n${items.map((f) => `- **${f.q}** ${f.a}`).join("\n")}` : "");
+  const doc = (h1: string, path: string, answer: string, md: string, items: { q: string; a: string }[]) =>
+    `### ${h1}\n\nURL: ${abs(path)}\n\n${answer}\n\n${body(md, path)}${faq(items)}`;
+  const priceFaq = ["monitorCounted", "buyOnline", "threeMonths", "switch", "stop", "aiExtra", "partnerDiscount", "compare"].map((k) => ({ q: pricing(`faq.${k}.q`), a: pricing(`faq.${k}.a`) }));
+  return [
+    `## ${PRODUCT_NAME}\n\n> ${ENTITY_DC}\n\n${PRODUCT_NAME} is a product of ${LEGAL_NAME} (Malta), part of RACKDENSITY (rack-density.com). Contact: ${CONTACT_EMAIL}. German and Chinese versions of the main pages: ${SITE_URL.replace(/\/$/, "") + lp("/dc", "de")}, ${SITE_URL.replace(/\/$/, "") + lp("/dc", "zh")}.`,
+    `### Pricing\n\nURL: ${abs("pricing/")}\n\n${pricing("hero.intro")}${faq(priceFaq)}`,
+    ...pages.map((p) => doc(p.data.h1, `${p.id}/`, p.data.directAnswer, p.body ?? "", p.data.faq)),
+    ...guides.map((g) => doc(g.data.h1, `resources/guides/${g.id}/`, g.data.directAnswer, g.body ?? "", g.data.faq)),
+    ...compare.map((c) => doc(c.data.h1, `compare/${c.id}/`, `${c.data.directAnswer} (Last checked ${c.data.lastChecked}.)`, c.body ?? "", c.data.faq)),
+    `### Changelog\n\nURL: ${abs("resources/changelog/")} (RSS: ${abs("rss.xml")})\n\n${CHANGELOG.map((e) => `- ${e.date}, ${e.title}: ${e.items.join(" ")}`).join("\n")}\n\nIn progress (roadmap): ${IN_PROGRESS.join("; ")}.`,
+  ].join("\n\n");
+};
+
+/** The translated DC pages for /de/llms-full.txt and /zh/llms-full.txt: overview, pricing and every page listed for that
+ *  locale in src/config/dc/i18n.ts, links pointing to the page in that language when it exists (else English). */
+export const dcLlmsFullLocale = async (locale: Locale): Promise<string> => {
+  if (!hasPage("/dc", locale)) return "";
+  const { dcCopy, dcHref } = await import("../../i18n/dc");
+  const home = dcCopy("home", locale).t, pricing = dcCopy("pricing", locale).t;
+  const site = SITE_URL.replace(/\/$/, "");
+  const url = (p: string) => site + dcHref(p, locale);
+  const body = (md: string, englishPath: string) =>
+    md.replace(/\]\((?!https?:|mailto:|#)([^)\s]+)\)/g, (_, href: string) => {
+      const t = new URL(href, `https://x${englishPath}`);
+      return `](${url(t.pathname)}${t.hash})`;
+    }).replace(/^(#{1,4}) /gm, "###$1 ").trim();
+  const faq = (items: { q: string; a: string }[]) => (items.length ? `\n\n${items.map((f) => `- **${f.q}** ${f.a}`).join("\n")}` : "");
+  const order = ["product", "integrations", "resources", "company"];
+  const pages = (await getCollection("pagesL10n", (p) => p.id.startsWith(`${locale}/`)))
+    .map((p) => ({ slug: p.id.slice(locale.length + 1), p }))
+    .filter(({ slug }) => hasPage(`/dc/${slug}`, locale))
+    .sort((a, b) => order.indexOf(a.p.data.section) - order.indexOf(b.p.data.section) || a.p.data.order - b.p.data.order);
+  const priceFaq = ["monitorCounted", "buyOnline", "threeMonths", "switch", "stop", "aiExtra", "partnerDiscount", "compare"].map((k) => ({ q: pricing(`faq.${k}.q`), a: pricing(`faq.${k}.a`) }));
+  return [
+    `## ${PRODUCT_NAME}\n\nURL: ${url("/dc")}\n\n${home("what.body")}`,
+    `### ${pricing("hero.h1")}\n\nURL: ${url("/dc/pricing")}\n\n${pricing("hero.intro")}${faq(priceFaq)}`,
+    ...pages.map(({ slug, p }) => `### ${p.data.h1}\n\nURL: ${url(`/dc/${slug}`)}\n\n${p.data.directAnswer}\n\n${body(p.body ?? "", `/dc/${slug}/`)}${faq(p.data.faq)}`),
+  ].join("\n\n");
+};

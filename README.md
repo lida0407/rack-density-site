@@ -49,6 +49,7 @@ No `/ads.txt` (no ads). `public/_routes.json` keeps all of these off the languag
 ## Feeds and llms-full (how DC marketing plugs in)
 - **Feeds:** export `dcFeedItems(): Promise<FeedItem[]>` from `src/pages/dc/_feed.ts` (`FeedItem` = `{ title, link (absolute), guid (unique site-wide), pubDate, description (plain text), category }`, same shape as `src/lib/feed.ts`). `/rss.xml` merges it with the Homelab Twin changelog and Learn guides; `/dc/rss.xml` is your own route.
 - **llms-full:** export `dcLlmsFull(): Promise<string>` from `src/pages/dc/_llms.ts` (English, headings from `##`) for `/llms-full.txt`; optionally `dcLlmsFullLocale(locale)` for `/de/llms-full.txt` and `/zh/llms-full.txt`. Until they exist, `/llms-full.txt` carries the `dcLlms()` summary. Both hooks are found with `import.meta.glob`, so a build without them still passes.
+- **DC status (2026-10-27):** all three hooks exist. `dcFeedItems()` = the DC changelog (`src/data/dc/changelog.ts`, also rendered on `/dc/resources/changelog/`) + DC guides (`updated` as the date), guids `dc-changelog-…` / `dc-guide-…`; `/dc/rss.xml` uses the shared `rssXml()`. `dcLlmsFull()` = DC pages, guides, comparisons, pricing and changelog in English with absolute links; `dcLlmsFullLocale(l)` = the pages listed for `l` in `src/config/dc/i18n.ts`. New DC changelog entries go in `src/data/dc/changelog.ts` only.
 
 ## Commands
 ```
