@@ -6,7 +6,7 @@ export function GET() {
   const body = [
     'User-agent: *', 'Allow: /', '',
     '# AI crawlers: allowed', ...AI_BOTS.flatMap((b) => [`User-agent: ${b}`, 'Allow: /', '']),
-    `Sitemap: ${abs('/sitemap-index.xml').replace(/\/$/, '')}`, `# llms.txt: ${abs('/llms.txt').replace(/\/$/, '')}`, '',
+    `Sitemap: ${abs('/sitemap.xml').replace(/\/$/, '')}`, `# llms.txt: ${abs('/llms.txt').replace(/\/$/, '')}`, '',
   ].join('\n');
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 }

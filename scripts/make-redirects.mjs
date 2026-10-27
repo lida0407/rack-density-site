@@ -18,5 +18,5 @@ for (const f of walk(DIST).filter((f) => f.endsWith('index.html'))) {
   writeFileSync(join(OUT, rel, 'index.html'), page(url)); n++;
 }
 writeFileSync(join(OUT, '404.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Moved: RACKDENSITY</title><meta name="robots" content="noindex"><script>location.replace(${JSON.stringify(TARGET)} + location.pathname.replace(/^${OLD_BASE.replace(/\//g, '\\/')}/, '') + location.search + location.hash);</script></head><body><p>This site moved to <a href="${TARGET}/">${TARGET}/</a>.</p></body></html>\n`);
-writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${TARGET}/sitemap-index.xml\n`);
+writeFileSync(join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${TARGET}/sitemap.xml\n`);
 console.log(`${n} redirect pages + 404 + robots.txt → ${TARGET}`);

@@ -20,6 +20,9 @@
     "/llms.txt",
     "/sitemap-index.xml",
     "/sitemap-0.xml",
-    "/homelab/changelog.xml"
+    "/homelab/changelog.xml",
+    "/sitemap.xml",
+    "/favicon.ico",
+    "/.well-known/*"
   ]
 }

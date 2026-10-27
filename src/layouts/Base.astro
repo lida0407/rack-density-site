@@ -55,6 +55,7 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <meta name="theme-color" content="#0b0a09" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <ThemeScript />
+    <link rel="icon" href={u('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={u(section === 'homelab' ? '/brand/favicon-homelab.svg' : '/brand/favicon-rackdensity.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={u('/icon-512.png')} />
     {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME} changelog`} href={u('/homelab/changelog.xml')} />}

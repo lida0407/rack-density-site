@@ -1,2 +1,5 @@
 /waitlist /homelab/waitlist/ 301
 /waitlist/ /homelab/waitlist/ 301
+# One plain sitemap since 2026-10-27 (scripts/sitemap-single.mjs): the old @astrojs/sitemap names still resolve
+/sitemap-index.xml /sitemap.xml 301
+/sitemap-0.xml /sitemap.xml 301
