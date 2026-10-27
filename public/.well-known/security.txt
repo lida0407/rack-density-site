@@ -1,4 +1,4 @@
 Contact: mailto:da@mustardseedmt.com
 Expires: 2027-10-27T00:00:00.000Z
-Preferred-Languages: en, de, zh
+Preferred-Languages: en
 Canonical: https://rack-density.com/.well-known/security.txt

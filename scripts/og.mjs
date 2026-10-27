@@ -44,5 +44,4 @@ for (const v of Object.values(V)) {
     console.log(name + v.suffix);
   }
 }
-await sharp(readFileSync('public/brand/favicon-rackdensity.svg'), { density: 1200 }).resize(512, 512).png().toFile('public/icon-512.png');
-console.log('icon-512.png');
+// icon-512.png and the other site icons: scripts/icons.mjs (npm run icons).

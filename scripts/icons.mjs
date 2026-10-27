@@ -1,5 +1,6 @@
-// /favicon.ico from the RACKDENSITY mark (public/brand/favicon-rackdensity.svg, a 16-px pixel design): 16, 32 and 48 px
-// PNG frames rendered by sharp, packed into an ICO container. Run: node scripts/favicon.mjs (the .ico is committed).
+// Site icons from the RACKDENSITY mark (public/brand/favicon-rackdensity.svg, a 16-px pixel design), rendered by sharp:
+// /favicon.ico (16, 32, 48 px PNG frames in an ICO container), /apple-touch-icon.png (180 px, opaque: iOS rounds the corners
+// itself), /icon-192.png and /icon-512.png (site.webmanifest, schema logo). Run: npm run icons (the files are committed).
 import sharp from 'sharp';
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -18,3 +19,7 @@ sizes.forEach((s, i) => {
 });
 writeFileSync('public/favicon.ico', Buffer.concat([head, ...pngs]));
 console.log(`public/favicon.ico: ${sizes.join(', ')} px, ${offset} bytes`);
+const BG = '#f2f1ee'; // the mark's own light tile
+const png = (s, opaque) => { const i = sharp(svg, { density: (72 * s) / 16 }).resize(s, s); return (opaque ? i.flatten({ background: BG }) : i).png().toFile(`public/${s === 180 ? 'apple-touch-icon' : `icon-${s}`}.png`); };
+await Promise.all([png(180, true), png(192, false), png(512, false)]);
+console.log('public/apple-touch-icon.png (180, opaque), icon-192.png, icon-512.png');

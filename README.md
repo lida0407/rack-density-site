@@ -8,7 +8,7 @@ Production: **https://rack-density.com** on Cloudflare Pages (project `rack-dens
 | `/` | Hub: both products + the Rack Density Calculator (the domain's original page) | homelab marketing |
 | `/homelab/…` | Homelab Twin: home, try, pricing, learn (+ calculators), changelog (+ RSS) | homelab marketing |
 | `/dc/…` | DC Sim: home, product, integrations, pricing, resources, guides, partners, legal | **DC marketing** |
-| `/privacy/`, `/404`, `robots.txt`, `sitemap-index.xml`, `llms.txt` | site-wide | homelab marketing (llms.txt embeds `src/pages/dc/_llms.ts`) |
+| `/privacy/`, `/404` and the standard files below | site-wide | homelab marketing (llms files embed `src/pages/dc/_llms.ts`, `/rss.xml` merges `src/pages/dc/_feed.ts`) |
 | `/de/…`, `/zh/…` | German and Chinese versions of translated pages (see Languages) | each section for its own pages; plumbing homelab marketing |
 
 ## Ownership and how to commit
@@ -32,6 +32,24 @@ Production: **https://rack-density.com** on Cloudflare Pages (project `rack-dens
 4. Optional: export `dcLlmsLocale(locale)` from `src/pages/dc/_llms.ts` to add the DC part to `/de/llms.txt` and `/zh/llms.txt`.
 5. `npm run build` checks the hreflang pairs; the middleware starts sending German/Chinese visitors to your pages as soon as they exist.
 
+## Standard files (site root, plain names; Dali 2026-10-27)
+| Path | Source | Notes |
+|---|---|---|
+| `/robots.txt` | `src/pages/robots.txt.ts` | points at `/sitemap.xml`; AI crawlers allowed |
+| `/sitemap.xml` | `@astrojs/sitemap` + `scripts/sitemap-single.mjs` | one file with hreflang alternates; `/sitemap-index.xml`, `/sitemap-0.xml` 301 here (`public/_redirects`) |
+| `/llms.txt`, `/de/llms.txt`, `/zh/llms.txt` | `src/pages/llms.txt.ts`, `src/pages/[locale]/llms.txt.ts` + `scripts/llms-index.mjs` | summary + generated page index |
+| `/llms-full.txt`, `/de/llms-full.txt`, `/zh/llms-full.txt` | `src/pages/llms-full.txt.ts`, `src/pages/[locale]/llms-full.txt.ts`, `src/lib/llmsFull.ts` | full text of product pages and guides |
+| `/rss.xml`, `/homelab/rss.xml`, `/dc/rss.xml` | `src/pages/rss.xml.ts`, `src/pages/homelab/rss.xml.ts`, `src/lib/feed.ts`; DC: `src/pages/dc/rss.xml.ts` | `/homelab/changelog.xml` 301s to `/homelab/rss.xml` |
+| `/favicon.ico`, `/apple-touch-icon.png`, `/icon-192.png`, `/icon-512.png` | `scripts/icons.mjs` (`npm run icons`) from `public/brand/favicon-rackdensity.svg` | committed files |
+| `/site.webmanifest` | `src/pages/site.webmanifest.ts` | colours = `--bg-000` from `src/styles/tokens.css` |
+| `/.well-known/security.txt` | `public/.well-known/security.txt` | renew `Expires` before 2027-10-27 |
+| `/humans.txt` | `src/pages/humans.txt.ts` | build date as "Last update" |
+No `/ads.txt` (no ads). `public/_routes.json` keeps all of these off the language function.
+
+## Feeds and llms-full (how DC marketing plugs in)
+- **Feeds:** export `dcFeedItems(): Promise<FeedItem[]>` from `src/pages/dc/_feed.ts` (`FeedItem` = `{ title, link (absolute), guid (unique site-wide), pubDate, description (plain text), category }`, same shape as `src/lib/feed.ts`). `/rss.xml` merges it with the Homelab Twin changelog and Learn guides; `/dc/rss.xml` is your own route.
+- **llms-full:** export `dcLlmsFull(): Promise<string>` from `src/pages/dc/_llms.ts` (English, headings from `##`) for `/llms-full.txt`; optionally `dcLlmsFullLocale(locale)` for `/de/llms-full.txt` and `/zh/llms-full.txt`. Until they exist, `/llms-full.txt` carries the `dcLlms()` summary. Both hooks are found with `import.meta.glob`, so a build without them still passes.
+
 ## Commands
 ```
 npm ci
@@ -39,7 +57,8 @@ npm test          # homelab calculator math (node --test)
 npm run dev       # http://localhost:4321/rack-density-site/
 npm run build     # astro build + scripts/check-dist.mjs (links, one H1, meta, JSON-LD) + scripts/check-copy-dc.mjs (DC copy rules)
 npm run sync      # homelab Learn articles from ~/Sensaka/marketing/homelab-site/learn → src/content/homelab/learn (local only)
-npm run og        # homelab OG images + hub OG + icon (local only)
+npm run og        # homelab OG images + hub OG (local only)
+npm run icons     # favicon.ico, apple-touch-icon.png, icon-192/512.png from the RACKDENSITY mark
 ```
 Push to `main` → `.github/workflows/deploy.yml` → GitHub Pages.
 

@@ -57,8 +57,10 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <ThemeScript />
     <link rel="icon" href={u('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={u(section === 'homelab' ? '/brand/favicon-homelab.svg' : '/brand/favicon-rackdensity.svg')} type="image/svg+xml" />
-    <link rel="apple-touch-icon" href={u('/icon-512.png')} />
-    {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME} changelog`} href={u('/homelab/changelog.xml')} />}
+    <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
+    <link rel="manifest" href={u('/site.webmanifest')} />
+    <link rel="alternate" type="application/rss+xml" title={`${BRAND}: changelogs and guides`} href={u('/rss.xml')} />
+    {section === 'homelab' && <link rel="alternate" type="application/rss+xml" title={`${PRODUCT_NAME}: changelog and guides`} href={u('/homelab/rss.xml')} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={BRAND} />
     <meta property="og:locale" content={LOCALE_META[locale].og} />

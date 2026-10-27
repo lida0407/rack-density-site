@@ -23,6 +23,14 @@
     "/homelab/changelog.xml",
     "/sitemap.xml",
     "/favicon.ico",
-    "/.well-known/*"
+    "/.well-known/*",
+    "/llms-full.txt",
+    "/rss.xml",
+    "/humans.txt",
+    "/site.webmanifest",
+    "/apple-touch-icon.png",
+    "/icon-192.png",
+    "/homelab/rss.xml",
+    "/dc/rss.xml"
   ]
 }

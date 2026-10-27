@@ -15,7 +15,7 @@ const rendered = await Promise.all(entries.map(async (e) => ({ e, C: (await rend
   <section class="section-tight">
     <div class="wrap narrow">
       <h1>{c.h1}</h1>
-      <p class="lead" set:html={fill(c.lead, { rss: `<a href="${u('/homelab/changelog.xml')}">RSS</a>` })}></p>
+      <p class="lead" set:html={fill(c.lead, { rss: `<a href="${u('/homelab/rss.xml')}">RSS</a>` })}></p>
       {c.entriesNote && <p class="small muted">{c.entriesNote}</p>}
       {rendered.map(({ e, C }) => (
         <article class="entry prose" id={e.id} lang={locale === 'en' ? undefined : 'en'}>

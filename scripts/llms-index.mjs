@@ -23,7 +23,7 @@ for (const [l, heading] of Object.entries(LOCALES)) {
   if (!existsSync(file)) continue;
   const lines = urls.filter((u) => u.slice(root.length).startsWith(`${l}/`)).map((u) => [u, meta(u.slice(root.length))]).filter(([, m]) => m)
     .map(([u, m]) => `- [${m.title}](${u})${m.desc ? `: ${m.desc}` : ''}`);
-  writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\nSitemap: ${root}sitemap.xml\n\n## ${heading}\n\n${lines.join('\n')}\n`);
+  writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\nFull text: ${root}${l}/llms-full.txt · Sitemap: ${root}sitemap.xml\n\n## ${heading}\n\n${lines.join('\n')}\n`);
   console.log(`${l}/llms.txt: ${lines.length} pages indexed`);
 }
 let deviceModels = 0;
@@ -45,5 +45,5 @@ if (deviceModels) groups.get('Device database').push(`- ${deviceModels} model pa
 const index = [...groups].filter(([, l]) => l.length).map(([h, l]) => `### ${h}\n${l.join('\n')}`).join('\n\n');
 const file = join(dist, 'llms.txt');
 const other = Object.keys(LOCALES).filter((l) => LOCALE_LIVE[l] && existsSync(join(dist, l, 'llms.txt'))).map((l) => `${{ de: 'In German', zh: 'In Chinese' }[l]}: ${root}${l}/llms.txt`).join(' · ');
-writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\n${other ? `${other}\n\n` : ''}Sitemap: ${root}sitemap.xml\n\n## Every page (generated from the sitemap at build time)\n\n${index}\n`);
+writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\n${other ? `${other}\n\n` : ''}Full text: ${root}llms-full.txt · Sitemap: ${root}sitemap.xml · RSS: ${root}rss.xml\n\n## Every page (generated from the sitemap at build time)\n\n${index}\n`);
 console.log(`llms.txt: ${urls.length} sitemap pages indexed`);
