@@ -43,7 +43,7 @@ A hot aisle / cold aisle layout tool should take rows and racks and give you ais
 
 **What-if:** a CDU stops; a manifold leaks: litres released (estimated), the isolation valve closes, racks are taken offline. Built for small rooms adding a liquid-cooled GPU row next to air-cooled racks: both live in one model.
 
-**From the sheet:** Cooling rows of liquid types (CDU, loop) with `serves` listing the racks.
+**From the sheet:** the Liquid sheet (template v1.5): loop, type (dlc, rdhx or immersion), the racks it serves, CDU, capacity, supply and return temperatures, flow, coolant, secondary loop and manifold.
 
 Liquid cooling planning for a small data center starts with one question: which racks go on the loop, and what happens to them when the CDU stops. Model it before the pipes are ordered.
 

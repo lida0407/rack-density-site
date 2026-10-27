@@ -19,7 +19,7 @@ faq: [{"q": "Is the Grafana and Prometheus integration live today?", "a": "Not a
 
 ## What you can do today
 
-In Grafana, open any panel and use **Inspect → Data → Download CSV**. You get time and value columns; add `item` (the device name) and `metric` columns and paste the rows into the **Readings** sheet. Metric names such as `power_w`, `inlet_c`, `util_pct` or `ups_runtime_min` drive the simulation directly; anything else is kept as a series you can bind by hand.
+In Grafana, open any panel and use **Inspect → Data → Download CSV**. You get time and value columns; add `item` (the device name) and `metric` columns and paste the rows into the **Readings** sheet. Use the template's metric names (`power_w`, `current_a`, `inlet_temp_c`, `outlet_temp_c`, `humidity_pct`, `link_mbps`, `port_errors`, `gpu_util_pct`, `tokens_per_s`) and the readings land on the matching device; anything else is kept as a series you can bind by hand. UPS runtime for the simulation comes from `runtime_min` or `battery_kwh` in the Power sheet.
 
 ## What the collector reads
 

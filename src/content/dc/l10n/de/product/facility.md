@@ -43,7 +43,7 @@ Ein Werkzeug für die Kalt-/Warmgang-Aufstellung sollte aus Reihen und Racks sel
 
 **Was-wäre-wenn:** Eine CDU fällt aus; ein Verteiler leckt: ausgetretene Liter (geschätzt), das Absperrventil schließt, Racks werden außer Betrieb genommen. Gedacht für kleine Räume, die neben luftgekühlten Racks eine flüssigkeitsgekühlte GPU-Reihe ergänzen: Beides steckt in einem Modell.
 
-**Aus der Tabelle:** Zeilen im Blatt Cooling mit Flüssigkeitstypen (CDU, loop), deren Spalte `serves` die Racks auflistet.
+**Aus der Tabelle:** das Blatt Liquid (Vorlage v1.5): Kreislauf, Typ (dlc, rdhx oder immersion), die versorgten Racks, CDU, Leistung, Vor- und Rücklauftemperatur, Durchfluss, Kühlmittel, Sekundärkreis und Verteiler.
 
 Die Planung der Flüssigkühlung für ein kleines Rechenzentrum beginnt mit einer Frage: Welche Racks kommen an den Kreislauf, und was passiert mit ihnen, wenn die CDU ausfällt? Bilden Sie es ab, bevor die Rohre bestellt sind.
 
