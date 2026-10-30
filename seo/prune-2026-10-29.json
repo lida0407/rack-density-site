@@ -1,0 +1,3760 @@
+{
+ "site": "rack-density.com",
+ "generated": "2026-10-30",
+ "source": "GSC 2026-10-29 + live sitemap crawl",
+ "applied": false,
+ "counts": {
+  "keep": 139,
+  "noindex": 249,
+  "drop-translation": 47,
+  "hold": 100
+ },
+ "rule": "keep = earns impressions or hub/tool/guide; hold = keep, re-check 2027-01; noindex = meta robots noindex,follow and drop from sitemap; drop-translation = remove locale path from the translated-path config",
+ "urls": [
+  {
+   "path": "/de/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 196,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/contact/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 207,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/integrations/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 592,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/integrations/librenms/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 484,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/integrations/netbox/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 1032,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/integrations/zabbix/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 853,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/legal/privacy/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 295,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/partners/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 669,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/pricing/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 725,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 1002,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/connectivity/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 772,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/design/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 968,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/facility/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 1394,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/it/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 877,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/product/simulate/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 1082,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/security/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 650,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/world/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 2906,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/world/data/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 353,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/world/estates/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 768,
+   "impressions": 0
+  },
+  {
+   "path": "/de/dc/world/imagined/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 202,
+   "impressions": 0
+  },
+  {
+   "path": "/de/homelab/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 1423,
+   "impressions": 0
+  },
+  {
+   "path": "/de/homelab/changelog/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 220,
+   "impressions": 0
+  },
+  {
+   "path": "/de/homelab/pricing/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 637,
+   "impressions": 0
+  },
+  {
+   "path": "/de/homelab/waitlist/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 115,
+   "impressions": 0
+  },
+  {
+   "path": "/de/privacy/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 499,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 61,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 481,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/contact/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 60,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/integrations/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 202,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/integrations/librenms/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 133,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/integrations/netbox/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 339,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/integrations/zabbix/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/legal/privacy/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 62,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/partners/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 123,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 256,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/connectivity/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 184,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/design/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 208,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/facility/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 377,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/it/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 216,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/product/simulate/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/resources/excel-template/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 415,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/dc/security/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 94,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/homelab/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 515,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/homelab/changelog/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 200,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/homelab/try/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 182,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/homelab/waitlist/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 39,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/privacy/",
+   "tier": "drop-translation",
+   "reason": "locale page with no impressions; remove its path from DC_TRANSLATED / localePaths so hreflang stays two-way (scripts/check-dist.mjs fails on one-way pairs)",
+   "words": 96,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/kioxia/cm7-v-32tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 317,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/kioxia/exceria-pro-2tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/samsung/990-pro-2tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 296,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/seagate/exos-x20-20tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 309,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/seagate/exos-x24-24tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 308,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/seagate/ironwolf-pro-16tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 294,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/solidigm/d5-p5336-6144tb-e1s/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 314,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/wd/black-sn850x-2tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/wd/red-plus-8tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 300,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/drive/wd/ultrastar-dc-hc560-20tb/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/12 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 318,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/fire-suppression/ansul/inergen-system/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/3 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 211,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/apple/mac-mini-m4/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 307,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/beelink/eq12/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 274,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/beelink/ser6-pro/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 274,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/dell/optiplex-7070-micro/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 273,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/gmktec/nucbox-m5/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/hp/elitedesk-800-g4-mini/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 320,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/intel/nuc-12-pro/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 318,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/intel/nuc-13-pro/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 320,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/minisforum/ms-01/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 306,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/minisforum/um790-pro/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 286,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/protectli/vp2420/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/topton/n100-4port/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 10/22 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/orangepi/orange-pi-5-plus/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 1/5 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 285,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/raspberrypi/compute-module-5-io/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 1/5 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 277,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/raspberrypi/raspberry-pi-4b/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 1/5 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 304,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/raspberrypi/raspberry-pi-5/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 1/5 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 296,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/asus/esc-n8-e11/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/cisco/ucs-c220-m7/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/cisco/ucs-c240-m7/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r620/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r650/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r660/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r6715/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 251,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r720/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r730/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r730xd/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r740/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 283,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r750/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r760/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 281,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r7625/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 280,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r7725/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 251,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-t440/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 318,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-xe9680/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 295,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-xe9680l/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 302,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-xe9712/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/gigabyte/g593-sd0/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/h3c/uniserver-r4900-g5/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 274,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/cray-xd670/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 283,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl360-gen10/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl360-gen11/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl360-gen9/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl360p-gen8/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380-gen10/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380-gen11/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 264,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380-gen12/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 255,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380-gen9/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380p-gen8/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl385-gen11/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 263,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/hpe/proliant-microserver-gen10-plus/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 316,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/huawei/atlas-800t-a2/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 277,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/huawei/fusionserver-2288h-v6/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 258,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/ieit/nf5280m6/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 246,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/ieit/nf5688m6/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 275,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr630-v3/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 269,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr650-v2/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 259,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr650-v3/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 266,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr665-v3/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr670-v2/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr675-v3/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 289,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/lenovo/thinksystem-sr680a-v3/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 289,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/nvidia/dgx-b200/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 278,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/as-8125gs-tnhr/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 280,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-1029p-wtr/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 302,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-2029p-c1r/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 300,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-221h-tnr/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 275,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-5018d-fn4t/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 305,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-5019d-fn8tp/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 305,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/supermicro/sys-821ge-tnhr/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 6/58 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 280,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/storage/netapp/aff-a400/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 5/10 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 246,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/storage/netapp/aff-a800/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 5/10 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 246,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/storage/supermicro/cse-847-jbod/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 5/10 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 278,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/storage/supermicro/ssg-6049p-e1cr60l/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 5/10 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 244,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/storage/wd/data102/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 5/10 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 254,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/bx1600mi/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 285,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/smc1000i-2uc/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/smc1500-2u/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 321,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/smt1500rm2u/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 317,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/srt10krmxli/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 305,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/apc/srt5krmxli/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 310,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/cyberpower/or1500lcdrm2u/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/cyberpower/pr1500rt2u/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 275,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/eaton/3s-700/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/eaton/5p-1550ir/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 286,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/eaton/5px-1500rt/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/eaton/93pm/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 262,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/eaton/9px-6000irt3u/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 315,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/schneider/galaxy-vs/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/vertiv/liebert-apm-150kw/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 294,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ups/vertiv/liebert-exl-s1/",
+   "tier": "hold",
+   "reason": "device spec page in a category where 2/18 pages earn impressions; keep, no new pages until the 60-day review",
+   "words": 302,
+   "impressions": 0
+  },
+  {
+   "path": "/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 208,
+   "impressions": 728
+  },
+  {
+   "path": "/calculator/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1021,
+   "impressions": 5
+  },
+  {
+   "path": "/calculator/ups-runtime/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 676,
+   "impressions": 13
+  },
+  {
+   "path": "/dc/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1617,
+   "impressions": 8
+  },
+  {
+   "path": "/dc/compare/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 356,
+   "impressions": 3
+  },
+  {
+   "path": "/dc/compare/dc-sim-vs-enterprise-dcim-pricing/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1100,
+   "impressions": 30
+  },
+  {
+   "path": "/dc/compare/device42-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1388,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/compare/ecostruxure-it-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 813,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/compare/hyperview-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 857,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/compare/nlyte-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1244,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/compare/opendcim-racktables-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1598,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/compare/sunbird-dctrack-alternative/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 816,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/contact/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 204,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 620,
+   "impressions": 13
+  },
+  {
+   "path": "/dc/integrations/cloudsino/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 926,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/grafana/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 784,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/librenms/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 499,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/manageengine-opmanager/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 993,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/netbox/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 997,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/prtg/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 977,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/solarwinds/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 942,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/sunbird-dctrack/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1063,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/integrations/zabbix/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 831,
+   "impressions": 1
+  },
+  {
+   "path": "/dc/legal/privacy/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/partners/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 685,
+   "impressions": 2
+  },
+  {
+   "path": "/dc/pricing/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 741,
+   "impressions": 2
+  },
+  {
+   "path": "/dc/product/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1006,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/product/connectivity/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 759,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/product/design/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 994,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/product/facility/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1392,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/product/it/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 880,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/product/simulate/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1076,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 772,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/calculators/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 57,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/calculators/rack-power/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 324,
+   "impressions": 6
+  },
+  {
+   "path": "/dc/resources/calculators/tokens-per-kwh/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 308,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/changelog/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1283,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/excel-template/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1361,
+   "impressions": 10
+  },
+  {
+   "path": "/dc/resources/guides/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 695,
+   "impressions": 1
+  },
+  {
+   "path": "/dc/resources/guides/crusoe-paraguay-data-center/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1678,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/data-center-cabling-documentation/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2472,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/data-center-digital-twin/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1679,
+   "impressions": 4
+  },
+  {
+   "path": "/dc/resources/guides/data-center-waste-heat-recovery/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1898,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/dcim-for-small-data-center/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1489,
+   "impressions": 1
+  },
+  {
+   "path": "/dc/resources/guides/dcim-pricing/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1418,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/document-data-center-in-excel/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1583,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/google-data-center-finland-halt/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1801,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/grafana-prometheus-to-dc-twin/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2192,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/hot-aisle-cold-aisle-layout/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2688,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/liquid-cooling-leak-what-if/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2541,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/netbox-to-3d/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2909,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/guides/rack-power-capacity-planning/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1343,
+   "impressions": 4
+  },
+  {
+   "path": "/dc/resources/guides/tokens-per-kwh/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1566,
+   "impressions": 3
+  },
+  {
+   "path": "/dc/resources/guides/ups-failure-impact-analysis/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1926,
+   "impressions": 2
+  },
+  {
+   "path": "/dc/resources/guides/zabbix-power-monitoring-3d/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2588,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/resources/sample-twin/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 511,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/security/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 655,
+   "impressions": 7
+  },
+  {
+   "path": "/dc/watch/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 347,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 2690,
+   "impressions": 0
+  },
+  {
+   "path": "/de/calculator/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 972,
+   "impressions": 27
+  },
+  {
+   "path": "/de/dc/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1640,
+   "impressions": 5
+  },
+  {
+   "path": "/de/dc/resources/excel-template/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1397,
+   "impressions": 2
+  },
+  {
+   "path": "/de/homelab/try/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 628,
+   "impressions": 1
+  },
+  {
+   "path": "/devices/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 590,
+   "impressions": 1
+  },
+  {
+   "path": "/devices/accelerator/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 186,
+   "impressions": 6
+  },
+  {
+   "path": "/devices/ap/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 169,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 239,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 239,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 240,
+   "impressions": 6
+  },
+  {
+   "path": "/devices/drive/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 355,
+   "impressions": 9
+  },
+  {
+   "path": "/devices/drive/crucial/mx500-1tb/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 286,
+   "impressions": 7
+  },
+  {
+   "path": "/devices/drive/samsung/pm9a3-384tb-u2/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 313,
+   "impressions": 19
+  },
+  {
+   "path": "/devices/enclosure/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 181,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/fire-detection/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 186,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/fire-detection/xtralis/vesda-vep/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 255,
+   "impressions": 12
+  },
+  {
+   "path": "/devices/fire-detection/xtralis/vesda-vlf/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 251,
+   "impressions": 18
+  },
+  {
+   "path": "/devices/fire-suppression/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 198,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/fire-suppression/fike/ecaro-25/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 210,
+   "impressions": 10
+  },
+  {
+   "path": "/devices/fire-suppression/kidde/novec-1230-system/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 215,
+   "impressions": 6
+  },
+  {
+   "path": "/devices/genset/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 222,
+   "impressions": 2
+  },
+  {
+   "path": "/devices/gpu-server/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 444,
+   "impressions": 2
+  },
+  {
+   "path": "/devices/gpu/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 484,
+   "impressions": 3
+  },
+  {
+   "path": "/devices/inrow/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 196,
+   "impressions": 2
+  },
+  {
+   "path": "/devices/leak-detection/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 188,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/mini-pc/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 516,
+   "impressions": 2
+  },
+  {
+   "path": "/devices/mini-pc/beelink/eq14/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 273,
+   "impressions": 5
+  },
+  {
+   "path": "/devices/mini-pc/beelink/ser8/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 273,
+   "impressions": 4
+  },
+  {
+   "path": "/devices/mini-pc/dell/optiplex-7010-micro/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 294,
+   "impressions": 42
+  },
+  {
+   "path": "/devices/mini-pc/dell/optiplex-7060-micro/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 273,
+   "impressions": 11
+  },
+  {
+   "path": "/devices/mini-pc/gmktec/nucbox-k8/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 276,
+   "impressions": 2
+  },
+  {
+   "path": "/devices/mini-pc/hp/elitedesk-800-g9-mini/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 304,
+   "impressions": 15
+  },
+  {
+   "path": "/devices/mini-pc/lenovo/thinkcentre-m720q-tiny/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 281,
+   "impressions": 37
+  },
+  {
+   "path": "/devices/mini-pc/lenovo/thinkcentre-m75q-tiny/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 296,
+   "impressions": 4
+  },
+  {
+   "path": "/devices/mini-pc/lenovo/thinkcentre-m90q-tiny/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 303,
+   "impressions": 10
+  },
+  {
+   "path": "/devices/mini-pc/lenovo/thinkcentre-m920q-tiny/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 275,
+   "impressions": 19
+  },
+  {
+   "path": "/devices/nas/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 289,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 264,
+   "impressions": 30
+  },
+  {
+   "path": "/devices/rack-system/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 173,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 328,
+   "impressions": 11
+  },
+  {
+   "path": "/devices/rear-door-hx/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 177,
+   "impressions": 18
+  },
+  {
+   "path": "/devices/router/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 184,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 243,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/sbc/radxa/rock-5b/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 278,
+   "impressions": 107
+  },
+  {
+   "path": "/devices/server/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 764,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/server/dell/poweredge-r630/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 279,
+   "impressions": 22
+  },
+  {
+   "path": "/devices/server/h3c/uniserver-r5500-g6/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 289,
+   "impressions": 6
+  },
+  {
+   "path": "/devices/server/hpe/proliant-dl380a-gen11/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 293,
+   "impressions": 8
+  },
+  {
+   "path": "/devices/server/nvidia/dgx-h100/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 281,
+   "impressions": 18
+  },
+  {
+   "path": "/devices/server/nvidia/dgx-h200/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 281,
+   "impressions": 10
+  },
+  {
+   "path": "/devices/server/sugon/i620-g30/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 293,
+   "impressions": 3
+  },
+  {
+   "path": "/devices/storage/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 296,
+   "impressions": 3
+  },
+  {
+   "path": "/devices/storage/dell/powerstore-1200t/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 245,
+   "impressions": 5
+  },
+  {
+   "path": "/devices/storage/dell/powerstore-500t/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 258,
+   "impressions": 54
+  },
+  {
+   "path": "/devices/storage/dell/powervault-me5024/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 249,
+   "impressions": 16
+  },
+  {
+   "path": "/devices/storage/dell/powervault-me5084/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 262,
+   "impressions": 18
+  },
+  {
+   "path": "/devices/storage/pure/flasharray-x/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 245,
+   "impressions": 12
+  },
+  {
+   "path": "/devices/switch/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 553,
+   "impressions": 15
+  },
+  {
+   "path": "/devices/ups/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 436,
+   "impressions": 4
+  },
+  {
+   "path": "/devices/ups/apc/back-ups-pro-1500/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 287,
+   "impressions": 21
+  },
+  {
+   "path": "/devices/ups/cyberpower/cp1500pfclcd/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 275,
+   "impressions": 2
+  },
+  {
+   "path": "/homelab/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1435,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/changelog/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 211,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/learn/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 412,
+   "impressions": 1
+  },
+  {
+   "path": "/homelab/learn/10-inch-mini-rack-planner/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1146,
+   "impressions": 9
+  },
+  {
+   "path": "/homelab/learn/homelab-power-calculator/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1163,
+   "impressions": 7
+  },
+  {
+   "path": "/homelab/learn/homelab-rack-layout/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1073,
+   "impressions": 7
+  },
+  {
+   "path": "/homelab/learn/homelab-ups-sizing/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 1020,
+   "impressions": 2
+  },
+  {
+   "path": "/homelab/learn/how-much-power-does-a-homelab-use/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 952,
+   "impressions": 6
+  },
+  {
+   "path": "/homelab/learn/proxmox-power-usage/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1220,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/learn/rack-diagram-from-excel/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 993,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/learn/tokens-per-watt/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 1181,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/pricing/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 630,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/try/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 629,
+   "impressions": 0
+  },
+  {
+   "path": "/homelab/waitlist/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 121,
+   "impressions": 1
+  },
+  {
+   "path": "/privacy/",
+   "tier": "keep",
+   "reason": "hub, tool, guide, product or legal page",
+   "words": 510,
+   "impressions": 0
+  },
+  {
+   "path": "/zh/calculator/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 423,
+   "impressions": 1
+  },
+  {
+   "path": "/zh/dc/pricing/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 180,
+   "impressions": 1
+  },
+  {
+   "path": "/zh/homelab/pricing/",
+   "tier": "keep",
+   "reason": "earns impressions",
+   "words": 253,
+   "impressions": 1
+  },
+  {
+   "path": "/dc/world/ae/equinix-dx1-dubai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 470,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ae/khazna-abu-dhabi/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 502,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ae/moro-hub-solar-dubai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 501,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/au/airtrunk-syd1-huntingwood/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 429,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/au/nextdc-m2-melbourne/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 415,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/be/google-st-ghislain/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 447,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/br/ascenty-paulinea-campinas/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 473,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/br/odata-sp01-santana/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 481,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/br/scala-sp4-tambore/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 492,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ca/vantage-qc2-montreal/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 466,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ch/cscs-alps-lugano/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 466,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cl/ascenty-santiago/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 471,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cl/google-quilicura/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 464,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/alibaba-zhangbei/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 664,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/apple-icloud-guian/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 472,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/baidu-yangquan-ai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 436,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/bytedance-ulanqab/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 419,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/cainiao-jiaxing-hub/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 412,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/china-mobile-harbin/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 427,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/china-telecom-hohhot/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 447,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/china-telecom-zhongwei/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 432,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/china-unicom-zhongwei/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 444,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/gansu-qingyang-hub/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 439,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/huawei-guian-cloud/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 456,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/tencent-qixing-guizhou/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 462,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/cn/tencent-tianjin/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 418,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/co/equinix-bg1-bogota/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 474,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/data/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 356,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/de/equinix-fr5-frankfurt/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 444,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/de/fz-juelich-jupiter/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 443,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/de/hetzner-falkenstein/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 455,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/dk/gefion-dcai-copenhagen/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 461,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/es/bsc-marenostrum5-barcelona/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 464,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 742,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/2africa/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 529,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/akamai-edge-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 504,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/alibaba-cloud-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 495,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/aws-global-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 520,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/bifrost-cable/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 445,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/china-east-west-computing/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 566,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/cloudflare-global-network/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 530,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/curie/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 415,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/de-cix-globe-peer/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 477,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/dunant/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 398,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/equiano/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 786,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/equinix-fabric/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 496,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/eurohpc-geant-network/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 478,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/fidelity-dr-pair/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 459,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/google-cloud-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 493,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/grace-hopper/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 445,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/huawei-cloud-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 517,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/london-frankfurt-financial/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 435,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/marea/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 403,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/microsoft-azure-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 505,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/oracle-cloud-backbone/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 507,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/peace-cable/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 454,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/sea-me-we-6/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 471,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/spread-networks-chicago-nj/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 476,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/estates/us-doe-esnet/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 549,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fi/csc-lumi-kajaani/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 464,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fi/google-hamina/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 624,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fi/nebius-mantsala/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 477,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fr/data4-marcoussis/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 451,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fr/interxion-mrs3-marseille/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 512,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/fr/ovh-gravelines/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 452,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/gb/equinix-ld4-slough/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 468,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/gb/isambard-ai-bristol/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 470,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/gb/kao-data-harlow/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 481,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/gb/microsoft-natick/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 475,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/gb/telehouse-north-london/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 459,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/hk/sunevision-mega-i/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 433,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/id/nongsa-digital-park-batam/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 477,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ie/meta-clonee/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 456,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ie/microsoft-grange-castle-dublin/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 454,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/imagined/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 208,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/imagined/giant-fjord/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 1062,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/imagined/giant-gobi-sun/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 1042,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/imagined/giant-hyperion-class/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 1043,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/imagined/references/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 2891,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/in/reliance-jamnagar-ai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 480,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/in/yotta-nm1-mumbai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 469,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/is/verne-global-keflavik/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 454,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/it/cineca-leonardo-bologna/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 443,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/jp/airtrunk-toj1-inzai/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 434,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/jp/keihanna-open-lab/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 443,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/jp/ntt-shinagawa-tokyo/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 453,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/jp/riken-fugaku-kobe/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 448,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/kr/lg-cns-busan/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 466,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/kr/naver-gak-chuncheon/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 469,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/mx/kio-qro1-queretaro/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 464,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/mx/microsoft-queretaro/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 472,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/my/bridge-data-centres-johor/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 464,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ng/mdxi-appolonia-lekki/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 484,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/nl/google-eemshaven/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 443,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/no/green-mountain-dc1-stavanger/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 625,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/no/lefdal-mine/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 469,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/pt/start-campus-sines/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 473,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/sa/center3-riyadh/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 467,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/se/bahnhof-pionen/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 404,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/se/ecodatacenter-falun/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 462,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/se/meta-lulea/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 569,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/se/stockholm-data-parks-kista/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 471,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/sg/equinix-sg1-singapore/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 408,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/sg/stt-tai-seng-singapore/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 435,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/ug/raxio-kampala/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 470,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/111-eighth-avenue-nyc/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 478,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/60-hudson-street-nyc/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 517,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/anl-aurora/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 473,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/aws-ashburn-va/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 478,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/aws-umatilla-oregon/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 501,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/cerebras-condor-galaxy-santa-clara/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 516,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/compass-loudoun-ashburn/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 452,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/coreweave-denton/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 460,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/digital-realty-350-cermak-chicago/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 502,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/google-council-bluffs/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 463,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/google-the-dalles/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 470,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/iron-mountain-boyers-wpa1/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 460,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/llnl-el-capitan/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 471,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/meta-prineville/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 467,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/microsoft-boydton/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 454,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/microsoft-fairwater-racine/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 483,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/nautilus-stockton-barge/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 516,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/ornl-frontier/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 471,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/qts-richmond-mega/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 470,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/stargate-abilene/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 511,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/supernap-las-vegas/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 475,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/switch-citadel/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 705,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/switch-pyramid-grand-rapids/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 469,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/westin-building-seattle/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 468,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/us/xai-colossus-memphis/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 496,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/za/teraco-jb1-isando/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 462,
+   "impressions": 0
+  },
+  {
+   "path": "/dc/world/za/teraco-jb4-bredell/",
+   "tier": "noindex",
+   "reason": "facility/country directory page: ~470 words from one template, 0 of 132 earn impressions (same pattern Sensaka dropped in its /intel policy)",
+   "words": 483,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/accelerator/huawei/ascend-910b/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 243,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/accelerator/intel/gaudi-3/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 236,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/ap/ui/u6-pro/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/1 pages earn impressions",
+   "words": 220,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/coolit/chx750/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 277,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/envicool/cybersway-cdu/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 266,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/motivair/mcdu-500/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 278,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/nvent/schroff-cdu/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 282,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cdu/vertiv/liebert-xdu450/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/amd/epyc-9654/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 263,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/amd/epyc-9655/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 247,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/amd/epyc-9754/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 261,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/intel/xeon-6780e/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 248,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/intel/xeon-platinum-8480plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 269,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/cpu/intel/xeon-platinum-8592plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/6 pages earn impressions",
+   "words": 269,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/schneider/uniflair-mbc/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/stulz/cyberair-3pro-dx/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 285,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/vertiv/liebert-cw/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/vertiv/liebert-dse/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 255,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/crah/vertiv/liebert-pdx/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/5 pages earn impressions",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/enclosure/deskpi/rackmate-1u-pi-mount/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 200,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/enclosure/uctronics/1u-pi-rack/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 211,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/genset/cat/3516c/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/4 pages earn impressions",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/genset/cat/c32-acert/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/4 pages earn impressions",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/genset/cummins/c1500d5e/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/4 pages earn impressions",
+   "words": 268,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/genset/cummins/c2250d5/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/4 pages earn impressions",
+   "words": 270,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/amd/instinct-mi300x/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/amd/instinct-mi325x/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 273,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/amd/radeon-rx-7900-xtx/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 297,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/a100-sxm4-80gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/a800-sxm4-80gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 286,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/b200-sxm/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/gb200-superchip/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/geforce-rtx-3090/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 301,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/geforce-rtx-4060-ti-16gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 301,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/geforce-rtx-4090/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 307,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/geforce-rtx-5090/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 293,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/h100-nvl-94gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/h100-pcie-80gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/h100-sxm5-80gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/h20-sxm5-96gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 278,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/h200-sxm5-141gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 277,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/l4/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 286,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/l40s/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 293,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/rtx-a2000-12gb/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 287,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/rtx-a4000/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 295,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/gpu/nvidia/tesla-p40/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/21 pages earn impressions",
+   "words": 284,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/inrow/apc/inrow-acrc301s/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/inrow/apc/inrow-acrd100/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 274,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/leak-detection/nvent/tracetek-tt1000/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 212,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/leak-detection/rle/seahawk-ld2100/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/qnap/ts-464/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/qnap/ts-873a/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 268,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/qnap/ts-h1290fx/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 275,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/synology/diskstation-ds1522plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/synology/diskstation-ds224plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 273,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/synology/diskstation-ds923plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 291,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/synology/rackstation-rs1221plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 293,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/terramaster/f4-424/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 263,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/nas/ugreen/dxp4800-plus/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/9 pages earn impressions",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/dell/1400w-titanium/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 326,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/dell/2400w-platinum/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 327,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/delta/3000w-titanium/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 318,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/hpe/1600w-flex-slot-platinum/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 334,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/hpe/800w-flex-slot-titanium/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 334,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/lenovo/1800w-titanium-crps/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 326,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/psu/liteon/2000w-titanium/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 317,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/apc/ap7921b/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 279,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/apc/ap8841/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/apc/ap8959/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 292,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/deskpi/10-inch-pdu/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/raritan/px3-5190r/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 293,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/raritan/px3-5493/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-pdu/servertech/pro2-c2wg36-4c20/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/7 pages earn impressions",
+   "words": 290,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack-system/nvidia/gb200-nvl72/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/1 pages earn impressions",
+   "words": 220,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/apc/netshelter-sx-ar3300/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 273,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/deskpi/rackmate-t0/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 262,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/deskpi/rackmate-t1/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/deskpi/rackmate-t2/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 262,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/geeekpi/10-inch-8u/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 263,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/rittal/ts-it-42u/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 264,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/startech/4postrack25u/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/startech/4postrack42/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 276,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/sysracks/pr-12-600/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 287,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/sysracks/pr-27-800/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 287,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rack/vertiv/vr-rack-42u/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/11 pages earn impressions",
+   "words": 266,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/rear-door-hx/motivair/chilleddoor/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/1 pages earn impressions",
+   "words": 251,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/router/mikrotik/hex-s/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 232,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/router/tplink/er8411/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/2 pages earn impressions",
+   "words": 234,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/arista/7050x3-48yc12/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 245,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/arista/7060x5-64d/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 245,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/arista/7280r3-48yc8/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 262,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/arista/7800r3-chassis/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 246,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/cisco/nexus-93180yc-fx3/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 251,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/cisco/nexus-9336c-fx2/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 249,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/cisco/nexus-9364d-gx2a/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 249,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/dell/s5248f-on/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/dell/z9432f-on/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/h3c/s9850/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 273,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/huawei/cloudengine-ce6866/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 266,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/huawei/cloudengine-ce9860/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 265,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/juniper/qfx5120-48y/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 247,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/juniper/qfx5130-32cd/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 258,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/juniper/qfx5220-32cd/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 245,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/mikrotik/crs309-1g-8s-plus-in/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 287,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/mikrotik/crs326-24g-2s-plus-rm/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 288,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/netgear/gs308epp/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 270,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/nvidia/quantum-2-qm9700/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 257,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/nvidia/spectrum-sn3700/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 266,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/nvidia/spectrum-sn4600/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 250,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/nvidia/spectrum-sn5600/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 250,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ruijie/rg-s6510/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 261,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/tplink/tl-sg3428mp/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 283,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ui/udm-pro/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 308,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ui/usw-flex-mini/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 269,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ui/usw-lite-8-poe/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 271,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ui/usw-pro-24-poe/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 311,
+   "impressions": 0
+  },
+  {
+   "path": "/devices/switch/ui/usw-pro-48/",
+   "tier": "noindex",
+   "reason": "device spec page (~280 words) in a category where only 0/29 pages earn impressions",
+   "words": 305,
+   "impressions": 0
+  }
+ ]
+}

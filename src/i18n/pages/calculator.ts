@@ -4,8 +4,8 @@ import { calculatorFaq } from '../../data/faq';
 import type { Deep } from '../config';
 
 export const en = {
-  title: `Rack Density Calculator | ${BRAND}`,
-  description: 'Free rack density calculator: how many devices fit in your rack by space, power and cooling, the kW per rack and the cost per month, with a live rack diagram.',
+  title: `Rack Density Calculator: kW per Rack | ${BRAND}`,
+  description: 'Free rack density calculator: how many servers fit in your rack by space, power and cooling, the kW per rack and the cost per month. Includes what fits in a 15 kW rack.',
   crumb: 'Calculator',
   schemaName: 'Rack Density Calculator',
   schemaDescription: 'Calculate how many servers or homelab devices fit in one rack by space, power and cooling, the kW per rack, and the monthly electricity cost. Presets for 10-inch mini racks, 12U wall racks, 22U and 42U racks.',
@@ -30,6 +30,25 @@ export const en = {
       { a: '10-inch rack planner', rest: ': will it fit, and how many U' },
       { a: 'Idle savings and payback', rest: '' },
       { a: 'Rack power calculator', rest: ': load per PDU in normal and failover against the 80 % rule' },
+    ],
+  },
+  /** EN-only section for the query "rack 15 kw" (GSC 2026-10-29: position 12.9). Rendered by src/views/Calculator.astro when locale is en. */
+  kw15: {
+    h2: 'What fits in a 15 kW rack?',
+    p: '15 kW is the usual line between a standard rack and a high-density one. Below it, a single three-phase feed and room air cooling are enough. Above it, plan in-row cooling, rear-door heat exchangers or liquid cooling. With the 80 % rule, a 15 kW rack gives you 12 kW to plan against, so that either feed can fail and the other still carries the load.',
+    th: ['Device', 'Draw each', 'By power at 15 kW', 'By power at 12 kW (80 %)', 'By space (42U)', 'Fits (12 kW plan)'],
+    rows: [
+      ['1U server', '250 W', '60', '48', '42', '42, space limits first'],
+      ['1U server', '500 W', '30', '24', '42', '24, power limits first'],
+      ['2U server', '750 W', '20', '16', '21', '16'],
+      ['2U server', '1,000 W', '15', '12', '21', '12'],
+      ['4U GPU server', '2,000 W', '7', '6', '10', '6'],
+      ['8U 8-GPU server', '10,200 W', '1', '1', '5', '1'],
+    ],
+    notes: [
+      'Feed: 15 kW needs about 23 A per phase at 400 V three-phase, so a 32 A three-phase feed per side (A and B). A 230 V 16 A single-phase circuit tops out near 3.7 kW.',
+      'Cooling: 15 kW is about 51,000 BTU/h. At a 20 °F (11 K) air rise that is roughly 2,400 CFM through the rack, which is why racks past this point move to in-row or rear-door cooling.',
+      'Enter your own numbers in the calculator above: set cooling to 15 kW and the circuit to 400 V three-phase 32 A to reproduce this table.',
     ],
   },
   faq: calculatorFaq,
