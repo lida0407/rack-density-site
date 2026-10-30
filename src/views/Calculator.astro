@@ -44,6 +44,17 @@ devices    = min(by_space, by_power, by_cooling)
 circuit_kW = V × A × PF / 1000          {c.how.single}
 circuit_kW = √3 × V × A × PF / 1000     {c.how.three}</code></pre>
       <p>{c.how.p}</p>
+      {locale === 'en' && (
+        <>
+          <h2>{c.kw15.h2}</h2>
+          <p>{c.kw15.p}</p>
+          <table>
+            <thead><tr>{c.kw15.th.map((h) => <th>{h}</th>)}</tr></thead>
+            <tbody>{c.kw15.rows.map((r) => <tr>{r.map((x) => <td>{x}</td>)}</tr>)}</tbody>
+          </table>
+          <ul>{c.kw15.notes.map((n) => <li>{n}</li>)}</ul>
+        </>
+      )}
       <h2>{c.more.h2}</h2>
       <ul>
         {c.more.items.map((i, k) => { const href = MORE[k]; return <li><a href={lp(href, locale)}>{i.a}</a>{enOnly(href) && <span class="en-only"> ({t.englishOnly})</span>}{i.rest}</li>; })}
