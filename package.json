@@ -15,7 +15,8 @@
     "media": "node scripts/media.mjs",
     "devices": "node scripts/devices-sync.mjs",
     "icons": "node scripts/icons.mjs",
-    "waitlist:export": "sh scripts/waitlist-export.sh"
+    "waitlist:export": "sh scripts/waitlist-export.sh",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "engines": {
     "node": ">=22.12"
