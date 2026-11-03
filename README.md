@@ -51,6 +51,15 @@ No `/ads.txt` (no ads). `public/_routes.json` keeps all of these off the languag
 - **llms-full:** export `dcLlmsFull(): Promise<string>` from `src/pages/dc/_llms.ts` (English, headings from `##`) for `/llms-full.txt`; optionally `dcLlmsFullLocale(locale)` for `/de/llms-full.txt` and `/zh/llms-full.txt`. Until they exist, `/llms-full.txt` carries the `dcLlms()` summary. Both hooks are found with `import.meta.glob`, so a build without them still passes.
 - **DC status (2026-10-27):** all three hooks exist. `dcFeedItems()` = the DC changelog (`src/data/dc/changelog.ts`, also rendered on `/dc/resources/changelog/`) + DC guides (`updated` as the date), guids `dc-changelog-…` / `dc-guide-…`; `/dc/rss.xml` uses the shared `rssXml()`. `dcLlmsFull()` = DC pages, guides, comparisons, pricing and changelog in English with absolute links; `dcLlmsFullLocale(l)` = the pages listed for `l` in `src/config/dc/i18n.ts`. New DC changelog entries go in `src/data/dc/changelog.ts` only.
 
+## Self-serve trial (~/Sensaka/TRY-SIGNUP.md)
+- **Switch:** `src/config/trial.mjs` `TRIAL_LIVE` (false until the planner's "Try live"). Until then `/try/`, `/de/try/`, `/zh/try/` and the privacy "Trial" paragraph are built only with `TRIAL_PAGE=1 npm run build`, and the API answers only where `TRIAL_ENABLED=1` (`wrangler.toml` `[env.preview]`, which also sets `TRIAL_DRY=1`).
+- **Preview:** `TRIAL_PAGE=1 npm run build && npx wrangler pages deploy dist --project-name rack-density --branch trial-preview` → https://trial-preview.rack-density.pages.dev (same D1; dry run returns the pass as JSON).
+- **Sign-up:** `POST /api/try/signup` (`functions/api/try/signup.ts`): Turnstile, e-mail syntax + MX, 5/h per IP hash, D1 `trials` (`db/trials.sql`) + a waitlist row, pass cookie `rd_pass` (`Domain=.rack-density.com; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=604800`), 303 to `https://app.rack-density.com/homelabtwin/` or `/dcsim/`. One trial per e-mail; the same pass again until the trial is started; `{ok:false, reason:"used"}` after.
+- **Pass format (app host verifies):** `base64url(JSON {id, ed: "homelab"|"dc", iat, exp})` + `.` + `base64url(HMAC-SHA256(TRIAL_SIGNING_SECRET, <payload part>))`, no padding. `src/lib/trialPass.ts` has `signPass` / `verifyPass`.
+- **Callback from the app host:** `POST https://rack-density.com/api/try/used`, body `{"id": "<pass id>", "event": "started"|"used", "ts": <epoch s | epoch ms | ISO 8601>}`, header `X-RD-Signature: base64url(HMAC-SHA256(TRIAL_SIGNING_SECRET, <raw body bytes>))`; `ts` within 5 minutes. 200 `{ok:true}` · 401 signature · 400 body/stale · 404 unknown pass. Sets `started_at` / `used_at` once.
+- **Secret:** `TRIAL_SIGNING_SECRET` only through the pipe in TRY-SIGNUP.md §7, for both environments (`… pages secret put TRIAL_SIGNING_SECRET --project-name rack-density` and again with `--env preview`). Never in git, chat or logs.
+- **Export:** `npm run trials:export` → CSV in `~/Sensaka/.secrets/`.
+
 ## Commands
 ```
 npm ci
