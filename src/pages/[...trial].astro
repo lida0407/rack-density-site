@@ -1,0 +1,11 @@
+---
+// /try/, /de/try/, /zh/try/ (src/views/Trial.astro). One rest route so the pages exist only when TRIAL_PAGES is on:
+// preview builds (TRIAL_PAGE=1) until the planner's "Try live" flips TRIAL_LIVE in src/config/trial.mjs.
+import Trial from '../views/Trial.astro';
+import { TRIAL_PAGES } from '../config/trial.mjs';
+import { isLive, type Locale } from '../i18n';
+export const getStaticPaths = () => (TRIAL_PAGES ? [{ params: { trial: 'try' }, props: { locale: 'en' } },
+  ...(['de', 'zh'] as const).filter((l) => isLive(l)).map((l) => ({ params: { trial: `${l}/try` }, props: { locale: l } }))] : []);
+const { locale } = Astro.props as { locale: Locale };
+---
+<Trial locale={locale} />

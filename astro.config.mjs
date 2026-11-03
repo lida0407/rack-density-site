@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { SITE_URL, BASE } from './site.config.mjs';
 import { LOCALE_LIVE } from './src/i18n/live.mjs';
+import { TRIAL_LIVE } from './src/config/trial.mjs';
 
 const siteBase = BASE.endsWith('/') ? BASE : `${BASE}/`;
 
@@ -64,6 +65,6 @@ export default defineConfig({
   build: { format: 'directory', inlineStylesheets: 'always' },
   markdown: { rehypePlugins: [rehypeBaseLinks], shikiConfig: { themes: { dark: 'github-dark-default', light: 'github-light-default' }, defaultColor: 'dark' } },
   // Sitemap: hreflang alternates for pages that exist in several locales; the Impressum (German only, noindex until complete) stays out.
-  integrations: [mdx(), sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', de: 'de', zh: 'zh-CN' } }, filter: (page) => !/\/(404|impressum)\/?$/.test(page) && !Object.entries(LOCALE_LIVE).some(([l, live]) => !live && page.includes(`/${l}/`)) && !page.includes('/dc/preview/'), serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; } })],
+  integrations: [mdx(), sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', de: 'de', zh: 'zh-CN' } }, filter: (page) => !/\/(404|impressum)\/?$/.test(page) && (TRIAL_LIVE || !/\/try\/$/.test(page) || /\/homelab\/try\/$/.test(page)) && !Object.entries(LOCALE_LIVE).some(([l, live]) => !live && page.includes(`/${l}/`)) && !page.includes('/dc/preview/'), serialize: (item) => { const d = lastmod(item.url); return d ? { ...item, lastmod: d } : item; } })],
   devToolbar: { enabled: false },
 });

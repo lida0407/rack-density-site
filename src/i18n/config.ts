@@ -15,6 +15,7 @@ export const LOCALE_META: Record<Locale, { label: string; name: string; menu: st
 
 export { LOCALE_CALC } from './calc';
 import { LOCALE_LIVE } from './live.mjs';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 export { LOCALE_LIVE };
 /** Launched locales (src/i18n/live.mjs); English always. */
 export const isLive = (l: Locale) => l === 'en' || LOCALE_LIVE[l];
@@ -25,6 +26,8 @@ const HUB_HOMELAB: Record<'de' | 'zh', string[]> = {
   de: ['/', '/calculator', '/homelab', '/homelab/pricing', '/homelab/try', '/homelab/waitlist', '/homelab/changelog', '/privacy', '/impressum'],
   zh: ['/', '/calculator', '/homelab', '/homelab/pricing', '/homelab/try', '/homelab/waitlist', '/homelab/changelog', '/privacy'],
 };
+// The trial sign-up page exists in every launched locale while trial pages are built (src/config/trial.mjs).
+if (TRIAL_PAGES) { HUB_HOMELAB.de.push('/try'); HUB_HOMELAB.zh.push('/try'); }
 const dcMod = Object.values(import.meta.glob<{ DC_TRANSLATED?: Partial<Record<'de' | 'zh', string[]>> }>('../config/dc/i18n.ts', { eager: true }))[0];
 const norm = (p: string) => (p.replace(/[?#].*$/, '').replace(/\/+$/, '') || '/');
 export const TRANSLATED: Record<'de' | 'zh', Set<string>> = {

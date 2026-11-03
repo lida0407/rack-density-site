@@ -3,6 +3,7 @@
 import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL, MAILTO, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../config/brand';
 import { fill, pageCopy, type Locale } from '../i18n';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 import * as copy from '../i18n/pages/privacy';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -24,6 +25,8 @@ const analytics = CF_WEB_ANALYTICS_ON || CF_WEB_ANALYTICS_TOKEN ? c.site.analyti
       </ul>
       <h2>{c.waitlist.h2}</h2>
       <ul>{c.waitlist.items.map((i) => <li set:html={h(i)} />)}</ul>
+      {TRIAL_PAGES && <><h2>{c.trial.h2}</h2>
+      <ul>{c.trial.items.map((i) => <li set:html={h(i)} />)}</ul></>}
       <h2>{c.account.h2}</h2>
       <ul>{c.account.items.map((i) => <li set:html={h(i)} />)}</ul>
       <h2>{c.who.h2}</h2>

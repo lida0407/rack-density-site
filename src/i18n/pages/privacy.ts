@@ -29,6 +29,12 @@ export const en = {
     "A Cloudflare Turnstile check on the form tells people from bots. It runs Cloudflare's script on that page only.",
     "We use the address for one e-mail when the self-serve Try opens. We don't share it and we don't add it to any other list. Ask us at {mail} and we delete it.",
   ] },
+  trial: { h2: 'The trial', items: [
+    'If you sign up for the trial we store your e-mail address, the product you picked, your optional note, whether you ticked "E-mail me when accounts open", where you came from (<code>?src</code>), a one-way hash of your IP address against abuse (five sign-ups per hour) and the times the trial was created, started and first used. It is kept in Cloudflare D1, together with a waitlist entry.',
+    'The app gets a signed pass in a cookie named <code>rd_pass</code> on rack-density.com and its subdomains, valid for 7 days. It holds a random trial number and the product, never your e-mail address.',
+    'Your spreadsheet: Homelab Twin reads it in your browser and never uploads it. DC Sim processes it on our server for the session and deletes it within 24 hours after the session ends.',
+    'We send no e-mail unless you ticked the box; then one e-mail when accounts open. Ask us at {mail} and we delete your trial record.',
+  ] },
   account: { h2: 'With an Account (when available)', items: [
     'We store your lab, its history and your account details so you can come back to them. Ask us at {mail} and we delete your lab or your account.',
     'Payments will be handled by our payment provider. We never see your card number.',
@@ -66,6 +72,12 @@ export const de: Deep<typeof en> = {
     'Eine Cloudflare-Turnstile-Prüfung im Formular unterscheidet Menschen von Bots. Sie führt das Skript von Cloudflare nur auf dieser Seite aus.',
     'Wir nutzen die Adresse für eine E-Mail, wenn Try zum Selbsttesten öffnet. Wir geben sie nicht weiter und setzen sie auf keine andere Liste. Schreiben Sie uns an {mail}, und wir löschen sie.',
   ] },
+  trial: { h2: 'Der Testzugang', items: [
+    'Wenn Sie sich für den Test anmelden, speichern wir Ihre E-Mail-Adresse, das gewählte Produkt, Ihre optionale Notiz, ob Sie „Per E-Mail benachrichtigen, wenn Konten verfügbar sind“ angekreuzt haben, woher Sie kamen (<code>?src</code>), einen Einweg-Hash Ihrer IP-Adresse gegen Missbrauch (fünf Anmeldungen pro Stunde) sowie die Zeitpunkte, zu denen der Test angelegt, gestartet und erstmals genutzt wurde. Die Daten liegen in Cloudflare D1, zusammen mit einem Eintrag auf der Warteliste.',
+    'Die App erhält einen signierten Pass in einem Cookie namens <code>rd_pass</code> für rack-density.com und seine Subdomains, gültig für 7 Tage. Er enthält eine zufällige Testnummer und das Produkt, nie Ihre E-Mail-Adresse.',
+    'Ihre Tabelle: Homelab Twin liest sie in Ihrem Browser und lädt sie nie hoch. DC Sim verarbeitet sie für die Dauer der Sitzung auf unserem Server und löscht sie innerhalb von 24 Stunden nach dem Ende der Sitzung.',
+    'Wir senden keine E-Mail, außer Sie haben das Häkchen gesetzt; dann eine E-Mail, wenn Konten verfügbar sind. Schreiben Sie uns an {mail}, und wir löschen Ihren Testeintrag.',
+  ] },
   account: { h2: 'Mit einem Account (sobald verfügbar)', items: [
     'Wir speichern Ihr Lab, seinen Verlauf und Ihre Kontodaten, damit Sie darauf zurückgreifen können. Schreiben Sie uns an {mail}, und wir löschen Ihr Lab oder Ihr Konto.',
     'Zahlungen wickelt künftig unser Zahlungsdienstleister ab. Ihre Kartennummer sehen wir nie.',
@@ -102,6 +114,12 @@ export const zh: Deep<typeof en> = {
     '加入候补名单时，我们保存您的邮箱地址、所选产品、关于机柜的选填备注、来源（链接中的 <code>?src</code>，例如 <code>yt</code>；在德文或中文页面登记时附加 <code>-de</code> 或 <code>-zh</code>）及浏览器 User-Agent 字符串，另保存 IP 地址的单向哈希值，仅用于限制垃圾提交（每小时五次）。',
     '表单使用 Cloudflare Turnstile 人机验证，用于区分真人与自动程序。Cloudflare 脚本仅在该页面运行。',
     '我们仅在自助免费试用开放时使用该邮箱发送一封邮件，不会共享，也不会加入任何其他名单。如需删除，请发送邮件至 {mail}。',
+  ] },
+  trial: { h2: '免费试用', items: [
+    '注册免费试用时，我们保存您的邮箱地址、所选产品、选填备注、是否勾选“账户功能开放时邮件通知我”、来源（<code>?src</code>）、用于防范滥用的 IP 地址单向哈希值（每小时最多五次注册），以及试用的创建、开始和首次使用时间。上述数据保存在 Cloudflare D1 中，并同时生成一条候补名单记录。',
+    '应用通过名为 <code>rd_pass</code> 的 Cookie 获取签名试用凭证，适用于 rack-density.com 及其子域名，有效期 7 天。凭证仅包含随机试用编号和产品，不包含您的邮箱地址。',
+    '您的清单：Homelab Twin 仅在浏览器本地读取，不会上传。DC Sim 在会话期间于我们的服务器上处理，并在会话结束后 24 小时内删除。',
+    '除非您勾选通知，我们不会发送任何邮件；勾选后，仅在账户功能开放时发送一封邮件。如需删除试用记录，请发送邮件至 {mail}。',
   ] },
   account: { h2: '使用账户时（推出后）', items: [
     '我们保存您的 Homelab、历史记录及账户信息，以便您随时访问。如需删除 Homelab 或账户，请发送邮件至 {mail}。',
