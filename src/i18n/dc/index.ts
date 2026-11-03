@@ -14,6 +14,7 @@ import integrations from "./strings/integrations-index.json";
 import page from "./strings/page.json";
 // Self-serve trial copy (TRY-SIGNUP.md §6), hand-written en/de/zh, used when DC_TRY_LIVE (src/lib/dc/try.ts).
 import tryCopy from "./strings/try.json";
+import { TRIAL } from "../../config/trial.mjs"; // the trial session length, one constant (homelab marketing)
 import worldUi from "./strings/world-ui.json";
 import worldExtra from "./strings/world-extra.json";
 
@@ -53,7 +54,7 @@ export const dcLp = (p: string, locale: Locale, fromHeld = false) => dcHref(`/dc
 export const rootLp = (p: string, locale: Locale) => lp(`/${p.replace(/^\//, "")}`, locale);
 
 const constants = (locale: Locale): Record<string, string | number> => ({
-  PRODUCT_NAME, LEGAL_NAME, COMPANY: LEGAL_NAME, LEGAL_URL, CONTACT_EMAIL, TEMPLATE_VERSION,
+  PRODUCT_NAME, LEGAL_NAME, COMPANY: LEGAL_NAME, LEGAL_URL, CONTACT_EMAIL, TEMPLATE_VERSION, minutes: TRIAL.minutes,
   TEMPLATE_SHEETS: locale === "en" ? TEMPLATE_SHEETS : str("home", "const.templateSheets", locale),
   "PRICES.monitorPerRack": PRICES.monitorPerRack, "PRICES.monitorMin": PRICES.monitorMin, "PRICES.partnerMargin": PRICES.partnerMargin,
   "PRICES.design[0].price": PRICES.design[0].price,

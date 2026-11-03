@@ -3,7 +3,8 @@ import { PRODUCT_NAME, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } 
 import { abs } from "../../lib/dc/url";
 import { ENTITY_DC, LEGAL_NAME, DC_TRY_LIVE } from "../../config/dc/product";
 import tryStrings from "../../i18n/dc/strings/try.json";
-const tryStatus = tryStrings["llms.status"].en;
+import { TRIAL } from "../../config/trial.mjs";
+const tryStatus = tryStrings["llms.status"].en.replace("{minutes}", String(TRIAL.minutes));
 import { SITE_URL } from "../../../site.config.mjs";
 import { lp, hasPage, type Locale } from "../../i18n";
 

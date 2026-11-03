@@ -6,6 +6,7 @@
 //    every build, flag on or off, so an edit that breaks a replacement fails the build instead of silently doing nothing.
 import { DC_TRY_LIVE } from "../../config/dc/product";
 import { lp, type Locale } from "../../i18n";
+import { TRIAL } from "../../config/trial.mjs"; // session length, one constant
 
 export type TryPair = { from: string; to: string };
 type Faq = { q: string; a: string }[];
@@ -13,7 +14,8 @@ type Faq = { q: string; a: string }[];
 /** The sign-up page with the DC edition preselected. */
 export const tryHref = (locale: Locale) => `${lp("/try", locale)}?edition=dc`;
 
-const swap = (s: string, pairs: TryPair[]) => pairs.reduce((t, p) => t.split(p.from).join(p.to), s);
+// `to` may say {minutes}: the trial session length from src/config/trial.mjs.
+const swap = (s: string, pairs: TryPair[]) => pairs.reduce((t, p) => t.split(p.from).join(p.to.replace(/\{minutes\}/g, String(TRIAL.minutes))), s);
 // Rendered Markdown turns ' and " into typographic quotes; compare on a neutral form.
 const plain = (s: string) => s.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
 

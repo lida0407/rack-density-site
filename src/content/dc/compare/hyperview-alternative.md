@@ -16,7 +16,7 @@ related:
   - { href: "compare/dc-sim-vs-enterprise-dcim-pricing/", label: "DC Sim vs enterprise DCIM pricing", kind: "Price comparison" }
   - { href: "product/simulate/", label: "Data center what-if simulation: fail anything", kind: "Product" }
   - { href: "resources/excel-template/", label: "The Excel template that becomes a 3D twin", kind: "Template" }
-tryLive: [{"from": "Walkthrough on your own file; Excel template free", "to": "Free 60-minute trial with your own spreadsheet, no card; Excel template free"}]
+tryLive: [{"from": "Walkthrough on your own file; Excel template free", "to": "Free {minutes}-minute trial with your own spreadsheet, no card; Excel template free"}]
 ---
 
 ## At a glance
