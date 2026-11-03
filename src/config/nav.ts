@@ -68,3 +68,12 @@ export const FOOTER = {
     { href: '/privacy', label: 'Privacy' },
   ],
 };
+
+/** "Our other sites" footer row: the owner's sister sites, plain followed links on every page. Descriptions go through label(). */
+export const SISTER_SITES = [
+  { href: 'https://servertoohot.com/', name: 'servertoohot.com', desc: 'server, storage and network hardware reference' },
+  { href: 'https://www.mrplanb.com/', name: 'mrplanb.com', desc: 'Proxmox, storage and backup guides' },
+  { href: 'https://tapebackup.org/', name: 'tapebackup.org', desc: 'LTO tape prices' },
+  { href: 'https://outagecost.org/', name: 'outagecost.org', desc: 'downtime cost calculator' },
+  { href: 'https://sensaka.com/', name: 'sensaka.com', desc: 'data center and AI infrastructure management' },
+] as const;
