@@ -18,7 +18,7 @@ export const en = {
     Product: 'Product', Integrations: 'Integrations', Partners: 'Partners', Resources: 'Resources', 'Excel template': 'Excel template',
     Guides: 'Guides', 'Security & data': 'Security & data', Contact: 'Contact', Waitlist: 'Waitlist', Comparisons: 'Comparisons', 'Famous data centers': 'Famous data centers',
     'server, storage and network hardware reference': 'server, storage and network hardware reference', 'Proxmox, storage and backup guides': 'Proxmox, storage and backup guides',
-    'LTO tape prices': 'LTO tape prices', 'downtime cost calculator': 'downtime cost calculator', 'data center and AI infrastructure management': 'data center and AI infrastructure management',
+    'LTO tape prices': 'LTO tape prices', 'downtime cost calculator': 'downtime cost calculator',
   } as Record<string, string>,
   usd: '${n}',
   mail: { walkSubject: '{p} walkthrough', walkBody: 'I would like a walkthrough of {p}. My lab: (rack size, devices, what you want to see).', notifySubject: 'Tell me when {p} Try opens', notifyBody: 'One e-mail when the self-serve Try opens, please.' },

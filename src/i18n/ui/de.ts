@@ -18,7 +18,7 @@ export const de: Deep<UI> = {
     Product: 'Produkt', Integrations: 'Integrationen', Partners: 'Partner', Resources: 'Ressourcen', 'Excel template': 'Excel-Vorlage',
     Guides: 'Leitfäden', 'Security & data': 'Sicherheit & Daten', Contact: 'Kontakt', Waitlist: 'Warteliste', Comparisons: 'Vergleiche', 'Famous data centers': 'Bekannte Rechenzentren',
     'server, storage and network hardware reference': 'Server-, Storage- und Netzwerk-Hardware im Überblick', 'Proxmox, storage and backup guides': 'Ratgeber zu Proxmox, Storage und Backup',
-    'LTO tape prices': 'LTO-Bandpreise', 'downtime cost calculator': 'Rechner für Ausfallkosten', 'data center and AI infrastructure management': 'Management von Rechenzentren und KI-Infrastruktur',
+    'LTO tape prices': 'LTO-Bandpreise', 'downtime cost calculator': 'Rechner für Ausfallkosten',
   },
   usd: '{n}\u00a0$',
   mail: { walkSubject: 'Vorführung {p}', walkBody: 'Ich hätte gern eine Vorführung von {p}. Mein Lab: (Rackgröße, Geräte, was Sie sehen möchten).', notifySubject: 'Bitte benachrichtigen, wenn {p} Try öffnet', notifyBody: 'Bitte eine E-Mail, sobald Try zum Selbsttesten öffnet.' },

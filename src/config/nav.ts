@@ -75,5 +75,4 @@ export const SISTER_SITES = [
   { href: 'https://www.mrplanb.com/', name: 'mrplanb.com', desc: 'Proxmox, storage and backup guides' },
   { href: 'https://tapebackup.org/', name: 'tapebackup.org', desc: 'LTO tape prices' },
   { href: 'https://outagecost.org/', name: 'outagecost.org', desc: 'downtime cost calculator' },
-  { href: 'https://sensaka.com/', name: 'sensaka.com', desc: 'data center and AI infrastructure management' },
 ] as const;

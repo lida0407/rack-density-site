@@ -18,7 +18,7 @@ export const zh: Deep<UI> = {
     Product: '产品', Integrations: '集成', Partners: '合作伙伴', Resources: '资源', 'Excel template': 'Excel 导入模板',
     Guides: '技术指南', 'Security & data': '安全与数据', Contact: '联系我们', Waitlist: '候补名单', Comparisons: '产品对比', 'Famous data centers': '全球知名数据中心',
     'server, storage and network hardware reference': '服务器、存储与网络硬件参考', 'Proxmox, storage and backup guides': 'Proxmox、存储与备份指南',
-    'LTO tape prices': 'LTO 磁带价格', 'downtime cost calculator': '停机损失计算器', 'data center and AI infrastructure management': '数据中心与 AI 基础设施管理',
+    'LTO tape prices': 'LTO 磁带价格', 'downtime cost calculator': '停机损失计算器',
   },
   usd: '${n}',
   mail: { walkSubject: '预约 {p} 演示', walkBody: '您好，我希望预约一次 {p} 演示。我的环境：（机柜尺寸、设备情况、希望了解的内容）。', notifySubject: '{p} 免费试用开放时请通知我', notifyBody: '自助免费试用（Try）开放时，请发送一封邮件通知我。' },
