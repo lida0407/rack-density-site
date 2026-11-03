@@ -1,0 +1,90 @@
+{
+ "tryPage.dc.title": {
+  "en": "DC Sim: your own hall, for 60 minutes",
+  "de": "DC Sim: Ihr eigener Raum, 60 Minuten lang",
+  "zh": "DC Sim：用您自己的机房试用 60 分钟"
+ },
+ "tryPage.dc.short": {
+  "en": "Your own hall in 3D for 60 minutes: power chain, cooling, cabling and network, and every what-if (estimated, not CFD). The trial hall is deleted within 24 hours.",
+  "de": "Ihr eigener Raum in 3D, 60 Minuten lang: Stromversorgungskette, Kühlung, Verkabelung und Netzwerk sowie jede Was-wäre-wenn-Analyse (geschätzt, keine CFD). Der Testraum wird innerhalb von 24 Stunden gelöscht.",
+  "zh": "用您自己的机房数据试用 60 分钟：以 3D 呈现供配电链路、制冷、布线与网络，支持全部故障推演（估算值，并非 CFD）；试用机房 24 小时内删除。"
+ },
+ "tryPage.dc.line1": {
+  "en": "Import your own hall from the v1.5 template (Excel or CSV) and see it in 3D with its power chain, cooling, cabling and network, plus the import checks.",
+  "de": "Importieren Sie Ihren eigenen Raum aus der Vorlage v1.5 (Excel oder CSV) und sehen Sie ihn in 3D: Stromversorgungskette, Kühlung, Verkabelung und Netzwerk, dazu die Importprüfungen.",
+  "zh": "通过 v1.5 导入模板（Excel 或 CSV）导入您自己的机房，以 3D 查看供配电链路、制冷、布线与网络，并获得导入检查结果。"
+ },
+ "tryPage.dc.line2": {
+  "en": "Design mode and every what-if: fail a UPS, a feed, a cooling unit or a manifold and see what goes dark. Thermal values are estimated, not CFD.",
+  "de": "Design-Modus und jede Was-wäre-wenn-Analyse: Lassen Sie eine USV, eine Einspeisung, ein Kühlgerät oder einen Verteiler ausfallen und sehen Sie, was dunkel wird. Thermische Werte sind geschätzt, keine CFD.",
+  "zh": "设计模式（Design）与全部故障推演：模拟 UPS、供电回路、精密空调或分集水器故障，查看失电范围。热工数值为估算值，并非 CFD。"
+ },
+ "tryPage.dc.line3": {
+  "en": "60 minutes from your first click. Re-import a corrected file as often as you need, or connect your own Zabbix or NetBox with a read-only token.",
+  "de": "60 Minuten ab dem ersten Klick. Importieren Sie eine korrigierte Datei so oft wie nötig, oder binden Sie Ihr eigenes Zabbix oder NetBox per Read-only-Token an.",
+  "zh": "自首次点击起 60 分钟。可按需多次导入修正后的文件，也可通过只读令牌对接您自己的 Zabbix 或 NetBox。"
+ },
+ "tryPage.dc.line4": {
+  "en": "Nothing is kept: your trial hall is deleted within 24 hours after the session ends.",
+  "de": "Nichts wird aufbewahrt: Ihr Testraum wird innerhalb von 24 Stunden nach Ende der Sitzung gelöscht.",
+  "zh": "不保存任何数据：试用会话结束后 24 小时内删除您的试用机房。"
+ },
+ "tryPage.dc.fine": {
+  "en": "Free, no account and no card. One trial per e-mail address.",
+  "de": "Kostenlos, ohne Konto und ohne Karte. Ein Test pro E-Mail-Adresse.",
+  "zh": "免费，无需账户，无需绑卡。每个邮箱地址可试用一次。"
+ },
+ "tryPage.dc.noSheet": {
+  "en": "No filled sheet yet? Download the template or the filled demo hall first.",
+  "de": "Noch keine ausgefüllte Tabelle? Laden Sie zuerst die Vorlage oder die ausgefüllte Demohalle herunter.",
+  "zh": "还没有填写好的表格？请先下载导入模板或已填写的演示机房示例。"
+ },
+ "cta.try": {
+  "en": "Try it once",
+  "de": "Einmal testen",
+  "zh": "免费试用一次"
+ },
+ "cta.tryWithFile": {
+  "en": "Try it once with your file",
+  "de": "Mit Ihrer Datei einmal testen",
+  "zh": "用您的文件免费试用一次"
+ },
+ "home.faq.signup.q": {
+  "en": "Can I try it myself?",
+  "de": "Kann ich es selbst ausprobieren?",
+  "zh": "可以自己试用吗？"
+ },
+ "home.faq.signup.a": {
+  "en": "Yes, once and free: sign up with your e-mail at rack-density.com/try/, import your own spreadsheet and use DC Sim for 60 minutes; your trial hall is deleted within 24 hours. Accounts and checkout are on the roadmap; for a longer look we walk you through your own room on a call.",
+  "de": "Ja, einmal und kostenlos: Registrieren Sie sich mit Ihrer E-Mail-Adresse unter rack-density.com/try/, importieren Sie Ihre eigene Tabelle und nutzen Sie DC Sim 60 Minuten lang; Ihr Testraum wird innerhalb von 24 Stunden gelöscht. Konten und Online-Kauf stehen auf der Roadmap; für einen ausführlicheren Blick gehen wir Ihren eigenen Raum in einem gemeinsamen Termin mit Ihnen durch.",
+  "zh": "可以，免费试用一次：在 rack-density.com/try/ 使用邮箱注册，导入您自己的表格，即可使用 DC Sim 60 分钟；试用机房将在 24 小时内删除。账户与在线支付已列入路线图；如需更深入了解，我们将通过线上会议为您演示您自己的机房。"
+ },
+ "pricing.tryRow.kicker": {
+  "en": "Try",
+  "de": "Test",
+  "zh": "试用"
+ },
+ "pricing.tryRow.line": {
+  "en": "Try once · free · your own spreadsheet · 60 minutes · nothing stored",
+  "de": "Einmal testen · kostenlos · Ihre eigene Tabelle · 60 Minuten · nichts gespeichert",
+  "zh": "免费试用一次 · 使用您自己的表格 · 60 分钟 · 不保存任何数据"
+ },
+ "pricing.hero.intro": {
+  "en": "DC Sim has two licenses and a partner program. Design is one-time per project: $490 for up to 20 racks, $1,490 up to 100, $3,900 above that, three months per project. Monitor is about $5 per rack per month with a $49 minimum. Partners earn a 30 % margin. You can try DC Sim once, free, with your own spreadsheet for 60 minutes; licenses start with a walkthrough on your own file, and self-serve accounts and card checkout are on the roadmap. Prices in USD, excluding VAT.",
+  "de": "DC Sim bietet zwei Lizenzen und ein Partnerprogramm. Design wird einmalig pro Projekt berechnet: 490 $ für bis zu 20 Racks, 1.490 $ bis 100 Racks, 3.900 $ darüber, jeweils drei Monate pro Projekt. Monitor kostet etwa 5 $ pro Rack und Monat, mindestens 49 $. Partner erhalten 30 % Marge. Sie können DC Sim einmal kostenlos mit Ihrer eigenen Tabelle 60 Minuten lang testen; Lizenzen beginnen mit einer Vorführung anhand Ihrer eigenen Datei, Self-Service-Konten und Kartenzahlung stehen auf der Roadmap. Preise in USD, zzgl. MwSt.",
+  "zh": "DC Sim 提供两种授权和一项合作伙伴计划。设计版（Design）按项目一次性收费：20 个机柜以内 $490，100 个机柜以内 $1,490，超过 100 个机柜 $3,900，每个项目使用期三个月。监测版（Monitor）约为每机柜每月 $5，最低 $49。合作伙伴可获得 30 % 利润空间。您可以使用自己的表格免费试用 DC Sim 一次，时长 60 分钟；授权以基于您自有文件的演示为起点，自助开通账户和银行卡在线支付已列入路线图。价格以美元计，不含增值税。"
+ },
+ "pricing.faq.buyOnline.a": {
+  "en": "Not yet, but you can try DC Sim once for free with your own spreadsheet (60 minutes, nothing stored). Every license starts with a walkthrough on your own file. Self-serve accounts and card checkout are on the roadmap.",
+  "de": "Noch nicht, aber Sie können DC Sim einmal kostenlos mit Ihrer eigenen Tabelle testen (60 Minuten, nichts gespeichert). Jede Lizenz beginnt mit einer Vorführung anhand Ihrer eigenen Datei. Self-Service-Konten und Kartenzahlung stehen auf der Roadmap.",
+  "zh": "暂不支持在线购买，但您可以使用自己的表格免费试用 DC Sim 一次（60 分钟，不保存任何数据）。所有授权均以基于您自有文件的演示为起点。自助开通账户和银行卡在线支付已列入路线图。"
+ },
+ "pricing.notIncluded.selfServe": {
+  "en": "Accounts and card checkout <Badge kind=\"roadmap\" /> (the free trial is one session); on-prem packaging (Enterprise, later).",
+  "de": "Konten und Kartenzahlung <Badge kind=\"roadmap\" /> (der kostenlose Test ist eine Sitzung); On-Prem-Paket (Enterprise, später).",
+  "zh": "账户与银行卡在线支付 <Badge kind=\"roadmap\" />（免费试用为单次会话）；本地部署安装包（企业版，后续推出）。"
+ },
+ "llms.status": {
+  "en": "Status: DC Sim can be tried once, free, after signing up at rack-density.com/try/ (60 minutes with your own spreadsheet; the trial site is deleted within 24 hours); licenses start with a walkthrough. Zabbix and NetBox connect directly with a read-only token (tested against live demo instances); other live connectors, accounts, checkout and the AI design assistant are on the roadmap."
+ }
+}

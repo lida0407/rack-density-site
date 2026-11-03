@@ -16,6 +16,7 @@ related:
   - { href: "compare/dc-sim-vs-enterprise-dcim-pricing/", label: "DC Sim vs enterprise DCIM pricing", kind: "Price comparison" }
   - { href: "integrations/sunbird-dctrack/", label: "Sunbird dcTrack inventory as a simulatable twin", kind: "Integration" }
   - { href: "resources/guides/ups-failure-impact-analysis/", label: "UPS failure impact analysis in 20 minutes", kind: "Guide" }
+tryLive: [{"from": "Excel template today; walkthrough on your own file", "to": "free 60-minute trial with your own spreadsheet; Excel template; walkthrough"}]
 ---
 
 ## At a glance

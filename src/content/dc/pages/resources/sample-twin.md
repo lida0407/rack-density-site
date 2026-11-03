@@ -16,6 +16,7 @@ shots:
   - { name: "phone", alt: "DC Sim on a phone: the demo hall in 3D with the View menu, import button and time slider.", caption: "The same twin on a phone." }
 clips:
   - { name: "excel-to-3d", title: "From an Excel file to a 3D twin", caption: "The Devices and Cables sheets, import, checks pinned in 3D, then a re-upload with its change list (50 s)." }
+tryLive: [{"from": "Not publicly. We show the demo rooms, and your own file if you send one, in a walkthrough.", "to": "Yes, once: sign up at rack-density.com/try/ for a free 60-minute trial with the demo rooms and your own spreadsheet. We also show them in a walkthrough."}]
 ---
 
 ## What a walkthrough shows

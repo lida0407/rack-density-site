@@ -10,6 +10,9 @@ export const LEGAL_URL = "https://mustardseedmt.com";
 export const CONTACT_EMAIL = "da@mustardseedmt.com";
 /** Public demo of the English build. null = not public yet; the site shows stills and offers a walkthrough. */
 export const DEMO_URL: string | null = null;
+/** Self-serve trial (TRY-SIGNUP.md): flip to true with the planner's "Try live" notice, not before. Switches the DC CTAs to
+ *  "Try it once", the /dc/pricing/ Try row and every statement prepared in try.json and the pages' `tryLive` lists (src/lib/dc/try.ts). */
+export const DC_TRY_LIVE = false;
 export const TEMPLATE_VERSION = "1.5";
 export const TEMPLATE_SHEETS = "twelve sheets";
 export const TEMPLATE_FILE = "downloads/dc-import-template.xlsx";

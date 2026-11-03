@@ -1,7 +1,9 @@
 import { getCollection } from "astro:content";
 import { PRODUCT_NAME, CONTACT_EMAIL, PRICES, TEMPLATE_FILE, TEMPLATE_VERSION } from "../../config/dc/product";
 import { abs } from "../../lib/dc/url";
-import { ENTITY_DC, LEGAL_NAME } from "../../config/dc/product";
+import { ENTITY_DC, LEGAL_NAME, DC_TRY_LIVE } from "../../config/dc/product";
+import tryStrings from "../../i18n/dc/strings/try.json";
+const tryStatus = tryStrings["llms.status"].en;
 import { SITE_URL } from "../../../site.config.mjs";
 import { lp, hasPage, type Locale } from "../../i18n";
 
@@ -22,7 +24,7 @@ export const dcLlms = async (): Promise<string> => {
 
 DC Sim is a product of ${LEGAL_NAME} (Malta), part of RACKDENSITY (rack-density.com).
 
-Status: the product runs today on demo data and on imported files, shown in walkthroughs. Zabbix and NetBox connect directly with a read-only token (tested against live demo instances); other live connectors, self-serve accounts, checkout and the AI design assistant are on the roadmap. Pricing: Design from $${PRICES.design[0].price} one-time per project; Monitor $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}; partners earn a ${PRICES.partnerMargin} % margin. Contact: ${CONTACT_EMAIL}.
+${DC_TRY_LIVE ? tryStatus : "Status: the product runs today on demo data and on imported files, shown in walkthroughs. Zabbix and NetBox connect directly with a read-only token (tested against live demo instances); other live connectors, self-serve accounts, checkout and the AI design assistant are on the roadmap."} Pricing: Design from $${PRICES.design[0].price} one-time per project; Monitor $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}; partners earn a ${PRICES.partnerMargin} % margin. Contact: ${CONTACT_EMAIL}.
 
 ## Main pages
 ${line("Home", "", "What DC Sim is, the three advantages, how it works.")}

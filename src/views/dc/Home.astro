@@ -7,7 +7,8 @@ import Base from "../../layouts/dc/Base.astro";
 import Clip from "../../components/dc/Clip.astro";
 import Faq from "../../components/dc/Faq.astro";
 import ToolChips from "../../components/dc/ToolChips.astro";
-import { PRODUCT_NAME, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, mailto } from "../../config/dc/product";
+import { PRODUCT_NAME, DEMO_URL, TEMPLATE_FILE, EXAMPLE_FILE, DC_TRY_LIVE, mailto } from "../../config/dc/product";
+import { tryHref } from "../../lib/dc/try";
 import { faqLd, softwareLd, videoLd } from "../../lib/dc/schema";
 import { HERO_CLIP, isoDuration } from "../../config/dc/clips";
 import { getImage } from "astro:assets";
@@ -26,9 +27,12 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { t, fellBack } = dcCopy("home", locale);
 const { t: tc } = dcCopy("clips", locale);
+// Self-serve trial (TRY-SIGNUP.md): with DC_TRY_LIVE the hero leads with "Try it once" and the sign-up FAQ answers yes.
+const { t: tt } = dcCopy("try", locale);
 const enOnly = (p: string) => (dcHas(p, locale) ? "" : englishOnly(locale));
 
-const faq = ["whatIs", "signup", "install", "cfd", "cost", "chinese"].map((k) => ({ q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) }));
+const faq = ["whatIs", "signup", "install", "cfd", "cost", "chinese"].map((k) =>
+  DC_TRY_LIVE && k === "signup" ? { q: tt("home.faq.signup.q"), a: tt("home.faq.signup.a") } : { q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) });
 // mailto subjects and bodies stay English: they land in our inbox (marketing/i18n/dc/README.md).
 const walkthrough = DEMO_URL ?? mailto("DC Sim walkthrough", "Hi Da,\n\nI'd like a walkthrough of DC Sim with our own file.\n\nRacks: \nCompany: \n");
 const sizes = "(min-width: 1200px) 600px, (min-width: 1000px) 50vw, 100vw";
@@ -77,8 +81,13 @@ const html = (s: string) => s; // marker: keys rendered with set:html carry inli
         <h1>{t("hero.h1")}</h1>
         <p class="lede">{t("hero.lede")}</p>
         <div class="btn-row">
-          <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>{t("hero.ctaTemplate")}</a>
-          <a class="cs-btn cs-btn--secondary dch-cta" href={walkthrough}>{DEMO_URL ? t("hero.ctaDemo") : t("hero.ctaWalkthrough")}</a>
+          {DC_TRY_LIVE ? <>
+            <a class="cs-btn cs-btn--primary dch-cta" href={tryHref(locale)}>{tt("cta.try")}</a>
+            <a class="cs-btn cs-btn--secondary dch-cta" href={u(TEMPLATE_FILE)} download>{t("hero.ctaTemplate")}</a>
+          </> : <>
+            <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>{t("hero.ctaTemplate")}</a>
+            <a class="cs-btn cs-btn--secondary dch-cta" href={walkthrough}>{DEMO_URL ? t("hero.ctaDemo") : t("hero.ctaWalkthrough")}</a>
+          </>}
         </div>
         <p class="dch-note">{t("hero.note")}</p>
       </div>
@@ -207,6 +216,7 @@ const html = (s: string) => s; // marker: keys rendered with set:html carry inli
       <div class="btn-row">
         <a class="cs-btn cs-btn--primary dch-cta" href={u(TEMPLATE_FILE)} download>{t("template.btnTemplate")}</a>
         <a class="cs-btn cs-btn--secondary dch-cta" href={u(EXAMPLE_FILE)} download>{t("template.btnExample")}</a>
+        {DC_TRY_LIVE && <a class="cs-btn cs-btn--secondary dch-cta" href={tryHref(locale)}>{tt("cta.tryWithFile")}</a>}
         <a class="cs-btn cs-btn--ghost dch-cta" href={walkthrough}>{t("template.btnWalkthrough")}</a>
       </div>
     </section>

@@ -17,6 +17,7 @@ related:
   - { href: "resources/guides/dcim-pricing/", label: "What DCIM costs in 2026: price bands and a calculator", kind: "Data" }
   - { href: "pricing/", label: "DC Sim pricing: Design per project, Monitor per rack", kind: "Pricing" }
   - { href: "compare/", label: "All comparisons", kind: "Comparisons" }
+tryLive: [{"from": "Excel template today; walkthrough on your own file", "to": "free 60-minute trial with your own spreadsheet; Excel template; walkthrough"}]
 ---
 
 ## Published prices, side by side

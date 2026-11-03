@@ -17,6 +17,7 @@ import { faqLd, softwareLd, howToLd } from "../../lib/dc/schema";
 import { root } from "../../lib/dc/url";
 import { dcCopy, dcLp, localizeLinks } from "../../i18n/dc";
 import { label, lp, type Locale } from "../../i18n";
+import { withTry } from "../../lib/dc/try";
 
 type Page = CollectionEntry<"pages"> | CollectionEntry<"pagesL10n">;
 interface Props {
@@ -26,9 +27,11 @@ interface Props {
   locale: Locale;
 }
 const { page, slug, siblings, locale } = Astro.props;
-const d = page.data;
-const { Content } = locale === "en" ? await render(page) : { Content: null };
-const html = locale === "en" ? "" : localizeLinks(page.rendered?.html ?? "", `/dc/${slug}/`, locale);
+// Self-serve trial: the page's `tryLive` replacements are checked always and applied when DC_TRY_LIVE (src/lib/dc/try.ts).
+const tr = withTry(`${locale}/${slug}`, page.data, page.rendered?.html ?? "");
+const d = { ...page.data, directAnswer: tr.directAnswer, faq: tr.faq };
+const { Content } = locale === "en" && !tr.live ? await render(page) : { Content: null };
+const html = locale === "en" ? (tr.html ?? "") : localizeLinks(tr.html ?? page.rendered?.html ?? "", `/dc/${slug}/`, locale);
 const path = `${slug}/`;
 const { t: tp } = dcCopy("page", locale);
 const { t: tc } = dcCopy("components", locale);

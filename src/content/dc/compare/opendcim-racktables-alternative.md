@@ -26,6 +26,7 @@ related:
   - { href: "integrations/netbox/", label: "NetBox, in 3D: racks and devices as a twin", kind: "Integration" }
   - { href: "resources/excel-template/", label: "The Excel template that becomes a 3D twin", kind: "Template" }
   - { href: "resources/guides/document-data-center-in-excel/", label: "How to document your data center in Excel", kind: "Guide" }
+tryLive: [{"from": "Excel template today, walkthrough on your own file", "to": "free 60-minute trial with your own spreadsheet, Excel template, walkthrough"}]
 ---
 
 ## At a glance

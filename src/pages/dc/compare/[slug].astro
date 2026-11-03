@@ -7,6 +7,7 @@ import Faq from "../../../components/dc/Faq.astro";
 import TemplateCTA from "../../../components/dc/TemplateCTA.astro";
 import { faqLd, articleLd } from "../../../lib/dc/schema";
 import { u } from "../../../lib/dc/url";
+import { withTry } from "../../../lib/dc/try";
 import { CONTACT_EMAIL } from "../../../config/dc/product";
 
 export async function getStaticPaths() {
@@ -14,7 +15,9 @@ export async function getStaticPaths() {
   return pages.map((p) => ({ params: { slug: p.id }, props: { page: p } }));
 }
 const { page } = Astro.props;
-const d = page.data;
+// Self-serve trial: `tryLive` replacements checked always, applied when DC_TRY_LIVE (src/lib/dc/try.ts).
+const tr = withTry(`compare/${page.id}`, page.data, page.rendered?.html ?? "");
+const d = { ...page.data, directAnswer: tr.directAnswer, faq: tr.faq };
 const { Content } = await render(page);
 const path = `compare/${page.id}/`;
 const checked = new Date(`${d.lastChecked}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
@@ -28,7 +31,7 @@ const jsonLd = [{ ...articleLd(d.h1, d.description, path), dateModified: d.lastC
       <p class="cmp-checked"><span class="cs-shape cs-shape--ok" aria-hidden="true"></span>Last checked <time datetime={d.lastChecked}>{checked}</time> against the vendors' public pages · sources below</p>
     </div>
     <p class="direct-answer">{d.directAnswer}</p>
-    <div class="prose"><Content /></div>
+    {tr.html !== null ? <div class="prose" set:html={tr.html} /> : <div class="prose"><Content /></div>}
     <section class="cmp-sources" aria-labelledby="cs-h">
       <h2 id="cs-h">Sources</h2>
       <ol>{d.sources.map((s) => <li><a href={s.url} rel="noopener">{s.label}</a></li>)}</ol>

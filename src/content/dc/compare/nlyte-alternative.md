@@ -22,6 +22,7 @@ related:
   - { href: "compare/dc-sim-vs-enterprise-dcim-pricing/", label: "DC Sim vs enterprise DCIM pricing", kind: "Price comparison" }
   - { href: "product/simulate/", label: "Data center what-if simulation: fail anything", kind: "Product" }
   - { href: "resources/guides/dcim-for-small-data-center/", label: "DCIM for a small server room: the five things you need", kind: "Guide" }
+tryLive: [{"from": "Excel template today; walkthrough on your own file", "to": "free 60-minute trial with your own spreadsheet; Excel template; walkthrough"}]
 ---
 
 ## At a glance

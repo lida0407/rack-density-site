@@ -10,6 +10,7 @@ import DcimCostCalc from "../../../../components/dc/DcimCostCalc.astro";
 import Clip from "../../../../components/dc/Clip.astro";
 import { faqLd, articleLd, howToLd, datasetLd } from "../../../../lib/dc/schema";
 import { u } from "../../../../lib/dc/url";
+import { withTry } from "../../../../lib/dc/try";
 import { mailto } from "../../../../config/dc/product";
 import { Image } from "astro:assets";
 import seeIt from "../../../../assets/dc/shots/hero-lightsoff-crop.png";
@@ -20,7 +21,9 @@ export async function getStaticPaths() {
   return guides.map((g) => ({ params: { slug: g.id }, props: { guide: g, all: guides } }));
 }
 const { guide, all } = Astro.props;
-const d = guide.data;
+// Self-serve trial: `tryLive` replacements checked always, applied when DC_TRY_LIVE (src/lib/dc/try.ts).
+const tr = withTry(`guide/${guide.id}`, guide.data, guide.rendered?.html ?? "");
+const d = { ...guide.data, directAnswer: tr.directAnswer, faq: tr.faq };
 const { Content } = await render(guide);
 const path = `resources/guides/${guide.id}/`;
 const jsonLd = [
@@ -53,7 +56,7 @@ const jsonLd = [
       </div>
     ) : <p class="direct-answer">{d.directAnswer}</p>}
     {d.shots.map((s, i) => <div class="shots"><Shot name={s.name} alt={s.alt} caption={s.caption} light={s.light} eager={i === 0} /></div>)}
-    <div class="prose"><Content /></div>
+    {tr.html !== null ? <div class="prose" set:html={tr.html} /> : <div class="prose"><Content /></div>}
     {d.steps.length > 0 && (
       <section class="guide-steps" aria-labelledby="gs-h">
         <span class="eyebrow">Step by step</span>

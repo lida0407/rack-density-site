@@ -4,7 +4,7 @@
 import { lp, ui, hasPage, OTHER_LOCALES, type Locale } from "../index";
 import { u } from "../../lib/url";
 import { DC_PREVIEW } from "../../config/dc/i18n";
-import { PRODUCT_NAME, LEGAL_NAME, LEGAL_URL, CONTACT_EMAIL, TEMPLATE_VERSION, TEMPLATE_SHEETS, PRICES } from "../../config/dc/product";
+import { PRODUCT_NAME, LEGAL_NAME, LEGAL_URL, CONTACT_EMAIL, TEMPLATE_VERSION, TEMPLATE_SHEETS, PRICES, TEMPLATE_FILE, EXAMPLE_FILE } from "../../config/dc/product";
 import home from "./strings/home.json";
 import pricing from "./strings/pricing.json";
 import privacy from "./strings/privacy.json";
@@ -12,13 +12,15 @@ import components from "./strings/components.json";
 import clips from "./strings/clips.json";
 import integrations from "./strings/integrations-index.json";
 import page from "./strings/page.json";
+// Self-serve trial copy (TRY-SIGNUP.md §6), hand-written en/de/zh, used when DC_TRY_LIVE (src/lib/dc/try.ts).
+import tryCopy from "./strings/try.json";
 import worldUi from "./strings/world-ui.json";
 import worldExtra from "./strings/world-extra.json";
 
 export type Entry = { en: string; de?: string; zh?: string };
 // /dc/world/: the staged strings (world-ui.json, from the importer) plus the site's own (world-extra.json); staged wins.
 const world = { ...worldExtra, ...worldUi };
-const DICTS = { home, pricing, privacy, components, clips, integrations, page, world } as Record<string, Record<string, Entry>>;
+const DICTS = { home, pricing, privacy, components, clips, integrations, page, world, try: tryCopy } as Record<string, Record<string, Entry>>;
 export type DictName = keyof typeof DICTS;
 /** The dictionary has this key (labels with an English fallback for values the copy does not know yet). */
 export const dcHasKey = (dict: DictName, key: string) => key in DICTS[dict];
@@ -111,3 +113,18 @@ export const localizeLinks = (html: string, englishPath: string, locale: Locale,
     const translated = dcHas(p, locale, fromHeld);
     return `<a href="${out}"${rest}>${text}</a>${translated || locale === "en" ? "" : englishOnly(locale)}`;
   });
+
+/** DC copy for the shared /try/ page (homelab marketing builds the page, TRY-SIGNUP.md §6): the DC edition's title, four
+ *  lines, the fine print and the "no sheet yet" pointer, plus the downloads it names, in the page's locale. */
+export const dcTryCopy = (locale: Locale) => {
+  const { t } = dcCopy("try", locale);
+  return {
+    title: t("tryPage.dc.title"),
+    short: t("tryPage.dc.short"), // one line for the edition picker (trial.ts form.dc)
+    lines: [1, 2, 3, 4].map((n) => t(`tryPage.dc.line${n}`)),
+    fine: t("tryPage.dc.fine"),
+    noSheet: t("tryPage.dc.noSheet"),
+    template: dcLp(TEMPLATE_FILE, "en"),
+    example: dcLp(EXAMPLE_FILE, "en"),
+  };
+};

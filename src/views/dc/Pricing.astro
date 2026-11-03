@@ -4,7 +4,8 @@
 import Base from "../../layouts/dc/Base.astro";
 import Faq from "../../components/dc/Faq.astro";
 import TemplateCTA from "../../components/dc/TemplateCTA.astro";
-import { PRICES, mailto } from "../../config/dc/product";
+import { PRICES, DC_TRY_LIVE, mailto } from "../../config/dc/product";
+import { tryHref } from "../../lib/dc/try";
 import { faqLd, softwareLd, productLd } from "../../lib/dc/schema";
 import { dcCopy, dcLp } from "../../i18n/dc";
 import { LOCALE_META, type Locale } from "../../i18n";
@@ -13,7 +14,11 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { t, fellBack } = dcCopy("pricing", locale);
 const { t: tc } = dcCopy("components", locale);
-const faq = ["monitorCounted", "buyOnline", "threeMonths", "switch", "stop", "aiExtra", "partnerDiscount", "compare"].map((k) => ({ q: t(`faq.${k}.q`), a: t(`faq.${k}.a`) }));
+// Self-serve trial (TRY-SIGNUP.md §6): with DC_TRY_LIVE a Try row above the plans and the trial-aware intro/FAQ lines.
+const { t: tt } = dcCopy("try", locale);
+const live = (key: string, fallback: string) => (DC_TRY_LIVE ? tt(key) : fallback);
+const faq = ["monitorCounted", "buyOnline", "threeMonths", "switch", "stop", "aiExtra", "partnerDiscount", "compare"].map((k) =>
+  ({ q: t(`faq.${k}.q`), a: k === "buyOnline" ? live("pricing.faq.buyOnline.a", t(`faq.${k}.a`)) : t(`faq.${k}.a`) }));
 // USD everywhere (I18N.md: one price constant, no FX); German writes the sign after the number.
 const intl = LOCALE_META[locale].intl;
 const usd = (n: number) => (locale === "de" ? `${n.toLocaleString(intl)} $` : "$" + n.toLocaleString(locale === "en" ? "en-US" : intl));
@@ -41,9 +46,14 @@ const calcI18n = JSON.stringify({
         <span class="eyebrow">{t("hero.eyebrow")}</span>
         <h1>{t("hero.h1")}</h1>
       </div>
-      <p class="dcp-intro">{t("hero.intro")}</p>
+      <p class="dcp-intro">{live("pricing.hero.intro", t("hero.intro"))}</p>
     </section>
 
+    {DC_TRY_LIVE && <section class="dcp-wrap dcp-try" aria-label={tt("pricing.tryRow.kicker")}>
+      <span class="dcp-kicker dcp-acc">{tt("pricing.tryRow.kicker")}</span>
+      <span class="dcp-try-line">{tt("pricing.tryRow.line")}</span>
+      <a class="cs-btn cs-btn--primary dcp-btn" href={tryHref(locale)}>{tt("cta.try")}</a>
+    </section>}
     <section class="dcp-wrap dcp-pad">
       <div class="dcp-plans">
         <article>
@@ -112,7 +122,7 @@ const calcI18n = JSON.stringify({
         <ul class="dcp-not">
           <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span>{t("notIncluded.cfd")}</span></li>
           <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span set:html={badged(t("notIncluded.roadmap"))} /></li>
-          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span set:html={badged(t("notIncluded.selfServe"))} /></li>
+          <li><span class="cs-shape cs-shape--off" aria-hidden="true"></span><span set:html={badged(live("pricing.notIncluded.selfServe", t("notIncluded.selfServe")))} /></li>
         </ul>
       </div>
     </section>
@@ -147,6 +157,8 @@ const calcI18n = JSON.stringify({
   calc();
 </script>
 <style>
+  .dcp-try { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-top: 24px; padding-bottom: 8px; }
+  .dcp-try-line { font: 600 15px/22px var(--font-mono); color: var(--ink); }
   .dcp-wrap { max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
   .dcp-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
   .dcp-hero { padding-top: clamp(48px, 7vw, 88px); padding-bottom: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 40px; align-items: end; }

@@ -22,6 +22,7 @@ related:
   - { href: "compare/dc-sim-vs-enterprise-dcim-pricing/", label: "DC Sim vs enterprise DCIM pricing", kind: "Price comparison" }
   - { href: "compare/opendcim-racktables-alternative/", label: "An openDCIM and RackTables alternative", kind: "Alternative" }
   - { href: "resources/excel-template/", label: "The Excel template that becomes a 3D twin", kind: "Template" }
+tryLive: [{"from": "Excel template free; walkthrough on your own file", "to": "Free 60-minute trial with your own spreadsheet; Excel template free; walkthrough"}]
 ---
 
 ## At a glance

@@ -6,6 +6,8 @@ const still = { name: z.string(), alt: z.string(), caption: z.string().optional(
 // light: the lit-room variant shown in the bright theme instead of a lights-off still (SITE-THEME-VIDEO.md §1)
 const shot = z.object({ ...still, light: z.object(still).optional() });
 const clip = z.object({ name: z.string(), title: z.string(), caption: z.string().optional() });
+// Text to swap when the self-serve trial opens (src/lib/dc/try.ts, DC_TRY_LIVE).
+const tryLive = z.array(z.object({ from: z.string(), to: z.string() })).default([]);
 
 const pageSchema = z.object({
   title: z.string().max(70),
@@ -21,6 +23,7 @@ const pageSchema = z.object({
   clips: z.array(clip).default([]),
   ctaTop: z.boolean().default(false),
   navLabel: z.string().optional(),
+  tryLive,
 });
 const pages = defineCollection({ loader: glob({ pattern: "**/*.md", base: "./src/content/dc/pages" }), schema: pageSchema });
 // Translated pages (marketing/I18N.md), ids "de/product/it", "zh/contact"…, same schema; written by scripts/dc/i18n-import.mjs.
@@ -45,6 +48,7 @@ const guides = defineCollection({
     dataset: z.object({ name: z.string(), description: z.string(), variables: z.array(z.string()) }).optional(),
     related: z.array(z.object({ href: z.string(), label: z.string(), kind: z.string() })).max(3).default([]),
     updated: z.string().optional(),
+    tryLive,
   }),
 });
 
@@ -64,6 +68,7 @@ const compare = defineCollection({
     sources: z.array(z.object({ label: z.string(), url: z.string() })).min(1),
     faq,
     related: z.array(z.object({ href: z.string(), label: z.string(), kind: z.string() })).max(3).default([]),
+    tryLive,
   }),
 });
 
