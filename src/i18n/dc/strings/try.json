@@ -5,9 +5,9 @@
   "zh": "DC Sim：用您自己的机房试用 60 分钟"
  },
  "tryPage.dc.short": {
-  "en": "Your own hall in 3D for 60 minutes: power chain, cooling, cabling and network, and every what-if (estimated, not CFD). The trial hall is deleted within 24 hours.",
-  "de": "Ihr eigener Raum in 3D, 60 Minuten lang: Stromversorgungskette, Kühlung, Verkabelung und Netzwerk sowie jede Was-wäre-wenn-Analyse (geschätzt, keine CFD). Der Testraum wird innerhalb von 24 Stunden gelöscht.",
-  "zh": "用您自己的机房数据试用 60 分钟：以 3D 呈现供配电链路、制冷、布线与网络，支持全部故障推演（估算值，并非 CFD）；试用机房 24 小时内删除。"
+  "en": "Design mode with your own hall in 3D: power chain, cooling, cabling and network, and every what-if (estimated, not CFD). 60 minutes; the trial hall is deleted within 24 hours.",
+  "de": "Design-Modus mit Ihrem eigenen Raum in 3D: Stromversorgungskette, Kühlung, Verkabelung und Netzwerk sowie jede Was-wäre-wenn-Analyse (geschätzt, keine CFD). 60 Minuten; der Testraum wird innerhalb von 24 Stunden gelöscht.",
+  "zh": "设计模式（Design）载入您自己的机房，以 3D 呈现供配电链路、制冷、布线与网络，支持全部故障推演（估算值，并非 CFD）。试用 60 分钟；试用机房 24 小时内删除。"
  },
  "tryPage.dc.line1": {
   "en": "Import your own hall from the v1.5 template (Excel or CSV) and see it in 3D with its power chain, cooling, cabling and network, plus the import checks.",
