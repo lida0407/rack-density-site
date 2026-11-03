@@ -6,17 +6,18 @@
 import Base from '../layouts/Base.astro';
 import { u } from '../lib/url';
 import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, CONTACT_EMAIL, MAILTO } from '../config/brand';
-import { TEMPLATE_FILE } from '../config/dc/product';
 import { TRIAL_LIVE } from '../config/trial.mjs';
 import { lp, fill, pageCopy, type Locale } from '../i18n';
 import * as copy from '../i18n/pages/trial';
+import { dcTryCopy } from '../i18n/dc';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { c, fellBack } = pageCopy(copy, locale);
 const js = { ...c.js, lang: locale };
+const dc = dcTryCopy(locale); // DC marketing's copy for the DC Sim edition
 const files = {
   homelab: [[u('/downloads/homelab-template.xlsx'), c.prep.homelab.template], [u('/downloads/basement-lab.xlsx'), c.prep.homelab.sample]],
-  dc: [[u(`/dc/${TEMPLATE_FILE}`), c.prep.dc.template], [u('/dc/downloads/demo-hall.xlsx'), c.prep.dc.sample]],
+  dc: [[dc.template, c.prep.dc.template], [dc.example, c.prep.dc.sample]],
 };
 ---
 <Base title={c.title} description={c.description} path="/try" ogImage="/homelab/og/try.png" section="hub" crumbs={[{ name: c.crumb }]} locale={locale} fallback={fellBack} noindex={!TRIAL_LIVE}>
@@ -29,8 +30,9 @@ const files = {
       <form class="card form" method="post" action="/api/try/signup" data-trial data-t={JSON.stringify(js)}>
         <fieldset class="field ed"><legend>{c.form.product}</legend>
           <label class="opt"><input type="radio" name="edition" value="homelab" checked /> <span><b>{PRODUCT_NAME}</b><small>{c.form.homelab}</small></span></label>
-          <label class="opt"><input type="radio" name="edition" value="dc" /> <span><b>{DC_PRODUCT_NAME}</b><small>{c.form.dc}</small></span></label>
+          <label class="opt"><input type="radio" name="edition" value="dc" /> <span><b>{DC_PRODUCT_NAME}</b><small>{dc.short}</small></span></label>
         </fieldset>
+        <div class="edinfo" data-edinfo="dc"><p class="k">{dc.title}</p><ul>{dc.lines.map((l) => <li>{l}</li>)}</ul><p class="small muted">{dc.fine} {dc.noSheet}</p></div>
         <label class="field">{c.form.email} <input type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" /></label>
         <label class="field">{c.form.note} <span class="hint">{c.form.optional}</span>
           <input type="text" name="note" maxlength="120" placeholder={c.form.placeholder} /></label>
@@ -89,6 +91,11 @@ const files = {
   .prep .k { margin: 0 0 6px; font: 600 11px/14px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-muted); }
   .prep ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
   .prep .card.on { border-color: var(--accent); }
+  .edinfo { display: none; border-left: 2px solid var(--accent); padding: 2px 0 2px 12px; }
+  .edinfo.on { display: block; }
+  .edinfo .k { margin: 0 0 4px; font-weight: 600; }
+  .edinfo ul { margin: 0 0 6px; padding-left: 1.1em; display: grid; gap: 3px; color: var(--ink-muted); }
+  .edinfo p { margin: 0; }
 </style>
 <script>
   const f = document.querySelector<HTMLFormElement>('[data-trial]');
@@ -100,7 +107,7 @@ const files = {
     // Edition: ?edition= wins, else the section the visitor came from (a /dc/ referrer on this site).
     const want = q.get('edition') ?? (/^\/((de|zh)\/)?dc(\/|$)/.test(document.referrer ? new URL(document.referrer).pathname : '') ? 'dc' : 'homelab');
     const radio = f.querySelector<HTMLInputElement>(`[name="edition"][value="${want === 'dc' ? 'dc' : 'homelab'}"]`); if (radio) radio.checked = true;
-    const mark = () => { const ed = (f.querySelector<HTMLInputElement>('[name="edition"]:checked')?.value) ?? 'homelab'; document.querySelectorAll<HTMLElement>('[data-prep]').forEach((c) => c.classList.toggle('on', c.dataset.prep === ed)); };
+    const mark = () => { const ed = (f.querySelector<HTMLInputElement>('[name="edition"]:checked')?.value) ?? 'homelab'; document.querySelectorAll<HTMLElement>('[data-prep], [data-edinfo]').forEach((c) => c.classList.toggle('on', (c.dataset.prep ?? c.dataset.edinfo) === ed)); };
     f.addEventListener('change', mark); mark();
     const src = q.get('src'); if (src && /^[a-z0-9_-]{1,21}$/i.test(src)) (f.elements.namedItem('src') as HTMLInputElement).value = src.toLowerCase();
     f.addEventListener('submit', async (e) => {

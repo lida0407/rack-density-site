@@ -1,5 +1,6 @@
-// /try/ (sign-up for the one-session trial, ~/Sensaka/TRY-SIGNUP.md §1, §6) in en, de, zh. The DC Sim lines (form.dc,
-// prep.dc) are DC marketing's to word; send changes and they go in here.
+// /try/ (sign-up for the one-session trial, ~/Sensaka/TRY-SIGNUP.md §1, §6) in en, de, zh. The DC Sim picker line and the
+// DC panel (title, four lines, fine print, "no sheet yet") come from DC marketing's dcTryCopy() in src/i18n/dc/index.ts;
+// the DC download labels (prep.dc) are DC marketing's wording.
 import { PRODUCT_NAME as P, DC_PRODUCT_NAME as D, BRAND } from '../../config/brand';
 import { TEMPLATE_VERSION as V } from '../../config/dc/product';
 import { TRIAL } from '../../config/trial.mjs';
@@ -20,7 +21,6 @@ export const en = {
   form: {
     product: 'Product',
     homelab: 'Your homelab rack in 3D: watts and cost per device, cables, and what goes dark when one thing fails.',
-    dc: `Design mode with your own hall in 3D: power chain, cooling, cabling and network, and every what-if (estimated, not CFD). ${M} minutes; the trial hall is deleted within 24 hours.`, // DC marketing
     email: 'E-mail', note: "What's in your rack or hall?", optional: 'optional, 120 characters',
     placeholder: 'e.g. 3 mini PCs, a NAS, a 10-inch rack · or: 2 rooms, 40 racks, A/B feeds',
     updates: 'E-mail me when accounts open', updatesHint: 'Optional. Without it we send you nothing.',
@@ -33,7 +33,7 @@ export const en = {
     h2: 'No spreadsheet yet?',
     p: `Fill in the template first, or look at a finished example: the ${M} minutes start only when the app opens. Templates and column names are in English.`,
     homelab: { template: 'Homelab template (.xlsx)', sample: 'Basement Lab example (.xlsx)', seeIt: 'See it: clips and stills' },
-    dc: { template: `Import template v${V} (.xlsx, only Devices required)`, sample: 'Filled example: the demo hall (.xlsx)' }, // DC marketing
+    dc: { template: `Import template v${V} (.xlsx, only Devices required)`, sample: 'Filled example: the demo hall (.xlsx)' },
   },
   js: {
     sending: 'Starting your trial…',
@@ -59,7 +59,6 @@ export const de: Deep<typeof en> = {
   form: {
     product: 'Produkt',
     homelab: 'Ihr Homelab-Rack in 3D: Watt und Kosten pro Gerät, Kabel und was bei einem Ausfall dunkel wird.',
-    dc: `Design-Modus mit Ihrem eigenen Raum in 3D: Stromversorgungskette, Kühlung, Verkabelung und Netzwerk sowie jede Was-wäre-wenn-Analyse (geschätzt, keine CFD). ${M} Minuten; der Testraum wird innerhalb von 24 Stunden gelöscht.`, // DC marketing
     email: 'E-Mail', note: 'Was steckt in Ihrem Rack oder Saal?', optional: 'optional, 120 Zeichen',
     placeholder: 'z. B. 3 Mini-PCs, ein NAS, ein 10-Zoll-Rack · oder: 2 Räume, 40 Racks, A/B-Einspeisung',
     updates: 'Per E-Mail benachrichtigen, wenn Konten verfügbar sind', updatesHint: 'Optional. Ohne Häkchen senden wir Ihnen nichts.',
@@ -71,7 +70,7 @@ export const de: Deep<typeof en> = {
     h2: 'Noch keine Tabelle?',
     p: `Füllen Sie zuerst die Vorlage aus oder sehen Sie sich ein fertiges Beispiel an: Die ${M} Minuten beginnen erst, wenn die App öffnet. Vorlagen und Spaltennamen sind auf Englisch.`,
     homelab: { template: 'Homelab-Vorlage (.xlsx)', sample: 'Beispiel Basement Lab (.xlsx)', seeIt: 'Ansehen: Clips und Standbilder' },
-    dc: { template: `Importvorlage v${V} (.xlsx, nur Devices ist Pflicht)`, sample: 'Ausgefülltes Beispiel: die Demohalle (.xlsx)' }, // DC marketing
+    dc: { template: `Importvorlage v${V} (.xlsx, nur Devices ist Pflicht)`, sample: 'Ausgefülltes Beispiel: die Demohalle (.xlsx)' },
   },
   js: {
     sending: 'Test wird gestartet …',
@@ -97,7 +96,6 @@ export const zh: Deep<typeof en> = {
   form: {
     product: '产品',
     homelab: '以 3D 呈现您的 Homelab 机柜：每台设备的功耗与电费、线缆连接，以及单台设备故障时的影响范围。',
-    dc: `设计模式（Design）载入您自己的机房，以 3D 呈现供配电链路、制冷、布线与网络，支持全部故障推演（估算值，并非 CFD）。试用 ${M} 分钟；试用机房 24 小时内删除。`, // DC marketing
     email: '邮箱', note: '您的机柜或机房中有哪些设备？', optional: '选填，不超过 120 字',
     placeholder: '例如：3 台迷你主机、1 台 NAS、10 英寸机柜 · 或：2 个机房、40 个机柜、A/B 路供电',
     updates: '账户功能开放时邮件通知我', updatesHint: '选填。不勾选则我们不会向您发送任何邮件。',
@@ -109,7 +107,7 @@ export const zh: Deep<typeof en> = {
     h2: '还没有清单？',
     p: `请先填写导入模板，或参考已填好的示例：${M} 分钟自应用打开时才开始计时。导入模板及列名为英文。`,
     homelab: { template: 'Homelab 导入模板（.xlsx）', sample: 'Basement Lab 示例（.xlsx）', seeIt: '观看演示：视频与截图' },
-    dc: { template: `导入模板 v${V}（.xlsx，仅 Devices 为必填）`, sample: '已填写示例：演示机房（.xlsx）' }, // DC marketing
+    dc: { template: `导入模板 v${V}（.xlsx，仅 Devices 为必填）`, sample: '已填写示例：演示机房（.xlsx）' },
   },
   js: {
     sending: '正在开通试用…',
