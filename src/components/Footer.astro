@@ -1,9 +1,9 @@
 ---
-// Shared footer (marketing/SITE-NAV.md): RACKDENSITY · Homelab Twin · DC Sim · Company, plus the product switcher.
+// Shared footer (marketing/SITE-NAV.md): RACKDENSITY · Homelab Twin · DC Sim · Company, plus the product switcher and the "Our other sites" row (SISTER_SITES).
 // Self-contained styles (hub/homelab and DC stylesheets).
 import { ui, fill, label, lp, type Locale } from '../i18n';
 import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, COMPANY } from '../config/brand';
-import { FOOTER, PRODUCTS, type Section } from '../config/nav';
+import { FOOTER, PRODUCTS, SISTER_SITES, type Section } from '../config/nav';
 
 interface Props { section?: Section; locale?: Locale }
 const { section = 'hub', locale = 'en' } = Astro.props;
@@ -40,6 +40,12 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
         </div>
       ))}
     </div>
+    <div class="sf-sites">
+      <p class="sf-h">{t.otherSites}</p>
+      <ul>
+        {SISTER_SITES.map((s) => <li><a href={s.href}>{s.name}</a> · {label(locale, s.desc)}</li>)}
+      </ul>
+    </div>
     <p class="sf-legal">{fill(t.legal, { company: COMPANY.name, b: BRAND })}</p>
   </div>
 </footer>
@@ -65,5 +71,6 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
   li a { display: inline-block; padding: 3px 0; color: var(--ink-muted); text-decoration: none; overflow-wrap: anywhere; }
   li a:hover { color: var(--accent); }
   .site-footer a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .sf-sites { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
   .sf-legal { margin: 26px 0 0; color: var(--ink-dim); font-size: 11.5px; }
 </style>
