@@ -47,7 +47,7 @@ async function hasMx(domain: string): Promise<boolean> {
 export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   const type = request.headers.get('content-type') ?? '';
   const json = type.includes('application/json');
-  const data: Record<string, unknown> = json ? await request.json().catch(() => ({})) : Object.fromEntries([...(await request.formData()).entries()].map(([k, v]) => [k, String(v)]));
+  const data: Record<string, unknown> = json ? await request.json().catch(() => ({})) : Object.fromEntries([...(await request.formData().catch(() => new FormData())).entries()].map(([k, v]) => [k, String(v)]));
   const lang: Lang = data.lang === 'de' || data.lang === 'zh' ? data.lang : 'en';
   const fail = (status: number, reason: string) => (json ? Response.json({ ok: false, reason }, { status, headers: { 'Cache-Control': 'no-store' } }) : page(lang, status, reason));
   if (!(TRIAL_LIVE || env.TRIAL_ENABLED === '1')) return fail(404, 'closed');
