@@ -14,6 +14,7 @@ import { PRODUCT_NAME, PRICES, FLAGS, WAITLIST } from '../config/brand';
 import { ENTITY } from '../config/entity';
 import { lp, ui, fill, hasPage, pageCopy, notifyLp, type Locale } from '../i18n';
 import * as copy from '../i18n/pages/homelab';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 import heroDark from '../assets/shots/hero-lightsoff.png';
 import heroLight from '../assets/shots/hero-office.png';
 import overview from '../assets/shots/overview.png';
@@ -50,7 +51,7 @@ const heroImg = { widths: [480, 800, 1280], sizes: '(min-width: 1000px) 640px, 1
         <h1>{c.hero.h1}</h1>
         <p class="lead">{c.hero.lead}</p>
         <div class="btn-row"><TryButton walkthrough locale={locale} /></div>
-        <p class="note"><span class="run"><span class="cs-shape cs-shape--off" aria-hidden="true"></span>{c.hero.run}</span><Fragment set:html={fill(c.hero.note, { link: `<a href="${notifyLp('home', locale)}">${WAITLIST.live ? c.hero.join : c.hero.notify}</a>` })} />{c.hero.langNote}</p>
+        <p class="note"><span class="run"><span class="cs-shape cs-shape--off" aria-hidden="true"></span>{c.hero.run}</span><Fragment set:html={fill(c.hero.note, { link: `<a href="${TRIAL_PAGES ? `${lp('/try', locale)}?edition=homelab` : notifyLp('home', locale)}">${WAITLIST.live ? c.hero.join : c.hero.notify}</a>` })} />{c.hero.langNote}</p>
       </div>
       <HeroStage edition="homelab" label={c.hero.stage} dark={heroDark} light={heroLight} sizes={heroImg.sizes} locale={locale}
         alt={c.hero.alt} altLight={c.hero.altLight}>

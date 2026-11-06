@@ -124,3 +124,10 @@ export const zh: Deep<typeof en> = {
     { q: '为什么以美元计价？', a: '结算将以美元进行。应用和计算器中的电费按您设置的币种和电价计算。' },
   ],
 };
+
+/** Trial builds (TRY-SIGNUP.md §10): play-only wording. */
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: { description: `Try once for free: your own spreadsheet, ${TRIAL.minutes} minutes, play only, nothing saved. Account keeps your lab for $${A.month}/month or $${A.year}/year; Pro adds cable tracing and the AI view.` },
+  de: { description: `Einmal kostenlos testen: Ihre eigene Tabelle, ${TRIAL.minutes} Minuten, nichts wird gespeichert. Account speichert Ihr Lab für ${A.month}\u00a0$/Monat oder ${A.year}\u00a0$/Jahr; Pro bringt Kabelverfolgung und KI-Ansicht.` },
+  zh: { description: `免费试玩一次：使用您自己的清单，${TRIAL.minutes} 分钟，不保存任何数据。基础账户每月 ${A.month} 美元或每年 ${A.year} 美元，可保存您的 Homelab；专业版增加链路追踪和 AI 视图。` },
+};

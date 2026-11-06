@@ -9,8 +9,9 @@ import { u, mailto } from '../lib/url';
 import { TRY, WAITLIST, FLAGS } from '../config/brand';
 import Transcript from '../components/site/Transcript.astro';
 import { VIDEOS, videoLd } from '../data/videos';
-import { ui, pageCopy, notifyLp, walkMail, type Locale } from '../i18n';
+import { ui, lp, pageCopy, notifyLp, walkMail, type Locale } from '../i18n';
 import * as copy from '../i18n/pages/try';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 import heroDark from '../assets/shots/hero-lightsoff.png';
 import heroLight from '../assets/shots/hero-office.png';
 import flaw from '../assets/shots/flaw-finder.png';
@@ -36,7 +37,7 @@ const stills = [[heroDark, heroLight], [flaw], [viewMenu], [cables]].map(([src, 
         <p class="lead">{c.lead}</p>
         <div class="btn-row">
           <a class="btn btn-primary" href={mailto(walkMail(locale).subject, walkMail(locale).body)}>{t.walkthrough}</a>
-          <a class="btn btn-ghost" href={notifyLp('seeit', locale)}>{WAITLIST.live ? c.join : c.notify}</a>
+          <a class="btn btn-ghost" href={TRIAL_PAGES ? `${lp('/try', locale)}?edition=homelab&src=seeit` : notifyLp('seeit', locale)}>{WAITLIST.live ? c.join : c.notify}</a>
         </div>
         {c.langNote && <p class="small muted">{c.langNote}</p>}
       </div>

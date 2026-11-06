@@ -131,3 +131,10 @@ export const zh: Deep<typeof en> = {
   },
   updated: '最后更新：2026 年 10 月 15 日（新增多语言版本及语言 Cookie）',
 };
+
+/** Trial builds: the waitlist e-mail is about accounts now that Try is open (TRY-SIGNUP.md §10). */
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: { waitlist: { items: [undefined as any, undefined as any, "We use the address for one e-mail when accounts open. We don't share it and we don't add it to any other list. Ask us at {mail} and we delete it."] } },
+  de: { waitlist: { items: [undefined as any, undefined as any, 'Wir nutzen die Adresse für eine E-Mail, wenn Konten verfügbar sind. Wir geben sie nicht weiter und setzen sie auf keine andere Liste. Schreiben Sie uns an {mail}, und wir löschen sie.'] } },
+  zh: { waitlist: { items: [undefined as any, undefined as any, '我们仅在账户功能开放时使用该邮箱发送一封邮件，不会共享，也不会加入任何其他名单。如需删除，请发送邮件至 {mail}。'] } },
+};

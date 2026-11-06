@@ -4,6 +4,7 @@ import { PRODUCT_NAME as P, PRICES, FLAGS } from '../../config/brand';
 const A = PRICES.account, R = PRICES.pro, soon = !FLAGS.billingLive;
 import { homeFaq } from '../../data/faq';
 import { VIDEOS } from '../../data/videos';
+import { TRIAL } from '../../config/trial.mjs';
 import type { Deep } from '../config';
 
 export const en = {
@@ -290,4 +291,33 @@ export const zh: Deep<typeof en> = {
     { q: '什么是每千瓦时 token 数？', a: '指硬件每消耗 1 kWh 电能所产出的 AI token 数量，是衡量家用 AI 主机能效的指标，类似汽车的百公里油耗。' },
   ],
   final: { h2: '以 3D 查看您的机柜。', note: `未注册账户时不存储任何数据。基础账户每月 ${A.month} 美元，可保存您的 Homelab。` },
+};
+
+/** Trial builds (TRY-SIGNUP.md §10): play-only wording; the hero note links to /try/ (src/views/Homelab.astro). */
+const TM = TRIAL.minutes;
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: {
+    hero: { note: `Free play now: your own spreadsheet, ${TM} minutes, nothing saved; {link}. Your file is read in your browser and never uploaded.`, join: 'start your trial', notify: 'start your trial' },
+    pricing: { try: { body: `Play once with your own spreadsheet: ${TM} minutes, nothing saved, no account.` } },
+    faq: [
+      { a: `Free play is: once, with your own spreadsheet, for ${TM} minutes, with no account and nothing saved. Account ($${A.month}/month or $${A.year}/year) will keep your lab; Pro ($${R.month}/month or $${R.year}/year) adds cable tracing, tokens per kWh, the full Flaw Finder and reports.${soon ? ' Account and Pro are launching soon.' : ''}` },
+      { a: `Yes, once: sign up with your e-mail on the trial page and the app opens with your own spreadsheet for ${TM} minutes. It is play only: nothing is saved. Clips, stills and walkthroughs stay on the See it page.` },
+    ],
+  },
+  de: {
+    hero: { note: `Jetzt kostenlos testen: Ihre eigene Tabelle, ${TM} Minuten, nichts wird gespeichert. Jetzt {link}. Ihre Datei wird im Browser gelesen und nie hochgeladen.`, join: 'den Test starten', notify: 'den Test starten' },
+    pricing: { try: { body: `Einmal mit Ihrer eigenen Tabelle testen: ${TM} Minuten, nichts wird gespeichert, kein Konto.` } },
+    faq: [
+      { a: `Das kostenlose Testen ja: einmal, mit Ihrer eigenen Tabelle, ${TM} Minuten lang, ohne Konto und ohne dass etwas gespeichert wird. Account (${A.month}\u00a0$/Monat oder ${A.year}\u00a0$/Jahr) wird Ihr Lab speichern; Pro (${R.month}\u00a0$/Monat oder ${R.year}\u00a0$/Jahr) bringt Kabelverfolgung, Tokens pro kWh, den vollständigen Flaw Finder und Berichte.${soon ? ' Account und Pro starten bald.' : ''}` },
+      { a: `Ja, einmal: Melden Sie sich auf der Testseite mit Ihrer E-Mail-Adresse an, dann öffnet sich die App mit Ihrer eigenen Tabelle für ${TM} Minuten. Nur zum Ausprobieren: Nichts wird gespeichert. Clips, Standbilder und Vorführungen gibt es weiter auf der Seite „Ansehen“.` },
+    ],
+  },
+  zh: {
+    hero: { note: `现已开放免费试玩：使用您自己的清单，${TM} 分钟，不保存任何数据；{link}。文件仅在浏览器本地读取，不上传、不存储。`, join: '立即开始试用', notify: '立即开始试用' },
+    pricing: { try: { body: `使用您自己的清单试玩一次：${TM} 分钟，不保存任何数据，无需账户。` } },
+    faq: [
+      { a: `免费试玩：使用您自己的清单试用一次，时长 ${TM} 分钟，无需账户，不保存任何数据。基础账户（每月 ${A.month} 美元或每年 ${A.year} 美元）将可保存您的 Homelab；专业版（每月 ${R.month} 美元或每年 ${R.year} 美元）增加链路追踪、每千瓦时 token 数、完整版 Flaw Finder 及报告功能。${soon ? '基础账户和专业版即将推出。' : ''}` },
+      { a: `可以，限一次：在试用页面使用邮箱注册后，应用即打开并载入您自己的清单，时长 ${TM} 分钟。仅供试玩，不保存任何数据。视频、截图和演示预约仍在“观看演示”页面。` },
+    ],
+  },
 };

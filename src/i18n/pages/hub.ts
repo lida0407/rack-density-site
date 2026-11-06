@@ -1,5 +1,6 @@
 // Hub home copy (/, /de/, /zh/). English is the source; de/zh may leave keys out (English fallback + note).
 import { PRODUCT_NAME as P, DC_PRODUCT_NAME as D, BRAND } from '../../config/brand';
+import { TRIAL } from '../../config/trial.mjs';
 import type { Deep } from '../config';
 
 export const en = {
@@ -73,4 +74,11 @@ export const zh: Deep<typeof en> = {
     body: '选择机柜规格，输入设备功耗与供电回路，即可查看机柜装配情况：单机柜设备数、负载功率（kW）、每月电费及瓶颈所在。',
     open: '打开计算器 →',
   },
+};
+
+/** Trial builds (TRY-SIGNUP.md §10): play-only wording instead of "when we open the doors". */
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: { homelab: { body: `Your homelab rack, in 3D. Watts and cost per device, what's plugged where, and what goes dark when one thing fails. Free play now: your own spreadsheet, ${TRIAL.minutes} minutes, nothing saved.`, badge: `Free play · ${TRIAL.minutes} minutes` } },
+  de: { homelab: { body: `Ihr Homelab-Rack in 3D. Watt und Kosten pro Gerät, was wo eingesteckt ist und was dunkel wird, wenn ein Teil ausfällt. Jetzt kostenlos testen: Ihre eigene Tabelle, ${TRIAL.minutes} Minuten, nichts wird gespeichert.`, badge: `Kostenlos testen · ${TRIAL.minutes} Minuten` } },
+  zh: { homelab: { body: `以 3D 呈现您的 Homelab 机柜：每台设备的功耗与电费、线缆连接关系，以及单台设备故障时的影响范围。现已开放免费试玩：使用您自己的清单，${TRIAL.minutes} 分钟，不保存任何数据。`, badge: `免费试玩 · ${TRIAL.minutes} 分钟` } },
 };

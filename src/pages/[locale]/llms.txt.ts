@@ -3,6 +3,7 @@
 // from src/pages/dc/_llms.ts (picked up when present).
 import { PRODUCT_NAME as P, BRAND, PRICES, CONTACT_EMAIL, SITE_URL } from '../../config/brand';
 import { lp, localePaths, isLive, type Locale } from '../../i18n';
+import { TRIAL_PAGES, TRIAL } from '../../config/trial.mjs';
 export const getStaticPaths = () => localePaths('/').filter((p) => isLive(p.params.locale));
 const dc = Object.values(import.meta.glob<{ dcLlmsLocale?: (l: Locale) => Promise<string> }>('../dc/_llms.ts', { eager: true }))[0];
 const A = PRICES.account, R = PRICES.pro;
@@ -19,7 +20,7 @@ Mustard Seed Solutions (mustardseedmt.com, Malta) betreibt rack-density.com; ${B
 
 ## ${P} (Homelab)
 
-> ${P} macht aus einer Tabelle Ihrer Geräte ein 3D-Modell Ihres Racks: Watt und Kosten pro Gerät, was wo steckt, USV-Laufzeit, was bei einem Ausfall dunkel wird, und Tokens pro kWh für lokale KI-Rechner. Noch keine öffentliche Demo: Clips, Vorführungen und eine Warteliste. Account (${A.month} $/Monat oder ${A.year} $/Jahr) und Pro (${R.month} $/Monat oder ${R.year} $/Jahr) starten bald. Die App ist derzeit auf Englisch.
+> ${P} macht aus einer Tabelle Ihrer Geräte ein 3D-Modell Ihres Racks: Watt und Kosten pro Gerät, was wo steckt, USV-Laufzeit, was bei einem Ausfall dunkel wird, und Tokens pro kWh für lokale KI-Rechner. ${TRIAL_PAGES ? `Einmal kostenlos testen: Ihre eigene Tabelle, ${TRIAL.minutes} Minuten, nichts wird gespeichert (${url('/try', l)}).` : 'Noch keine öffentliche Demo: Clips, Vorführungen und eine Warteliste.'} Account (${A.month} $/Monat oder ${A.year} $/Jahr) und Pro (${R.month} $/Monat oder ${R.year} $/Jahr) starten bald. Die App ist derzeit auf Englisch.
 
 - [${P}](${url('/homelab', l)}): Überblick
 - [${P} ansehen](${url('/homelab/try', l)}): Clips und Standbilder des Demo-Labs, Vorführung anfragen, die Importvorlage
@@ -40,7 +41,7 @@ Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com
 
 ## ${P}（Homelab）
 
-> ${P} 将设备清单生成为机柜 3D 模型：每台设备的功耗与电费、线缆连接关系、UPS 后备时间、单台设备故障时的影响范围，以及本地 AI 主机的每千瓦时 token 数。暂无公开演示：提供演示视频、预约演示和候补名单。基础账户（每月 ${A.month} 美元或每年 ${A.year} 美元）和专业版（每月 ${R.month} 美元或每年 ${R.year} 美元）即将推出。应用界面目前为英文。
+> ${P} 将设备清单生成为机柜 3D 模型：每台设备的功耗与电费、线缆连接关系、UPS 后备时间、单台设备故障时的影响范围，以及本地 AI 主机的每千瓦时 token 数。${TRIAL_PAGES ? `免费试玩一次：使用您自己的清单，${TRIAL.minutes} 分钟，不保存任何数据（${url('/try', l)}）。` : '暂无公开演示：提供演示视频、预约演示和候补名单。'}基础账户（每月 ${A.month} 美元或每年 ${A.year} 美元）和专业版（每月 ${R.month} 美元或每年 ${R.year} 美元）即将推出。应用界面目前为英文。
 
 - [${P}](${url('/homelab', l)})：概览
 - [${P} 演示](${url('/homelab/try', l)})：演示环境的视频与截图、预约演示、导入模板

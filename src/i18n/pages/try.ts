@@ -2,6 +2,7 @@
 import { PRODUCT_NAME as P, PRICES } from '../../config/brand';
 import { tryFaq } from '../../data/faq';
 import { VIDEOS } from '../../data/videos';
+import { TRIAL } from '../../config/trial.mjs';
 import type { Deep } from '../config';
 const A = PRICES.account;
 
@@ -167,4 +168,26 @@ export const zh: Deep<typeof en> = {
     { q: '是否会上传或保存任何数据？', a: '不会。文件仅在浏览器本地读取，未注册账户时不存储任何数据：应用不使用 Cookie 和浏览器存储，不向服务器发送任何数据。' },
   ],
   open: '免费试用已开放。',
+};
+
+/** Trial builds (TRY-SIGNUP.md §10): the app is open for one play-only session; the second button goes to /try/. */
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: {
+    lead: `Watch it here, book a short walkthrough, or try it once yourself: your own spreadsheet, ${TRIAL.minutes} minutes, play only.`,
+    join: 'Try it once', notify: 'Try it once',
+    banner: `Free play: nothing is saved, close the tab and it's gone. <b>$${A.month}/month will keep it.</b>`,
+    faq: [{ q: 'Can I try it myself?', a: `Yes, once: sign up on the trial page and open the app with your own spreadsheet for ${TRIAL.minutes} minutes. It is play only: nothing is saved. Until accounts open, the clips, stills and a walkthrough show the rest.` }],
+  },
+  de: {
+    lead: `Sehen Sie sie sich hier an, buchen Sie eine kurze Vorführung oder testen Sie selbst einmal: Ihre eigene Tabelle, ${TRIAL.minutes} Minuten, nur zum Ausprobieren.`,
+    join: 'Einmal testen', notify: 'Einmal testen',
+    banner: `Kostenlos testen: Nichts wird gespeichert, schließen Sie den Tab und alles ist weg. <b>Für ${A.month}\u00a0$/Monat bleibt es künftig gespeichert.</b>`,
+    faq: [{ q: 'Kann ich es selbst ausprobieren?', a: `Ja, einmal: Melden Sie sich auf der Testseite an und öffnen Sie die App mit Ihrer eigenen Tabelle für ${TRIAL.minutes} Minuten. Nur zum Ausprobieren: Nichts wird gespeichert. Bis Konten verfügbar sind, zeigen Clips, Standbilder und eine Vorführung den Rest.` }],
+  },
+  zh: {
+    lead: `您可以在本页观看演示视频、预约在线演示，或亲自免费试玩一次：使用您自己的清单，${TRIAL.minutes} 分钟，仅供试玩。`,
+    join: '免费试玩一次', notify: '免费试玩一次',
+    banner: `免费试玩：不保存任何数据，关闭标签页即清除。<b>基础账户每月 ${A.month} 美元，将可保存数据。</b>`,
+    faq: [{ q: '可以亲自试用吗？', a: `可以，限一次：在试用页面注册后，即可载入您自己的清单使用应用 ${TRIAL.minutes} 分钟。仅供试玩，不保存任何数据。账户功能推出前，视频、截图和演示讲解可展示其余功能。` }],
+  },
 };

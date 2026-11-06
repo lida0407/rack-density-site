@@ -8,6 +8,7 @@ import { mailto } from '../lib/url';
 import { PRODUCT_NAME, DC_PRODUCT_NAME, WAITLIST, CF_WEB_ANALYTICS_TOKEN, CF_WEB_ANALYTICS_ON } from '../config/brand';
 import { lp, fill, pageCopy, notifyMail, LOCALE_META, type Locale } from '../i18n';
 import * as copy from '../i18n/pages/waitlist';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const { c, fellBack } = pageCopy(copy, locale);
@@ -20,6 +21,7 @@ const js = { ...c.js, lang: locale === 'en' ? '' : locale, intl: LOCALE_META[loc
       <p class="eyebrow">{c.eyebrow}</p>
       <h1>{c.h1}</h1>
       <p class="lead">{c.lead}</p>
+      {TRIAL_PAGES && <p class="trynow"><a href={`${lp('/try', locale)}?src=waitlist`}>{c.tryNow}</a></p>}
       {WAITLIST.live ? (
         <form class="card form" method="post" action={WAITLIST.api} data-wl data-t={JSON.stringify(js)}>
           <label class="field">{c.email} <input type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" /></label>
@@ -53,6 +55,8 @@ const js = { ...c.js, lang: locale === 'en' ? '' : locale, intl: LOCALE_META[loc
 </Base>
 <style>
   .wl h1 { margin-bottom: .3em; }
+  .trynow { margin: 6px 0 0; font-weight: 600; }
+  .trynow a { color: var(--accent); }
   .form { display: grid; gap: 14px; margin: 22px 0 12px; }
   .ed { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
   .ed legend { padding: 0; margin-bottom: 6px; }

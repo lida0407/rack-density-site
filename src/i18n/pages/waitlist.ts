@@ -1,5 +1,6 @@
 // /homelab/waitlist/ copy in en, de, zh, including the messages the form script shows (passed as data-t JSON).
 import { PRODUCT_NAME as P } from '../../config/brand';
+import { TRIAL } from '../../config/trial.mjs';
 import type { Deep } from '../config';
 
 export const en = {
@@ -14,6 +15,8 @@ export const en = {
   analyticsOn: 'No tracking cookies: the only scripts from elsewhere are Cloudflare’s bot check and its cookieless visit counter.',
   analyticsOff: 'No tracking, no third-party scripts besides the Cloudflare bot check.',
   privacy: 'Privacy',
+  /** Trial builds only: the line above the form that points to /try/ (TRY-SIGNUP.md §6) */
+  tryNow: `Try is open now: play once with your own spreadsheet for ${TRIAL.minutes} minutes →`,
   closed: 'The waitlist form opens in a moment. Until then, e-mail us and we add you by hand.', closedButton: 'E-mail me when Try opens',
   /** html: {clips} = link to the See it page */
   prefer: 'Prefer to see it now? {clips} or request a walkthrough from the See it page.', clips: 'Watch the clips',
@@ -38,6 +41,7 @@ export const de: Deep<typeof en> = {
   analyticsOn: 'Keine Tracking-Cookies: Die einzigen fremden Skripte sind die Bot-Prüfung von Cloudflare und sein cookieloser Besuchszähler.',
   analyticsOff: 'Kein Tracking, keine fremden Skripte außer der Bot-Prüfung von Cloudflare.',
   privacy: 'Datenschutz',
+  tryNow: `Try ist jetzt offen: einmal mit Ihrer eigenen Tabelle testen, ${TRIAL.minutes} Minuten →`,
   closed: 'Das Formular der Warteliste öffnet in Kürze. Bis dahin schreiben Sie uns eine E-Mail, und wir tragen Sie von Hand ein.', closedButton: 'Benachrichtigen, wenn Try öffnet',
   prefer: 'Lieber gleich ansehen? {clips} oder auf der Seite „Ansehen“ eine Vorführung anfragen.', clips: 'Clips ansehen',
   js: {
@@ -61,6 +65,7 @@ export const zh: Deep<typeof en> = {
   analyticsOn: '不使用跟踪 Cookie：仅加载 Cloudflare 人机验证及其不使用 Cookie 的访问统计脚本。',
   analyticsOff: '不进行跟踪，除 Cloudflare 人机验证外不加载第三方脚本。',
   privacy: '隐私政策',
+  tryNow: `免费试玩现已开放：使用您自己的清单试用一次，${TRIAL.minutes} 分钟 →`,
   closed: '候补名单表单即将开放。在此之前，请发送邮件，我们将为您手动登记。', closedButton: '免费试用开放时邮件通知我',
   prefer: '希望立即了解？{clips}，或在“观看演示”页面预约演示。', clips: '观看演示视频',
   js: {
@@ -70,4 +75,11 @@ export const zh: Deep<typeof en> = {
     email: '邮箱地址格式不正确。', turnstile: '人机验证未通过，请重试。',
     rate: '当前网络提交次数过多，请一小时后重试。', down: '候补名单暂时无法访问，请改为发送邮件。',
   },
+};
+
+/** Trial builds (TRY-SIGNUP.md §6, §10): the list is now for accounts; Try itself is open. */
+export const trial: Partial<Record<'en' | 'de' | 'zh', Deep<typeof en>>> = {
+  en: { description: `${P} accounts are coming: one e-mail when they open, no spam, nothing else stored. Try is open now.`, eyebrow: 'Waitlist · accounts', h1: 'Hear when accounts open', lead: 'Accounts that keep your lab come later. Leave your e-mail for one message when they open: no spam, nothing else stored.' },
+  de: { description: `Konten für ${P} kommen bald: eine E-Mail, wenn sie öffnen, kein Spam, sonst wird nichts gespeichert. Try ist jetzt offen.`, eyebrow: 'Warteliste · Konten', h1: 'Benachrichtigung, wenn Konten öffnen', lead: 'Konten, die Ihr Lab speichern, kommen später. Hinterlassen Sie Ihre E-Mail-Adresse für eine Nachricht, wenn sie öffnen: kein Spam, sonst wird nichts gespeichert.' },
+  zh: { description: `${P} 账户功能即将推出：开放时仅发送一封邮件，不发送推广信息，不存储其他数据。免费试玩现已开放。`, eyebrow: '候补名单 · 账户', h1: '账户开放时通知我', lead: '可保存 Homelab 的账户功能将在稍后推出。留下邮箱，开放时我们仅发送一封邮件：不发送推广信息，不存储其他数据。' },
 };
