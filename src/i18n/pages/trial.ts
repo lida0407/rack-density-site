@@ -16,7 +16,7 @@ export const en = {
   lines: [
     `Pick ${P} or ${D}, sign up with your e-mail, and open the app with your own spreadsheet.`,
     `One session of ${M} minutes from the moment the app opens. Import the same or a corrected file as often as you like inside it.`,
-    `Nothing is kept: ${P} reads your file in your browser; ${D} deletes your trial hall within 24 hours after the session.`,
+    `Play only: nothing is saved. ${P} reads your file in your browser; ${D} keeps your hall in memory for the session only.`,
   ],
   form: {
     product: 'Product',
@@ -54,7 +54,7 @@ export const de: Deep<typeof en> = {
   lines: [
     `Wählen Sie ${P} oder ${D}, melden Sie sich mit Ihrer E-Mail-Adresse an und öffnen Sie die App mit Ihrer eigenen Tabelle.`,
     `Eine Sitzung von ${M} Minuten ab dem Öffnen der App. Innerhalb der Sitzung importieren Sie dieselbe oder eine korrigierte Datei beliebig oft.`,
-    `Nichts wird aufbewahrt: ${P} liest Ihre Datei im Browser; ${D} löscht Ihre Testhalle innerhalb von 24 Stunden nach der Sitzung.`,
+    `Nur zum Ausprobieren: Nichts wird gespeichert. ${P} liest Ihre Datei im Browser; ${D} hält Ihre Halle nur für die Dauer der Sitzung im Arbeitsspeicher.`,
   ],
   form: {
     product: 'Produkt',
@@ -91,7 +91,7 @@ export const zh: Deep<typeof en> = {
   lines: [
     `选择 ${P} 或 ${D}，使用邮箱注册后，即可在应用中导入您自己的清单。`,
     `单次会话 ${M} 分钟，自应用打开时开始计时。会话期间可多次导入同一文件或修正后的文件。`,
-    `不保留任何数据：${P} 仅在浏览器本地读取文件；${D} 在会话结束后 24 小时内删除试用机房数据。`,
+    `仅供试用，不保存任何数据。${P} 仅在浏览器本地读取文件；${D} 仅在会话期间将机房数据保存在内存中。`,
   ],
   form: {
     product: '产品',

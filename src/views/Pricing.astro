@@ -6,6 +6,7 @@ import TryButton from '../components/TryButton.astro';
 import { mailto, abs } from '../lib/url';
 import { PRODUCT_NAME, BRAND, PRICES, FLAGS, FEATURE_STATUS } from '../config/brand';
 import { ui, fill, pageCopy, type Locale } from '../i18n';
+import { TRIAL_PAGES } from '../config/trial.mjs';
 import * as copy from '../i18n/pages/pricing';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -45,7 +46,7 @@ const product = { '@context': 'https://schema.org', '@type': 'Product', '@id': a
       {c.currencyNote && <p class="small muted">{c.currencyNote}</p>}
       <div class="tiles tiles-3 plans">
         <div class="card featured">
-          <h2>{c.try.h2}</h2><p class="price">{c.try.price}</p><p class="muted"><em>{c.try.tag}</em></p><p class="small muted">{c.try.note}</p>
+          <h2>{c.try.h2}</h2><p class="price">{c.try.price}</p><p class="muted"><em>{c.try.tag}</em></p><p class="small muted">{TRIAL_PAGES ? c.try.trialRow : c.try.note}</p>
           <ul>{c.try.items.map((i) => <li set:html={i} />)}</ul>
           <TryButton label={c.try.button} locale={locale} />
         </div>

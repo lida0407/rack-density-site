@@ -2,6 +2,7 @@
 import { PRODUCT_NAME as P, PRICES } from '../../config/brand';
 import { pricingFaq } from '../../data/faq';
 import type { Deep } from '../config';
+import { TRIAL } from '../../config/trial.mjs';
 const A = PRICES.account, R = PRICES.pro;
 
 export const en = {
@@ -13,6 +14,8 @@ export const en = {
   soon: 'Launching soon', roadmap: 'Roadmap', perMonth: '/ month', perYear: '{price} / year, two months free',
   try: {
     h2: 'Try', price: 'Free', tag: 'No account · nothing stored', note: 'Not public yet: see it in clips or book a walkthrough.',
+    /** Try row while the trial is built (preview, then live): TRY-SIGNUP.md §10 */
+    trialRow: `Try once · free · your own spreadsheet · ${TRIAL.minutes} minutes · play only, nothing saved`,
     /** html items (<strong>) */
     items: ['1–2 racks in 3D from your spreadsheet', 'Power, Heat, Network, Compute views', 'Power and network diagrams with <strong>Fail</strong> what-if', 'Import report and checks', 'Share image and rack-elevation PNG', 'One Flaw Finder run', 'Closes with the tab, or download your lab as a file'],
     button: 'See it',
@@ -48,6 +51,7 @@ export const de: Deep<typeof en> = {
   soon: 'Bald verfügbar', roadmap: 'Geplant', perMonth: '/ Monat', perYear: '{price} / Jahr, zwei Monate gratis',
   try: {
     h2: 'Try', price: 'Kostenlos', tag: 'Kein Konto · nichts gespeichert', note: 'Noch nicht öffentlich: in Clips ansehen oder eine Vorführung buchen.',
+    trialRow: `Einmal testen · kostenlos · Ihre eigene Tabelle · ${TRIAL.minutes} Minuten · nur zum Ausprobieren, nichts wird gespeichert`,
     items: ['1–2 Racks in 3D aus Ihrer Tabelle', 'Ansichten für Strom, Wärme, Netzwerk und Compute', 'Strom- und Netzwerkdiagramme mit <strong>Fail</strong>-Simulation', 'Importbericht und Prüfungen', 'Bild zum Teilen und PNG der Rack-Frontansicht', 'Ein Durchlauf des Flaw Finder', 'Endet beim Schließen des Tabs, oder Sie laden Ihr Lab als Datei herunter'],
     button: 'Ansehen',
   },
@@ -89,6 +93,7 @@ export const zh: Deep<typeof en> = {
   soon: '即将推出', roadmap: '规划中', perMonth: '/ 月', perYear: '{price} / 年，相当于免两个月费用',
   try: {
     h2: '免费试用', price: '免费', tag: '无需账户 · 不存储数据', note: '尚未公开：可观看演示视频或预约演示。',
+    trialRow: `免费试用一次 · 免费 · 使用您自己的清单 · ${TRIAL.minutes} 分钟 · 仅供试用，不保存任何数据`,
     items: ['由 Excel/CSV 清单生成 1–2 个 3D 机柜', '供配电、散热、网络、计算视图', '供配电与网络拓扑图，支持 <strong>Fail</strong> 故障推演', '导入报告与检查', '分享图片与机柜立面 PNG 图', '运行一次 Flaw Finder', '关闭标签页即清除，也可将 Homelab 下载为文件'],
     button: '观看演示',
   },
