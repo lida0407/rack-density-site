@@ -8,6 +8,7 @@ export const zh: Deep<UI> = {
   themeAuto: '自动', themeDark: '深色', themeBright: '浅色', themeAutoTitle: '自动（跟随系统设置）',
   themeAutoAria: '自动显示模式', themeDarkAria: '深色显示模式', themeBrightAria: '浅色显示模式',
   company: '公司', otherSites: '我们的其他网站', legal: '© 2026 {company} · {b} 是 {company} 旗下品牌 · 标注“估算”的数值均为估算值',
+  props: '3D 模型素材：NVIDIA SimReady Assets，',
   faq: '常见问题', fallbackNote: '本页部分内容尚未翻译，暂以英文显示。', englishOnly: '英文',
   seeIt: '观看演示', walkthrough: '预约演示', seeIn3D: '查看 3D 视图', seeOnRack: '在您的机柜上查看',
   simulated: '模拟数据', demoLab: '演示环境', transcript: '视频内容说明', impressum: '法律声明',

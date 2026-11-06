@@ -8,6 +8,7 @@ export const de: Deep<UI> = {
   themeAuto: 'Auto', themeDark: 'Dunkel', themeBright: 'Hell', themeAutoTitle: 'Automatisch (wie Ihr System)',
   themeAutoAria: 'Automatische Darstellung', themeDarkAria: 'Dunkle Darstellung', themeBrightAria: 'Helle Darstellung',
   company: 'Unternehmen', otherSites: 'Unsere weiteren Seiten', legal: '© 2026 {company} · {b} ist ein Angebot von {company} · als geschätzt markierte Werte sind Schätzungen',
+  props: '3D-Objekte: NVIDIA SimReady Assets, ',
   faq: 'Häufige Fragen', fallbackNote: 'Teile dieser Seite sind noch nicht übersetzt und erscheinen auf Englisch.', englishOnly: 'Englisch',
   seeIt: 'Ansehen', walkthrough: 'Vorführung anfragen', seeIn3D: 'In 3D ansehen', seeOnRack: 'An Ihrem Rack ansehen',
   simulated: 'simulierte Daten', demoLab: 'Demo-Lab', transcript: 'Was der Clip zeigt', impressum: 'Impressum',

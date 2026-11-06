@@ -7,6 +7,7 @@ export const en = {
   themeAuto: 'Auto', themeDark: 'Dark', themeBright: 'Bright', themeAutoTitle: 'Auto (follows your system)',
   themeAutoAria: 'Auto theme', themeDarkAria: 'Dark theme', themeBrightAria: 'Bright theme',
   company: 'Company', otherSites: 'Our other sites', legal: '© 2026 {company} · {b} is a brand of {company} · figures marked estimated are estimates',
+  props: '3D props: NVIDIA SimReady Assets, ', // CC BY 4.0 credit (footer); the licence link text stays "CC BY 4.0"
   faq: 'Questions', fallbackNote: 'Parts of this page are not translated yet and are shown in English.', englishOnly: 'English',
   seeIt: 'See it', walkthrough: 'Request a walkthrough', seeIn3D: 'See it in 3D', seeOnRack: 'See it on your rack',
   simulated: 'simulated data', demoLab: 'Demo lab', transcript: 'What the clip shows', impressum: 'Legal notice',

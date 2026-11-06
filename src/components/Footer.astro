@@ -46,7 +46,8 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
         {SISTER_SITES.map((s) => <li><a href={s.href}>{s.name}</a> · {label(locale, s.desc)}</li>)}
       </ul>
     </div>
-    <p class="sf-legal">{fill(t.legal, { company: COMPANY.name, b: BRAND })}</p>
+    {/* CC BY 4.0 attribution for the 3D props in Homelab Twin and DC Sim (planner notice 2026-11-06). */}
+    <p class="sf-legal">{fill(t.legal, { company: COMPANY.name, b: BRAND })} · {t.props}<a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a></p>
   </div>
 </footer>
 <style>
@@ -73,4 +74,5 @@ const ext = (href: string) => /^(https?:|mailto:)/.test(href);
   .site-footer a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   .sf-sites { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
   .sf-legal { margin: 26px 0 0; color: var(--ink-dim); font-size: 11.5px; }
+  .sf-legal a { color: var(--ink-muted); text-decoration: underline; text-underline-offset: 2px; }
 </style>
