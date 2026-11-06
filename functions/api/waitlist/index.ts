@@ -38,7 +38,7 @@ export async function onRequestPost({ request, env }: Ctx): Promise<Response> {
   const type = request.headers.get('content-type') ?? '';
   const form = !type.includes('application/json');
   const data: Record<string, string> = form
-    ? Object.fromEntries([...(await request.formData()).entries()].map(([k, v]) => [k, String(v)]))
+    ? Object.fromEntries([...(await request.formData().catch(() => new FormData())).entries()].map(([k, v]) => [k, String(v)]))
     : await request.json().catch(() => ({}));
   if (!env.DB || !env.TURNSTILE_SECRET) return reply(form, 503, { ok: false, error: 'closed' });
 
