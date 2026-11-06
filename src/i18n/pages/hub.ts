@@ -7,7 +7,7 @@ export const en = {
   description: `3D twins of your racks from the spreadsheet you already keep: ${P} for the homelab, ${D} for the data center. Plus a free rack density calculator.`,
   status: 'Free · runs in your browser · no data leaves it',
   /** Hero badge + CTA to /try/ (TRY-SIGNUP.md §10), shown once the trial is built (preview, then go-live) */
-  freePlay: { badge: 'FREE PLAY', cta: 'Your own spreadsheet, 60 minutes' },
+  freePlay: { badge: 'FREE PLAY', cta: 'Your own spreadsheet, 60 minutes', ctaShort: 'Your sheet, 60 min' },
   h1: "See your racks: what they draw, what's plugged where, what fails.",
   lead: 'Free tools and 3D twins built from the spreadsheet you already keep. One for the rack in your basement, one for the data hall.',
   homelab: {
@@ -31,7 +31,7 @@ export const de: Deep<typeof en> = {
   title: `Racks in 3D planen: Homelab und Rechenzentrum | ${BRAND}`,
   description: `Digitale Zwillinge Ihrer Racks in 3D aus Ihrer Excel-Liste: ${P} für das Homelab, ${D} für das Rechenzentrum. Dazu ein kostenloser Rack-Rechner.`,
   status: 'Kostenlos · läuft im Browser · keine Daten verlassen den Browser',
-  freePlay: { badge: 'KOSTENLOS TESTEN', cta: 'Ihre eigene Tabelle, 60 Minuten' },
+  freePlay: { badge: 'KOSTENLOS TESTEN', cta: 'Ihre eigene Tabelle, 60 Minuten', ctaShort: 'Eigene Tabelle, 60 Min.' },
   h1: 'Sehen Sie Ihre Racks: was sie verbrauchen, was wo steckt, was ausfällt.',
   lead: 'Kostenlose Werkzeuge und 3D-Zwillinge aus der Tabelle, die Sie ohnehin führen. Einer für das Rack im Keller, einer für den Rechenzentrumssaal.',
   homelab: {
@@ -55,7 +55,7 @@ export const zh: Deep<typeof en> = {
   title: `机柜 3D 规划与数字孪生：Homelab 与数据中心 | ${BRAND}`,
   description: `基于现有的 Excel/CSV 设备清单生成机柜 3D 视图与数字孪生：${P} 面向 Homelab（家庭机房），${D} 面向数据中心。另提供免费的单机柜功率密度计算器。`,
   status: '免费 · 在浏览器本地运行 · 数据不上传、不存储',
-  freePlay: { badge: '免费试玩', cta: '使用您自己的清单，60 分钟' },
+  freePlay: { badge: '免费试玩', cta: '使用您自己的清单，60 分钟', ctaShort: '自有清单，60 分钟' },
   h1: '看清您的机柜：功耗、连接与故障影响。',
   lead: '基于您现有的设备清单，提供免费工具与 3D 数字孪生：一款面向家庭机房，一款面向数据中心机房。',
   homelab: {

@@ -15,7 +15,7 @@ const { c, fellBack } = pageCopy(copy, locale), presets = ui(locale).density.pre
   <section class="hub-hero">
     <div class="wrap">
       <div class="hero-top">
-        {TRIAL_PAGES && <a class="freeplay" href={lp('/try', locale)}><span class="fp-badge">{c.freePlay.badge}</span><span class="fp-cta">{c.freePlay.cta}</span><span class="fp-go" aria-hidden="true">→</span></a>}
+        {TRIAL_PAGES && <a class="freeplay" href={lp('/try', locale)}><span class="fp-badge">{c.freePlay.badge}</span><span class="fp-cta"><span class="fp-long">{c.freePlay.cta}</span><span class="fp-short">{c.freePlay.ctaShort}</span></span><span class="fp-go" aria-hidden="true">→</span></a>}
         <p class:list={['status', { 'status--with-fp': TRIAL_PAGES }]}><span class="dot" aria-hidden="true"></span>{c.status}</p>
       </div>
       <h1>{c.h1}</h1>
@@ -63,12 +63,14 @@ const { c, fellBack } = pageCopy(copy, locale), presets = ui(locale).density.pre
      headline stays where it was. */
   .freeplay { display: inline-flex; align-items: stretch; border: 1px solid var(--accent); border-radius: var(--radius-1); overflow: hidden; text-decoration: none; font: 600 .72rem/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; box-shadow: var(--glow-accent); transition: box-shadow .15s, border-color .15s; }
   .fp-badge { display: inline-flex; align-items: center; padding: 8px 10px; background: var(--accent); color: var(--on-accent); font-weight: 700; }
+  .fp-badge, .fp-cta, .fp-go { white-space: nowrap; }
   .fp-cta { display: inline-flex; align-items: center; padding: 8px 10px; color: var(--ink); letter-spacing: .06em; text-transform: none; font-weight: 500; }
+  .fp-short { display: none; }
   .fp-go { display: inline-flex; align-items: center; padding: 8px 10px 8px 0; color: var(--accent); font-weight: 700; }
   .freeplay:hover { border-color: var(--accent-strong); }
   .freeplay:hover .fp-badge { background: var(--accent-strong); }
   .freeplay:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
-  @media (max-width: 600px) { .status--with-fp { display: none; } }
+  @media (max-width: 600px) { .status--with-fp { display: none; } .fp-long { display: none; } .fp-short { display: inline; } .fp-cta { letter-spacing: 0; padding: 8px; } .fp-badge { padding: 8px; } }
   @media (max-width: 380px) { .fp-cta { display: none; } .fp-go { padding-left: 10px; } }
   .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
   .products { margin-top: 28px; }
