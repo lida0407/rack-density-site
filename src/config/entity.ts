@@ -1,9 +1,15 @@
 // Verbatim entity descriptions from ~/Sensaka/marketing/ENTITY.md (SEO-GEO-PLAN §4.3: the same words everywhere).
-// Change them there first, then here.
-export const ENTITY = {
+// Change them there first, then here. Trial builds (TRIAL_PAGES) use ENTITY.md's "Trial-era lines" instead (TRY-SIGNUP.md §10).
+import { TRIAL_PAGES } from './trial.mjs';
+const BASE = {
   rackdensity: 'Free rack and data-center tools and two browser-based 3D twins by Mustard Seed Solutions: Homelab Twin for home racks and DC Sim for data halls. Everything runs in the browser from an Excel/CSV file; nothing is uploaded.',
   homelabTwin: 'Homelab Twin turns a spreadsheet of your devices into a 3D model of your rack: watts and cost per device, what is plugged where, UPS runtime, what goes dark when something fails, and tokens per kWh for local AI boxes. Free to try with no account once the self-serve Try opens (no public demo yet: clips, walkthroughs and a waitlist); runs in the browser, nothing stored.',
   homelabTwinShort: 'Homelab Twin turns a spreadsheet of your devices into a 3D model of your rack: watts and cost per device, what is plugged where, UPS runtime, what goes dark when something fails, and tokens per kWh for local AI boxes.',
   // On rack-density.com only Mustard Seed Solutions is named (Dali 2026-10-15, planner e0b6d1f: no Sensaka on this site).
   company: 'Mustard Seed Solutions (mustardseedmt.com, Malta) runs rack-density.com; RACKDENSITY is its brand.',
-} as const;
+};
+const TRIAL_ERA = {
+  rackdensity: 'Free rack and data-center tools and two browser-based 3D twins by Mustard Seed Solutions: Homelab Twin for home racks and DC Sim for data halls. Both start from an Excel/CSV file; Homelab Twin runs it in the browser, DC Sim keeps it in server memory for the session only, and nothing is saved.',
+  homelabTwin: 'Homelab Twin turns a spreadsheet of your devices into a 3D model of your rack: watts and cost per device, what is plugged where, UPS runtime, what goes dark when something fails, and tokens per kWh for local AI boxes. Free play: sign up with an e-mail and use it once for 60 minutes with your own spreadsheet; play only, nothing is saved, no account.',
+};
+export const ENTITY: typeof BASE = TRIAL_PAGES ? { ...BASE, ...TRIAL_ERA } : BASE;

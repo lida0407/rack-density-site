@@ -11,7 +11,7 @@ const url = (path: string, l: Locale) => SITE_URL.replace(/\/$/, '') + lp(path, 
 const TEXT: Record<'de' | 'zh', (l: Locale) => string> = {
   de: (l) => `# ${BRAND} (Deutsch)
 
-> Kostenlose Rack- und Rechenzentrumswerkzeuge und zwei 3D-Zwillinge im Browser von Mustard Seed Solutions: ${P} für Racks zu Hause und DC Sim für Rechenzentren. Alles läuft im Browser aus einer Excel/CSV-Datei; nichts wird hochgeladen. Kontakt: ${CONTACT_EMAIL}.
+> Kostenlose Rack- und Rechenzentrumswerkzeuge und zwei 3D-Zwillinge im Browser von Mustard Seed Solutions: ${P} für Racks zu Hause und DC Sim für Rechenzentren. ${TRIAL_PAGES ? `Beide starten mit einer Excel/CSV-Datei; ${P} verarbeitet sie im Browser, DC Sim hält sie nur für die Sitzung im Serverspeicher, und nichts wird gespeichert.` : 'Alles läuft im Browser aus einer Excel/CSV-Datei; nichts wird hochgeladen.'} Kontakt: ${CONTACT_EMAIL}.
 
 Mustard Seed Solutions (mustardseedmt.com, Malta) betreibt rack-density.com; ${BRAND} ist ein Angebot des Unternehmens. Diese Datei listet die deutschen Seiten; alle Seiten auf Englisch: ${SITE_URL.replace(/\/$/, '')}/llms.txt
 
@@ -20,19 +20,19 @@ Mustard Seed Solutions (mustardseedmt.com, Malta) betreibt rack-density.com; ${B
 
 ## ${P} (Homelab)
 
-> ${P} macht aus einer Tabelle Ihrer Geräte ein 3D-Modell Ihres Racks: Watt und Kosten pro Gerät, was wo steckt, USV-Laufzeit, was bei einem Ausfall dunkel wird, und Tokens pro kWh für lokale KI-Rechner. ${TRIAL_PAGES ? `Einmal kostenlos testen: Ihre eigene Tabelle, ${TRIAL.minutes} Minuten, nichts wird gespeichert (${url('/try', l)}).` : 'Noch keine öffentliche Demo: Clips, Vorführungen und eine Warteliste.'} Account (${A.month} $/Monat oder ${A.year} $/Jahr) und Pro (${R.month} $/Monat oder ${R.year} $/Jahr) starten bald. Die App ist derzeit auf Englisch.
+> ${P} macht aus einer Tabelle Ihrer Geräte ein 3D-Modell Ihres Racks: Watt und Kosten pro Gerät, was wo steckt, USV-Laufzeit, was bei einem Ausfall dunkel wird, und Tokens pro kWh für lokale KI-Rechner. ${TRIAL_PAGES ? `Kostenlos ausprobieren: mit einer E-Mail-Adresse anmelden und einmal ${TRIAL.minutes} Minuten mit Ihrer eigenen Tabelle nutzen; nur zum Ausprobieren, nichts wird gespeichert, kein Konto (${url('/try', l)}).` : 'Noch keine öffentliche Demo: Clips, Vorführungen und eine Warteliste.'} Account (${A.month} $/Monat oder ${A.year} $/Jahr) und Pro (${R.month} $/Monat oder ${R.year} $/Jahr) starten bald. Die App ist derzeit auf Englisch.
 
 - [${P}](${url('/homelab', l)}): Überblick
 - [${P} ansehen](${url('/homelab/try', l)}): Clips und Standbilder des Demo-Labs, Vorführung anfragen, die Importvorlage
 - [Preise](${url('/homelab/pricing', l)}): was jeder Tarif enthält; geplante Funktionen sind markiert
-- [Warteliste](${url('/homelab/waitlist', l)}): eine E-Mail, wenn Try zum Selbsttesten öffnet
+- [Warteliste](${url('/homelab/waitlist', l)}): ${TRIAL_PAGES ? 'eine E-Mail, wenn Konten verfügbar sind' : 'eine E-Mail, wenn Try zum Selbsttesten öffnet'}
 - [Änderungen](${url('/homelab/changelog', l)}): was ausgeliefert wurde (Einträge auf Englisch)
 
 Fakten: Das Blatt „Devices“ der Vorlage ist Pflicht (Rack, HE, Modell); Cables, Racks, Power, Networks und Readings sind optional. Strom-, Wärme- und Kostenwerte sind Schätzungen aus der typischen Leistungsaufnahme jedes Modells, angepasst durch Messwerte, die der Nutzer ergänzt. Tokens pro kWh = Tokens pro Sekunde ÷ Watt × 3.600.000.
 `,
   zh: (l) => `# ${BRAND}（中文）
 
-> Mustard Seed Solutions 出品的免费机柜与数据中心工具，以及两款在浏览器中运行的 3D 数字孪生：${P} 面向 Homelab（家庭机房），DC Sim 面向数据中心机房。全部功能在浏览器本地基于 Excel/CSV 清单运行，数据不上传。联系方式：${CONTACT_EMAIL}。
+> Mustard Seed Solutions 出品的免费机柜与数据中心工具，以及两款在浏览器中运行的 3D 数字孪生：${P} 面向 Homelab（家庭机房），DC Sim 面向数据中心机房。${TRIAL_PAGES ? `两款产品均基于 Excel/CSV 清单：${P} 在浏览器本地处理，DC Sim 仅在会话期间将清单暂存于服务器内存，不保存任何数据。` : '全部功能在浏览器本地基于 Excel/CSV 清单运行，数据不上传。'}联系方式：${CONTACT_EMAIL}。
 
 Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com；${BRAND} 是其旗下品牌。本文件列出中文页面；全部英文页面见：${SITE_URL.replace(/\/$/, '')}/llms.txt
 
@@ -41,12 +41,12 @@ Mustard Seed Solutions（mustardseedmt.com，马耳他）运营 rack-density.com
 
 ## ${P}（Homelab）
 
-> ${P} 将设备清单生成为机柜 3D 模型：每台设备的功耗与电费、线缆连接关系、UPS 后备时间、单台设备故障时的影响范围，以及本地 AI 主机的每千瓦时 token 数。${TRIAL_PAGES ? `免费试玩一次：使用您自己的清单，${TRIAL.minutes} 分钟，不保存任何数据（${url('/try', l)}）。` : '暂无公开演示：提供演示视频、预约演示和候补名单。'}基础账户（每月 ${A.month} 美元或每年 ${A.year} 美元）和专业版（每月 ${R.month} 美元或每年 ${R.year} 美元）即将推出。应用界面目前为英文。
+> ${P} 将设备清单生成为机柜 3D 模型：每台设备的功耗与电费、线缆连接关系、UPS 后备时间、单台设备故障时的影响范围，以及本地 AI 主机的每千瓦时 token 数。${TRIAL_PAGES ? `免费试玩：使用邮箱注册，即可用您自己的清单试用一次，时长 ${TRIAL.minutes} 分钟；仅供试玩，不保存任何数据，无需创建账户（${url('/try', l)}）。` : '暂无公开演示：提供演示视频、预约演示和候补名单。'}基础账户（每月 ${A.month} 美元或每年 ${A.year} 美元）和专业版（每月 ${R.month} 美元或每年 ${R.year} 美元）即将推出。应用界面目前为英文。
 
 - [${P}](${url('/homelab', l)})：概览
 - [${P} 演示](${url('/homelab/try', l)})：演示环境的视频与截图、预约演示、导入模板
 - [价格](${url('/homelab/pricing', l)})：各版本功能；规划中的功能已标注
-- [候补名单](${url('/homelab/waitlist', l)})：自助免费试用开放时发送一封邮件通知
+- [候补名单](${url('/homelab/waitlist', l)})：${TRIAL_PAGES ? '账户功能开放时发送一封邮件通知' : '自助免费试用开放时发送一封邮件通知'}
 - [更新日志](${url('/homelab/changelog', l)})：已发布内容（条目为英文）
 
 说明：导入模板中的 Devices 表为必填（机柜、U 位、型号）；Cables、Racks、Power、Networks 和 Readings 为选填。功耗、散热和电费均为估算值，依据各型号的典型功耗，并结合用户补充的监测数据。每千瓦时 token 数 = 每秒 token 数 ÷ 功耗（W）× 3,600,000。
