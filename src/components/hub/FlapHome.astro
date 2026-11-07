@@ -150,6 +150,8 @@ const rows = [
 
   /* footer line: bottom left only, nothing in the bottom-right corner */
   .fh-foot { position: absolute; left: var(--gut); right: 33%; bottom: 22px; display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 0; text-align: left; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+  .fh-foot { transition: opacity .2s; }
+  .fh-foot.is-off { opacity: 0; }
   .fh-foot b { color: var(--accent); font-weight: 500; }
   .fh-status i { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--accent); animation: fh-blink 1.4s infinite; }
   @keyframes fh-blink { 50% { opacity: .25; } }
@@ -191,12 +193,19 @@ const rows = [
 </style>
 
 <script>
-  // After load: the Warsaw clock in every footer line, and one shuffle per board when it scrolls in (not with reduced motion).
+  // After load: the Warsaw clock in every footer line; each footer line fades out as soon as it slides under the see-through
+  // sticky header (so the last screen's line never shows behind the logo); one shuffle per board when it scrolls in (not with
+  // reduced motion).
   const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-?.';
   const init = () => {
     const clocks = document.querySelectorAll<HTMLElement>('[data-flap-home] [data-clock]');
     const tick = () => { const t = new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit' }); clocks.forEach((c) => (c.textContent = t)); };
     tick(); setInterval(tick, 15000);
+    if ('IntersectionObserver' in window) {
+      const top = Math.ceil(document.querySelector('.site-header')?.getBoundingClientRect().height ?? 59);
+      const fo = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle('is-off', e.intersectionRatio < 1)), { rootMargin: `-${top}px 0px 0px 0px`, threshold: 1 });
+      document.querySelectorAll('[data-flap-home] .fh-foot').forEach((f) => fo.observe(f));
+    }
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
     const spin = (board: Element) => board.querySelectorAll<HTMLElement>('.fh-tile').forEach((tile, i) => {
       const target = tile.dataset.c ?? ' ', glyph = tile.firstElementChild as HTMLElement;
