@@ -1,0 +1,217 @@
+---
+// Home opening in the split-flap "departure board" style (planner notice 2026-11-07, mechanics from
+// ~/coldmail/mrplanb-homepage-styles/reference). Four full-height screens, one board each, and every board shows something
+// real: the brand, the Rack Density Calculator's result for its default 42U preset, the device database's record count, and
+// the reveal question. Boards are aria-hidden with their final characters in the HTML (sr-only text carries the meaning); each
+// shuffles once after load when it scrolls in, never with reduced motion. Then the Departures timetable, built from the nav
+// data. Copy: src/i18n/pages/hub.ts (flap). Tiles stay dark in both themes: ink on the bright theme, charcoal on dark.
+import { getCollection } from 'astro:content';
+import { BRAND } from '../../config/brand';
+import { PRODUCTS, FOOTER } from '../../config/nav';
+import { TRIAL_PAGES } from '../../config/trial.mjs';
+import { DENSITY_DEFAULT as P } from '../../lib/calc/presets';
+import { rackDensity } from '../../lib/calc/rackDensity';
+import { DEVICES } from '../../lib/devices';
+import { lp, label, fill, nf, LOCALE_META, LOCALE_CALC, type Locale } from '../../i18n';
+import type { en as HubCopy } from '../../i18n/pages/hub';
+interface Props { locale: Locale; c: typeof HubCopy }
+const { locale, c } = Astro.props;
+const f = c.flap;
+
+// Board 2: the calculator's own output for its default inputs (the 42U preset and the locale's default circuit, as /calculator/).
+const [, V, A] = (LOCALE_CALC[LOCALE_META[locale].html]?.circuit ?? 'single-230-16').split('-');
+const r = rackDensity({ rackU: P.rackU, serverU: P.serverU, wattsPerServer: P.w, coolingKw: P.cool, supply: { phase: 'single', volts: +V, amps: +A, pf: 0.95 } });
+if (r.bottleneck !== 'power') throw new Error('FlapHome: board 2 says power runs out first; the 42U preset changed, so update flap.b2 in hub.ts');
+const calcVars = { n: r.servers, u: P.serverU, w: P.w, rack: P.rackU, a: A, v: V, space: r.bySpace, cool: r.byCooling };
+// Board 3: the device database (src/data/devices/public.json).
+const devVars = { n: nf(locale, DEVICES.length, 0), priced: nf(locale, DEVICES.filter((d) => d.list_price?.usd).length, 0) };
+
+const boards = [
+  { rows: [BRAND.slice(0, 4), BRAND.slice(4)], hiRow: 1, max: 118 },
+  { rows: [String(r.servers)], tone: 'hi', max: 230 },
+  { rows: [String(DEVICES.length)], max: 230 },
+  { rows: f.reveal, tone: 'hi', max: 112 },
+] as { rows: string[]; hiRow?: number; tone?: 'hi'; max: number }[];
+const cells = (rows: string[]) => {
+  const width = Math.max(...rows.map((x) => [...x].length));
+  return { width, rows: rows.map((x) => { const ch = [...x], pad = Math.floor((width - ch.length) / 2); return [...Array(pad).fill(' '), ...ch, ...Array(width - pad - ch.length).fill(' ')]; }) };
+};
+const status = [TRIAL_PAGES ? f.b1.statusTrial : f.b1.status, f.b2.status, f.b3.status, ''];
+
+// Departures: the trial (trial builds), both products, then the hub's footer links (src/config/nav.ts).
+const learn = (await getCollection('learn')).length;
+const dep = f.departures;
+const rows = [
+  ...(TRIAL_PAGES ? [{ href: '/try', name: dep.tryLabel, gate: dep.gates.board, ed: 'try' }] : []),
+  ...PRODUCTS.map((p) => ({ href: p.href, name: p.label, gate: dep.gates.board, ed: p.edition })),
+  ...FOOTER.hub.filter((l) => l.href !== '/').map((l) => ({ href: l.href, name: label(locale, l.label), gate: l.href.startsWith('/calculator') ? dep.gates.run : dep.gates.open, ed: '' })),
+].map((x, i) => ({ ...x, no: String(i + 1).padStart(2, '0'), rem: fill((dep.remarks as Record<string, string>)[x.href] ?? '', { ...devVars, learn }) }));
+---
+<div class="fh" data-flap-home>
+  {boards.map((b, i) => {
+    const g = cells(b.rows);
+    return (
+      <section class="fh-act" id={`board-${i + 1}`}>
+        <div class:list={['fh-board', { 'is-hi': b.tone === 'hi' }]} style={`--n:${g.width};--max:${b.max}px`} aria-hidden="true" data-board>
+          {g.rows.map((row, ri) => (
+            <div class:list={['fh-row', { 'is-hi': b.hiRow === ri }]}>{row.map((ch) => <div class="fh-tile" data-c={ch}><span>{ch}</span></div>)}</div>
+          ))}
+        </div>
+        {i === 0 && <>
+          <h1 class="fh-title"><span class="sr-only">{BRAND}: </span>{c.h1}</h1>
+          <p class="fh-cap">{c.lead}</p>
+        </>}
+        {i === 1 && <p class="fh-cap fh-cap--first"><span class="sr-only">{r.servers} </span>{fill(f.b2.caption, calcVars)} <a href={`${lp('/calculator', locale)}?preset=${P.id}`}>{f.b2.link}</a></p>}
+        {i === 2 && <p class="fh-cap fh-cap--first"><span class="sr-only">{DEVICES.length} </span>{fill(f.b3.caption, devVars)} <a href={lp('/devices', locale)}>{f.b3.link}</a></p>}
+        {i === 3 && <>
+          <h2 class="sr-only">{f.revealText}</h2>
+          <div class="fh-btns">
+            <a class="fh-btn" href="#departures">{f.button}</a>
+            {TRIAL_PAGES && <a class="fh-btn fh-btn--play" href={`${lp('/try', locale)}?src=home-board`}><b>{c.freePlay.badge}</b> <span class="fp-long">{c.freePlay.cta}</span><span class="fp-short">{c.freePlay.ctaShort}</span> <span aria-hidden="true">→</span></a>}
+          </div>
+        </>}
+        <p class="fh-foot" aria-hidden="true">
+          <span><b data-clock>--:--</b> {f.city} · {fill(f.board, { i: i + 1, n: boards.length })}</span>
+          {status[i] && <span class="fh-status"><i></i>{status[i]}</span>}
+        </p>
+      </section>
+    );
+  })}
+
+  <section class="fh-dep" id="departures">
+    <div class="wrap">
+      <h2 class="fh-h">{dep.h2} <small>{dep.small}</small></h2>
+      <table class="fh-table">
+        <thead><tr><th class="fh-no">{dep.cols[0]}</th><th>{dep.cols[1]}</th><th class="fh-rem">{dep.cols[2]}</th><th class="fh-go">{dep.cols[3]}</th></tr></thead>
+        <tbody>
+          {rows.map((x) => (
+            <tr class:list={[x.ed && `is-${x.ed}`]}>
+              <td class="fh-no">{x.no}</td>
+              <td class="fh-dest"><a href={lp(x.href, locale)}>{x.name}</a></td>
+              <td class="fh-rem">{x.rem}</td>
+              <td class="fh-go"><a href={lp(x.href, locale)} aria-hidden="true" tabindex="-1">{x.gate}</a></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<style>
+  .fh {
+    /* dark theme: charcoal tiles */
+    --tile-top: #25282c; --tile-bot: #191b1e; --tile-line: #34373c; --tile-ink: #f2f1ee; --tile-hi: #ff8a1f;
+    --tile-pin: var(--bg-000); --tile-shadow: rgba(0,0,0,.5); --grid: rgba(242,241,238,.035);
+    --gap: clamp(4px, .7vw, 10px); --gut: 28px;
+    font: 400 12px/1.6 var(--font-mono);
+    color: var(--ink);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  /* bright theme: ink tiles on paper */
+  :global([data-theme='light']) .fh { --tile-top: #1f2329; --tile-bot: #14171b; --tile-line: #0d0f12; --tile-ink: #f6f5f2; --tile-shadow: rgba(21,23,26,.22); --grid: rgba(21,23,26,.05); }
+
+  .fh-act, .fh-dep { scroll-margin-top: 59px; }
+  .fh-act { position: relative; container-type: inline-size; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100svh - 59px); padding: 48px var(--gut) 80px; text-align: center; }
+  .fh-board { display: flex; flex-direction: column; gap: var(--gap); }
+  .fh-row { display: flex; gap: var(--gap); }
+  .fh-tile {
+    --w: min(var(--max), calc((100cqi - (var(--n) - 1) * var(--gap)) / var(--n)));
+    position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;
+    width: var(--w); height: calc(var(--w) * 1.38); border: 1px solid var(--tile-line); border-radius: calc(var(--w) * .05);
+    background: linear-gradient(var(--tile-top) 0 50%, var(--tile-bot) 50% 100%);
+    box-shadow: 0 2px 0 rgba(0,0,0,.5), 0 10px 24px var(--tile-shadow);
+    color: var(--tile-ink); font: 700 calc(var(--w) * .8)/1 var(--font-sans); letter-spacing: 0;
+  }
+  :global(:lang(zh)) .fh-tile { font-size: calc(var(--w) * .68); }
+  /* the split line and the two hinge pins */
+  .fh-tile::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; z-index: 2; height: 2px; margin-top: -1px; background: rgba(0,0,0,.55); }
+  .fh-tile::after { content: ''; position: absolute; left: -3px; right: -3px; top: 50%; z-index: 3; height: calc(var(--w) * .12); margin-top: calc(var(--w) * -.06); border-radius: 2px; background: linear-gradient(90deg, var(--tile-pin) 0 4%, transparent 4% 96%, var(--tile-pin) 96%); }
+  .fh-tile span { position: relative; top: .02em; }
+  .fh-tile.is-flipping span { animation: fh-flip .07s linear; }
+  @keyframes fh-flip { 50% { transform: scaleY(.15); } }
+  .fh-board.is-hi .fh-tile, .fh-row.is-hi .fh-tile { color: var(--tile-hi); }
+
+  .fh-title { margin: 36px 0 0; max-width: 620px; font: 500 13px/1.5 var(--font-mono); letter-spacing: .02em; color: var(--ink); }
+  .fh-cap { max-width: 620px; margin: 10px auto 0; color: var(--ink-muted); }
+  .fh-cap--first { margin-top: 34px; }
+  .fh-cap a { color: var(--ink); text-underline-offset: 3px; }
+  .fh-cap a:hover { color: var(--accent); }
+  .fh-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 40px; }
+  .fh-btn { display: inline-block; padding: 12px 22px; border: 1px solid var(--accent); border-radius: var(--radius-1); background: var(--accent); color: var(--on-accent); font: 500 13px var(--font-mono); letter-spacing: .03em; text-decoration: none; }
+  .fh-btn:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--on-accent); }
+  .fh-btn--play { background: transparent; color: var(--ink); box-shadow: var(--glow-accent); }
+  .fh-btn--play b { color: var(--accent); font-weight: 700; letter-spacing: .1em; }
+  .fh-btn--play > span:last-child { color: var(--accent); }
+  .fp-short { display: none; }
+  .fh-btn--play:hover { background: var(--accent-soft); color: var(--ink); }
+  .fh-btn:focus-visible, .fh-cap a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  /* footer line: bottom left only, nothing in the bottom-right corner */
+  .fh-foot { position: absolute; left: var(--gut); right: 33%; bottom: 22px; display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 0; text-align: left; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+  .fh-foot b { color: var(--accent); font-weight: 500; }
+  .fh-status i { display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--accent); animation: fh-blink 1.4s infinite; }
+  @keyframes fh-blink { 50% { opacity: .25; } }
+
+  /* timetable */
+  .fh-dep { padding: 90px 0 40px; border-top: 1px solid var(--line); }
+  .fh-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; margin: 0 0 10px; font: 700 clamp(1.5rem, 3vw, 1.9rem)/1.1 var(--font-sans); letter-spacing: .06em; text-transform: uppercase; }
+  .fh-h small { font: 400 11px var(--font-mono); letter-spacing: .06em; text-transform: none; color: var(--ink-muted); }
+  .fh-table { width: 100%; margin-bottom: 40px; border-collapse: collapse; }
+  .fh-table th { padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: 10px; font-weight: 400; letter-spacing: .14em; text-align: left; text-transform: uppercase; color: var(--ink-muted); }
+  .fh-table td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .fh-table tr:hover td { background: var(--bg-100); }
+  .fh-no { width: 44px; font-size: 11px; color: var(--accent); }
+  .fh-dest { font: 650 clamp(1rem, 2vw, 1.25rem)/1.15 var(--font-sans); letter-spacing: .03em; text-transform: uppercase; }
+  .fh-dest a { color: var(--ink); text-decoration: none; }
+  .fh-dest a:hover { color: var(--accent); }
+  .fh-rem { color: var(--ink-muted); }
+  .fh-table .fh-go { text-align: right; white-space: nowrap; }
+  .fh-go a { color: var(--accent); text-decoration: none; }
+  /* DC Sim rows in the DC green (tokens.css values, both themes) */
+  .is-dc { --accent: #22c55e; }
+  :global([data-theme='light']) .is-dc { --accent: #137a34; }
+  .is-try .fh-dest a::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 10px; vertical-align: middle; border-radius: 50%; background: var(--accent); animation: fh-blink 1.4s infinite; }
+
+  @media (max-width: 640px) {
+    .fh { --gut: 16px; }
+    .fh-act { padding: 40px var(--gut) 72px; }
+    .fh-foot { right: var(--gut); }
+    .fh-foot .fh-status { display: none; }
+    .fh-dep { padding-top: 60px; }
+    .fh-table .fh-rem { display: none; }
+    .fh-table td, .fh-table th { padding-left: 6px; padding-right: 6px; }
+    .fh-btn { max-width: 100%; }
+    .fh-btn--play b { display: block; margin-bottom: 2px; }
+    .fp-long { display: none; }
+    .fp-short { display: inline; }
+  }
+  @media (prefers-reduced-motion: reduce) { .fh-status i, .is-try .fh-dest a::after { animation: none; } }
+</style>
+
+<script>
+  // After load: the Warsaw clock in every footer line, and one shuffle per board when it scrolls in (not with reduced motion).
+  const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-?.';
+  const init = () => {
+    const clocks = document.querySelectorAll<HTMLElement>('[data-flap-home] [data-clock]');
+    const tick = () => { const t = new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Warsaw', hour: '2-digit', minute: '2-digit' }); clocks.forEach((c) => (c.textContent = t)); };
+    tick(); setInterval(tick, 15000);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const spin = (board: Element) => board.querySelectorAll<HTMLElement>('.fh-tile').forEach((tile, i) => {
+      const target = tile.dataset.c ?? ' ', glyph = tile.firstElementChild as HTMLElement;
+      if (target === ' ') return;
+      let steps = 5 + Math.floor(Math.random() * 8) + (i % 5);
+      const flip = () => {
+        tile.classList.remove('is-flipping'); void tile.offsetWidth; tile.classList.add('is-flipping');
+        steps -= 1;
+        glyph.textContent = steps > 0 ? CH[Math.floor(Math.random() * CH.length)] : target;
+        if (steps > 0) setTimeout(flip, 55);
+      };
+      setTimeout(flip, i * 20);
+    });
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { spin(e.target); io.unobserve(e.target); } }), { threshold: 0.5 });
+    document.querySelectorAll('[data-flap-home] [data-board]').forEach((b) => io.observe(b));
+  };
+  if (document.readyState === 'complete') init(); else addEventListener('load', init, { once: true });
+</script>
