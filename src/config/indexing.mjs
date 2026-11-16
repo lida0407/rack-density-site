@@ -13,8 +13,9 @@ export const INDEX_DEVICES = false; // /devices/<category>/ (27) and /devices/<c
 export const INDEX_WORLD = false;   // /dc/world/<country>/<site>/ (129) and /dc/world/{data,estates,imagined}/
 export const INDEX_LOCALES = false; // every /de/ and /zh/ page; while held there is no hreflang to them either
 
-// The tag a held page gets: 'robots' holds it for every search engine, 'googlebot' for Google only (Bing keeps it).
-export const HOLD_META = 'robots';
+// The tag a held page gets: 'robots' holds it for every search engine, 'googlebot' for Google only. 'googlebot' (planner
+// 2026-11-16): Bing keeps indexing these pages, and Bing feeds ChatGPT search; only Google gets the small site.
+export const HOLD_META = 'googlebot';
 
 // Indexable, but not in sitemap.xml: utility pages with nothing to rank for. English paths, exact; a trailing * = the prefix.
 export const SITEMAP_SKIP = [

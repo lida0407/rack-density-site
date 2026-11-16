@@ -15,7 +15,7 @@ export const en = {
   labels: {
     Calculator: 'Calculator', Devices: 'Devices', Learn: 'Learn', Pricing: 'Pricing', Changelog: 'Changelog', 'See it': 'See it',
     'All products': 'All products', 'Rack Density Calculator': 'Rack Density Calculator', 'UPS Runtime Calculator': 'UPS Runtime Calculator',
-    'Device database': 'Device database', Overview: 'Overview', Privacy: 'Privacy', 'Legal notice': 'Legal notice',
+    About: 'About', 'Device database': 'Device database', Overview: 'Overview', Privacy: 'Privacy', 'Legal notice': 'Legal notice',
     Product: 'Product', Integrations: 'Integrations', Partners: 'Partners', Resources: 'Resources', 'Excel template': 'Excel template',
     Guides: 'Guides', 'Security & data': 'Security & data', Contact: 'Contact', Waitlist: 'Waitlist', Comparisons: 'Comparisons', 'Famous data centers': 'Famous data centers',
     'server, storage and network hardware reference': 'server, storage and network hardware reference', 'Proxmox, storage and backup guides': 'Proxmox, storage and backup guides',

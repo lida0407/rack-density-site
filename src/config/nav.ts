@@ -63,6 +63,7 @@ export const FOOTER = {
   ],
   dc: DC_FOOTER,
   company: [
+    { href: '/about', label: 'About' },
     { href: COMPANY.url, label: COMPANY.name },
     { href: `mailto:${CONTACT_EMAIL}`, label: CONTACT_EMAIL },
     { href: '/privacy', label: 'Privacy' },

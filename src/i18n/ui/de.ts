@@ -15,7 +15,7 @@ export const de: Deep<UI> = {
   labels: {
     Calculator: 'Rechner', Devices: 'Geräte', Learn: 'Ratgeber', Pricing: 'Preise', Changelog: 'Änderungen', 'See it': 'Ansehen',
     'All products': 'Alle Produkte', 'Rack Density Calculator': 'Rack-Rechner', 'UPS Runtime Calculator': 'USV-Laufzeitrechner',
-    'Device database': 'Gerätedatenbank', Overview: 'Überblick', Privacy: 'Datenschutz', 'Legal notice': 'Impressum',
+    About: 'Über uns', 'Device database': 'Gerätedatenbank', Overview: 'Überblick', Privacy: 'Datenschutz', 'Legal notice': 'Impressum',
     Product: 'Produkt', Integrations: 'Integrationen', Partners: 'Partner', Resources: 'Ressourcen', 'Excel template': 'Excel-Vorlage',
     Guides: 'Leitfäden', 'Security & data': 'Sicherheit & Daten', Contact: 'Kontakt', Waitlist: 'Warteliste', Comparisons: 'Vergleiche', 'Famous data centers': 'Bekannte Rechenzentren',
     'server, storage and network hardware reference': 'Server-, Storage- und Netzwerk-Hardware im Überblick', 'Proxmox, storage and backup guides': 'Ratgeber zu Proxmox, Storage und Backup',

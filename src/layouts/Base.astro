@@ -40,6 +40,7 @@ const org = {
     { '@type': 'Organization', '@id': `${abs('/')}#org`, name: COMPANY.name, url: COMPANY.url, email: CONTACT_EMAIL,
       address: { '@type': 'PostalAddress', addressCountry: COMPANY.country }, description: ENTITY.company,
       ...(COMPANY_SAME_AS.length ? { sameAs: COMPANY_SAME_AS } : {}),
+      mainEntityOfPage: abs('/about/'), // the page about the company on this site; url stays the company's own site
       brand: [{ '@type': 'Brand', name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}` }] },
     { '@type': 'WebSite', '@id': `${abs('/')}#website`, name: BRAND, url: abs('/'), description: ENTITY.rackdensity, publisher: { '@id': `${abs('/')}#org` } }, // marketing/ENTITY.md, verbatim
   ],

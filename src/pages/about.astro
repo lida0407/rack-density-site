@@ -1,0 +1,64 @@
+---
+// /about/ (English only): who makes RACKDENSITY, what is on the site, where the data comes from, how to cite it.
+// Plain facts from marketing/ENTITY.md and the data itself (counts and dates are computed). Da Li is the only person named;
+// no team, no bylines, no model or competitor names (planner, 2026-11-16, SEO-ROOT-CAUSE.md step 3).
+import Base from '../layouts/Base.astro';
+import { BRAND, PRODUCT_NAME, DC_PRODUCT_NAME, COMPANY, CONTACT_EMAIL, MAILTO } from '../config/brand';
+import { ENTITY } from '../config/entity';
+import { ENTITY_DC } from '../config/dc/product';
+import { CATALOG, DEVICES } from '../lib/devices';
+import { SITES, ESTATES, WORLD_META } from '../lib/dc/world';
+import { abs, u } from '../lib/url';
+
+const devicesUpdated = DEVICES.map((d) => d.updated).sort().at(-1)!;
+const deviceSources = DEVICES.reduce((a, d) => a + d.sources.length, 0);
+const cite = {
+  devices: `${CATALOG.attribution}. ${abs('/devices/')} (data as of ${devicesUpdated})`,
+  world: `Famous data centers of the world: the open dataset, by ${BRAND} (rack-density.com), CC BY 4.0. ${abs('/dc/world/data/')} (synced ${WORLD_META.synced})`,
+};
+const page = abs('/about/');
+const schema = [{
+  '@context': 'https://schema.org', '@type': 'AboutPage', '@id': `${page}#webpage`, url: page, name: `About ${BRAND}`,
+  about: { '@id': `${abs('/')}#org` }, mainEntity: { '@id': `${abs('/')}#org` }, isPartOf: { '@id': `${abs('/')}#website` },
+}];
+---
+<Base title={`About ${BRAND}: Company and Data Sources | ${BRAND}`}
+  description={`Who makes ${BRAND} (Mustard Seed Solutions, Malta), what is on rack-density.com, where the device and data-center data comes from, and how to cite it.`}
+  path="/about" ogImage="/og/hub.png" section="hub" crumbs={[{ name: 'About' }]} schema={schema}>
+  <section class="section-tight">
+    <div class="wrap narrow prose">
+      <h1>About {BRAND}</h1>
+      <p class="lead">{ENTITY.rackdensity}</p>
+
+      <h2>Who makes it</h2>
+      <p>{ENTITY.company} Da Li runs the company. Website: <a href={COMPANY.url} rel="noopener">{COMPANY.url.replace(/^https:\/\//, '')}</a>. E-mail: <a href={MAILTO}>{CONTACT_EMAIL}</a>.</p>
+
+      <h2>What is on rack-density.com</h2>
+      <ul>
+        <li><a href={u('/homelab/')}>{PRODUCT_NAME}</a>: {ENTITY.homelabTwin}</li>
+        <li><a href={u('/dc/')}>{DC_PRODUCT_NAME}</a>: {ENTITY_DC}</li>
+        <li><a href={u('/calculator/')}>Rack Density Calculator</a> and <a href={u('/calculator/ups-runtime/')}>UPS Runtime Calculator</a>: free, in the browser, no sign-up. The results are estimates: real draw depends on load.</li>
+        <li><a href={u('/devices/')}>Device database</a>: {DEVICES.length} rack, homelab and data-center devices with power, size, ports and dated list prices, as open data (CSV and JSON, CC BY 4.0).</li>
+        <li><a href={u('/dc/world/')}>Famous data centers of the world</a>: {SITES.length} sites and {ESTATES.length} estates on a 3D earth, with the <a href={u('/dc/world/data/')}>open dataset</a> (GeoJSON and CSV, CC BY 4.0).</li>
+      </ul>
+
+      <h2>Where the data comes from, and how it is dated</h2>
+      <ul>
+        <li><strong>Devices.</strong> Specs come from the vendors' data sheets, manuals and spec pages; prices from the vendor store, launch announcements or a named reseller. Every device lists its sources with the date they were read ({deviceSources} sources in all). List prices are the list price on the date shown, not a quote. Values the sources do not state are estimates and are marked. Catalog last updated {devicesUpdated}.</li>
+        <li><strong>Data centers.</strong> Each record is compiled from public sources (operators' own pages, filings, press, Wikidata, OpenStreetMap for coordinates), has at least two of them, and was checked before publication. Values the sources do not state directly are marked estimated. Corrections are dated in the record's <code>updated</code> field. Last sync {WORLD_META.synced}.</li>
+        <li><strong>Calculators and the twins.</strong> They compute from the numbers you enter or import. What they show (draw, cost, runtime, what fails) is an estimate, not a measurement.</li>
+      </ul>
+
+      <h2>Reuse and how to cite</h2>
+      <p>The device database and the data-center dataset are published under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener">CC BY 4.0</a>: copy, adapt and publish them, also commercially, as long as you credit the source with a link. Suggested citations:</p>
+      <ul>
+        <li><code>{cite.devices}</code></li>
+        <li><code>{cite.world}</code></li>
+      </ul>
+      <p>Downloads: <a href={u('/devices/rack-density-devices.csv')}>rack-density-devices.csv</a>, <a href={u('/devices/rack-density-devices.json')}>rack-density-devices.json</a>, and the files on the <a href={u('/dc/world/data/')}>dataset page</a>.</p>
+
+      <h2>Contact and corrections</h2>
+      <p>Found a wrong number or a better source? Write to <a href={MAILTO}>{CONTACT_EMAIL}</a> with the device or record and the source. How the site handles data: <a href={u('/privacy/')}>Privacy</a>.</p>
+    </div>
+  </section>
+</Base>
