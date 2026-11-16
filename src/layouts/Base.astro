@@ -7,8 +7,9 @@ import Breadcrumbs from '../components/site/Breadcrumbs.astro';
 import { trail, crumbsSchema, type Crumb } from '../lib/crumbs';
 import { ENTITY } from '../config/entity';
 import { abs, u } from '../lib/url';
-import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
+import { BRAND, PRODUCT_NAME, SITE_URL, BASE, COMPANY, COMPANY_SAME_AS, CONTACT_EMAIL, CF_WEB_ANALYTICS_TOKEN } from '../config/brand';
 import { ui, alternates, localeOf, lp, isLive, LOCALE_META, LOCALES, hasPage, type Locale } from '../i18n';
+import { heldPage, HOLD_META } from '../config/indexing.mjs';
 
 interface Props {
   title: string;               // full <title>
@@ -30,12 +31,15 @@ const ld = bc ? [...schema, crumbsSchema(bc, path, locale)] : schema;
 const canonical = locale === 'en' ? abs(path) : `${SITE_URL}${lp(path, locale)}`;
 // A locale that is not launched yet (src/i18n/live.mjs) is readable but noindex and outside hreflang.
 const alts = isLive(locale) ? alternates(path) : [];
+// Template sections and translated copies held back from search for now (src/config/indexing.mjs): noindex, follow.
+const hold = heldPage(path, locale);
 const org = {
   '@context': 'https://schema.org',
   '@graph': [
     // Entity rule: the Organization is the company (Mustard Seed Solutions); RACKDENSITY is its brand (no Sensaka on this site).
     { '@type': 'Organization', '@id': `${abs('/')}#org`, name: COMPANY.name, url: COMPANY.url, email: CONTACT_EMAIL,
       address: { '@type': 'PostalAddress', addressCountry: COMPANY.country }, description: ENTITY.company,
+      ...(COMPANY_SAME_AS.length ? { sameAs: COMPANY_SAME_AS } : {}),
       brand: [{ '@type': 'Brand', name: BRAND, url: abs('/'), logo: `${SITE_URL}${u('/icon-512.png')}` }] },
     { '@type': 'WebSite', '@id': `${abs('/')}#website`, name: BRAND, url: abs('/'), description: ENTITY.rackdensity, publisher: { '@id': `${abs('/')}#org` } }, // marketing/ENTITY.md, verbatim
   ],
@@ -51,7 +55,7 @@ const ogTitle = title.replace(/ \| .*$/, '');
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {alts.length > 2 && alts.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    {(noindex || !isLive(locale)) && <meta name="robots" content="noindex" />}
+    {noindex || !isLive(locale) ? <meta name="robots" content="noindex" /> : hold && <meta name={HOLD_META} content="noindex, follow" />}
     <meta name="theme-color" content="#0b0a09" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <ThemeScript />

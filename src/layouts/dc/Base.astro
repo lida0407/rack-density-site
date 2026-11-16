@@ -12,6 +12,7 @@ import { SITE_URL } from "../../../site.config.mjs";
 import { abs, u, root } from "../../lib/dc/url";
 import { ui, lp, alternates, isLive, hasPage, LOCALES, LOCALE_META, type Locale } from "../../i18n";
 import { dcPreview } from "../../i18n/dc";
+import { heldPage, HOLD_META } from "../../config/indexing.mjs";
 import ogSrc from "../../assets/dc/shots/hero-lightsoff.png";
 
 interface Crumb { name: string; path: string }
@@ -32,12 +33,14 @@ const preview = dcPreview(sitePath, locale);
 const canonical = locale === "en" || preview ? abs(path) : `${SITE_URL.replace(/\/$/, "")}${lp(sitePath, locale)}`;
 // A locale that is not launched yet (src/i18n/live.mjs) is readable but noindex and outside hreflang.
 const alts = isLive(locale) && !preview ? alternates(sitePath) : [];
+// Template sections and translated copies held back from search for now (src/config/indexing.mjs): noindex, follow.
+const hold = heldPage(sitePath, locale);
 const og = await getImage({ src: ogSrc, width: 1200, format: "jpg", quality: 80 });
 const ogUrl = new URL(og.src, SITE_URL).href;
 
 const org = {
   "@type": "Organization",
-  "@id": abs("#org"),
+  "@id": `${SITE_URL.replace(/\/$/, "")}${root()}#org`, // same @id as the hub layout: one Organization site-wide
   name: LEGAL_NAME,
   url: LEGAL_URL,
   email: CONTACT_EMAIL,
@@ -59,7 +62,7 @@ const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {alts.length > 2 && alts.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    {(noindex || preview || !isLive(locale)) && <meta name="robots" content="noindex" />}
+    {noindex || preview || !isLive(locale) ? <meta name="robots" content="noindex" /> : hold && <meta name={HOLD_META} content="noindex, follow" />}
     <meta name="theme-color" content="#080a09" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f6f7f6" media="(prefers-color-scheme: light)" />
     <ThemeScript />

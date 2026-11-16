@@ -7,6 +7,8 @@ export const BRAND = 'RACKDENSITY';
 // Entity rule (Dali 2026-10-15): Mustard Seed Solutions is the company; RACKDENSITY is its brand. No "Sensaka" on this site
 // (Dali 2026-10-15 evening): only Mustard Seed Solutions and the contact address.
 export const COMPANY = { name: 'Mustard Seed Solutions', url: 'https://mustardseedmt.com', country: 'MT' } as const;
+/** Organization sameAs (JSON-LD): only profiles that exist and belong to the company, confirmed by the planner. Empty = left out. */
+export const COMPANY_SAME_AS: string[] = [];
 export const CONTACT_EMAIL = 'da@mustardseedmt.com';
 
 /** The app. Dali 2026-10-15: no public demo — both apps stay behind the password page. `live` stays false until he opens a

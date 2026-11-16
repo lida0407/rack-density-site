@@ -7,7 +7,9 @@ import { SITE_URL, BASE } from '../site.config.mjs';
 
 const dist = 'dist';
 const root = SITE_URL.replace(/\/$/, '') + (BASE.endsWith('/') ? BASE : `${BASE}/`);
-const sm = readFileSync(join(dist, 'sitemap.xml'), 'utf8'); // one file since 2026-10-27 (scripts/sitemap-single.mjs runs first)
+// Every built page (.astro/sitemap-all.xml, written by scripts/sitemap-single.mjs), not only the ones open for search in
+// sitemap.xml: AI crawlers get the whole catalog. Falls back to sitemap.xml.
+const sm = readFileSync(existsSync('.astro/sitemap-all.xml') ? '.astro/sitemap-all.xml' : join(dist, 'sitemap.xml'), 'utf8');
 const urls = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 const unesc = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 import { LOCALE_LIVE } from '../src/i18n/live.mjs';
@@ -45,5 +47,5 @@ if (deviceModels) groups.get('Device database').push(`- ${deviceModels} model pa
 const index = [...groups].filter(([, l]) => l.length).map(([h, l]) => `### ${h}\n${l.join('\n')}`).join('\n\n');
 const file = join(dist, 'llms.txt');
 const other = Object.keys(LOCALES).filter((l) => LOCALE_LIVE[l] && existsSync(join(dist, l, 'llms.txt'))).map((l) => `${{ de: 'In German', zh: 'In Chinese' }[l]}: ${root}${l}/llms.txt`).join(' · ');
-writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\n${other ? `${other}\n\n` : ''}Full text: ${root}llms-full.txt · Sitemap: ${root}sitemap.xml · RSS: ${root}rss.xml\n\n## Every page (generated from the sitemap at build time)\n\n${index}\n`);
+writeFileSync(file, `${readFileSync(file, 'utf8').trimEnd()}\n\n${other ? `${other}\n\n` : ''}Full text: ${root}llms-full.txt · Sitemap: ${root}sitemap.xml · RSS: ${root}rss.xml\n\n## Every page (generated at build time)\n\n${index}\n`);
 console.log(`llms.txt: ${urls.length} sitemap pages indexed`);

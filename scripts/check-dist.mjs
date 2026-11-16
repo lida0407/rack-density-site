@@ -3,6 +3,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { BASE, SITE_URL } from '../site.config.mjs';
+import { held } from '../src/config/indexing.mjs';
 const ROOT = BASE.replace(/\/$/, '');   // '' on rack-density.com, '/rack-density-site' on github.io
 const DIST = 'dist';
 const walk = (d) => readdirSync(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
@@ -52,6 +53,23 @@ for (const [f, { lang, canon, map }] of alts) {
   }
 }
 console.log(`${alts.size} pages with hreflang alternates checked`);
+// Search indexing (src/config/indexing.mjs, SEO-ROOT-CAUSE.md): sitemap.xml lists only indexable pages, every held page says
+// noindex, follow, and no hreflang points at a noindex page.
+const robotsOf = (s) => (s.match(/<meta name="(?:robots|googlebot)" content="([^"]+)"/) || [])[1] ?? '';
+const noindexAt = (file) => existsSync(file) && /noindex/.test(robotsOf(readFileSync(file, 'utf8')));
+const inMap = [...readFileSync(join(DIST, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+for (const url of inMap) { if (!existsSync(pageOf(url))) fail(`sitemap.xml: ${url} has no page`); else if (noindexAt(pageOf(url))) fail(`sitemap.xml: ${url} is noindex`); }
+let heldN = 0, openN = 0;
+for (const f of html) {
+  const s = readFileSync(f, 'utf8');
+  if (/http-equiv="refresh"/.test(s)) continue;
+  const path = `/${f.slice(DIST.length + 1).replace(/index\.html$/, '')}`;
+  const isNoindex = /noindex/.test(robotsOf(s));
+  if (held(path)) { heldN++; if (!isNoindex) fail(`${f}: held in src/config/indexing.mjs but has no noindex`); }
+  else if (!isNoindex) openN++;
+  for (const m of s.matchAll(/<link rel="alternate" hreflang="[^"]+" href="([^"]+)"/g)) if (noindexAt(pageOf(m[1]))) fail(`${f}: hreflang → noindex page ${m[1]}`);
+}
+console.log(`search: ${openN} indexable pages, ${heldN} held (noindex, follow), ${inMap.length} in sitemap.xml`);
 // No "Sensaka" on rack-density.com (Dali 2026-10-15): a warning, so a section still being cleaned does not block deploys.
 const named = walk(DIST).filter((f) => /\.(html|txt|xml|json|csv)$/.test(f) && /sensaka/i.test(readFileSync(f, 'utf8')));
 if (named.length) warn(`"Sensaka" still in ${named.length} built file(s): ${named.slice(0, 8).join(', ')}${named.length > 8 ? ' …' : ''}`);

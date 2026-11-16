@@ -1,6 +1,7 @@
 // i18n (marketing/I18N.md): English unprefixed, German under /de/, Chinese (simplified, mainland) under /zh/.
 // Product and brand names stay Latin in every locale (Homelab Twin, DC Sim, RACKDENSITY).
 import { u, abs } from '../lib/url';
+import { localeIndexed } from '../config/indexing.mjs'; // hreflang only to locales open for search (SEO-ROOT-CAUSE.md)
 
 export const LOCALES = ['en', 'de', 'zh'] as const;
 export type Locale = (typeof LOCALES)[number];
@@ -64,7 +65,7 @@ export const switchHref = (path: string, to: Locale): string => {
 };
 /** hreflang alternates for an English path: every launched locale that has it, plus x-default = English. */
 export const alternates = (path: string) => {
-  const out = LOCALES.filter((l) => isLive(l) && hasPage(path, l)).map((l) => ({ hreflang: LOCALE_META[l].hreflang, href: l === 'en' ? abs(norm(path)) : abs(`/${l}${norm(path) === '/' ? '' : norm(path)}`) }));
+  const out = LOCALES.filter((l) => isLive(l) && localeIndexed(l) && hasPage(path, l)).map((l) => ({ hreflang: LOCALE_META[l].hreflang, href: l === 'en' ? abs(norm(path)) : abs(`/${l}${norm(path) === '/' ? '' : norm(path)}`) }));
   if (hasPage(path, 'en')) out.push({ hreflang: 'x-default', href: abs(norm(path)) });
   return out;
 };

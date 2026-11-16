@@ -29,6 +29,14 @@ function wanted(request: Request): 'de' | 'zh' | null {
 
 export async function onRequest({ request, env, next }: Ctx): Promise<Response> {
   const url = new URL(request.url);
+  // www.rack-density.com → rack-density.com, same path and query (SEO-ROOT-CAUSE.md, 2026-11-16). Here, not as a zone rule:
+  // no Cloudflare zone or DNS change. Asset paths in public/_routes.json skip Functions, so only pages, robots.txt and
+  // sitemap.xml redirect; the pages link their assets on the apex anyway.
+  if (url.hostname === 'www.rack-density.com') {
+    url.hostname = 'rack-density.com';
+    url.protocol = 'https:';
+    return new Response(null, { status: request.method === 'GET' || request.method === 'HEAD' ? 301 : 308, headers: { Location: url.toString(), 'Cache-Control': 'public, max-age=86400' } });
+  }
   const p = url.pathname;
   if (request.method !== 'GET' && request.method !== 'HEAD') return next();
   if (/^\/(api|de|zh)(\/|$)/.test(p) || /\.[a-z0-9]{1,5}$/i.test(p)) return next();
