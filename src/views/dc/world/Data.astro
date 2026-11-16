@@ -3,7 +3,7 @@
 // corrections. Copy in the "world" dictionary (data.*); field names, file names and the correction mail stay English.
 import Base from "../../../layouts/dc/Base.astro";
 import { SITES, ESTATES, WORLD_META } from "../../../lib/dc/world";
-import { abs, root } from "../../../lib/dc/url";
+import { abs, root, ORG_ID } from "../../../lib/dc/url";
 import { worldCopy } from "../../../i18n/dc/world";
 import type { Locale } from "../../../i18n";
 
@@ -14,7 +14,7 @@ const { t } = w;
 const N = { "SITES.length": SITES.length, "ESTATES.length": ESTATES.length };
 const dl = (p: string) => new URL(root(p), "https://rack-density.com").href;
 const ld = { "@type": "Dataset", "@id": `${abs("world/data/")}#dataset`, name: t("common.schema.datasetName"), description: t("data.schema.description", N),
-  url: abs("world/data/"), license: "https://creativecommons.org/licenses/by/4.0/", isAccessibleForFree: true, creator: { "@id": abs("#org") }, dateModified: WORLD_META.synced,
+  url: abs("world/data/"), license: "https://creativecommons.org/licenses/by/4.0/", isAccessibleForFree: true, creator: { "@id": ORG_ID }, dateModified: WORLD_META.synced,
   spatialCoverage: "Worldwide", keywords: [t("data.schema.keyword.dataCenters"), t("data.schema.keyword.hyperscale"), t("data.schema.keyword.submarineCables"), "PUE", t("data.schema.keyword.aiDataCenters")],
   distribution: [
     { "@type": "DataDownload", encodingFormat: "application/geo+json", contentUrl: dl("dc/world/data/dc-world.geojson") },

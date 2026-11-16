@@ -4,7 +4,7 @@ import Base from "../../../../layouts/dc/Base.astro";
 import Faq from "../../../../components/dc/Faq.astro";
 import WorldMap from "../../../../components/dc/world/WorldMap.astro";
 import { ESTATES, SITES, KIND_LABEL, countryName, fmt, km, latencyMs, sitePath, type Estate } from "../../../../lib/dc/world";
-import { u, abs, root } from "../../../../lib/dc/url";
+import { u, abs, root, ORG_ID } from "../../../../lib/dc/url";
 import { faqLd } from "../../../../lib/dc/schema";
 
 export function getStaticPaths() {
@@ -27,7 +27,7 @@ const faq = [
 ];
 const dataset = { "@type": "Dataset", name: `${e.name}: sites and links`, description: e.famous_for ?? e.name, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
   distribution: [{ "@type": "DataDownload", encodingFormat: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", contentUrl: new URL(root(`dc/world/data/estates/${e.id}.xlsx`), "https://rack-density.com").href }],
-  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: e.updated, creator: { "@id": abs("#org") } };
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: e.updated, creator: { "@id": ORG_ID } };
 const title = [`${e.name}: sites, links and map — DC Sim world`, `${e.name}: sites and links`, e.name].find((t) => t.length <= 60)!;
 ---
 <Base title={title} description={(e.famous_for ?? e.name).slice(0, 165)} path={path}

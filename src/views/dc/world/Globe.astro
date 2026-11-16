@@ -6,7 +6,7 @@
 import Base from "../../../layouts/dc/Base.astro";
 import Faq from "../../../components/dc/Faq.astro";
 import { SITES, ESTATES, IMAGINED, REGIONS, TYPE_LABEL, KIND_LABEL, countryName } from "../../../lib/dc/world";
-import { u, abs, root } from "../../../lib/dc/url";
+import { u, abs, root, ORG_ID } from "../../../lib/dc/url";
 import { faqLd } from "../../../lib/dc/schema";
 import { englishOnly } from "../../../i18n/dc";
 import { worldCopy } from "../../../i18n/dc/world";
@@ -24,7 +24,7 @@ const N = { "SITES.length": SITES.length, "ESTATES.length": ESTATES.length };
 const types = [...new Set(SITES.map((s) => s.tenant_type).filter(Boolean))] as string[];
 const kinds = [...new Set(ESTATES.map((e) => e.kind).filter(Boolean))] as string[];
 const faq = ["famous", "latency", "cut", "data"].map((k) => ({ q: t(`index.faq.${k}.q`, N), a: t(`index.faq.${k}.a`, N) }));
-const ld = { "@type": "Dataset", name: t("common.schema.datasetName"), url: abs("world/"), description: t("index.schema.description", N), license: "https://creativecommons.org/licenses/by/4.0/", creator: { "@id": abs("#org") } };
+const ld = { "@type": "Dataset", name: t("common.schema.datasetName"), url: abs("world/"), description: t("index.schema.description", N), license: "https://creativecommons.org/licenses/by/4.0/", creator: { "@id": ORG_ID } };
 const byRegion = REGIONS.map((r) => ({ r, list: SITES.filter((s) => s.region === r) })).filter((x) => x.list.length);
 
 // The earth script's copy: { name in the script: dictionary key }. Placeholders are the expressions of the English code.

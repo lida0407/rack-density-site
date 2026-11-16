@@ -5,7 +5,7 @@ import Base from "../../../layouts/dc/Base.astro";
 import Faq from "../../../components/dc/Faq.astro";
 import WorldMap from "../../../components/dc/world/WorldMap.astro";
 import { SITES, estatesFor, estatePath, TYPE_LABEL, countryName, fmt, type Site } from "../../../lib/dc/world";
-import { u, abs, root } from "../../../lib/dc/url";
+import { u, abs, root, ORG_ID } from "../../../lib/dc/url";
 import { faqLd } from "../../../lib/dc/schema";
 
 export function getStaticPaths() {
@@ -41,7 +41,7 @@ const place = {
 };
 const dataset = {
   "@type": "Dataset", name: `${s.name}: public facts`, description: s.famous_for ?? s.name, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
-  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: s.updated, creator: { "@id": abs("#org") },
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, dateModified: s.updated, creator: { "@id": ORG_ID },
   citation: (s.sources ?? []).map((x) => x.url),
 };
 const title = [`${s.name}: facts, power, PUE — DC Sim world`, `${s.name}: facts and power`, s.name].find((t) => t.length <= 60)!;

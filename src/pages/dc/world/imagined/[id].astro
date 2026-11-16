@@ -7,7 +7,7 @@ import Base from "../../../../layouts/dc/Base.astro";
 import Faq from "../../../../components/dc/Faq.astro";
 import WorldMap from "../../../../components/dc/world/WorldMap.astro";
 import { IMAGINED, IMAGINED_LABEL, giantMain, countryName, fmt, km, latencyMs, type Giant } from "../../../../lib/dc/world";
-import { u, abs, root } from "../../../../lib/dc/url";
+import { u, abs, root, ORG_ID } from "../../../../lib/dc/url";
 import { faqLd } from "../../../../lib/dc/schema";
 
 export function getStaticPaths() {
@@ -40,7 +40,7 @@ const faq = [
   ...(g.what_ifs?.[0] ? [{ q: `What happens if ${g.what_ifs[0].name.toLowerCase()}?`, a: g.what_ifs[0].verdict }] : []),
 ];
 const ld = { "@type": "Dataset", name: `${g.name} (imagined)`, description: `${IMAGINED_LABEL}. ${g.famous_for ?? ""}`, url: abs(path), license: "https://creativecommons.org/licenses/by/4.0/",
-  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, creator: { "@id": abs("#org") }, dateModified: g.updated };
+  isPartOf: { "@type": "Dataset", name: "Famous data centers of the world", url: abs("world/data/") }, creator: { "@id": ORG_ID }, dateModified: g.updated };
 const title = [`${g.name} (imagined) — DC Sim world`, `${g.name} (imagined)`].find((t) => t.length <= 60) ?? g.name.slice(0, 58);
 const hero = still("estate") ?? still("card");
 ---

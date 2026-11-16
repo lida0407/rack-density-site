@@ -1,5 +1,5 @@
 import { PRODUCT_NAME, BRAND, PRICES, ENTITY_DC } from "../../config/dc/product";
-import { abs } from "./url";
+import { abs, ORG_ID } from "./url";
 
 export const faqLd = (items: { q: string; a: string }[]) =>
   items.length
@@ -16,7 +16,7 @@ export const softwareLd = () => ({
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web browser",
   description: ENTITY_DC,
-  publisher: { "@id": abs("#org") },
+  publisher: { "@id": ORG_ID },
   offers: [
     { "@type": "Offer", name: "Monitor", price: PRICES.monitorMin, priceCurrency: "USD", description: `From $${PRICES.monitorPerRack} per rack per month, minimum $${PRICES.monitorMin}` },
     { "@type": "Offer", name: "Design", price: PRICES.design[0].price, priceCurrency: "USD", description: "One-time per project, from $490 for up to 20 racks" },
@@ -28,8 +28,8 @@ export const articleLd = (headline: string, description: string, path: string) =
   headline,
   description,
   mainEntityOfPage: abs(path),
-  author: { "@id": abs("#org") },
-  publisher: { "@id": abs("#org") },
+  author: { "@id": ORG_ID },
+  publisher: { "@id": ORG_ID },
 });
 
 /** Calculators (SEO-GEO-PLAN §3: WebApplication for tools). */
@@ -42,7 +42,7 @@ export const webAppLd = (name: string, description: string, path: string) => ({
   operatingSystem: "Web browser",
   isAccessibleForFree: true,
   offers: { "@type": "Offer", price: 0, priceCurrency: "USD" },
-  publisher: { "@id": abs("#org") },
+  publisher: { "@id": ORG_ID },
 });
 
 /** Guides and setup pages with numbered steps. */
@@ -75,7 +75,7 @@ export const productLd = () => ({
 export const videoLd = (v: { name: string; description: string; contentUrl: string; thumbnailUrl: string; uploadDate: string; duration: string; transcript: string }) => ({
   "@type": "VideoObject",
   ...v,
-  publisher: { "@id": abs("#org") },
+  publisher: { "@id": ORG_ID },
 });
 
 /** Data pages (price ranges, benchmarks). */
@@ -84,7 +84,7 @@ export const datasetLd = (name: string, description: string, path: string, varia
   name,
   description,
   url: abs(path),
-  creator: { "@id": abs("#org") },
+  creator: { "@id": ORG_ID },
   license: "https://creativecommons.org/licenses/by/4.0/",
   isAccessibleForFree: true,
   variableMeasured: variables,

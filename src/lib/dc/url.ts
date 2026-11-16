@@ -13,3 +13,6 @@ export const u = (path = ""): string => {
 
 /** Absolute URL, for canonical tags, sitemaps, JSON-LD and llms.txt. */
 export const abs = (path = ""): string => SITE_URL.replace(/\/$/, "") + u(path);
+
+/** The site-wide Organization node (https://rack-density.com/#org), the same @id as the hub layout: one company entity. */
+export const ORG_ID = `${SITE_URL.replace(/\/$/, "")}${root()}#org`;
